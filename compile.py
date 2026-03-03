@@ -1,62 +1,113 @@
 import os
-import json
 import subprocess
 import tempfile
 import shutil
+import stat
 
-SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-CONFIG_PATH = os.path.join(SCRIPT_DIR, "config.json")
+from config import CONFIG
 
-with open(CONFIG_PATH, "r") as f:
-    CONFIG = json.load(f)
+
+def _run_quiet(cmd, cwd, step):
+    try:
+        subprocess.run(
+            cmd,
+            check=True,
+            cwd=cwd,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.PIPE,
+            text=True,
+        )
+    except subprocess.CalledProcessError as e:
+        error_details = e.stderr.strip() if e.stderr else "no error output"
+        raise RuntimeError(f"{step} failed: {error_details}") from e
+
+
+def _ensure_executable(path, step):
+    if not os.path.exists(path):
+        raise RuntimeError(f"{step} failed: expected output not found at {path}")
+    mode = os.stat(path).st_mode
+    execute_bits = stat.S_IXUSR | stat.S_IXGRP | stat.S_IXOTH
+    if mode & execute_bits:
+        return
+    os.chmod(path, mode | execute_bits)
+
 
 def compile_reussir(program: str, driver: str, output: str) -> None:
     with tempfile.TemporaryDirectory() as tmpdir:
-        subprocess.run([
-            CONFIG["reussir-compiler"],
-            "-o", "reussir.ll",
-            "-Oaggressive",
-            "--reuse-across-call",
-            "--relocation-mode", "pic",
-            "-t", "llvm-ir",
-            program
-        ], check=True, cwd=tmpdir)
-        subprocess.run([
-            CONFIG["cc"],
-            "-o", output,
-            "reussir.ll",
-            driver,
-            "-flto",
-            "-O3",
-            "-L", CONFIG["reussir-libs"],
-            "-lreussir_rt",
-            f"-Wl,-rpath={CONFIG['reussir-libs']}",
-        ], check=True, cwd=tmpdir)
+        _run_quiet(
+            [
+                CONFIG["reussir-compiler"],
+                "-o",
+                "reussir.ll",
+                "-Oaggressive",
+                "--reuse-across-call",
+                "--relocation-mode",
+                "pic",
+                "-t",
+                "llvm-ir",
+                program,
+            ],
+            cwd=tmpdir,
+            step="reussir compilation",
+        )
+        _run_quiet(
+            [
+                CONFIG["cc"],
+                "-o",
+                output,
+                "reussir.ll",
+                driver,
+                "-flto",
+                "-O3",
+                "-L",
+                CONFIG["reussir-libs"],
+                "-lreussir_rt",
+                f"-Wl,-rpath={CONFIG['reussir-libs']}",
+            ],
+            cwd=tmpdir,
+            step="reussir linking",
+        )
+    _ensure_executable(output, "reussir linking")
 
 def compile_koka(program: str, output: str) -> None:
     with tempfile.TemporaryDirectory() as tmpdir:
-        subprocess.run([
-            CONFIG["koka-compiler"],
-            "-O3",
-            program,
-            "-o", 
-            output,
-        ], check=True, cwd=tmpdir)
+        _run_quiet(
+            [
+                CONFIG["koka-compiler"],
+                "-O3",
+                program,
+                "-o",
+                output,
+            ],
+            cwd=tmpdir,
+            step="koka compilation",
+        )
+    _ensure_executable(output, "koka compilation")
 
 def compile_lean(program: str, output: str) -> None:
     with tempfile.TemporaryDirectory() as tmpdir:
         # copy program to tmpdir
         shutil.copyfile(program, os.path.join(tmpdir, os.path.basename(program)))
-        subprocess.run([
-            CONFIG["lean-compiler"],
-            os.path.join(tmpdir, os.path.basename(program)),
-            "-c", 
-            f"{output}.c",
-        ], check=True, cwd=tmpdir)
-        subprocess.run([
-            CONFIG["leanc"],
-            "-o", output,
-            f"{output}.c",
-            "-flto",
-            "-O3",
-        ], check=True, cwd=tmpdir)
+        _run_quiet(
+            [
+                CONFIG["lean-compiler"],
+                os.path.join(tmpdir, os.path.basename(program)),
+                "-c",
+                f"{output}.c",
+            ],
+            cwd=tmpdir,
+            step="lean C emission",
+        )
+        _run_quiet(
+            [
+                CONFIG["leanc"],
+                "-o",
+                output,
+                f"{output}.c",
+                "-flto",
+                "-O3",
+            ],
+            cwd=tmpdir,
+            step="lean linking",
+        )
+    _ensure_executable(output, "lean linking")

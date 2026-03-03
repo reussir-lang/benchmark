@@ -4,5 +4,8 @@
     "reussir-libs": "/home/schrodingerzy/Documents/reussir/build/lib",
     "koka-compiler": "/usr/local/bin/koka",
     "lean-compiler": "/home/schrodingerzy/.elan/bin/lean",
-    "leanc": "/home/schrodingerzy/.elan/bin/leanc"
+    "leanc": "/home/schrodingerzy/.elan/bin/leanc",
+    "hyperfine": "hyperfine",
+    "warmup-runs": 5,
+    "runs": 10
 }
