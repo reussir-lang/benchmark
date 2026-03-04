@@ -18,5 +18,10 @@ BENCHES = {
         "lean" : "lean/rbtree-zipper-lambda.lean",
         "reussir" : ("reussir/rbtree-zipper-lambda.rr", "reussir/rbtree.rr.c"), # reuse rbtree.rr.c
         "koka" : "koka/rbtree-zipper-lambda.kk",
+    },
+    "derive" : {
+        "lean" : "lean/derive.lean",
+        "reussir" : ("reussir/derive.rr", "reussir/derive.rr.c"),
+        "koka" : "koka/derive.kk",
     }
 }

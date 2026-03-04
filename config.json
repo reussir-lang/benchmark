@@ -1,6 +1,6 @@
 {
     "reussir-compiler": "/home/schrodingerzy/Documents/reussir/build/bin/reussir-compiler",
-    "cc": "clang",
+    "cc": "clang-21",
     "reussir-libs": "/home/schrodingerzy/Documents/reussir/build/lib",
     "koka-compiler": "/usr/local/bin/koka",
     "lean-compiler": "/home/schrodingerzy/.elan/bin/lean",
