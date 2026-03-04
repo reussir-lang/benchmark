@@ -1,27 +1,27 @@
 enum Term {
-    Var(i32),
-    Lam(i32, Term),
+    Var(i64),
+    Lam(i64, Term),
     App(Term, Term),
-    Let(i32, Term, Term)
+    Let(i64, Term, Term)
 }
 
 enum Value {
-    VVar(i32),
+    VVar(i64),
     VApp(Value, Value),
-    VLam(i32, Value -> Value)
+    VLam(i64, Value -> Value)
 }
 
 enum Env {
-    EnvCons(i32, Value, Env),
+    EnvCons(i64, Value, Env),
     EnvNil
 }
 
 enum Names {
-    NameCons(i32, Names),
+    NameCons(i64, Names),
     NameNil
 }
 
-fn max_of_names(n: Names, acc: i32) -> i32 {
+fn max_of_names(n: Names, acc: i64) -> i64 {
     match n {
         Names::NameCons(id, n1) => {
             let next = if acc > id { acc } else { id };
@@ -38,11 +38,11 @@ fn names_of_env(env: Env, acc: Names) -> Names {
     }
 }
 
-fn fresh(n: Names) -> i32 {
+fn fresh(n: Names) -> i64 {
     max_of_names(n, 0) + 1
 }
 
-fn lookup(env: Env, id: i32) -> Value {
+fn lookup(env: Env, id: i64) -> Value {
     match env {
         Env::EnvCons(id1, v, env1) =>
             if id == id1 { v } else { lookup(env1, id) },
@@ -173,14 +173,7 @@ fn term200000() -> Term {
     Term::App{Term::App{y, x}, z}
 }
 
-fn term40000000() -> Term {
-    let x = term200000();
-    let y = mul();
-    let z = two_hundred();
-    Term::App{Term::App{y, z}, x}
-}
-
-fn nf_to_int(t: Term, acc: i32) -> i32 {
+fn nf_to_int(t: Term, acc: i64) -> i64 {
     match t {
         Term::Lam(_, x) => nf_to_int(x, acc),
         Term::App(_, x) => nf_to_int(x, acc + 1),
@@ -188,8 +181,8 @@ fn nf_to_int(t: Term, acc: i32) -> i32 {
     }
 }
 
-fn nbe_test() -> i32 {
-    let t = term40000000();
+fn nbe_test() -> i64 {
+    let t = term200000();
     let n = norm_form(Env::EnvNil, t);
     nf_to_int(n, 0)
 }

@@ -2,14 +2,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-extern int32_t fold_test_ffi(int32_t size);
+extern int64_t fold_test_ffi(int64_t size);
 
 int main(void) {
-    const int32_t n = 4200000;
-    int32_t p = fold_test_ffi(n);
-    if (p != 420000) {
-        fprintf(stderr, "FAIL: expected 420000, got %d\n", (int32_t)p);
-        abort();
-    }
-    return 0;
+  const int64_t n = 4200000;
+  int64_t p = fold_test_ffi(n);
+  if (p != 420000) {
+    fprintf(stderr, "FAIL: expected 420000, got %ld\n", p);
+    abort();
+  }
+  return 0;
 }
