@@ -5,6 +5,7 @@
     "koka-compiler": "/usr/local/bin/koka",
     "lean-compiler": "/home/schrodingerzy/.elan/bin/lean",
     "leanc": "/home/schrodingerzy/.elan/bin/leanc",
+    "rustc": "rustc",
     "hyperfine": "hyperfine",
     "warmup-runs": 5,
     "runs": 10

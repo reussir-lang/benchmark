@@ -1,11 +1,16 @@
 import json
 import os
+import resource
 import subprocess
 import tempfile
 import compile
 
 from config import CONFIG
 from benches import BENCHES
+
+
+def _unlimit_stack():
+    resource.setrlimit(resource.RLIMIT_STACK, (resource.RLIM_INFINITY, resource.RLIM_INFINITY))
 
 
 def run_benchmark(bench_name, bench_variant):
@@ -44,6 +49,8 @@ def run_benchmark(bench_name, bench_variant):
             compile.compile_koka(resolve(bench_info), executable)
         elif bench_variant == "lean":
             compile.compile_lean(resolve(bench_info), executable)
+        elif bench_variant == "rust":
+            compile.compile_rust(resolve(bench_info), executable)
         else:
             raise ValueError(f"Unsupported bench_variant: {bench_variant}")
 
@@ -72,6 +79,7 @@ def run_benchmark(bench_name, bench_variant):
                     stdout=subprocess.DEVNULL,
                     stderr=subprocess.PIPE,
                     text=True,
+                    preexec_fn=_unlimit_stack,
                 )
             except subprocess.CalledProcessError as e:
                 error_details = e.stderr.strip() if e.stderr else "no error output"

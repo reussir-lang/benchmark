@@ -84,6 +84,21 @@ def compile_koka(program: str, output: str) -> None:
         )
     _ensure_executable(output, "koka compilation")
 
+def compile_rust(program: str, output: str) -> None:
+    _run_quiet(
+        [
+            CONFIG["rustc"],
+            "-C", "opt-level=3",
+            "-o",
+            output,
+            program,
+        ],
+        cwd=os.path.dirname(program) or ".",
+        step="rust compilation",
+    )
+    _ensure_executable(output, "rust compilation")
+
+
 def compile_lean(program: str, output: str) -> None:
     with tempfile.TemporaryDirectory() as tmpdir:
         # copy program to tmpdir
