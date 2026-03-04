@@ -21,16 +21,15 @@ fn expr_add(n0: Expr, m0: Expr) -> Expr {
     match n0 {
         Expr::Val(n) => match m0 {
             Expr::Val(m)              => Expr::Val{n + m},
-            Expr::Add(Expr::Val(m), f) =>
-                if n == 0 { expr_add(Expr::Val{m}, f) }
-                else { expr_add(Expr::Val{n + m}, f) },
-            _ => if n == 0 { m0 } else {
+            Expr::Add(Expr::Val(m), f) if n == 0 => expr_add(Expr::Val{m}, f),
+            Expr::Add(Expr::Val(m), f) => expr_add(Expr::Val{n + m}, f),
+            _ if n == 0 => m0,
+            _ =>
                 match m0 {
                     Expr::Val(0)                => Expr::Val{n},
                     Expr::Add(Expr::Val(m), f)  => expr_add(Expr::Val{n + m}, f),
                     _                           => Expr::Add{Expr::Val{n}, m0}
                 }
-            }
         },
         Expr::Add(f, g) => match m0 {
             Expr::Val(0) => n0,
@@ -49,18 +48,14 @@ fn expr_mul(n0: Expr, m0: Expr) -> Expr {
     match n0 {
         Expr::Val(n) => match m0 {
             Expr::Val(m) => Expr::Val{n * m},
+            _ if n == 0 => Expr::Val{0},
+            _ if n == 1 => m0,
             _ =>
-                if n == 0 { Expr::Val{0} }
-                else {
-                    if n == 1 { m0 }
-                    else {
-                        match m0 {
-                            Expr::Val(0)               => Expr::Val{0},
-                            Expr::Val(1)               => Expr::Val{n},
-                            Expr::Mul(Expr::Val(m), f) => expr_mul(Expr::Val{n * m}, f),
-                            _                          => Expr::Mul{Expr::Val{n}, m0}
-                        }
-                    }
+                match m0 {
+                    Expr::Val(0)               => Expr::Val{0},
+                    Expr::Val(1)               => Expr::Val{n},
+                    Expr::Mul(Expr::Val(m), f) => expr_mul(Expr::Val{n * m}, f),
+                    _                          => Expr::Mul{Expr::Val{n}, m0}
                 }
         },
         Expr::Mul(f, g) => match m0 {
@@ -84,7 +79,8 @@ fn expr_pow(m0: Expr, n0: Expr) -> Expr {
             Expr::Val(n) => Expr::Val{pown(m, n)},
             Expr::Val(0) => Expr::Val{1},
             Expr::Val(1) => Expr::Val{m},
-            _            => if m == 0 { Expr::Val{0} } else { Expr::Pow{Expr::Val{m}, n0} }
+            _ if m == 0  => Expr::Val{0},
+            _            => Expr::Pow{Expr::Val{m}, n0}
         },
         _ => match n0 {
             Expr::Val(0) => Expr::Val{1},
