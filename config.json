@@ -6,6 +6,7 @@
     "lean-compiler": "/home/schrodingerzy/.elan/bin/lean",
     "leanc": "/home/schrodingerzy/.elan/bin/leanc",
     "rustc": "rustc",
+    "ghc": "ghc",
     "hyperfine": "hyperfine",
     "warmup-runs": 5,
     "runs": 10

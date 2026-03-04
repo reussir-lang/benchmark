@@ -51,6 +51,8 @@ def run_benchmark(bench_name, bench_variant):
             compile.compile_lean(resolve(bench_info), executable)
         elif bench_variant == "rust":
             compile.compile_rust(resolve(bench_info), executable)
+        elif bench_variant == "haskell":
+            compile.compile_haskell(resolve(bench_info), executable)
         else:
             raise ValueError(f"Unsupported bench_variant: {bench_variant}")
 

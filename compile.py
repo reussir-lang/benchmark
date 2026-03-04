@@ -99,6 +99,24 @@ def compile_rust(program: str, output: str) -> None:
     _ensure_executable(output, "rust compilation")
 
 
+def compile_haskell(program: str, output: str) -> None:
+    with tempfile.TemporaryDirectory() as tmpdir:
+        _run_quiet(
+            [
+                CONFIG["ghc"],
+                "-O2",
+                "-outputdir",
+                tmpdir,
+                "-o",
+                output,
+                program,
+            ],
+            cwd=tmpdir,
+            step="haskell compilation",
+        )
+    _ensure_executable(output, "haskell compilation")
+
+
 def compile_lean(program: str, output: str) -> None:
     with tempfile.TemporaryDirectory() as tmpdir:
         # copy program to tmpdir
