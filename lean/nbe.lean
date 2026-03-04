@@ -8,18 +8,18 @@ inductive Term
 | letE (id : Nat) (value : Term) (body : Term) : Term
 deriving Inhabited
 
-mutual
-inductive Value
+unsafe inductive Value
 | vVar (id : Nat) : Value
 | vApp (v1 : Value) (v2 : Value) : Value
-| vLam (id : Nat) (body : Term) (env : Env) : Value
-deriving Inhabited
+| vLam (id : Nat) (body : Value → Value) : Value
 
-inductive Env
+unsafe instance : Inhabited Value := ⟨Value.vVar 0⟩
+
+unsafe inductive Env
 | envCons (id : Nat) (value : Value) (env : Env) : Env
 | envNil : Env
-deriving Inhabited
-end
+
+unsafe instance : Inhabited Env := ⟨Env.envNil⟩
 
 inductive Names
 | nameCons (id : Nat) (names : Names) : Names
@@ -31,7 +31,7 @@ def maxOfNames (n : Names) (acc : Nat) : Nat :=
   | Names.nameCons id n1 => maxOfNames n1 (Nat.max acc id)
   | Names.nameNil => acc
 
-def namesOfEnv (env : Env) (acc : Names) : Names :=
+unsafe def namesOfEnv (env : Env) (acc : Names) : Names :=
   match env with
   | Env.envCons id _ env1 => namesOfEnv env1 (Names.nameCons id acc)
   | Env.envNil => acc
@@ -39,34 +39,34 @@ def namesOfEnv (env : Env) (acc : Names) : Names :=
 def fresh (n : Names) : Nat :=
   maxOfNames n 0 + 1
 
-def lookup (env : Env) (id : Nat) : Value :=
+unsafe def lookup (env : Env) (id : Nat) : Value :=
   match env with
   | Env.envCons id1 v env1 => if id == id1 then v else lookup env1 id
   | Env.envNil => Value.vVar id
 
 mutual
-partial def eval (env : Env) (x : Term) : Value :=
+unsafe def eval (env : Env) (x : Term) : Value :=
   match x with
   | Term.var id => lookup env id
   | Term.app t u => vapp (eval env t) (eval env u)
-  | Term.lam x t => Value.vLam x t env
+  | Term.lam x t => Value.vLam x (fun u => eval (Env.envCons x u env) t)
   | Term.letE x t u => eval (Env.envCons x (eval env t) env) u
 
-partial def vapp (v1 : Value) (v2 : Value) : Value :=
+unsafe def vapp (v1 : Value) (v2 : Value) : Value :=
   match v1 with
-  | Value.vLam x body env => eval (Env.envCons x v2 env) body
+  | Value.vLam _ body => body v2
   | _ => Value.vApp v1 v2
 end
 
-partial def quote (n : Names) (v : Value) : Term :=
+unsafe def quote (n : Names) (v : Value) : Term :=
   match v with
   | Value.vVar i => Term.var i
   | Value.vApp v1 v2 => Term.app (quote n v1) (quote n v2)
-  | Value.vLam _ _ _ =>
+  | Value.vLam _ f =>
       let y := fresh n
-      Term.lam y (quote (Names.nameCons y n) (vapp v (Value.vVar y)))
+      Term.lam y (quote (Names.nameCons y n) (f (Value.vVar y)))
 
-def normForm (env : Env) (t : Term) : Term :=
+unsafe def normForm (env : Env) (t : Term) : Term :=
   quote (namesOfEnv env Names.nameNil) (eval env t)
 
 def five : Term :=
@@ -117,7 +117,7 @@ def nfToInt (t : Term) (acc : Nat) : Nat :=
   | Term.app _ x => nfToInt x (acc + 1)
   | _ => acc
 
-def main : IO UInt32 :=
+unsafe def main : IO UInt32 :=
   let t := term40000000
   let n := normForm Env.envNil t
   IO.println (toString (nfToInt n 0)) *>
