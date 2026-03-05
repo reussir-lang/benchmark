@@ -9,5 +9,8 @@
     "ghc": "ghc",
     "hyperfine": "hyperfine",
     "warmup-runs": 5,
-    "runs": 10
+    "runs": 10,
+    "rust-runtime-env": [
+        "LD_PRELOAD=/usr/lib/libmimalloc.so"
+    ]
 }

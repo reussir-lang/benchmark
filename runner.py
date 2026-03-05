@@ -13,6 +13,52 @@ def _unlimit_stack():
     resource.setrlimit(resource.RLIMIT_STACK, (resource.RLIM_INFINITY, resource.RLIM_INFINITY))
 
 
+def _runtime_env(bench_variant):
+    env = os.environ.copy()
+    if bench_variant == "rust-with-mimalloc":
+        for assignment in CONFIG.get("rust-runtime-env", []):
+            key, sep, value = assignment.partition("=")
+            if not sep:
+                raise ValueError(f"Invalid rust-runtime-env entry: {assignment!r}")
+            env[key] = value
+    return env
+
+
+def _measure_peak_rss_kb(executable, env=None):
+    time_binary = "/usr/bin/time"
+    if not os.path.exists(time_binary):
+        return None
+
+    rss_file = tempfile.NamedTemporaryFile(
+        mode="w",
+        suffix=".rss",
+        delete=False,
+    )
+    rss_path = rss_file.name
+    rss_file.close()
+
+    try:
+        subprocess.run(
+            [time_binary, "-f", "%M", "-o", rss_path, executable],
+            check=True,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+            text=True,
+            preexec_fn=_unlimit_stack,
+            env=env,
+        )
+        with open(rss_path, "r", encoding="utf-8") as f:
+            rss_text = f.read().strip()
+        if not rss_text:
+            return None
+        return int(rss_text.splitlines()[0])
+    except (subprocess.SubprocessError, OSError, ValueError, IndexError):
+        return None
+    finally:
+        if os.path.exists(rss_path):
+            os.remove(rss_path)
+
+
 def run_benchmark(bench_name, bench_variant):
     bench = BENCHES.get(bench_name)
     if bench is None:
@@ -33,23 +79,30 @@ def run_benchmark(bench_name, bench_variant):
 
     with tempfile.TemporaryDirectory() as tmpdir:
         executable = os.path.join(tmpdir, f"{bench_name}-{bench_variant}")
+        runtime_env = _runtime_env(bench_variant)
 
-        if bench_variant == "reussir":
+        if bench_variant in {"reussir", "reussir-nrac", "reussir-dia"}:
             if not isinstance(bench_info, tuple) or len(bench_info) != 2:
                 raise ValueError(
                     f"Invalid reussir bench info for {bench_name}: {bench_info!r}"
                 )
             program, driver = bench_info
+            reuse_across_call = bench_variant != "reussir-nrac"
+            extra_flags = (
+                ["--disable-invariant-analysis"] if bench_variant == "reussir-dia" else []
+            )
             compile.compile_reussir(
                 resolve(program),
                 resolve(driver),
                 executable,
+                reuse_across_call=reuse_across_call,
+                extra_compiler_flags=extra_flags,
             )
         elif bench_variant == "koka":
             compile.compile_koka(resolve(bench_info), executable)
         elif bench_variant == "lean":
             compile.compile_lean(resolve(bench_info), executable)
-        elif bench_variant == "rust":
+        elif bench_variant in {"rust", "rust-with-mimalloc"}:
             compile.compile_rust(resolve(bench_info), executable)
         elif bench_variant == "haskell":
             compile.compile_haskell(resolve(bench_info), executable)
@@ -82,6 +135,7 @@ def run_benchmark(bench_name, bench_variant):
                     stderr=subprocess.PIPE,
                     text=True,
                     preexec_fn=_unlimit_stack,
+                    env=runtime_env,
                 )
             except subprocess.CalledProcessError as e:
                 error_details = e.stderr.strip() if e.stderr else "no error output"
@@ -89,7 +143,11 @@ def run_benchmark(bench_name, bench_variant):
                     f"hyperfine failed for {bench_name}/{bench_variant}: {error_details}"
                 ) from e
             with open(json_path, "r", encoding="utf-8") as f:
-                return json.load(f)
+                result = json.load(f)
+            peak_rss_kb = _measure_peak_rss_kb(executable, env=runtime_env)
+            if peak_rss_kb is not None:
+                result["peak_rss_kb"] = peak_rss_kb
+            return result
         finally:
             if os.path.exists(json_path):
                 os.remove(json_path)

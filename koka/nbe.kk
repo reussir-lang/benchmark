@@ -92,6 +92,12 @@ fun term200000() : term
     val z = thousand()
     App(App(y, x), z)
 
+fun term40000000() : term
+    val x = two-hundred()
+    val y = mul()
+    val z = term200000()
+    App(App(y, x), z)
+
 fun nf-to-int(t: term, acc: int) : int
     match t
         Lam(_, x) -> nf-to-int(x, acc)
@@ -99,6 +105,6 @@ fun nf-to-int(t: term, acc: int) : int
         _ -> acc
 
 fun main()
-    val t = term200000()
+    val t = term40000000()
     val n = norm-form(EnvNil, t)
     nf-to-int(n, 0).show.println

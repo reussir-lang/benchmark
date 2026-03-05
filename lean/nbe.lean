@@ -105,6 +105,12 @@ def term200000 : Term :=
   let z := thousand
   Term.app (Term.app y x) z
 
+def term40000000 : Term :=
+  let x := twoHundred
+  let y := mul
+  let z := term200000
+  Term.app (Term.app y x) z
+
 def nfToInt (t : Term) (acc : Nat) : Nat :=
   match t with
   | Term.lam _ x => nfToInt x acc
@@ -112,7 +118,7 @@ def nfToInt (t : Term) (acc : Nat) : Nat :=
   | _ => acc
 
 unsafe def main : IO UInt32 :=
-  let t := term200000
+  let t := term40000000
   let n := normForm Env.envNil t
   IO.println (toString (nfToInt n 0)) *>
   pure 0

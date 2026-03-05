@@ -188,6 +188,13 @@ fn term200000() -> Term {
     Term::App(Rc::new(Term::App(Rc::new(y), Rc::new(x))), Rc::new(z))
 }
 
+fn term40000000() -> Term {
+    let x = two_hundred();
+    let y = mul();
+    let z = term200000();
+    Term::App(Rc::new(Term::App(Rc::new(y), Rc::new(x))), Rc::new(z))
+}
+
 fn nf_to_int(t: &Term, acc: i64) -> i64 {
     match t {
         Term::Lam(_, x) => nf_to_int(x, acc),
@@ -197,15 +204,15 @@ fn nf_to_int(t: &Term, acc: i64) -> i64 {
 }
 
 fn nbe_test() -> i64 {
-    let t = term200000();
+    let t = term40000000();
     let n = norm_form(Rc::new(Env::Nil), &t);
     nf_to_int(&n, 0)
 }
 
 fn main() {
     let n = nbe_test();
-    if n != 200_000 {
-        eprintln!("FAIL: expected 200000, got {}", n);
+    if n != 40000000 {
+        eprintln!("FAIL: expected 40000000, got {}", n);
         std::process::exit(1);
     }
 }

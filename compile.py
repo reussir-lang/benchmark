@@ -32,21 +32,36 @@ def _ensure_executable(path, step):
     os.chmod(path, mode | execute_bits)
 
 
-def compile_reussir(program: str, driver: str, output: str) -> None:
+def compile_reussir(
+    program: str,
+    driver: str,
+    output: str,
+    reuse_across_call: bool = True,
+    extra_compiler_flags=None,
+) -> None:
+    if extra_compiler_flags is None:
+        extra_compiler_flags = []
+    compiler_cmd = [
+        CONFIG["reussir-compiler"],
+        "-o",
+        "reussir.ll",
+        "-Oaggressive",
+    ]
+    if reuse_across_call:
+        compiler_cmd.append("--reuse-across-call")
+    compiler_cmd.extend(extra_compiler_flags)
+    compiler_cmd.extend(
+        [
+            "--relocation-mode",
+            "pic",
+            "-t",
+            "llvm-ir",
+            program,
+        ]
+    )
     with tempfile.TemporaryDirectory() as tmpdir:
         _run_quiet(
-            [
-                CONFIG["reussir-compiler"],
-                "-o",
-                "reussir.ll",
-                "-Oaggressive",
-                "--reuse-across-call",
-                "--relocation-mode",
-                "pic",
-                "-t",
-                "llvm-ir",
-                program,
-            ],
+            compiler_cmd,
             cwd=tmpdir,
             step="reussir compilation",
         )
