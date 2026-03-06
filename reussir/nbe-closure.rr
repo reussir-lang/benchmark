@@ -44,8 +44,8 @@ fn fresh(n: Names) -> i64 {
 
 fn lookup(env: Env, id: i64) -> Value {
     match env {
-        Env::EnvCons(id1, v, env1) =>
-            if id == id1 { v } else { lookup(env1, id) },
+        Env::EnvCons(id1, v, env1) if id == id1 => v,
+        Env::EnvCons(_, _, env1) => lookup(env1, id),
         Env::EnvNil => Value::VVar{id}
     }
 }

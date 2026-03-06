@@ -1,3 +1,6 @@
 __pycache__
 .koka
 out
+*.svg
+perf.data
+perf.data.old
