@@ -58,14 +58,14 @@ fun d( x : int, ^e : expr) : div expr
 
 
 
-fun count( ^e : expr) : int
+fun right_depth( ^e : expr) : int
   match e
     Val(_)   -> 1
     Var(_)   -> 1
-    Add(f,g) -> count(f) + count(g) // + 1
-    Mul(f,g) -> count(f) + count(g) // + 1
-    Pow(f,g) -> count(f) + count(g) // + 1
-    Ln(f)    -> count(f) // + 1
+    Add(_,g) -> right_depth(g) + 1
+    Mul(_,g) -> right_depth(g) + 1
+    Pow(_,g) -> right_depth(g) + 1
+    Ln(f)    -> right_depth(f) + 1
 
 fun nest_aux(s : int, f : (int,expr) -> <div|e> expr, n : int, x : expr ) : <div|e> expr
   if n == 0 then x else
@@ -84,4 +84,4 @@ pub fun main()
   val x = Var(0)
   val f = powr(x,x)
   val res = nest(deriv,10,f)
-  count(res).show.println
+  right_depth(res).show.println

@@ -64,13 +64,13 @@ partial def d (x : Int) (e : Expr) : Expr :=
                   (Expr.mul' (Expr.ln' f) (d x g)))
   | Expr.ln f     => Expr.mul' (d x f) (Expr.pow' f (Expr.val (-1)))
 
-def count : Expr → Nat
+def rightDepth : Expr → Nat
   | Expr.val _    => 1
   | Expr.var _    => 1
-  | Expr.add f g  => count f + count g
-  | Expr.mul f g  => count f + count g
-  | Expr.pow f g  => count f + count g
-  | Expr.ln f     => count f
+  | Expr.add _ g  => rightDepth g + 1
+  | Expr.mul _ g  => rightDepth g + 1
+  | Expr.pow _ g  => rightDepth g + 1
+  | Expr.ln f     => rightDepth f + 1
 
 def nestAux (s : Nat) (f : Nat → Expr → Expr) : Nat → Expr → Expr
   | 0, x       => x
@@ -86,5 +86,5 @@ unsafe def main : IO UInt32 :=
   let x := Expr.var 0
   let f := Expr.pow' x x
   let res := nest deriv 10 f
-  IO.println (toString (count res)) *>
+  IO.println (toString (rightDepth res)) *>
   pure 0

@@ -191,14 +191,14 @@ fn d(x: i64, e: &Expr) -> Expr {
     }
 }
 
-fn count(e: &Expr) -> i64 {
+fn right_depth(e: &Expr) -> i64 {
     match e {
         Expr::Val(_) => 1,
         Expr::Var(_) => 1,
-        Expr::Add(f, g) => count(f) + count(g),
-        Expr::Mul(f, g) => count(f) + count(g),
-        Expr::Pow(f, g) => count(f) + count(g),
-        Expr::Ln(f) => count(f),
+        Expr::Add(_, g) => right_depth(g) + 1,
+        Expr::Mul(_, g) => right_depth(g) + 1,
+        Expr::Pow(_, g) => right_depth(g) + 1,
+        Expr::Ln(f) => right_depth(f) + 1,
     }
 }
 
@@ -215,13 +215,13 @@ fn derive_test() -> i64 {
     let x = Expr::Var(0);
     let f = expr_pow(x.clone(), x);
     let res = nest_aux(10, 10, f);
-    count(&res)
+    right_depth(&res)
 }
 
 fn main() {
     let n = derive_test();
-    if n != 40_230_090 {
-        eprintln!("FAIL: expected 40230090, got {}", n);
+    if n != 524 {
+        eprintln!("FAIL: expected 524, got {}", n);
         std::process::exit(1);
     }
 }

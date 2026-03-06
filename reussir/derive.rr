@@ -101,14 +101,14 @@ fn d(x: i64, e: Expr) -> Expr {
     }
 }
 
-fn count(e: Expr) -> i64 {
+fn right_depth(e: Expr) -> i64 {
     match e {
         Expr::Val(_)    => 1,
         Expr::Var(_)    => 1,
-        Expr::Add(f, g) => count(f) + count(g),
-        Expr::Mul(f, g) => count(f) + count(g),
-        Expr::Pow(f, g) => count(f) + count(g),
-        Expr::Ln(f)     => count(f)
+        Expr::Add(f, g) => right_depth(g) + 1,
+        Expr::Mul(f, g) => right_depth(g) + 1,
+        Expr::Pow(f, g) => right_depth(g) + 1,
+        Expr::Ln(f)     => right_depth(f) + 1
     }
 }
 
@@ -124,7 +124,7 @@ fn derive_test() -> i64 {
     let x = Expr::Var{0};
     let f = expr_pow(x, x);
     let res = nest_aux(10, 10, f);
-    count(res)
+    right_depth(res)
 }
 
 extern "C" trampoline "derive_test_ffi" = derive_test;

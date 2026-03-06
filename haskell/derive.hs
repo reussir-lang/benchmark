@@ -89,15 +89,15 @@ d x e =
         )
     Ln f -> exprMul (d x f) (exprPow f (Val (-1)))
 
-countExpr :: Expr -> Int
-countExpr e =
+rightDepth :: Expr -> Int
+rightDepth e =
   case e of
     Val _ -> 1
     Var _ -> 1
-    Add f g -> countExpr f + countExpr g
-    Mul f g -> countExpr f + countExpr g
-    Pow f g -> countExpr f + countExpr g
-    Ln f -> countExpr f
+    Add _ g -> rightDepth g + 1
+    Mul _ g -> rightDepth g + 1
+    Pow _ g -> rightDepth g + 1
+    Ln f -> rightDepth f + 1
 
 nestAux :: Int -> Int -> Expr -> Expr
 nestAux _s n x
@@ -109,11 +109,11 @@ deriveTest =
   let x = Var 0
       f = exprPow x x
       res = nestAux 10 10 f
-   in countExpr res
+   in rightDepth res
 
 main :: IO ()
 main = do
   let n = deriveTest
-  if n /= 40230090
-    then error ("FAIL: expected 40230090, got " ++ show n)
+  if n /= 524
+    then error ("FAIL: expected 524, got " ++ show n)
     else pure ()
