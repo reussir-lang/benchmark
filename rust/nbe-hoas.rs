@@ -162,6 +162,12 @@ fn ten() -> Term {
     Term::App(Rc::new(Term::App(Rc::new(y), Rc::new(x.clone()))), Rc::new(x))
 }
 
+fn twenty() -> Term {
+    let x = ten();
+    let y = add();
+    Term::App(Rc::new(Term::App(Rc::new(y), Rc::new(x.clone()))), Rc::new(x))
+}
+
 fn hundred() -> Term {
     let x = ten();
     let y = mul();
@@ -188,8 +194,8 @@ fn term200000() -> Term {
     Term::App(Rc::new(Term::App(Rc::new(y), Rc::new(x))), Rc::new(z))
 }
 
-fn term40000000() -> Term {
-    let x = two_hundred();
+fn term4000000() -> Term {
+    let x = twenty();
     let y = mul();
     let z = term200000();
     Term::App(Rc::new(Term::App(Rc::new(y), Rc::new(x))), Rc::new(z))
@@ -204,15 +210,15 @@ fn nf_to_int(t: &Term, acc: i64) -> i64 {
 }
 
 fn nbe_test() -> i64 {
-    let t = term40000000();
+    let t = term4000000();
     let n = norm_form(Rc::new(Env::Nil), &t);
     nf_to_int(&n, 0)
 }
 
 fn main() {
     let n = nbe_test();
-    if n != 40000000 {
-        eprintln!("FAIL: expected 40000000, got {}", n);
+    if n != 4000000 {
+        eprintln!("FAIL: expected 4000000, got {}", n);
         std::process::exit(1);
     }
 }

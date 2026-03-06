@@ -8,8 +8,6 @@ import Init.Data.Option.Basic
 import Init.Data.List.BasicAux
 import Init.System.IO
 
-universe u v w w'
-
 inductive color
 | Red | Black
 
@@ -17,12 +15,14 @@ inductive Tree
 | Leaf                                                                           : Tree
 | Node  (color : color) (lchild : Tree) (key : Nat) (val : Bool) (rchild : Tree) : Tree
 
-variable {σ : Type w}
 open color Nat Tree
 
-def fold (f : Nat → Bool → σ → σ) : Tree → σ → σ
+def foldAction (_ : Nat) (v : Bool) (acc : Nat) : Nat :=
+  if v then acc + 1 else acc
+
+def fold : Tree → Nat → Nat
 | Leaf, b               => b
-| Node _ l k v r,     b => fold f r (f k v (fold f l b))
+| Node _ l k v r, b     => fold r (foldAction k v (fold l b))
 
 @[inline]
 def balance1 : Nat → Bool → Tree → Tree → Tree
@@ -73,6 +73,6 @@ mkMapAux n Leaf
 
 def main : IO UInt32 :=
 let m := mkMap 4200000;
-let v := fold (fun (_ : Nat) (v : Bool) (r : Nat) => if v then r + 1 else r) m 0;
+let v := fold m 0;
 IO.println (toString v) *>
 pure 0

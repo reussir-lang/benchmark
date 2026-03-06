@@ -65,9 +65,12 @@ def ins : Tree → Nat → Bool → Zipper -> (Nat -> Nat -> CmpResult) → Tree
 def insert (t : Tree) (k : Nat) (v : Bool) : Tree :=
   ins t k v Done (fun a b => if a < b then CmpResult.LT else if a > b then CmpResult.GT else CmpResult.EQ)
 
-def fold (f : Nat → Bool → σ → σ) : Tree → σ → σ
+def foldAction (_ : Nat) (v : Bool) (acc : Nat) : Nat :=
+  if v then acc + 1 else acc
+
+def fold : Tree → Nat → Nat
 | Leaf, b             => b
-| Node _ l k v r, b   => fold f r (f k v (fold f l b))
+| Node _ l k v r, b   => fold r (foldAction k v (fold l b))
 
 def makeTreeAux : Nat → Tree → Tree
 | 0, t   => t
@@ -80,6 +83,6 @@ def makeTree (n : Nat) : Tree :=
 
 def main : IO UInt32 :=
   let t := makeTree 4200000
-  let v := fold (fun (_ : Nat) (b : Bool) (acc : Nat) => if b then acc + 1 else acc) t 0
+  let v := fold t 0
   IO.println (toString v) *>
   pure 0

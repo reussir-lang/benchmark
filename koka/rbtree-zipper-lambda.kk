@@ -45,9 +45,13 @@ fun insert(t : tree, k : int, v : bool) : tree
   ins(t, k, v, Done, fn (a:int, b:int) -> b - a)
 
 
-fun fold(t : tree, b : a, f: (int, bool, a) -> a) : a
+fun fold-action(_k : int, v : bool, acc : int) : int
+  if v then acc.inc else acc
+
+
+fun fold(t : tree, b : int) : int
   match t
-    Node(_, l, k, v, r) -> r.fold( f(k, v, l.fold(b, f)), f)
+    Node(_, l, k, v, r) -> r.fold(fold-action(k, v, l.fold(b)))
     Leaf                -> b
 
 fun make-tree(n : int, t : tree) : div tree
@@ -58,5 +62,5 @@ fun make-tree(n : int, t : tree) : div tree
 pub fun main()
   val n = get-args().head("").parse-int.default(4200000)
   val t = make-tree(n, Leaf)
-  val v = t.fold(0) fn(k,v,r:int){ if v then r.inc else r }
+  val v = t.fold(0)
   v.show.println

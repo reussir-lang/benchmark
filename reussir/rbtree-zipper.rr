@@ -114,9 +114,13 @@ fn insert(t: Tree, k: i64, v: bool) -> Tree {
     ins(t, k, v, Zipper::Done)
 }
 
-fn fold<A>(t: Tree, b: A, f: (i64, bool, A) -> A) -> A {
+fn fold_action(k : i64, v : bool, acc : i64) -> i64 {
+    if v { acc + 1 } else { acc }
+}
+
+fn fold(t: Tree, b: i64) -> i64 {
     match t {
-        Tree::Branch(_, l, k, v, r) => fold(r, f(k, v, fold(l, b, f)), f),
+        Tree::Branch(_, l, k, v, r) => fold(r, fold_action(k, v, fold(l, b))),
         Tree::Leaf => b
     }
 }
@@ -131,7 +135,7 @@ fn make_tree(n : i64, t : Tree) -> Tree {
 }
 
 fn fold_test(n: i64) -> i64 {
-    fold(make_tree(n, Tree::Leaf), 0, |k, v, acc : i64| if v { acc + 1 } else { acc })
+    fold(make_tree(n, Tree::Leaf), 0)
 }
 
 extern "C" trampoline "fold_test_ffi" = fold_test;

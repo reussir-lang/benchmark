@@ -74,6 +74,7 @@ def compile_reussir(
                 driver,
                 "-flto",
                 "-O3",
+                "-march=native",
                 "-L",
                 CONFIG["reussir-libs"],
                 "-lreussir_rt",

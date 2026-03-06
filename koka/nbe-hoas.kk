@@ -70,6 +70,11 @@ fun ten() : term
     val y = add()
     App(App(y, x), x)
 
+fun twenty() : term
+    val x = ten()
+    val y = add()
+    App(App(y, x), x)
+
 fun hundred() : term
     val x = ten()
     val y = mul()
@@ -92,8 +97,8 @@ fun term200000() : term
     val z = thousand()
     App(App(y, x), z)
 
-fun term40000000() : term
-    val x = two-hundred()
+fun term4000000() : term
+    val x = twenty()
     val y = mul()
     val z = term200000()
     App(App(y, x), z)
@@ -105,6 +110,6 @@ fun nf-to-int(t: term, acc: int) : int
         _ -> acc
 
 fun main()
-    val t = term40000000()
+    val t = term4000000()
     val n = norm-form(EnvNil, t)
     nf-to-int(n, 0).show.println

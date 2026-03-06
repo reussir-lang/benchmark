@@ -11,7 +11,7 @@ data Term
 data Value
   = VVar !Int
   | VApp !Value !Value
-  | VLam !Int (Value -> Value)
+  | VLam !Int !Term !Env
 
 data Env
   = Cons !Int !Value !Env
@@ -50,8 +50,7 @@ eval env term =
   case term of
     Var ident -> lookupEnv env ident
     App t u -> vapp (eval env t) (eval env u)
-    Lam xId t ->
-      VLam xId (\u -> eval (Cons xId u env) t)
+    Lam xId t -> VLam xId t env
     Let xId t u ->
       let v = eval env t
        in eval (Cons xId v env) u
@@ -59,7 +58,7 @@ eval env term =
 vapp :: Value -> Value -> Value
 vapp v1 v2 =
   case v1 of
-    VLam _ body -> body v2
+    VLam xId body env -> eval (Cons xId v2 env) body
     _ -> VApp v1 v2
 
 quoteValue :: Names -> Value -> Term
@@ -67,10 +66,10 @@ quoteValue n v =
   case v of
     VVar ident -> Var ident
     VApp v1 v2 -> App (quoteValue n v1) (quoteValue n v2)
-    VLam _ f ->
+    VLam xId body env ->
       let y = fresh n
           n2 = NameCons y n
-       in Lam y (quoteValue n2 (f (VVar y)))
+       in Lam y (quoteValue n2 (eval (Cons xId (VVar y) env) body))
 
 normForm :: Env -> Term -> Term
 normForm env t =
@@ -135,6 +134,9 @@ mul =
 ten :: Term
 ten = App (App add five) five
 
+twenty :: Term
+twenty = App (App add ten) ten
+
 hundred :: Term
 hundred = App (App mul ten) ten
 
@@ -147,8 +149,8 @@ thousand = App (App mul hundred) ten
 term200000 :: Term
 term200000 = App (App mul twoHundred) thousand
 
-term40000000 :: Term
-term40000000 = App (App mul twoHundred) term200000
+term4000000 :: Term
+term4000000 = App (App mul twenty) term200000
 
 nfToInt :: Term -> Int -> Int
 nfToInt t !acc =
@@ -159,12 +161,12 @@ nfToInt t !acc =
 
 nbeTest :: Int
 nbeTest =
-  let n = normForm Nil term40000000
+  let n = normForm Nil term4000000
    in nfToInt n 0
 
 main :: IO ()
 main = do
   let n = nbeTest
-  if n /= 40000000
-    then error ("FAIL: expected 40000000, got " ++ show n)
+  if n /= 4000000
+    then error ("FAIL: expected 4000000, got " ++ show n)
     else pure ()
