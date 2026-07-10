@@ -72,7 +72,8 @@ def compile_reussir(
                 output,
                 "reussir.ll",
                 driver,
-                "-flto",
+                "-flto=thin",
+                "-fuse-ld=lld",
                 "-O3",
                 "-march=native",
                 CONFIG["reussir-libs"] + "/libreussir_rt.a",
@@ -88,6 +89,7 @@ def compile_koka(program: str, output: str) -> None:
             [
                 CONFIG["koka-compiler"],
                 "-O3",
+                "--ccopts=-march=native",
                 program,
                 "-o",
                 output,
