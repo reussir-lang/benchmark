@@ -1,7 +1,7 @@
 {
-    "reussir-compiler": "/home/schrodingerzy/Documents/reussir/build/bin/reussir-compiler",
-    "cc": "clang-21",
-    "reussir-libs": "/home/schrodingerzy/Documents/reussir/build/lib",
+    "reussir-compiler": "/home/schrodingerzy/Documents/reussir/build/bin/rrc",
+    "cc": "clang-22",
+    "reussir-libs": "/home/schrodingerzy/rt-lto/aarch64-unknown-linux-gnu/release",
     "koka-compiler": "/usr/local/bin/koka",
     "lean-compiler": "/home/schrodingerzy/.elan/bin/lean",
     "leanc": "/home/schrodingerzy/.elan/bin/leanc",

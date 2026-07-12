@@ -1,0 +1,115 @@
+// Binary heap maintenance under a Gaussian workload: a min-heap of 65535
+// i64 values (the largest complete tree of depth 16), built by push/sift-up
+// from an approximately Gaussian stream (Irwin-Hall: each draw is the sum of
+// 12 consecutive MINSTD outputs), then M rounds of unconditional replace-top
+// (evict the minimum, insert a fresh draw, sift down). The checksum is the
+// running sum of evicted minima plus the final heap contents, mod 1e9+7 —
+// arrangement-independent, so tree-based implementations in languages
+// without arrays produce the same value.
+//
+// The array is threaded linearly through the recursion (uniqueness keeps
+// every set in place); build's base case continues into maintain directly,
+// so no function ever needs to return an (array, lcg-state) pair.
+
+fn lcg(x : i64) -> i64 {
+    (x * 48271) % 2147483647
+}
+
+fn sift_up(a : [i64; 65535], i : i64) -> [i64; 65535] {
+    if i == 0 {
+        a
+    } else {
+        let p = (i - 1) / 2;
+        let vi = core::intrinsic::array::get(a, i);
+        let vp = core::intrinsic::array::get(a, p);
+        if vi < vp {
+            sift_up(core::intrinsic::array::set(core::intrinsic::array::set(a, i, vp), p, vi), p)
+        } else {
+            a
+        }
+    }
+}
+
+fn sift_down(a : [i64; 65535], i : i64) -> [i64; 65535] {
+    let l = 2 * i + 1;
+    if l >= 65535 {
+        a
+    } else {
+        let r = l + 1;
+        let vl = core::intrinsic::array::get(a, l);
+        let c = if r < 65535 {
+            if core::intrinsic::array::get(a, r) < vl { r } else { l }
+        } else {
+            l
+        };
+        let vc = core::intrinsic::array::get(a, c);
+        let vi = core::intrinsic::array::get(a, i);
+        if vc < vi {
+            sift_down(core::intrinsic::array::set(core::intrinsic::array::set(a, i, vc), c, vi), c)
+        } else {
+            a
+        }
+    }
+}
+
+fn heap_sum(a : [i64; 65535], k : i64, acc : i64) -> i64 {
+    if k == 65535 {
+        acc
+    } else {
+        heap_sum(a, k + 1, (acc + core::intrinsic::array::get(a, k)) % 1000000007)
+    }
+}
+
+fn maintain(a : [i64; 65535], x : i64, m : i64, acc : i64) -> i64 {
+    if m == 0 {
+        (acc + heap_sum(a, 0, 0)) % 1000000007
+    } else {
+        let x1 = lcg(x);
+        let x2 = lcg(x1);
+        let x3 = lcg(x2);
+        let x4 = lcg(x3);
+        let x5 = lcg(x4);
+        let x6 = lcg(x5);
+        let x7 = lcg(x6);
+        let x8 = lcg(x7);
+        let x9 = lcg(x8);
+        let x10 = lcg(x9);
+        let x11 = lcg(x10);
+        let x12 = lcg(x11);
+        let g = x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8 + x9 + x10 + x11 + x12;
+        let top = core::intrinsic::array::get(a, 0);
+        maintain(
+            sift_down(core::intrinsic::array::set(a, 0, top + g), 0),
+            x12,
+            m - 1,
+            (acc + top) % 1000000007
+        )
+    }
+}
+
+fn build(a : [i64; 65535], k : i64, x : i64, m : i64) -> i64 {
+    if k == 65535 {
+        maintain(a, x, m, 0)
+    } else {
+        let x1 = lcg(x);
+        let x2 = lcg(x1);
+        let x3 = lcg(x2);
+        let x4 = lcg(x3);
+        let x5 = lcg(x4);
+        let x6 = lcg(x5);
+        let x7 = lcg(x6);
+        let x8 = lcg(x7);
+        let x9 = lcg(x8);
+        let x10 = lcg(x9);
+        let x11 = lcg(x10);
+        let x12 = lcg(x11);
+        let g = x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8 + x9 + x10 + x11 + x12;
+        build(sift_up(core::intrinsic::array::set(a, k, g), k), k + 1, x12, m)
+    }
+}
+
+fn heap_test(m : i64) -> i64 {
+    build(core::intrinsic::array::splat<[i64; 65535]>(0), 0, 20260711, m)
+}
+
+extern "C" trampoline "heap_test_ffi" = heap_test;

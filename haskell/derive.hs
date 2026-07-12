@@ -104,16 +104,16 @@ nestAux _s n x
   | n == 0 = x
   | otherwise = nestAux _s (n - 1) (d 0 x)
 
-deriveTest :: Int
-deriveTest =
+deriveTest :: Int -> Int
+deriveTest i =
   let x = Var 0
       f = exprPow x x
       res = nestAux 10 10 f
-   in rightDepth res
+   in rightDepth res + i
 
 main :: IO ()
 main = do
-  let n = deriveTest
-  if n /= 524
-    then error ("FAIL: expected 524, got " ++ show n)
+  let n = sum (map deriveTest [0 .. 2])
+  if n /= 1575
+    then error ("FAIL: expected 1575, got " ++ show n)
     else pure ()

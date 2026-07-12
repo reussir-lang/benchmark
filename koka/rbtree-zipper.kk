@@ -61,7 +61,9 @@ fun make-tree(n : int32, t : tree) : div tree
     make-tree(m, insert(t, m, m % 10.int32 == zero))
 
 pub fun main()
-  val n = get-args().head("").parse-int.default(4200000).int32
+  val n = get-args().head("").parse-int.default(10000000).int32
   val t = make-tree(n, Leaf)
   val v = t.fold(zero)
-  v.show.println
+  if v != 1000000.int32 then
+    println("FAIL: expected 1000000, got " ++ v.show)
+    throw("wrong result")

@@ -71,8 +71,10 @@ def mkMapAux : Nat → Tree → Tree
 def mkMap (n : Nat) :=
 mkMapAux n Leaf
 
-def main : IO UInt32 :=
-let m := mkMap 4200000;
-let v := fold m 0;
-IO.println (toString v) *>
-pure 0
+def main : IO UInt32 := do
+  let m := mkMap 10000000
+  let v := fold m 0
+  if v != 1000000 then
+    IO.eprintln s!"FAIL: expected 1000000, got {v}"
+    return 1
+  return 0

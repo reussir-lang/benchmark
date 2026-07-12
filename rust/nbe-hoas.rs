@@ -209,16 +209,16 @@ fn nf_to_int(t: &Term, acc: i64) -> i64 {
     }
 }
 
-fn nbe_test() -> i64 {
+fn nbe_test(i: i64) -> i64 {
     let t = term4000000();
     let n = norm_form(Rc::new(Env::Nil), &t);
-    nf_to_int(&n, 0)
+    nf_to_int(&n, i)
 }
 
 fn main() {
-    let n = nbe_test();
-    if n != 4000000 {
-        eprintln!("FAIL: expected 4000000, got {}", n);
+    let n: i64 = (0..6).map(nbe_test).sum();
+    if n != 24000015 {
+        eprintln!("FAIL: expected 24000015, got {}", n);
         std::process::exit(1);
     }
 }

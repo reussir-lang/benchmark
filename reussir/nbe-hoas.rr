@@ -194,10 +194,20 @@ fn nf_to_int(t: Term, acc: i64) -> i64 {
     }
 }
 
-fn nbe_hoas_test() -> i64 {
+// Each iteration seeds the count differently so no compiler can share the
+// normalization across rounds; expected total = 6*4000000 + (0+1+..+5).
+fn nbe_hoas_test(i : i64) -> i64 {
     let t = term4000000();
     let n = norm_form(Env::EnvNil, t);
-    nf_to_int(n, 0)
+    nf_to_int(n, i)
 }
 
-extern "C" trampoline "nbe_hoas_test_ffi" = nbe_hoas_test;
+fn nbe_hoas_repeat(r : i64, acc : i64) -> i64 {
+    if r == 0 { acc } else { nbe_hoas_repeat(r - 1, acc + nbe_hoas_test(r - 1)) }
+}
+
+fn nbe_hoas_bench() -> i64 {
+    nbe_hoas_repeat(6, 0)
+}
+
+extern "C" trampoline "nbe_hoas_test_ffi" = nbe_hoas_bench;

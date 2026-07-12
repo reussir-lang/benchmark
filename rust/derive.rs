@@ -211,17 +211,17 @@ fn nest_aux(_s: i64, n: i64, x: Expr) -> Expr {
     }
 }
 
-fn derive_test() -> i64 {
+fn derive_test(i: i64) -> i64 {
     let x = Expr::Var(0);
     let f = expr_pow(x.clone(), x);
     let res = nest_aux(10, 10, f);
-    right_depth(&res)
+    right_depth(&res) + i
 }
 
 fn main() {
-    let n = derive_test();
-    if n != 524 {
-        eprintln!("FAIL: expected 524, got {}", n);
+    let n: i64 = (0..3).map(derive_test).sum();
+    if n != 1575 {
+        eprintln!("FAIL: expected 1575, got {}", n);
         std::process::exit(1);
     }
 }

@@ -124,8 +124,18 @@ def nfToInt (t : Term) (acc : Nat) : Nat :=
   | Term.app _ x => nfToInt x (acc + 1)
   | _ => acc
 
-unsafe def main : IO UInt32 :=
+unsafe def nbeTest (i : Nat) : Nat :=
   let t := term4000000
   let n := normForm Env.envNil t
-  IO.println (toString (nfToInt n 0)) *>
-  pure 0
+  nfToInt n i
+
+unsafe def repeatTest : Nat → Nat → Nat
+  | 0, acc => acc
+  | r+1, acc => repeatTest r (acc + nbeTest r)
+
+unsafe def main : IO UInt32 := do
+  let n := repeatTest 7 0
+  if n != 28000021 then
+    IO.eprintln s!"FAIL: expected 28000021, got {n}"
+    return 1
+  return 0

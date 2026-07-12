@@ -82,9 +82,19 @@ def nest (f : Nat → Expr → Expr) (n : Nat) (e : Expr) : Expr :=
 def deriv (_ : Nat) (f : Expr) : Expr :=
   d 0 f
 
-unsafe def main : IO UInt32 :=
+unsafe def deriveTest (i : Nat) : Nat :=
   let x := Expr.var 0
   let f := Expr.pow' x x
   let res := nest deriv 10 f
-  IO.println (toString (rightDepth res)) *>
-  pure 0
+  rightDepth res + i
+
+unsafe def repeatTest : Nat → Nat → Nat
+  | 0, acc => acc
+  | r+1, acc => repeatTest r (acc + deriveTest r)
+
+unsafe def main : IO UInt32 := do
+  let n := repeatTest 3 0
+  if n != 1575 then
+    IO.eprintln s!"FAIL: expected 1575, got {n}"
+    return 1
+  return 0

@@ -160,14 +160,14 @@ nfToInt t !acc =
     App _ x -> nfToInt x (acc + 1)
     _ -> acc
 
-nbeTest :: Int
-nbeTest =
+nbeTest :: Int -> Int
+nbeTest i =
   let n = normForm Nil term4000000
-   in nfToInt n 0
+   in nfToInt n i
 
 main :: IO ()
 main = do
-  let n = nbeTest
-  if n /= 4000000
-    then error ("FAIL: expected 4000000, got " ++ show n)
+  let n = sum (map nbeTest [0 .. 5])
+  if n /= 24000015
+    then error ("FAIL: expected 24000015, got " ++ show n)
     else pure ()

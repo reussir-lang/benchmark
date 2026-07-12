@@ -77,8 +77,10 @@ def makeTreeAux : Nat → Tree → Tree
 def makeTree (n : Nat) : Tree :=
   makeTreeAux n Leaf
 
-def main : IO UInt32 :=
-  let t := makeTree 4200000
+def main : IO UInt32 := do
+  let t := makeTree 10000000
   let v := fold t 0
-  IO.println (toString v) *>
-  pure 0
+  if v != 1000000 then
+    IO.eprintln s!"FAIL: expected 1000000, got {v}"
+    return 1
+  return 0

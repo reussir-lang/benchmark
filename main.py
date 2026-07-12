@@ -3,14 +3,14 @@ import json
 import os
 import sys
 
-from benches import BENCHES
+from benches import BENCHES, SETS
 from runner import run_benchmark
 from tqdm import tqdm
 
 
 def parse_args():
     all_variants = sorted(
-        {variant for bench in BENCHES.values() for variant in bench.keys()}
+        {variant for bench in BENCHES.values() for variant in bench["sources"]}
     )
 
     parser = argparse.ArgumentParser(description="Compile and run benchmark(s).")
@@ -18,6 +18,12 @@ def parse_args():
         "--bench",
         choices=sorted(BENCHES.keys()),
         help="Benchmark name. If omitted, run all benchmarks.",
+    )
+    parser.add_argument(
+        "--set",
+        dest="bench_set",
+        choices=sorted(SETS.keys()),
+        help="Benchmark set. If omitted, run all sets.",
     )
     parser.add_argument(
         "--variant",
@@ -42,18 +48,22 @@ def parse_args():
     return parser, parser.parse_args()
 
 
-def resolve_targets(selected_bench, selected_variant, parser):
+def resolve_targets(selected_bench, selected_variant, selected_set, parser):
     benches = [selected_bench] if selected_bench else sorted(BENCHES.keys())
+    if selected_set:
+        benches = [b for b in benches if BENCHES[b]["set"] == selected_set]
+        if not benches:
+            parser.error(f"No benchmarks selected in set '{selected_set}'.")
     targets = []
     for bench_name in benches:
-        bench_variants = BENCHES[bench_name]
+        bench_sources = BENCHES[bench_name]["sources"]
         variants = (
             [selected_variant]
             if selected_variant
-            else sorted(bench_variants.keys())
+            else sorted(bench_sources.keys())
         )
         for variant in variants:
-            if variant not in bench_variants:
+            if variant not in bench_sources:
                 parser.error(
                     f"Variant '{variant}' is not available for bench '{bench_name}'."
                 )
@@ -207,7 +217,7 @@ def _plot_grouped_bars(
         return False
 
     ax.set_title(title, fontsize=13, pad=10)
-    ax.set_xlabel("Benchmark category")
+    ax.set_xlabel("Benchmark")
     ax.set_ylabel(ylabel)
     ax.set_xticks(x)
     ax.set_xticklabels(benches, rotation=20, ha="right")
@@ -223,7 +233,7 @@ def _plot_grouped_bars(
             linewidth=1.0,
             alpha=0.75,
         )
-    ax.legend(title="Language", ncols=min(4, len(variants)), frameon=True)
+    ax.legend(title="Variant", ncols=min(4, len(variants)), frameon=True)
     fig.tight_layout()
     fig.savefig(output_path, dpi=180)
     plt.close(fig)
@@ -231,83 +241,41 @@ def _plot_grouped_bars(
 
 
 def plot_results(results, plot_dir):
-    rust_timings = {}
-    rows = []
+    """Summarize the results as one SVG per benchmark set.
+
+    Each plot is a grouped bar chart of mean runtime (log scale) with one
+    bar group per benchmark and one bar per language variant.
+    """
+    rows_by_set = {}
     for bench, bench_results in sorted(results.items()):
         if not isinstance(bench_results, dict):
             continue
-        rust_payload = bench_results.get("rust")
-        rust_timings[bench] = _extract_timing_seconds(rust_payload)
+        bench_meta = BENCHES.get(bench)
+        bench_set = bench_meta["set"] if bench_meta else "unknown"
         for variant, payload in sorted(bench_results.items()):
             timing_seconds = _extract_timing_seconds(payload)
-            peak_rss_kb = _extract_peak_rss_kb(payload)
-            rust_timing_seconds = rust_timings[bench]
-            speedup_over_rust = None
-            if (
-                rust_timing_seconds is not None
-                and rust_timing_seconds > 0
-                and timing_seconds is not None
-                and timing_seconds > 0
-            ):
-                speedup_over_rust = rust_timing_seconds / timing_seconds
-            rows.append(
+            rows_by_set.setdefault(bench_set, []).append(
                 {
                     "bench": bench,
                     "variant": variant,
                     "timing_seconds": timing_seconds,
-                    "peak_rss_mib": (
-                        peak_rss_kb / 1024.0 if peak_rss_kb is not None else None
-                    ),
-                    "speedup_over_rust": speedup_over_rust,
                 }
             )
 
     os.makedirs(plot_dir, exist_ok=True)
-    timing_path = os.path.join(plot_dir, "timing.png")
-    peak_rss_path = os.path.join(plot_dir, "peak_rss.png")
-    speedup_path = os.path.join(plot_dir, "speedup_over_rust.png")
-    speedup_log_path = os.path.join(plot_dir, "speedup_over_rust_log.png")
-
     created = []
-    if _plot_grouped_bars(
-        rows,
-        "timing_seconds",
-        "Mean runtime (s)",
-        "Benchmark Runtime by Category and Language",
-        timing_path,
-    ):
-        created.append(timing_path)
-
-    if _plot_grouped_bars(
-        rows,
-        "peak_rss_mib",
-        "Peak RSS (MiB)",
-        "Benchmark Peak RSS by Category and Language",
-        peak_rss_path,
-    ):
-        created.append(peak_rss_path)
-
-    if _plot_grouped_bars(
-        rows,
-        "speedup_over_rust",
-        "Speedup vs Rust (Rust = 1.0, higher is faster)",
-        "Benchmark Speedup Relative to Rust",
-        speedup_path,
-        reference_line=1.0,
-    ):
-        created.append(speedup_path)
-
-    if _plot_grouped_bars(
-        rows,
-        "speedup_over_rust",
-        "Speedup vs Rust (log scale, Rust = 1.0)",
-        "Benchmark Speedup Relative to Rust (Log Scale)",
-        speedup_log_path,
-        reference_line=1.0,
-        yscale="log",
-    ):
-        created.append(speedup_log_path)
-
+    for bench_set, rows in sorted(rows_by_set.items()):
+        title = SETS.get(bench_set, bench_set)
+        output_path = os.path.join(plot_dir, f"{bench_set}.svg")
+        if _plot_grouped_bars(
+            rows,
+            "timing_seconds",
+            "Mean runtime (s, log scale)",
+            f"{title} — mean runtime by benchmark and variant",
+            output_path,
+            yscale="log",
+        ):
+            created.append(output_path)
     return created
 
 
@@ -319,7 +287,7 @@ def main():
             _read_json(args.input_json), args.bench, args.variant, parser
         )
     else:
-        targets = resolve_targets(args.bench, args.variant, parser)
+        targets = resolve_targets(args.bench, args.variant, args.bench_set, parser)
         results = {}
         progress = tqdm(targets, desc="Benchmarking", unit="target")
         for bench_name, variant in progress:

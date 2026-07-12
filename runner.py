@@ -6,7 +6,7 @@ import tempfile
 import compile
 
 from config import CONFIG
-from benches import BENCHES
+from benches import BENCHES, VARIANTS
 
 
 def _unlimit_stack():
@@ -15,11 +15,12 @@ def _unlimit_stack():
 
 def _runtime_env(bench_variant):
     env = os.environ.copy()
-    if bench_variant == "rust-with-mimalloc":
-        for assignment in CONFIG.get("rust-runtime-env", []):
+    env_key = VARIANTS.get(bench_variant, {}).get("runtime_env_key")
+    if env_key:
+        for assignment in CONFIG.get(env_key, []):
             key, sep, value = assignment.partition("=")
             if not sep:
-                raise ValueError(f"Invalid rust-runtime-env entry: {assignment!r}")
+                raise ValueError(f"Invalid {env_key} entry: {assignment!r}")
             env[key] = value
     return env
 
@@ -64,11 +65,14 @@ def run_benchmark(bench_name, bench_variant):
     if bench is None:
         raise ValueError(f"Unknown bench_name: {bench_name}")
 
-    bench_info = bench.get(bench_variant)
+    bench_info = bench.get("sources", {}).get(bench_variant)
     if bench_info is None:
         raise ValueError(
             f"Unknown bench_variant for {bench_name}: {bench_variant}"
         )
+    spec = VARIANTS.get(bench_variant)
+    if spec is None:
+        raise ValueError(f"Variant {bench_variant} is not registered in VARIANTS")
 
     script_dir = os.path.dirname(os.path.abspath(__file__))
 
@@ -81,33 +85,32 @@ def run_benchmark(bench_name, bench_variant):
         executable = os.path.join(tmpdir, f"{bench_name}-{bench_variant}")
         runtime_env = _runtime_env(bench_variant)
 
-        if bench_variant in {"reussir", "reussir-nrac", "reussir-dia"}:
+        kind = spec["kind"]
+        if kind == "reussir":
             if not isinstance(bench_info, tuple) or len(bench_info) != 2:
                 raise ValueError(
                     f"Invalid reussir bench info for {bench_name}: {bench_info!r}"
                 )
             program, driver = bench_info
-            reuse_across_call = bench_variant != "reussir-nrac"
-            extra_flags = (
-                ["--disable-invariant-analysis"] if bench_variant == "reussir-dia" else []
-            )
             compile.compile_reussir(
                 resolve(program),
                 resolve(driver),
                 executable,
-                reuse_across_call=reuse_across_call,
-                extra_compiler_flags=extra_flags,
+                reuse_across_call=spec.get("reuse_across_call", True),
+                extra_compiler_flags=list(spec.get("extra_flags", [])),
             )
-        elif bench_variant == "koka":
+        elif kind == "koka":
             compile.compile_koka(resolve(bench_info), executable)
-        elif bench_variant == "lean":
+        elif kind == "lean":
             compile.compile_lean(resolve(bench_info), executable)
-        elif bench_variant in {"rust", "rust-with-mimalloc"}:
+        elif kind == "rust":
             compile.compile_rust(resolve(bench_info), executable)
-        elif bench_variant == "haskell":
-            compile.compile_haskell(resolve(bench_info), executable)
+        elif kind == "haskell":
+            compile.compile_haskell(
+                resolve(bench_info), executable, rts_opts=spec.get("rts_opts")
+            )
         else:
-            raise ValueError(f"Unsupported bench_variant: {bench_variant}")
+            raise ValueError(f"Unsupported variant kind: {kind}")
 
         json_file = tempfile.NamedTemporaryFile(
             mode="w",

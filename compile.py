@@ -84,12 +84,16 @@ def compile_reussir(
     _ensure_executable(output, "reussir linking")
 
 def compile_koka(program: str, output: str) -> None:
+    # -O3 with the same clang, thin-LTO, and -march=native the reussir
+    # variant links with, so kklib participates in cross-module optimization.
     with tempfile.TemporaryDirectory() as tmpdir:
         _run_quiet(
             [
                 CONFIG["koka-compiler"],
                 "-O3",
-                "--ccopts=-march=native",
+                f"--cc={CONFIG['cc']}",
+                "--ccopts=-flto=thin -march=native",
+                "--cclinkopts=-flto=thin -fuse-ld=lld",
                 program,
                 "-o",
                 output,
@@ -114,12 +118,20 @@ def compile_rust(program: str, output: str) -> None:
     _ensure_executable(output, "rust compilation")
 
 
-def compile_haskell(program: str, output: str) -> None:
+def compile_haskell(program: str, output: str, rts_opts: str | None = None) -> None:
+    # -rtsopts always; an ``rts_opts`` string (e.g. "-A1G") is baked into the
+    # binary with -with-rtsopts so the harness can run it with no arguments.
+    ghc_cmd = [
+        CONFIG["ghc"],
+        "-O2",
+        "-rtsopts",
+    ]
+    if rts_opts:
+        ghc_cmd.append(f"-with-rtsopts={rts_opts}")
     with tempfile.TemporaryDirectory() as tmpdir:
         _run_quiet(
-            [
-                CONFIG["ghc"],
-                "-O2",
+            ghc_cmd
+            + [
                 "-outputdir",
                 tmpdir,
                 "-o",

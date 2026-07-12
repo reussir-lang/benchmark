@@ -200,10 +200,20 @@ fn nf_to_int(t: Term, acc: i64) -> i64 {
     }
 }
 
-fn nbe_closure_test() -> i64 {
+// Each iteration seeds the count differently so no compiler can share the
+// normalization across rounds; expected total = 7*4000000 + (0+1+..+6).
+fn nbe_closure_test(i : i64) -> i64 {
     let t = term4000000();
     let n = norm_form(Env::EnvNil, t);
-    nf_to_int(n, 0)
+    nf_to_int(n, i)
 }
 
-extern "C" trampoline "nbe_closure_test_ffi" = nbe_closure_test;
+fn nbe_closure_repeat(r : i64, acc : i64) -> i64 {
+    if r == 0 { acc } else { nbe_closure_repeat(r - 1, acc + nbe_closure_test(r - 1)) }
+}
+
+fn nbe_closure_bench() -> i64 {
+    nbe_closure_repeat(7, 0)
+}
+
+extern "C" trampoline "nbe_closure_test_ffi" = nbe_closure_bench;

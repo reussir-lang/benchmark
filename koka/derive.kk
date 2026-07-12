@@ -80,8 +80,17 @@ fun deriv(i : int, f : expr)
   val d = d(0,f)
   d
 
-pub fun main()
+fun derive-test( i : int ) : div int
   val x = Var(0)
   val f = powr(x,x)
   val res = nest(deriv,10,f)
-  right_depth(res).show.println
+  right_depth(res) + i
+
+fun repeat-test( r : int, acc : int ) : div int
+  if r == 0 then acc else repeat-test(r - 1, acc + derive-test(r - 1))
+
+pub fun main()
+  val n = repeat-test(3, 0)
+  if n != 1575 then
+    println("FAIL: expected 1575, got " ++ n.show)
+    throw("wrong result")

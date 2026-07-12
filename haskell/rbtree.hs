@@ -116,8 +116,8 @@ foldTest n = foldTree (makeTree n) 0
 
 main :: IO ()
 main = do
-  let n = 4200000
+  let n = 10000000
       p = foldTest n
-  if p /= 420000
-    then error ("FAIL: expected 420000, got " ++ show p)
+  if p /= 1000000
+    then error ("FAIL: expected 1000000, got " ++ show p)
     else pure ()

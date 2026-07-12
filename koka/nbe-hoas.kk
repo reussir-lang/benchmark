@@ -109,7 +109,16 @@ fun nf-to-int(t: term, acc: int) : int
         App(_, x) -> nf-to-int(x, acc.inc)
         _ -> acc
 
-fun main()
+fun nbe-test( i : int ) : <div,exn> int
     val t = term4000000()
     val n = norm-form(EnvNil, t)
-    nf-to-int(n, 0).show.println
+    nf-to-int(n, i)
+
+fun repeat-test( r : int, acc : int ) : <div,exn> int
+    if r == 0 then acc else repeat-test(r - 1, acc + nbe-test(r - 1))
+
+fun main()
+    val n = repeat-test(6, 0)
+    if n != 24000015 then
+        println("FAIL: expected 24000015, got " ++ n.show)
+        throw("wrong result")
