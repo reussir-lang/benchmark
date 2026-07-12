@@ -111,6 +111,13 @@ python3 main.py --output-json out/results.json --plot-dir out/
 python3 main.py --input-json out/results.json --plot-dir out/  # replot only
 ```
 
+When stderr is an interactive terminal, `main.py` opens a Burn-style live TUI
+dashboard while the matrix runs. Each completed benchmark/variant cell adds a
+runtime and peak-RSS bar; both panels recompute their scale immediately as new
+data arrives. The dashboard uses the alternate screen and writes only to
+stderr, so JSON on stdout and `--output-json` remain unchanged. Use `--no-tui`
+to keep the plain progress bar, or `--tui` to force the dashboard.
+
 `--plot-dir` writes one SVG per set (`functional-data-structures.svg`,
 `large-aggregates.svg`): grouped bars of mean runtime, log scale, one bar
 group per benchmark, one bar per variant. Timing uses hyperfine

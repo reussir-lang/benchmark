@@ -5,6 +5,7 @@ import sys
 
 from benches import BENCHES, SETS
 from runner import run_benchmark
+from terminal_dashboard import LiveBenchmarkDashboard
 from tqdm import tqdm
 
 
@@ -45,6 +46,20 @@ def parse_args():
             "(timing.png, peak_rss.png, and speedup_over_rust.png)."
         ),
     )
+    tui_group = parser.add_mutually_exclusive_group()
+    tui_group.add_argument(
+        "--tui",
+        dest="tui",
+        action="store_true",
+        help="Force the live terminal dashboard (normally enabled on a TTY).",
+    )
+    tui_group.add_argument(
+        "--no-tui",
+        dest="tui",
+        action="store_false",
+        help="Disable the live terminal dashboard and use a progress line.",
+    )
+    parser.set_defaults(tui=None)
     return parser, parser.parse_args()
 
 
@@ -279,6 +294,47 @@ def plot_results(results, plot_dir):
     return created
 
 
+def run_targets(targets, tui_choice=None):
+    """Run targets with either the live dashboard or the legacy progress bar."""
+
+    results = {}
+    dashboard = LiveBenchmarkDashboard(enabled=tui_choice)
+    if not dashboard.enabled:
+        progress = tqdm(targets, desc="Benchmarking", unit="target")
+        for bench_name, variant in progress:
+            progress.set_postfix_str(f"{bench_name}/{variant}")
+            results.setdefault(bench_name, {})
+            results[bench_name][variant] = run_benchmark(bench_name, variant)
+        return results
+
+    bench_totals = {
+        bench_name: sum(1 for candidate, _ in targets if candidate == bench_name)
+        for bench_name, _ in targets
+    }
+    with dashboard:
+        for index, (bench_name, variant) in enumerate(targets):
+            frame = {
+                "results": results,
+                "current_bench": bench_name,
+                "current_variant": variant,
+                "total": len(targets),
+                "bench_total": bench_totals[bench_name],
+            }
+            dashboard.update(
+                **frame,
+                completed=index,
+                status="Running",
+            )
+            results.setdefault(bench_name, {})
+            results[bench_name][variant] = run_benchmark(bench_name, variant)
+            dashboard.update(
+                **frame,
+                completed=index + 1,
+                status="Completed",
+            )
+    return results
+
+
 def main():
     parser, args = parse_args()
 
@@ -288,12 +344,7 @@ def main():
         )
     else:
         targets = resolve_targets(args.bench, args.variant, args.bench_set, parser)
-        results = {}
-        progress = tqdm(targets, desc="Benchmarking", unit="target")
-        for bench_name, variant in progress:
-            progress.set_postfix_str(f"{bench_name}/{variant}")
-            results.setdefault(bench_name, {})
-            results[bench_name][variant] = run_benchmark(bench_name, variant)
+        results = run_targets(targets, args.tui)
 
     print(json.dumps(results, indent=2))
 
