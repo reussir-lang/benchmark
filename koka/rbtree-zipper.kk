@@ -1,4 +1,4 @@
-import std/num/int32
+import std/num/int64
 import std/os/env
 
 type color
@@ -6,12 +6,12 @@ type color
   Black
 
 type tree
-  Node(color : color, lchild : tree, key : int32, value : bool, rchild : tree)
+  Node(color : color, lchild : tree, key : int64, value : bool, rchild : tree)
   Leaf
   
 type zipper
-  NodeR(color : color, lchild : tree, key : int32, value : bool, zip : zipper)
-  NodeL(color : color, zip : zipper, key : int32, value : bool, rchild : tree)
+  NodeR(color : color, lchild : tree, key : int64, value : bool, zip : zipper)
+  NodeL(color : color, zip : zipper, key : int64, value : bool, rchild : tree)
   Done
 
 fun move-up(z : zipper, t : tree)
@@ -20,7 +20,7 @@ fun move-up(z : zipper, t : tree)
     NodeL(c, z1, k, v, r) -> z1.move-up(Node(c, t, k, v, r))
     Done -> t
 
-fun balance-red( z : zipper, l : tree, k : int32, v : bool, r : tree ) : tree
+fun balance-red( z : zipper, l : tree, k : int64, v : bool, r : tree ) : tree
   match z
     NodeR(Black, l1, k1, v1, z1) -> z1.move-up( Node( Black, l1, k1, v1, Node(Red,l,k,v,r) ) )
     NodeL(Black, z1, k1, v1, r1) -> z1.move-up( Node( Black, Node(Red,l,k,v,r), k1, v1, r1 ) )
@@ -34,7 +34,7 @@ fun balance-red( z : zipper, l : tree, k : int32, v : bool, r : tree ) : tree
       Done -> Node(Black, Node(Red,l,k,v,r), k1, v1, r1)
     Done -> Node(Black,l,k,v,r)
 
-fun ins(t : tree, k : int32, v : bool, z : zipper) : tree
+fun ins(t : tree, k : int64, v : bool, z : zipper) : tree
   match t
     Node(c, l, kx, vx, r)
       -> if k < kx   then ins(l, k, v, NodeL(c, z, kx, vx, r))
@@ -42,28 +42,28 @@ fun ins(t : tree, k : int32, v : bool, z : zipper) : tree
          else z.move-up(Node(c, l, kx, vx, r))  // z.move-up(t) is slower (but not a reuse bug); to be investigated
     Leaf -> z.balance-red(Leaf, k, v, Leaf)
 
-fun insert(t : tree, k : int32, v : bool) : tree
+fun insert(t : tree, k : int64, v : bool) : tree
   ins(t, k, v, Done)
 
 
-fun fold-action(_k : int32, v : bool, acc : int32) : int32
+fun fold-action(_k : int64, v : bool, acc : int64) : int64
   if v then acc.inc else acc
 
 
-fun fold(t : tree, b : int32) : int32
+fun fold(t : tree, b : int64) : int64
   match t
     Node(_, l, k, v, r) -> r.fold(fold-action(k, v, l.fold(b)))
     Leaf                -> b
 
-fun make-tree(n : int32, t : tree) : div tree
+fun make-tree(n : int64, t : tree) : div tree
   if n <= zero then t else
-    val m = n - 1.int32
-    make-tree(m, insert(t, m, m % 10.int32 == zero))
+    val m = n - 1.int64
+    make-tree(m, insert(t, m, m % 10.int64 == zero))
 
 pub fun main()
-  val n = get-args().head("").parse-int.default(10000000).int32
+  val n = get-args().head("").parse-int.default(2500000).int64
   val t = make-tree(n, Leaf)
   val v = t.fold(zero)
-  if v != 1000000.int32 then
-    println("FAIL: expected 1000000, got " ++ v.show)
+  if v != 250000.int64 then
+    println("FAIL: expected 250000, got " ++ v.show)
     throw("wrong result")

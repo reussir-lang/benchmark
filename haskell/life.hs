@@ -57,7 +57,7 @@ population g = sum (map fromIntegral (elems g))
 
 main :: IO ()
 main = do
-  let pop = population (run 200000 seedGrid)
+  let pop = population (run 50000 seedGrid)
   if pop /= 115
     then putStrLn ("FAIL: expected 115, got " ++ show pop) >> exitFailure
     else pure ()

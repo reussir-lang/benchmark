@@ -8,14 +8,14 @@ enum [value] Color {
 }
 
 enum Tree {
-    Branch(Color, Tree, i32, bool, Tree),
+    Branch(Color, Tree, i64, bool, Tree),
     Leaf
 }
 
 
 enum Zipper {
-    NodeR(Color, Tree, i32, bool, Zipper),
-    NodeL(Color, Zipper, i32, bool, Tree),
+    NodeR(Color, Tree, i64, bool, Zipper),
+    NodeL(Color, Zipper, i64, bool, Tree),
     Done
 }
 
@@ -27,7 +27,7 @@ fn move_up(z : Zipper, t : Tree) -> Tree {
     }
 }
 
-fn balance_red(z : Zipper, l : Tree, k : i32, v : bool, r : Tree) -> Tree {
+fn balance_red(z : Zipper, l : Tree, k : i64, v : bool, r : Tree) -> Tree {
     match z {
         Zipper::NodeR(Color::Black, l1, k1, v1, z1) =>
             move_up(z1,
@@ -94,7 +94,7 @@ fn balance_red(z : Zipper, l : Tree, k : i32, v : bool, r : Tree) -> Tree {
     }
 }
 
-fn ins(t: Tree, k: i32, v: bool, z: Zipper) -> Tree {
+fn ins(t: Tree, k: i64, v: bool, z: Zipper) -> Tree {
     match t {
         Tree::Branch(c, l, kx, vx, r) =>
             if k < kx {
@@ -110,11 +110,11 @@ fn ins(t: Tree, k: i32, v: bool, z: Zipper) -> Tree {
     }
 }
 
-fn insert(t: Tree, k: i32, v: bool) -> Tree {
+fn insert(t: Tree, k: i64, v: bool) -> Tree {
     ins(t, k, v, Zipper::Done)
 }
 
-fn fold_action(k : i32, v : bool, acc : i64) -> i64 {
+fn fold_action(k : i64, v : bool, acc : i64) -> i64 {
     if v { acc + 1 } else { acc }
 }
 
@@ -130,7 +130,7 @@ fn make_tree(n : i64, t : Tree) -> Tree {
         t
     } else {
         let m = n - 1;
-        make_tree(m, insert(t, m as i32, m % 10 == 0))
+        make_tree(m, insert(t, m, m % 10 == 0))
     }
 }
 

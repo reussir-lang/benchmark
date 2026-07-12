@@ -32,7 +32,7 @@ fun rounds( r : int, acc : int ) : div int
     rounds(r - 1, (acc + c) % 1000000007)
 
 pub fun main()
-  val acc = rounds(400, 0)
-  if acc != 853505117 then
-    println("FAIL: expected 853505117, got " ++ acc.show)
+  val acc = rounds(100, 0)
+  if acc != 276066679 then
+    println("FAIL: expected 276066679, got " ++ acc.show)
     throw("wrong result")

@@ -151,10 +151,10 @@ fn fold_test(n: i64) -> i64 {
 }
 
 fn main() {
-    let n: i64 = 10_000_000;
+    let n: i64 = 2_500_000;
     let p = fold_test(n);
-    if p != 1_000_000 {
-        eprintln!("FAIL: expected 1000000, got {}", p);
+    if p != 250_000 {
+        eprintln!("FAIL: expected 250000, got {}", p);
         std::process::exit(1);
     }
 }

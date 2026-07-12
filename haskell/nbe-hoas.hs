@@ -150,8 +150,8 @@ thousand = App (App mul hundred) ten
 term200000 :: Term
 term200000 = App (App mul twoHundred) thousand
 
-term4000000 :: Term
-term4000000 = App (App mul twenty) term200000
+term1000000 :: Term
+term1000000 = App (App mul five) term200000
 
 nfToInt :: Term -> Int -> Int
 nfToInt t !acc =
@@ -162,12 +162,12 @@ nfToInt t !acc =
 
 nbeTest :: Int -> Int
 nbeTest i =
-  let n = normForm Nil term4000000
+  let n = normForm Nil term1000000
    in nfToInt n i
 
 main :: IO ()
 main = do
   let n = sum (map nbeTest [0 .. 5])
-  if n /= 24000015
-    then error ("FAIL: expected 24000015, got " ++ show n)
+  if n /= 6000015
+    then error ("FAIL: expected 6000015, got " ++ show n)
     else pure ()

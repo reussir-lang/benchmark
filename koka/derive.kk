@@ -90,7 +90,7 @@ fun repeat-test( r : int, acc : int ) : div int
   if r == 0 then acc else repeat-test(r - 1, acc + derive-test(r - 1))
 
 pub fun main()
-  val n = repeat-test(3, 0)
-  if n != 1575 then
-    println("FAIL: expected 1575, got " ++ n.show)
+  val n = repeat-test(1, 0)
+  if n != 524 then
+    println("FAIL: expected 524, got " ++ n.show)
     throw("wrong result")

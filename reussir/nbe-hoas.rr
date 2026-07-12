@@ -179,8 +179,8 @@ fn term200000() -> Term {
     Term::App{Term::App{y, x}, z}
 }
 
-fn term4000000() -> Term {
-    let x = twenty();
+fn term1000000() -> Term {
+    let x = five();
     let y = mul();
     let z = term200000();
     Term::App{Term::App{y, x}, z}
@@ -195,9 +195,9 @@ fn nf_to_int(t: Term, acc: i64) -> i64 {
 }
 
 // Each iteration seeds the count differently so no compiler can share the
-// normalization across rounds; expected total = 6*4000000 + (0+1+..+5).
+// normalization across rounds; expected total = 6*1000000 + (0+1+..+5).
 fn nbe_hoas_test(i : i64) -> i64 {
-    let t = term4000000();
+    let t = term1000000();
     let n = norm_form(Env::EnvNil, t);
     nf_to_int(n, i)
 }

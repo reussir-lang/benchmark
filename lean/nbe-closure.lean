@@ -112,8 +112,8 @@ def term200000 : Term :=
   let z := thousand
   Term.app (Term.app y x) z
 
-def term4000000 : Term :=
-  let x := twenty
+def term1000000 : Term :=
+  let x := five
   let y := mul
   let z := term200000
   Term.app (Term.app y x) z
@@ -125,7 +125,7 @@ def nfToInt (t : Term) (acc : Nat) : Nat :=
   | _ => acc
 
 unsafe def nbeTest (i : Nat) : Nat :=
-  let t := term4000000
+  let t := term1000000
   let n := normForm Env.envNil t
   nfToInt n i
 
@@ -135,7 +135,7 @@ unsafe def repeatTest : Nat → Nat → Nat
 
 unsafe def main : IO UInt32 := do
   let n := repeatTest 7 0
-  if n != 28000021 then
-    IO.eprintln s!"FAIL: expected 28000021, got {n}"
+  if n != 7000021 then
+    IO.eprintln s!"FAIL: expected 7000021, got {n}"
     return 1
   return 0

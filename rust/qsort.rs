@@ -1,7 +1,7 @@
 // Functional-style quicksort workload, direct-mutation baseline: Vec<i64>
 // filled from a MINSTD LCG, hand-written Lomuto partition (the same
 // algorithm the other variants use — not sort_unstable), checksum of the
-// sorted array, 60 rounds.
+// sorted array, 100 rounds.
 
 fn lcg(x: i64) -> i64 {
     (x * 48271) % 2147483647
@@ -48,15 +48,15 @@ fn checksum(a: &[i64]) -> i64 {
 }
 
 fn main() {
-    let rounds = 400i64;
+    let rounds = 100i64;
     let mut acc = 0i64;
     for r in (1..=rounds).rev() {
         let mut a = fill(42 + r);
         qsort(&mut a, 0, 65535);
         acc = (acc + checksum(&a)) % 1000000007;
     }
-    if acc != 853505117 {
-        eprintln!("FAIL: expected 853505117, got {}", acc);
+    if acc != 276066679 {
+        eprintln!("FAIL: expected 276066679, got {}", acc);
         std::process::abort();
     }
 }

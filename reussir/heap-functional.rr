@@ -1,0 +1,130 @@
+// Purely functional Braun min-heap. This is the same insert/replace-top
+// algorithm, stream, operation sequence, and checksum used by every
+// heap-functional port.
+
+enum Heap {
+    Node(i64, Heap, Heap),
+    Leaf
+}
+
+fn lcg(x : i64) -> i64 {
+    (x * 48271) % 2147483647
+}
+
+fn insert(h : Heap, v : i64) -> Heap {
+    match h {
+        Heap::Leaf => Heap::Node{v, Heap::Leaf, Heap::Leaf},
+        Heap::Node(w, l, r) =>
+            if v <= w {
+                Heap::Node{v, insert(r, w), l}
+            } else {
+                Heap::Node{w, insert(r, v), l}
+            }
+    }
+}
+
+fn down(v : i64, l : Heap, r : Heap) -> Heap {
+    match l {
+        Heap::Node(lv, ll, lr) => match r {
+            Heap::Node(rv, rl, rr) =>
+                if lv <= rv {
+                    if v <= lv {
+                        Heap::Node{v, Heap::Node{lv, ll, lr}, Heap::Node{rv, rl, rr}}
+                    } else {
+                        Heap::Node{lv, down(v, ll, lr), Heap::Node{rv, rl, rr}}
+                    }
+                } else {
+                    if v <= rv {
+                        Heap::Node{v, Heap::Node{lv, ll, lr}, Heap::Node{rv, rl, rr}}
+                    } else {
+                        Heap::Node{rv, Heap::Node{lv, ll, lr}, down(v, rl, rr)}
+                    }
+                },
+            Heap::Leaf =>
+                if v <= lv {
+                    Heap::Node{v, Heap::Node{lv, ll, lr}, Heap::Leaf}
+                } else {
+                    Heap::Node{lv, down(v, ll, lr), Heap::Leaf}
+                }
+        },
+        Heap::Leaf => match r {
+            Heap::Node(rv, rl, rr) =>
+                if v <= rv {
+                    Heap::Node{v, Heap::Leaf, Heap::Node{rv, rl, rr}}
+                } else {
+                    Heap::Node{rv, Heap::Leaf, down(v, rl, rr)}
+                },
+            Heap::Leaf => Heap::Node{v, Heap::Leaf, Heap::Leaf}
+        }
+    }
+}
+
+fn replace_top(h : Heap, v : i64) -> Heap {
+    match h {
+        Heap::Node(_, l, r) => down(v, l, r),
+        Heap::Leaf => Heap::Node{v, Heap::Leaf, Heap::Leaf}
+    }
+}
+
+fn top(h : Heap) -> i64 {
+    match h {
+        Heap::Node(w, _, _) => w,
+        Heap::Leaf => 0
+    }
+}
+
+fn heap_sum(h : Heap, acc : i64) -> i64 {
+    match h {
+        Heap::Leaf => acc,
+        Heap::Node(w, l, r) => heap_sum(r, heap_sum(l, (acc + w) % 1000000007))
+    }
+}
+
+fn build(k : i64, x : i64, h : Heap, m : i64) -> i64 {
+    if k == 65535 {
+        maintain(m, x, h, 0)
+    } else {
+        let x1 = lcg(x);
+        let x2 = lcg(x1);
+        let x3 = lcg(x2);
+        let x4 = lcg(x3);
+        let x5 = lcg(x4);
+        let x6 = lcg(x5);
+        let x7 = lcg(x6);
+        let x8 = lcg(x7);
+        let x9 = lcg(x8);
+        let x10 = lcg(x9);
+        let x11 = lcg(x10);
+        let x12 = lcg(x11);
+        let g = x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8 + x9 + x10 + x11 + x12;
+        build(k + 1, x12, insert(h, g), m)
+    }
+}
+
+fn maintain(m : i64, x : i64, h : Heap, acc : i64) -> i64 {
+    if m == 0 {
+        (acc + heap_sum(h, 0)) % 1000000007
+    } else {
+        let x1 = lcg(x);
+        let x2 = lcg(x1);
+        let x3 = lcg(x2);
+        let x4 = lcg(x3);
+        let x5 = lcg(x4);
+        let x6 = lcg(x5);
+        let x7 = lcg(x6);
+        let x8 = lcg(x7);
+        let x9 = lcg(x8);
+        let x10 = lcg(x9);
+        let x11 = lcg(x10);
+        let x12 = lcg(x11);
+        let g = x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8 + x9 + x10 + x11 + x12;
+        let t = top(h);
+        maintain(m - 1, x12, replace_top(h, t + g), (acc + t) % 1000000007)
+    }
+}
+
+fn heap_test(m : i64) -> i64 {
+    build(0, 20260711, Heap::Leaf, m)
+}
+
+extern "C" trampoline "heap_test_ffi" = heap_test;

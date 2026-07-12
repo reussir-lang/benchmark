@@ -219,9 +219,9 @@ fn derive_test(i: i64) -> i64 {
 }
 
 fn main() {
-    let n: i64 = (0..3).map(derive_test).sum();
-    if n != 1575 {
-        eprintln!("FAIL: expected 1575, got {}", n);
+    let n = derive_test(0);
+    if n != 524 {
+        eprintln!("FAIL: expected 524, got {}", n);
         std::process::exit(1);
     }
 }

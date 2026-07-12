@@ -51,7 +51,7 @@ fn seed() -> Box<[i32; CELLS]> {
 }
 
 fn main() {
-    let gens = 200000usize;
+    let gens = 50000usize;
     let mut src = seed();
     let mut dst = Box::new([0i32; CELLS]);
     for _ in 0..gens {

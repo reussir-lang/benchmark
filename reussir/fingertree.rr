@@ -1,0 +1,109 @@
+enum Elem {
+    Value(i64),
+    Node2(Elem, Elem),
+    Node3(Elem, Elem, Elem)
+}
+
+enum Digit {
+    One(Elem),
+    Two(Elem, Elem),
+    Three(Elem, Elem, Elem),
+    Four(Elem, Elem, Elem, Elem)
+}
+
+enum FingerTree {
+    Empty,
+    Single(Elem),
+    Deep(Digit, FingerTree, Digit)
+}
+
+enum [value] ViewLeft {
+    Empty,
+    Cons(Elem, FingerTree)
+}
+
+fn node_to_digit(node : Elem) -> Digit {
+    match node {
+        Elem::Node2(a, b) => Digit::Two{a, b},
+        Elem::Node3(a, b, c) => Digit::Three{a, b, c},
+        Elem::Value(_) => Digit::One{Elem::Value{0}}
+    }
+}
+
+fn digit_to_tree(digit : Digit) -> FingerTree {
+    match digit {
+        Digit::One(a) => FingerTree::Single{a},
+        Digit::Two(a, b) => FingerTree::Deep{Digit::One{a}, FingerTree::Empty, Digit::One{b}},
+        Digit::Three(a, b, c) => FingerTree::Deep{Digit::Two{a, b}, FingerTree::Empty, Digit::One{c}},
+        Digit::Four(a, b, c, d) => FingerTree::Deep{Digit::Two{a, b}, FingerTree::Empty, Digit::Two{c, d}}
+    }
+}
+
+fn snoc(tree : FingerTree, x : Elem) -> FingerTree {
+    match tree {
+        FingerTree::Empty => FingerTree::Single{x},
+        FingerTree::Single(a) => FingerTree::Deep{Digit::One{a}, FingerTree::Empty, Digit::One{x}},
+        FingerTree::Deep(prefix, middle, Digit::Four(a, b, c, d)) =>
+            FingerTree::Deep{prefix, snoc(middle, Elem::Node3{a, b, c}), Digit::Two{d, x}},
+        FingerTree::Deep(prefix, middle, Digit::One(a)) =>
+            FingerTree::Deep{prefix, middle, Digit::Two{a, x}},
+        FingerTree::Deep(prefix, middle, Digit::Two(a, b)) =>
+            FingerTree::Deep{prefix, middle, Digit::Three{a, b, x}},
+        FingerTree::Deep(prefix, middle, Digit::Three(a, b, c)) =>
+            FingerTree::Deep{prefix, middle, Digit::Four{a, b, c, x}}
+    }
+}
+
+fn view_left(tree : FingerTree) -> ViewLeft {
+    match tree {
+        FingerTree::Empty => ViewLeft::Empty,
+        FingerTree::Single(x) => ViewLeft::Cons{x, FingerTree::Empty},
+        FingerTree::Deep(Digit::One(x), middle, suffix) => match view_left(middle) {
+            ViewLeft::Empty => ViewLeft::Cons{x, digit_to_tree(suffix)},
+            ViewLeft::Cons(node, middle1) =>
+                ViewLeft::Cons{x, FingerTree::Deep{node_to_digit(node), middle1, suffix}}
+        },
+        FingerTree::Deep(Digit::Two(a, b), middle, suffix) =>
+            ViewLeft::Cons{a, FingerTree::Deep{Digit::One{b}, middle, suffix}},
+        FingerTree::Deep(Digit::Three(a, b, c), middle, suffix) =>
+            ViewLeft::Cons{a, FingerTree::Deep{Digit::Two{b, c}, middle, suffix}},
+        FingerTree::Deep(Digit::Four(a, b, c, d), middle, suffix) =>
+            ViewLeft::Cons{a, FingerTree::Deep{Digit::Three{b, c, d}, middle, suffix}}
+    }
+}
+
+fn build(index : i64, size : i64, tree : FingerTree) -> FingerTree {
+    if index == size {
+        tree
+    } else {
+        build(index + 1, size, snoc(tree, Elem::Value{index}))
+    }
+}
+
+fn churn(round : i64, remaining : i64, tree : FingerTree, checksum : i64) -> i64 {
+    if remaining == 0 {
+        drain(tree, checksum)
+    } else {
+        match view_left(tree) {
+            ViewLeft::Cons(Elem::Value(x), rest) =>
+                churn(round + 1, remaining - 1,
+                      snoc(rest, Elem::Value{(x + round + 1) % 1000000007}),
+                      (checksum + x) % 1000000007),
+            _ => 0 - 1
+        }
+    }
+}
+
+fn drain(tree : FingerTree, checksum : i64) -> i64 {
+    match view_left(tree) {
+        ViewLeft::Empty => checksum,
+        ViewLeft::Cons(Elem::Value(x), rest) => drain(rest, (checksum + x) % 1000000007),
+        _ => 0 - 1
+    }
+}
+
+fn fingertree_test(size : i64, rounds : i64) -> i64 {
+    churn(0, rounds, build(0, size, FingerTree::Empty), 0)
+}
+
+extern "C" trampoline "fingertree_test_ffi" = fingertree_test;

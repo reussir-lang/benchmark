@@ -12,7 +12,7 @@ enum [value] Color {
 }
 
 enum Tree {
-    Branch(Color, Tree, i32, bool, Tree),
+    Branch(Color, Tree, i64, bool, Tree),
     Leaf
 }
 
@@ -23,7 +23,7 @@ fn is_red(t: Tree) -> bool {
     }
 }
 
-fn balance_left(l: Tree, k: i32, v: bool, r: Tree) -> Tree {
+fn balance_left(l: Tree, k: i64, v: bool, r: Tree) -> Tree {
     match l {
         Tree::Branch(_, Tree::Branch(Color::Red, lx, kx, vx, rx), ky, vy, ry) =>
             Tree::Branch{
@@ -56,7 +56,7 @@ fn balance_left(l: Tree, k: i32, v: bool, r: Tree) -> Tree {
     }
 }
 
-fn balance_right(l: Tree, k: i32, v: bool, r: Tree) -> Tree {
+fn balance_right(l: Tree, k: i64, v: bool, r: Tree) -> Tree {
     match r {
         Tree::Branch(_, Tree::Branch(Color::Red, lx, kx, vx, rx), ky, vy, ry) =>
             Tree::Branch{
@@ -89,7 +89,7 @@ fn balance_right(l: Tree, k: i32, v: bool, r: Tree) -> Tree {
     }
 }
 
-fn ins(t: Tree, k: i32, v: bool) -> Tree {
+fn ins(t: Tree, k: i64, v: bool) -> Tree {
     match t {
         Tree::Branch(Color::Red, l, kx, vx, r) =>
             if k < kx {
@@ -132,7 +132,7 @@ fn set_black(t: Tree) -> Tree {
     }
 }
 
-fn insert(t: Tree, k: i32, v: bool) -> Tree {
+fn insert(t: Tree, k: i64, v: bool) -> Tree {
     set_black(ins(t, k, v))
 }
 
@@ -141,7 +141,7 @@ fn make_tree_aux(n: i64, t: Tree) -> Tree {
         t
     } else {
         let n1 = n - 1;
-        make_tree_aux(n1, insert(t, n1 as i32, n1 % 10 == 0))
+        make_tree_aux(n1, insert(t, n1, n1 % 10 == 0))
     }
 }
 
@@ -149,7 +149,7 @@ fn make_tree(n: i64) -> Tree {
     make_tree_aux(n, Tree::Leaf)
 }
 
-fn fold_action(k : i32, v : bool, acc : i64) -> i64 {
+fn fold_action(k : i64, v : bool, acc : i64) -> i64 {
     if v { acc + 1 } else { acc }
 }
 

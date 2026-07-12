@@ -44,7 +44,7 @@ fun population( g : vector<int> ) : int
   acc
 
 pub fun main()
-  val g = run(seed(), 200000)
+  val g = run(seed(), 50000)
   val p = population(g)
   if p != 115 then
     println("FAIL: expected 115, got " ++ p.show)

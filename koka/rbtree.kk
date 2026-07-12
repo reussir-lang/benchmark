@@ -1,4 +1,4 @@
-import std/num/int32
+import std/num/int64
 import std/os/env
 
 type color
@@ -7,7 +7,7 @@ type color
 
 
 type tree
-  Node(color : color, lchild : tree, key : int32, value : bool, rchild : tree)
+  Node(color : color, lchild : tree, key : int64, value : bool, rchild : tree)
   Leaf()
   
 
@@ -17,7 +17,7 @@ fun node-is-red(t : tree) : bool
     _         -> False
 
 
-fun balance-left(l :tree, k : int32, v : bool, r : tree) : tree
+fun balance-left(l :tree, k : int64, v : bool, r : tree) : tree
   match l
     Node(_, Node(Red, lx, kx, vx, rx), ky, vy, ry)
       -> Node(Red, Node(Black, lx, kx, vx, rx), ky, vy, Node(Black, ry, k, v, r))
@@ -28,7 +28,7 @@ fun balance-left(l :tree, k : int32, v : bool, r : tree) : tree
     Leaf -> Leaf
     
 
-fun balance-right(l : tree, k : int32, v : bool, r : tree) : tree
+fun balance-right(l : tree, k : int64, v : bool, r : tree) : tree
   match r
     Node(_, Node(Red, lx, kx, vx, rx), ky, vy, ry)
       -> Node(Red, Node(Black, l, k, v, lx), kx, vx, Node(Black, rx, ky, vy, ry))
@@ -39,7 +39,7 @@ fun balance-right(l : tree, k : int32, v : bool, r : tree) : tree
     Leaf -> Leaf
     
 
-fun ins(t : tree, k : int32, v : bool) : tree
+fun ins(t : tree, k : int64, v : bool) : tree
   match t
     Node(Red, l, kx, vx, r)
       -> if k < kx then Node(Red, ins(l, k, v), kx, vx, r)
@@ -60,33 +60,33 @@ fun set-black(t : tree) : tree
     _ -> t
 
 
-fun insert(t : tree, k : int32, v : bool) : tree
+fun insert(t : tree, k : int64, v : bool) : tree
   ins(t, k, v).set-black
 
 
-fun fold-action(_k : int32, v : bool, acc : int32) : int32
+fun fold-action(_k : int64, v : bool, acc : int64) : int64
   if v then acc.inc else acc
 
 
-fun fold(t : tree, b : int32) : int32
+fun fold(t : tree, b : int64) : int64
   match t
     Node(_, l, k, v, r) -> r.fold(fold-action(k, v, l.fold(b)))
     Leaf                -> b
 
 
-fun make-tree-aux(n : int32, t : tree) : div tree
+fun make-tree-aux(n : int64, t : tree) : div tree
   if n <= zero then t else
     val n1 = n.dec
-    make-tree-aux(n1, insert(t, n1, n1 % 10.int32 == zero))
+    make-tree-aux(n1, insert(t, n1, n1 % 10.int64 == zero))
 
-pub fun make-tree(n : int32) : div tree
+pub fun make-tree(n : int64) : div tree
   make-tree-aux(n, Leaf)
   
 
 pub fun main()
-  val n = get-args().head("").parse-int.default(10000000).int32
+  val n = get-args().head("").parse-int.default(2500000).int64
   val t = make-tree(n)
   val v = t.fold(zero)
-  if v != 1000000.int32 then
-    println("FAIL: expected 1000000, got " ++ v.show)
+  if v != 250000.int64 then
+    println("FAIL: expected 250000, got " ++ v.show)
     throw("wrong result")

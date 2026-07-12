@@ -34,12 +34,12 @@ checksum = go (-1) 0
 
 main :: IO ()
 main = do
-  let rounds = 400
+  let rounds = 100
       acc =
         foldl'
           (\ !a r -> (a + checksum (qsort (fill (42 + r)))) `rem` 1000000007)
           0
           (reverse [1 .. rounds])
-  if acc /= 853505117
-    then putStrLn ("FAIL: expected 853505117, got " ++ show acc) >> exitFailure
+  if acc /= 276066679
+    then putStrLn ("FAIL: expected 276066679, got " ++ show acc) >> exitFailure
     else pure ()

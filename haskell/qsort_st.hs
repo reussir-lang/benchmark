@@ -67,7 +67,7 @@ main = do
               go !r !a = do
                 c <- roundST (42 + r)
                 go (r - 1) ((a + c) `rem` 1000000007)
-          go (400 :: Int) 0
-  if acc /= 853505117
-    then putStrLn ("FAIL: expected 853505117, got " ++ show acc) >> exitFailure
+          go (100 :: Int) 0
+  if acc /= 276066679
+    then putStrLn ("FAIL: expected 276066679, got " ++ show acc) >> exitFailure
     else pure ()

@@ -32,7 +32,7 @@ def population (g : Array UInt32) : Nat :=
   g.foldl (fun a c => a + c.toNat) 0
 
 def main : IO UInt32 := do
-  let p := population (run 200000 seedGrid)
+  let p := population (run 50000 seedGrid)
   if p != 115 then
     IO.eprintln s!"FAIL: expected 115, got {p}"
     return 1

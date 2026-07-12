@@ -1,16 +1,18 @@
-/- Binary heap maintenance under a Gaussian workload — Array UInt64 min-heap
+import Init.Data.SInt.Basic
+
+/- Binary heap maintenance under a Gaussian workload — Array Int64 min-heap
    of 65535 values threaded linearly (uniqueness keeps set! in place),
-   Irwin-Hall draws (sum of 12 consecutive MINSTD outputs), 26M rounds of
+   Irwin-Hall draws (sum of 12 consecutive MINSTD outputs), 6.5M rounds of
    unconditional replace-top. Checksum = (evicted minima + final contents)
-   mod 1e9+7. All values are nonnegative and < 2^35, so unsigned arithmetic
-   matches the i64 variants exactly. -/
+   mod 1e9+7. Payloads, PRNG state, and checksums are signed 64-bit values in
+   every language port. -/
 
-def P : UInt64 := 1000000007
+def P : Int64 := 1000000007
 
-def lcg (x : UInt64) : UInt64 :=
+def lcg (x : Int64) : Int64 :=
   (x * 48271) % 2147483647
 
-def gauss (x : UInt64) : UInt64 × UInt64 :=
+def gauss (x : Int64) : Int64 × Int64 :=
   let x1 := lcg x
   let x2 := lcg x1
   let x3 := lcg x2
@@ -25,7 +27,7 @@ def gauss (x : UInt64) : UInt64 × UInt64 :=
   let x12 := lcg x11
   (x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8 + x9 + x10 + x11 + x12, x12)
 
-partial def siftUp (a : Array UInt64) (i : Nat) : Array UInt64 :=
+partial def siftUp (a : Array Int64) (i : Nat) : Array Int64 :=
   if i == 0 then a
   else
     let p := (i - 1) / 2
@@ -33,7 +35,7 @@ partial def siftUp (a : Array UInt64) (i : Nat) : Array UInt64 :=
     let vp := a[p]!
     if vi < vp then siftUp ((a.set! i vp).set! p vi) p else a
 
-partial def siftDown (a : Array UInt64) (i : Nat) : Array UInt64 :=
+partial def siftDown (a : Array Int64) (i : Nat) : Array Int64 :=
   let l := 2 * i + 1
   if l >= 65535 then a
   else
@@ -44,13 +46,13 @@ partial def siftDown (a : Array UInt64) (i : Nat) : Array UInt64 :=
     let vi := a[i]!
     if vc < vi then siftDown ((a.set! i vc).set! c vi) c else a
 
-partial def build (a : Array UInt64) (k : Nat) (x : UInt64) : Array UInt64 × UInt64 :=
+partial def build (a : Array Int64) (k : Nat) (x : Int64) : Array Int64 × Int64 :=
   if k == 65535 then (a, x)
   else
     let (g, x') := gauss x
     build (siftUp (a.set! k g) k) (k + 1) x'
 
-partial def maintain (a : Array UInt64) (x : UInt64) (m : Nat) (acc : UInt64) : UInt64 :=
+partial def maintain (a : Array Int64) (x : Int64) (m : Nat) (acc : Int64) : Int64 :=
   match m with
   | 0 => (acc + a.foldl (fun s v => (s + v) % P) 0) % P
   | m'+1 =>
@@ -58,13 +60,13 @@ partial def maintain (a : Array UInt64) (x : UInt64) (m : Nat) (acc : UInt64) : 
     let top := a[0]!
     maintain (siftDown (a.set! 0 (top + g)) 0) x' m' ((acc + top) % P)
 
-def heapTest (m : Nat) : UInt64 :=
+def heapTest (m : Nat) : Int64 :=
   let (a, x) := build (Array.replicate 65535 0) 0 20260711
   maintain a x m 0
 
 def main : IO UInt32 := do
-  let c := heapTest 26000000
-  if c != 715063753 then
-    IO.eprintln s!"FAIL: expected 715063753, got {c}"
+  let c := heapTest 6500000
+  if c != 558972311 then
+    IO.eprintln s!"FAIL: expected 558972311, got {c}"
     return 1
   return 0

@@ -64,6 +64,8 @@ def _compile(variant, source, executable, resolve):
         compilers.compile_haskell(
             resolve(source), executable, rts_opts=spec.get("rts_opts")
         )
+    elif kind == "ocaml":
+        compilers.compile_ocaml(resolve(source), executable)
     else:
         raise ValueError(f"Unsupported variant kind: {kind}")
 

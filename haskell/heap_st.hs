@@ -1,6 +1,6 @@
 -- Binary heap maintenance under a Gaussian workload — ST form: min-heap of
--- 65535 Int in an STUArray, Irwin-Hall draws (sum of 12 consecutive MINSTD
--- outputs), 26M rounds of unconditional replace-top. Checksum = (evicted
+-- 65535 Int64 values in an STUArray, Irwin-Hall draws (sum of 12 consecutive MINSTD
+-- outputs), 6.5M rounds of unconditional replace-top. Checksum = (evicted
 -- minima + final contents) mod 1e9+7.
 {-# LANGUAGE BangPatterns #-}
 
@@ -8,24 +8,25 @@ module Main where
 
 import Control.Monad.ST
 import Data.Array.ST
+import Data.Int (Int64)
 import System.Exit (exitFailure)
 
 n :: Int
 n = 65535
 
-p :: Int
+p :: Int64
 p = 1000000007
 
-lcg :: Int -> Int
+lcg :: Int64 -> Int64
 lcg x = (x * 48271) `rem` 2147483647
 
-gauss :: Int -> (Int, Int)
+gauss :: Int64 -> (Int64, Int64)
 gauss = go 12 0
   where
     go 0 !s !x = (s, x)
     go !k !s !x = let x1 = lcg x in go (k - 1) (s + x1) x1
 
-siftUp :: STUArray s Int Int -> Int -> ST s ()
+siftUp :: STUArray s Int Int64 -> Int -> ST s ()
 siftUp a = go
   where
     go 0 = pure ()
@@ -37,7 +38,7 @@ siftUp a = go
         then writeArray a i vq >> writeArray a q vi >> go q
         else pure ()
 
-siftDown :: STUArray s Int Int -> Int -> ST s ()
+siftDown :: STUArray s Int Int64 -> Int -> ST s ()
 siftDown a = go
   where
     go !i = do
@@ -59,7 +60,7 @@ siftDown a = go
             then writeArray a i vc >> writeArray a c vi >> go c
             else pure ()
 
-heapTest :: Int -> Int
+heapTest :: Int -> Int64
 heapTest m = runST $ do
   a <- newArray (0, n - 1) 0
   let buildGo !k !x
@@ -88,7 +89,7 @@ heapTest m = runST $ do
 
 main :: IO ()
 main = do
-  let c = heapTest 26000000
-  if c /= 715063753
-    then putStrLn ("FAIL: expected 715063753, got " ++ show c) >> exitFailure
+  let c = heapTest 6500000
+  if c /= 558972311
+    then putStrLn ("FAIL: expected 558972311, got " ++ show c) >> exitFailure
     else pure ()

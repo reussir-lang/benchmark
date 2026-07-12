@@ -115,7 +115,8 @@ fn nest_aux(s: i64, n: i64, x: Expr) -> Expr {
 }
 
 // Each iteration seeds the depth differently so no compiler can share the
-// derivative chain across rounds; expected total = 3*524 + (0+1+2).
+// A single derivative chain retains the original expression shape while
+// bringing the three-round workload into the rough quarter-scale range.
 fn derive_test(i : i64) -> i64 {
     let x = Expr::Var{0};
     let f = expr_pow(x, x);
@@ -128,7 +129,7 @@ fn derive_repeat(r : i64, acc : i64) -> i64 {
 }
 
 fn derive_bench() -> i64 {
-    derive_repeat(3, 0)
+    derive_repeat(1, 0)
 }
 
 extern "C" trampoline "derive_test_ffi" = derive_bench;

@@ -26,8 +26,12 @@ def _runtime_env(bench_variant):
 
 
 def _measure_peak_rss_kb(executable, env=None):
-    time_binary = "/usr/bin/time"
-    if not os.path.exists(time_binary):
+    time_binary = CONFIG.get("time", "/usr/bin/time")
+    if not os.path.isabs(time_binary):
+        import shutil
+
+        time_binary = shutil.which(time_binary)
+    if not time_binary or not os.path.exists(time_binary):
         return None
 
     rss_file = tempfile.NamedTemporaryFile(
@@ -109,6 +113,8 @@ def run_benchmark(bench_name, bench_variant):
             compile.compile_haskell(
                 resolve(bench_info), executable, rts_opts=spec.get("rts_opts")
             )
+        elif kind == "ocaml":
+            compile.compile_ocaml(resolve(bench_info), executable)
         else:
             raise ValueError(f"Unsupported variant kind: {kind}")
 

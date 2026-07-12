@@ -97,8 +97,8 @@ fun term200000() : term
     val z = thousand()
     App(App(y, x), z)
 
-fun term4000000() : term
-    val x = twenty()
+fun term1000000() : term
+    val x = five()
     val y = mul()
     val z = term200000()
     App(App(y, x), z)
@@ -110,7 +110,7 @@ fun nf-to-int(t: term, acc: int) : int
         _ -> acc
 
 fun nbe-test( i : int ) : <div,exn> int
-    val t = term4000000()
+    val t = term1000000()
     val n = norm-form(EnvNil, t)
     nf-to-int(n, i)
 
@@ -119,6 +119,6 @@ fun repeat-test( r : int, acc : int ) : <div,exn> int
 
 fun main()
     val n = repeat-test(6, 0)
-    if n != 24000015 then
-        println("FAIL: expected 24000015, got " ++ n.show)
+    if n != 6000015 then
+        println("FAIL: expected 6000015, got " ++ n.show)
         throw("wrong result")

@@ -1,8 +1,8 @@
 import os
-import subprocess
-import tempfile
 import shutil
 import stat
+import subprocess
+import tempfile
 
 from config import CONFIG
 
@@ -13,12 +13,17 @@ def _run_quiet(cmd, cwd, step):
             cmd,
             check=True,
             cwd=cwd,
-            stdout=subprocess.DEVNULL,
+            stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             text=True,
         )
     except subprocess.CalledProcessError as e:
-        error_details = e.stderr.strip() if e.stderr else "no error output"
+        streams = [
+            stream.strip()
+            for stream in (e.stdout, e.stderr)
+            if stream and stream.strip()
+        ]
+        error_details = "\n".join(streams) if streams else "no error output"
         raise RuntimeError(f"{step} failed: {error_details}") from e
 
 
@@ -83,6 +88,7 @@ def compile_reussir(
         )
     _ensure_executable(output, "reussir linking")
 
+
 def compile_koka(program: str, output: str) -> None:
     # -O3 with the same clang, thin-LTO, and -march=native the reussir
     # variant links with, so kklib participates in cross-module optimization.
@@ -103,11 +109,13 @@ def compile_koka(program: str, output: str) -> None:
         )
     _ensure_executable(output, "koka compilation")
 
+
 def compile_rust(program: str, output: str) -> None:
     _run_quiet(
         [
             CONFIG["rustc"],
-            "-C", "opt-level=3",
+            "-C",
+            "opt-level=3",
             "-o",
             output,
             program,
@@ -142,6 +150,27 @@ def compile_haskell(program: str, output: str, rts_opts: str | None = None) -> N
             step="haskell compilation",
         )
     _ensure_executable(output, "haskell compilation")
+
+
+def compile_ocaml(program: str, output: str) -> None:
+    with tempfile.TemporaryDirectory() as tmpdir:
+        # OCaml derives a module name from the filename; benchmark names use
+        # hyphens, which are not valid in module identifiers.
+        local_name = os.path.basename(program).replace("-", "_")
+        local_program = os.path.join(tmpdir, local_name)
+        shutil.copyfile(program, local_program)
+        _run_quiet(
+            [
+                CONFIG["ocamlopt"],
+                "-O3",
+                "-o",
+                output,
+                local_program,
+            ],
+            cwd=tmpdir,
+            step="OCaml compilation",
+        )
+    _ensure_executable(output, "OCaml compilation")
 
 
 def compile_lean(program: str, output: str) -> None:

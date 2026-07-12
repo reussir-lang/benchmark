@@ -64,7 +64,7 @@ lifeST gens = do
 
 main :: IO ()
 main = do
-  let pop = runST (lifeST 200000)
+  let pop = runST (lifeST 50000)
   if pop /= 115
     then putStrLn ("FAIL: expected 115, got " ++ show pop) >> exitFailure
     else pure ()

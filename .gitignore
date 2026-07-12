@@ -1,4 +1,7 @@
 __pycache__
+.direnv
+result
+result-*
 .koka
 out
 *.svg

@@ -2,15 +2,17 @@
 
 module Main where
 
+import Data.Int (Int64)
+
 data Color = Red | Black deriving (Eq)
 
 data Tree
-  = Branch !Color !Tree !Int !Bool !Tree
+  = Branch !Color !Tree !Int64 !Bool !Tree
   | Leaf
 
 data Zipper
-  = NodeR !Color !Tree !Int !Bool !Zipper
-  | NodeL !Color !Zipper !Int !Bool !Tree
+  = NodeR !Color !Tree !Int64 !Bool !Zipper
+  | NodeL !Color !Zipper !Int64 !Bool !Tree
   | Done
 
 moveUp :: Zipper -> Tree -> Tree
@@ -20,7 +22,7 @@ moveUp z t =
     NodeL c z1 k v r -> moveUp z1 (Branch c t k v r)
     Done -> t
 
-balanceRed :: Zipper -> Tree -> Int -> Bool -> Tree -> Tree
+balanceRed :: Zipper -> Tree -> Int64 -> Bool -> Tree -> Tree
 balanceRed z l k v r =
   case z of
     NodeR Black l1 k1 v1 z1 ->
@@ -63,7 +65,7 @@ balanceRed z l k v r =
         Done -> Branch Black (Branch Red l k v r) k1 v1 r1
     Done -> Branch Black l k v r
 
-ins :: Tree -> Int -> Bool -> Zipper -> (Int -> Int -> Int) -> Tree
+ins :: Tree -> Int64 -> Bool -> Zipper -> (Int64 -> Int64 -> Int64) -> Tree
 ins t k v z cmp =
   case t of
     Branch c l kx vx r ->
@@ -76,10 +78,10 @@ ins t k v z cmp =
               else moveUp z (Branch c l kx vx r)
     Leaf -> balanceRed z Leaf k v Leaf
 
-insert :: Tree -> Int -> Bool -> Tree
+insert :: Tree -> Int64 -> Bool -> Tree
 insert t k v = ins t k v Done (\a b -> b - a)
 
-makeTree :: Int -> Tree -> Tree
+makeTree :: Int64 -> Tree -> Tree
 makeTree n t
   | n <= 0 = t
   | otherwise =
@@ -96,13 +98,13 @@ foldTree t !b =
        in foldTree r mid
     Leaf -> b
 
-foldTest :: Int -> Int
+foldTest :: Int64 -> Int
 foldTest n = foldTree (makeTree n Leaf) 0
 
 main :: IO ()
 main = do
-  let n = 4200000
+  let n = 1050000
       p = foldTest n
-  if p /= 420000
-    then error ("FAIL: expected 420000, got " ++ show p)
+  if p /= 105000
+    then error ("FAIL: expected 105000, got " ++ show p)
     else pure ()

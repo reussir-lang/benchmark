@@ -2,17 +2,19 @@
 
 module Main where
 
+import Data.Int (Int64)
+
 data Color = Red | Black deriving (Eq)
 
 data Tree
-  = Branch !Color !Tree !Int !Bool !Tree
+  = Branch !Color !Tree !Int64 !Bool !Tree
   | Leaf
 
 isRed :: Tree -> Bool
 isRed (Branch Red _ _ _ _) = True
 isRed _ = False
 
-balanceLeft :: Tree -> Int -> Bool -> Tree -> Tree
+balanceLeft :: Tree -> Int64 -> Bool -> Tree -> Tree
 balanceLeft l k v r =
   case l of
     Branch _ lx kx vx rx ->
@@ -36,7 +38,7 @@ balanceLeft l k v r =
             _ -> Branch Black (Branch Red lx kx vx rx) k v r
     Leaf -> Leaf
 
-balanceRight :: Tree -> Int -> Bool -> Tree -> Tree
+balanceRight :: Tree -> Int64 -> Bool -> Tree -> Tree
 balanceRight l k v r =
   case r of
     Branch _ lx kx vx ry ->
@@ -60,7 +62,7 @@ balanceRight l k v r =
             _ -> Branch Black l k v (Branch Red lx kx vx ry)
     Leaf -> Leaf
 
-ins :: Tree -> Int -> Bool -> Tree
+ins :: Tree -> Int64 -> Bool -> Tree
 ins t k v =
   case t of
     Branch Red l kx vx r ->
@@ -89,10 +91,10 @@ setBlack :: Tree -> Tree
 setBlack (Branch _ l k v r) = Branch Black l k v r
 setBlack Leaf = Leaf
 
-insert :: Tree -> Int -> Bool -> Tree
+insert :: Tree -> Int64 -> Bool -> Tree
 insert t k v = setBlack (ins t k v)
 
-makeTree :: Int -> Tree
+makeTree :: Int64 -> Tree
 makeTree n = go n Leaf
   where
     go !m !t
@@ -111,13 +113,13 @@ foldTree t !b =
        in foldTree r mid
     Leaf -> b
 
-foldTest :: Int -> Int
+foldTest :: Int64 -> Int
 foldTest n = foldTree (makeTree n) 0
 
 main :: IO ()
 main = do
-  let n = 10000000
+  let n = 2500000
       p = foldTest n
-  if p /= 1000000
-    then error ("FAIL: expected 1000000, got " ++ show p)
+  if p /= 250000
+    then error ("FAIL: expected 250000, got " ++ show p)
     else pure ()

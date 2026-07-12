@@ -5,9 +5,9 @@
 extern int64_t qsort_test_ffi(int64_t rounds);
 
 int main(void) {
-  int64_t c = qsort_test_ffi(400);
-  if (c != 853505117) {
-    fprintf(stderr, "FAIL: expected 853505117, got %ld\n", c);
+  int64_t c = qsort_test_ffi(100);
+  if (c != 276066679) {
+    fprintf(stderr, "FAIL: expected 276066679, got %ld\n", c);
     abort();
   }
   return 0;

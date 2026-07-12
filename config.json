@@ -1,16 +1,18 @@
 {
-    "reussir-compiler": "/home/schrodingerzy/Documents/reussir/build/bin/rrc",
-    "cc": "clang-22",
-    "reussir-libs": "/home/schrodingerzy/rt-lto/aarch64-unknown-linux-gnu/release",
-    "koka-compiler": "/usr/local/bin/koka",
-    "lean-compiler": "/home/schrodingerzy/.elan/bin/lean",
-    "leanc": "/home/schrodingerzy/.elan/bin/leanc",
+    "reussir-compiler": "rrc",
+    "cc": "clang",
+    "reussir-libs": "build/lib",
+    "koka-compiler": "koka",
+    "lean-compiler": "lean",
+    "leanc": "leanc",
     "rustc": "rustc",
     "ghc": "ghc",
+    "ocamlopt": "ocamlopt",
     "hyperfine": "hyperfine",
+    "time": "time",
     "warmup-runs": 5,
     "runs": 10,
     "rust-runtime-env": [
-        "LD_PRELOAD=/usr/lib/libmimalloc.so"
+        "LD_PRELOAD=$MIMALLOC_LIB"
     ]
 }

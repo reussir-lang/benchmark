@@ -1,5 +1,6 @@
 /- Port of the zipper-based rbtree benchmark from Koka/Reussir. -/
 prelude
+import Init.Data.SInt.Basic
 import Init.Data.Option.Basic
 import Init.Data.List.BasicAux
 import Init.System.IO
@@ -13,11 +14,11 @@ inductive CmpResult
 
 inductive Tree
 | Leaf                                                                           : Tree
-| Node  (color : color) (lchild : Tree) (key : Nat) (val : Bool) (rchild : Tree) : Tree
+| Node  (color : color) (lchild : Tree) (key : Int64) (val : Bool) (rchild : Tree) : Tree
 
 inductive Zipper
-| NodeR (color : color) (lchild : Tree) (key : Nat) (val : Bool) (zip : Zipper)  : Zipper
-| NodeL (color : color) (zip : Zipper) (key : Nat) (val : Bool) (rchild : Tree)  : Zipper
+| NodeR (color : color) (lchild : Tree) (key : Int64) (val : Bool) (zip : Zipper)  : Zipper
+| NodeL (color : color) (zip : Zipper) (key : Int64) (val : Bool) (rchild : Tree)  : Zipper
 | Done                                                                            : Zipper
 
 open color Nat Tree Zipper CmpResult
@@ -27,7 +28,7 @@ def moveUp : Zipper → Tree → Tree
 | NodeL c z1 k v r, t => moveUp z1 (Node c t k v r)
 | Done,            t => t
 
-partial def balanceRed : Zipper → Tree → Nat → Bool → Tree → Tree
+partial def balanceRed : Zipper → Tree → Int64 → Bool → Tree → Tree
 | NodeR Black l1 k1 v1 z1, l, k, v, r =>
     moveUp z1 (Node Black l1 k1 v1 (Node Red l k v r))
 | NodeL Black z1 k1 v1 r1, l, k, v, r =>
@@ -53,7 +54,7 @@ partial def balanceRed : Zipper → Tree → Nat → Bool → Tree → Tree
 
 
 
-def ins : Tree → Nat → Bool → Zipper -> (Nat -> Nat -> CmpResult) → Tree
+def ins : Tree → Int64 → Bool → Zipper -> (Int64 -> Int64 -> CmpResult) → Tree
 | Node c l kx vx r, k, v, z, cmp =>
     match cmp k kx with
     |CmpResult.LT => ins l k v (NodeL c z kx vx r) cmp
@@ -62,10 +63,10 @@ def ins : Tree → Nat → Bool → Zipper -> (Nat -> Nat -> CmpResult) → Tree
 | Leaf, k, v, z, _cmp =>
     balanceRed z Leaf k v Leaf
 
-def insert (t : Tree) (k : Nat) (v : Bool) : Tree :=
+def insert (t : Tree) (k : Int64) (v : Bool) : Tree :=
   ins t k v Done (fun a b => if a < b then CmpResult.LT else if a > b then CmpResult.GT else CmpResult.EQ)
 
-def foldAction (_ : Nat) (v : Bool) (acc : Nat) : Nat :=
+def foldAction (_ : Int64) (v : Bool) (acc : Nat) : Nat :=
   if v then acc + 1 else acc
 
 def fold : Tree → Nat → Nat
@@ -76,13 +77,13 @@ def makeTreeAux : Nat → Tree → Tree
 | 0, t   => t
 | n+1, t =>
     let m := n
-    makeTreeAux n (insert t m (m % 10 = 0))
+    makeTreeAux n (insert t (Int64.ofNat m) (m % 10 = 0))
 
 def makeTree (n : Nat) : Tree :=
   makeTreeAux n Leaf
 
 def main : IO UInt32 :=
-  let t := makeTree 4200000
+  let t := makeTree 1050000
   let v := fold t 0
   IO.println (toString v) *>
   pure 0

@@ -75,9 +75,9 @@ fn heap_test(m: i64) -> i64 {
 }
 
 fn main() {
-    let m: i64 = std::env::args()
-        .nth(1)
-        .and_then(|s| s.parse().ok())
-        .unwrap_or(26000000);
-    println!("{}", heap_test(m));
+    let result = heap_test(6_500_000);
+    if result != 558_972_311 {
+        eprintln!("FAIL: expected 558972311, got {}", result);
+        std::process::exit(1);
+    }
 }

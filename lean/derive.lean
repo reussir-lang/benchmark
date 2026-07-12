@@ -93,8 +93,8 @@ unsafe def repeatTest : Nat → Nat → Nat
   | r+1, acc => repeatTest r (acc + deriveTest r)
 
 unsafe def main : IO UInt32 := do
-  let n := repeatTest 3 0
-  if n != 1575 then
-    IO.eprintln s!"FAIL: expected 1575, got {n}"
+  let n := repeatTest 1 0
+  if n != 524 then
+    IO.eprintln s!"FAIL: expected 524, got {n}"
     return 1
   return 0

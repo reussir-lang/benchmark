@@ -3,11 +3,10 @@
 The suite is organized as two benchmark sets:
 
 - ``functional-data-structures``: constructor-based workloads (trees, terms,
-  symbolic expressions) that exercise allocation, pattern matching, and
-  reuse/GC of linked structures.
-- ``large-aggregates``: flat-array workloads (grids, sort buffers, binary
-  heaps) that exercise bulk memory, in-place update under persistence
-  (copy-on-write / uniqueness), and bounds handling.
+  symbolic expressions, finger trees, and real-time queues) that exercise
+  allocation, pattern matching, persistence, and reuse/GC.
+- ``large-aggregates``: flat-array workloads plus the paired array and Braun
+  binary heaps, keeping the two heap representations in one result set.
 
 Extending the suite
 ===================
@@ -39,6 +38,15 @@ Toolchain configurations
   results by -40%..+190% depending on the benchmark's live-set size.
   The ``-st`` variants are separate sources using mutable ST arrays where
   the plain variant is purely functional.
+- ocaml: ``ocamlopt -O3``.
+
+For matched data-structure workloads, logical payloads have the same explicit
+width in every language: signed 64-bit keys/elements for the red-black trees,
+both heaps, the finger tree, and the functional queue. Native index/counter
+types and runtime object layouts may differ.
+
+Workloads use a roughly quarter-scale dominant work factor while retaining
+the working-set shape that each benchmark is intended to measure.
 """
 
 SETS = {
@@ -62,6 +70,7 @@ VARIANTS = {
     "haskell-a1g": {"kind": "haskell", "rts_opts": "-A1G"},
     "haskell-st": {"kind": "haskell"},
     "haskell-st-a1g": {"kind": "haskell", "rts_opts": "-A1G"},
+    "ocaml": {"kind": "ocaml"},
 }
 
 _FUNCTIONAL = "functional-data-structures"
@@ -96,6 +105,7 @@ BENCHES = {
                 "reussir-nrac": ("reussir/rbtree.rr", "reussir/rbtree.rr.c"),
                 "koka": "koka/rbtree.kk",
                 "rust": "rust/rbtree.rs",
+                "ocaml": "ocaml/rbtree.ml",
             },
             haskell="haskell/rbtree.hs",
         ),
@@ -110,6 +120,7 @@ BENCHES = {
                 "reussir-nrac": ("reussir/rbtree-zipper.rr", "reussir/rbtree.rr.c"),
                 "koka": "koka/rbtree-zipper.kk",
                 "rust": "rust/rbtree-zipper.rs",
+                "ocaml": "ocaml/rbtree-zipper.ml",
             },
             haskell="haskell/rbtree-zipper.hs",
         ),
@@ -123,6 +134,7 @@ BENCHES = {
                 "reussir-nrac": ("reussir/nbe-hoas.rr", "reussir/nbe-hoas.rr.c"),
                 "koka": "koka/nbe-hoas.kk",
                 "rust": "rust/nbe-hoas.rs",
+                "ocaml": "ocaml/nbe-hoas.ml",
             },
             haskell="haskell/nbe-hoas.hs",
         ),
@@ -136,6 +148,7 @@ BENCHES = {
                 "reussir-nrac": ("reussir/nbe-closure.rr", "reussir/nbe-closure.rr.c"),
                 "koka": "koka/nbe-closure.kk",
                 "rust": "rust/nbe-closure.rs",
+                "ocaml": "ocaml/nbe-closure.ml",
             },
             haskell="haskell/nbe-closure.hs",
         ),
@@ -149,6 +162,7 @@ BENCHES = {
                 "reussir-nrac": ("reussir/derive.rr", "reussir/derive.rr.c"),
                 "koka": "koka/derive.kk",
                 "rust": "rust/derive.rs",
+                "ocaml": "ocaml/derive.ml",
             },
             haskell="haskell/derive.hs",
         ),
@@ -162,6 +176,7 @@ BENCHES = {
                 "reussir-nrac": ("reussir/life.rr", "reussir/life.rr.c"),
                 "koka": "koka/life.kk",
                 "rust": "rust/life.rs",
+                "ocaml": "ocaml/life.ml",
             },
             haskell="haskell/life.hs",
             haskell_st="haskell/life_st.hs",
@@ -176,23 +191,72 @@ BENCHES = {
                 "reussir-nrac": ("reussir/qsort.rr", "reussir/qsort.rr.c"),
                 "koka": "koka/qsort.kk",
                 "rust": "rust/qsort.rs",
+                "ocaml": "ocaml/qsort.ml",
             },
             haskell="haskell/qsort.hs",
             haskell_st="haskell/qsort_st.hs",
         ),
     },
-    "heap": {
+    "heap-array": {
         "set": _AGGREGATES,
         "sources": _sources(
             {
                 "lean": "lean/heap.lean",
                 "reussir": ("reussir/heap.rr", "reussir/heap.rr.c"),
                 "reussir-nrac": ("reussir/heap.rr", "reussir/heap.rr.c"),
-                "koka": "koka/heap.kk",
+                "koka": "koka/heap-array.kk",
                 "rust": "rust/heap.rs",
+                "ocaml": "ocaml/heap-array.ml",
+            },
+            haskell_st="haskell/heap_st.hs",
+        ),
+    },
+    "heap-functional": {
+        "set": _AGGREGATES,
+        "sources": _sources(
+            {
+                "lean": "lean/heap-functional.lean",
+                "reussir": ("reussir/heap-functional.rr", "reussir/heap.rr.c"),
+                "reussir-nrac": ("reussir/heap-functional.rr", "reussir/heap.rr.c"),
+                "koka": "koka/heap.kk",
+                "rust": "rust/heap-functional.rs",
+                "ocaml": "ocaml/heap-functional.ml",
             },
             haskell="haskell/heap.hs",
-            haskell_st="haskell/heap_st.hs",
+        ),
+    },
+    "fingertree": {
+        "set": _FUNCTIONAL,
+        "sources": _sources(
+            {
+                "lean": "lean/fingertree.lean",
+                "reussir": ("reussir/fingertree.rr", "reussir/fingertree.rr.c"),
+                "reussir-nrac": ("reussir/fingertree.rr", "reussir/fingertree.rr.c"),
+                "koka": "koka/fingertree.kk",
+                "rust": "rust/fingertree.rs",
+                "ocaml": "ocaml/fingertree.ml",
+            },
+            haskell="haskell/fingertree.hs",
+        ),
+    },
+    "functional-queue": {
+        "set": _FUNCTIONAL,
+        "sources": _sources(
+            {
+                "lean": "lean/functional-queue.lean",
+                "reussir": (
+                    "reussir/functional-queue.rr",
+                    "reussir/functional-queue.rr.c",
+                ),
+                "reussir-nrac": (
+                    "reussir/functional-queue.rr",
+                    "reussir/functional-queue.rr.c",
+                ),
+                "koka": "koka/functional-queue.kk",
+                "rust": "rust/functional-queue.rs",
+                "ocaml": "ocaml/functional-queue.ml",
+            },
+            haskell="haskell/functional-queue.hs",
         ),
     },
 }

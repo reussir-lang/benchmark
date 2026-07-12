@@ -51,8 +51,8 @@ partial def rounds : Nat → Int → Int
   | r+1, acc => rounds r ((acc + round (UInt64.ofNat (42 + r + 1))) % 1000000007)
 
 def main : IO UInt32 := do
-  let acc := rounds 400 0
-  if acc != 853505117 then
-    IO.eprintln s!"FAIL: expected 853505117, got {acc}"
+  let acc := rounds 100 0
+  if acc != 276066679 then
+    IO.eprintln s!"FAIL: expected 276066679, got {acc}"
     return 1
   return 0

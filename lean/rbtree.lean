@@ -4,6 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Leonardo de Moura
 -/
 prelude
+import Init.Data.SInt.Basic
 import Init.Data.Option.Basic
 import Init.Data.List.BasicAux
 import Init.System.IO
@@ -13,11 +14,11 @@ inductive color
 
 inductive Tree
 | Leaf                                                                           : Tree
-| Node  (color : color) (lchild : Tree) (key : Nat) (val : Bool) (rchild : Tree) : Tree
+| Node  (color : color) (lchild : Tree) (key : Int64) (val : Bool) (rchild : Tree) : Tree
 
 open color Nat Tree
 
-def foldAction (_ : Nat) (v : Bool) (acc : Nat) : Nat :=
+def foldAction (_ : Int64) (v : Bool) (acc : Nat) : Nat :=
   if v then acc + 1 else acc
 
 def fold : Tree → Nat → Nat
@@ -25,14 +26,14 @@ def fold : Tree → Nat → Nat
 | Node _ l k v r, b     => fold r (foldAction k v (fold l b))
 
 @[inline]
-def balance1 : Nat → Bool → Tree → Tree → Tree
+def balance1 : Int64 → Bool → Tree → Tree → Tree
 | kv, vv, t, Node _ (Node Red l kx vx r₁) ky vy r₂   => Node Red (Node Black l kx vx r₁) ky vy (Node Black r₂ kv vv t)
 | kv, vv, t, Node _ l₁ ky vy (Node Red l₂ kx vx r)   => Node Red (Node Black l₁ ky vy l₂) kx vx (Node Black r kv vv t)
 | kv, vv, t, Node _ l  ky vy r                       => Node Black (Node Red l ky vy r) kv vv t
 | _,  _,  _,                                       _ => Leaf
 
 @[inline]
-def balance2 : Tree → Nat → Bool → Tree → Tree
+def balance2 : Tree → Int64 → Bool → Tree → Tree
 | t, kv, vv, Node _ (Node Red l kx₁ vx₁ r₁) ky vy r₂    => Node Red (Node Black t kv vv l) kx₁ vx₁ (Node Black r₁ ky vy r₂)
 | t, kv, vv, Node _ l₁ ky vy (Node Red l₂ kx₂ vx₂ r₂)   => Node Red (Node Black t kv vv l₁) ky vy (Node Black l₂ kx₂ vx₂ r₂)
 | t, kv, vv, Node _ l ky vy r                           => Node Black t kv vv (Node Red l ky vy r)
@@ -42,7 +43,7 @@ def isRed : Tree → Bool
 | Node Red _ _ _ _   => true
 | _                  => false
 
-def ins : Tree → Nat → Bool → Tree
+def ins : Tree → Int64 → Bool → Tree
 | Leaf,                 kx, vx => Node Red Leaf kx vx Leaf
 | Node Red a ky vy b,   kx, vx =>
    (if kx < ky then Node Red (ins a kx vx) ky vy b
@@ -60,21 +61,21 @@ def setBlack : Tree → Tree
 | Node _ l k v r   => Node Black l k v r
 | e                => e
 
-def insert (t : Tree) (k : Nat) (v : Bool) : Tree :=
+def insert (t : Tree) (k : Int64) (v : Bool) : Tree :=
 if isRed t then setBlack (ins t k v)
 else ins t k v
 
 def mkMapAux : Nat → Tree → Tree
 | 0, m => m
-| n+1,   m => mkMapAux n (insert m n (n % 10 = 0))
+| n+1,   m => mkMapAux n (insert m (Int64.ofNat n) (n % 10 = 0))
 
 def mkMap (n : Nat) :=
 mkMapAux n Leaf
 
 def main : IO UInt32 := do
-  let m := mkMap 10000000
+  let m := mkMap 2500000
   let v := fold m 0
-  if v != 1000000 then
-    IO.eprintln s!"FAIL: expected 1000000, got {v}"
+  if v != 250000 then
+    IO.eprintln s!"FAIL: expected 250000, got {v}"
     return 1
   return 0
