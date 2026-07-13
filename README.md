@@ -88,7 +88,7 @@ Known toolchain quirks, encoded in the sources:
 ## Running
 
 The checked-in flake is the one-shot bootstrap. It pins Reussir main at
-`02be96acc3447d5e6066e43c654fa3d920d2c80e` and builds only the `rrc`
+`15a6e37e99b067e5722a7ec4544f5b976de67d54` and builds only the `rrc`
 dependency closure plus `libreussir_rt.a`; TPDE, tests, the REPL, and unrelated
 tools are not built. It also supplies Clang/LLVM, Lean, Koka, Rust, GHC with
 the Hackage `fingertree` package, OCaml (and its GCC linker), hyperfine, GNU

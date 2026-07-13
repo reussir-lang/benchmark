@@ -10,9 +10,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Current main after the escaped-token ensure fix (#399, 2026-07-12).
+    # Current Reussir main (2026-07-12).
     reussir = {
-      url = "github:reussir-lang/reussir/02be96acc3447d5e6066e43c654fa3d920d2c80e";
+      url = "github:reussir-lang/reussir/15a6e37e99b067e5722a7ec4544f5b976de67d54";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.fenix.follows = "fenix";
       inputs.flake-utils.follows = "flake-utils";
