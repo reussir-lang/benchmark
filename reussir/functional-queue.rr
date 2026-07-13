@@ -3,16 +3,20 @@ enum QList {
     Cons(i64, QList)
 }
 
-enum [value] Rotation {
+enum Rotation {
     Idle,
     Reversing(i64, QList, QList, QList, QList),
     Appending(i64, QList, QList),
     Done(QList)
 }
 
-// Queue and its persistent QList members stay shared so update paths can
-// participate in reuse analysis. Only the nonrecursive state/result
-// contracts are inline values.
+// Queue, its persistent QList members, and the Rotation state stay shared
+// (boxed) so update paths participate in reuse analysis — matching the Koka
+// port's representation. Rotation in particular must NOT be a [value] enum:
+// the state is replaced every round, and an inline 40-byte four-slot
+// aggregate then travels through the call ABI and the Queue box on each
+// snoc/uncons (measured 69ms vs 41ms boxed, x64 9950X). Only Pop, the
+// nonrecursive result contract, is an inline value.
 struct Queue {
     lenf : i64,
     front : QList,
