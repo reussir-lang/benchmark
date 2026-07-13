@@ -238,6 +238,55 @@
           };
         };
 
+        # The runtime archive rrc-linked applications embed. Built with
+        # linker-plugin-LTO so the application's ThinLTO link can inline the
+        # allocation/RC entry points — the exact symmetry Koka gets from
+        # compiling kklib with `--ccopts=-flto=thin` (compile.py): without
+        # it every `__reussir_allocate(8, 40)` stays an opaque call while
+        # kk_malloc_small inlines, which alone was measured worth 15% on
+        # nbe-closure. The explicit CFLAGS must re-state
+        # `-DMI_MAX_ALIGN_SIZE=8`: setting the variable overrides the [env]
+        # entry in reussir's .cargo/config.toml, and silently losing the
+        # 8-granular mimalloc bins would reopen the per-constructor-sizing
+        # gap through a different door.
+        reussirRtXlto = llvmPkgs.stdenv.mkDerivation {
+          pname = "reussir-rt-xlto";
+          version = "0.1.0-git-${builtins.substring 0 12 reussir.rev}";
+          src = reussir;
+
+          cargoDeps = reussirCargoDeps;
+          cargoRoot = ".";
+
+          nativeBuildInputs = [
+            pkgs.rustPlatform.cargoSetupHook
+            rustToolchain
+            llvmPkgs.clang
+          ];
+
+          CFLAGS = "-flto=thin -DMI_MAX_ALIGN_SIZE=8";
+          RUSTFLAGS = "-Clinker-plugin-lto";
+
+          buildPhase = ''
+            runHook preBuild
+            cargo build --release -p reussir-rt -j "$NIX_BUILD_CORES"
+            runHook postBuild
+          '';
+
+          installPhase = ''
+            runHook preInstall
+            mkdir -p "$out/lib"
+            cp target/release/libreussir_rt.a "$out/lib/libreussir_rt.a"
+            runHook postInstall
+          '';
+
+          meta = {
+            description = "Reussir runtime archive as LLVM bitcode for consumer ThinLTO links";
+            homepage = "https://github.com/reussir-lang/reussir";
+            license = lib.licenses.asl20;
+            platforms = lib.platforms.linux;
+          };
+        };
+
         ghcBase = pkgs.haskellPackages.ghc;
         fingertreePackage = pkgs.haskellPackages.fingertree;
         fingertreePackageDb = pkgs.runCommand "fingertree-package-db" { } ''
@@ -260,6 +309,7 @@
       {
         packages.default = reussirCompiler;
         packages.reussir = reussirCompiler;
+        packages.reussir-rt-xlto = reussirRtXlto;
         packages.ghc = ghc;
 
         devShells.default =
@@ -288,7 +338,9 @@
               ];
 
               REUSSIR_COMPILER = "${reussirCompiler}/bin/rrc";
-              REUSSIR_LIBS = "${reussirCompiler}/lib";
+              # The bitcode runtime, so reussir's link gets the same
+              # runtime-LTO treatment compile.py gives kklib.
+              REUSSIR_LIBS = "${reussirRtXlto}/lib";
               BENCHMARK_CC = "${llvmPkgs.clang}/bin/clang";
               BENCHMARK_LEAN = "${pkgs.lean4}/bin/lean";
               BENCHMARK_LEANC = "${pkgs.lean4}/bin/leanc";
