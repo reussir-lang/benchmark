@@ -2,11 +2,14 @@
 // (std::collections::pure::hashmap — a persistent radix-32 HAMT keyed
 // by the pure FastHasher with its default seed).
 //
-// Same workload and checksum as ordered-map.rr: build 1M MINSTD-keyed
-// inserts over a 524287 keyspace, churn 1M insert/remove rounds, sum
-// 1M lookups, then fold the final map. The checksum depends only on
-// final contents plus the lookup stream, so it is iteration-order
-// independent and matches the ordered representation.
+// Unlike ordered-map, this workload is large and broad: keys are raw
+// MINSTD draws, uniform over [1, 2^31-2]. MINSTD is a full-period
+// permutation, so fresh draws never repeat; removals and the hit half
+// of the lookups replay the build key stream through a second MINSTD
+// state. Build 4M inserts, churn 2M rounds (remove a replayed build
+// key when the draw % 4 == 3, else insert fresh), then 2M lookups
+// alternating replayed hits and fresh misses. Final size 4,999,834.
+// result = lookup-sum + sum(key * 31 + value) + 7 * size.
 //
 // Std ships no Hash impl for primitive keys, so the logical i64 key
 // rides in a [value] newtype whose Hash feeds the i64 to the hasher —
@@ -38,46 +41,52 @@ fn lcg(x : i64) -> i64 {
 }
 
 fn build(i : i64, x : i64, m : HashMap<Key, i64>) -> HashMap<Key, i64> {
-    if i == 1000000 {
+    if i == 4000000 {
         m
     } else {
         let x1 = lcg(x);
-        build(i + 1, x1, m.insert(Key { id: x1 % 524287 }, i))
+        build(i + 1, x1, m.insert(Key { id: x1 }, i))
     }
 }
 
-fn churn(i : i64, x : i64, m : HashMap<Key, i64>) -> HashMap<Key, i64> {
-    if i == 1000000 {
+fn churn(i : i64, x : i64, r : i64, m : HashMap<Key, i64>) -> HashMap<Key, i64> {
+    if i == 2000000 {
         m
     } else {
         let x1 = lcg(x);
-        let k = Key { id: x1 % 524287 };
-        let m1 = if x1 % 4 == 3 {
-            m.remove(k)
+        if x1 % 4 == 3 {
+            let r1 = lcg(r);
+            churn(i + 1, x1, r1, m.remove(Key { id: r1 }))
         } else {
-            m.insert(k, 1000000 + i)
-        };
-        churn(i + 1, x1, m1)
+            churn(i + 1, x1, r, m.insert(Key { id: x1 }, 4000000 + i))
+        }
     }
 }
 
-fn lookups(i : i64, x : i64, m : HashMap<Key, i64>, acc : i64) -> i64 {
-    if i == 1000000 {
+fn lookups(i : i64, x : i64, r : i64, m : HashMap<Key, i64>, acc : i64) -> i64 {
+    if i == 2000000 {
         acc
     } else {
         let x1 = lcg(x);
-        let v = m.get(Key { id: x1 % 524287 }).unwrap_or(0 - 1);
-        lookups(i + 1, x1, m, acc + v)
+        if x1 % 2 == 0 {
+            let r1 = lcg(r);
+            let v = m.get(Key { id: r1 }).unwrap_or(0 - 1);
+            lookups(i + 1, x1, r1, m, acc + v)
+        } else {
+            let v = m.get(Key { id: x1 }).unwrap_or(0 - 1);
+            lookups(i + 1, x1, r, m, acc + v)
+        }
     }
 }
 
-// Each phase entry state is the MINSTD state after the previous phase's
-// million draws, hard-coded so every phase returns a single value.
+// Phase entry states are the MINSTD states after the previous phase's
+// draws (main stream and replay stream), hard-coded so every phase
+// returns a single value.
 fn map_test() -> i64 {
     let built = build(0, 1, HashMap::new());
-    let m = churn(0, 1263606197, built);
-    let acc = lookups(0, 24123260, m, 0);
-    acc + m.fold_left(0, |a, k, v| a + k.id * 1000003 + v) + 7 * (m.len() as i64)
+    let m = churn(0, 111912599, 1, built);
+    let acc = lookups(0, 541028572, 1377957107, m, 0);
+    acc + m.fold_left(0, |a, k, v| a + k.id * 31 + v) + 7 * (m.len() as i64)
 }
 
 extern "C" trampoline "map_test_ffi" = map_test;

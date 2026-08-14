@@ -278,8 +278,8 @@ BENCHES = {
         "sources": _sources(
             {
                 "lean": "lean/hash-map.lean",
-                "reussir": ("reussir/hash-map.rr", "reussir/map.rr.c"),
-                "reussir-nrac": ("reussir/hash-map.rr", "reussir/map.rr.c"),
+                "reussir": ("reussir/hash-map.rr", "reussir/hash-map.rr.c"),
+                "reussir-nrac": ("reussir/hash-map.rr", "reussir/hash-map.rr.c"),
                 "rust": "rust/hash-map.rs",
                 "rust-rpds": "rust/hash-map-rpds.rs",
                 "ocaml": "ocaml/hash-map.ml",

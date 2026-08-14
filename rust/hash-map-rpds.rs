@@ -4,17 +4,16 @@
 // SipHash). Updates use the `_mut` methods: rpds's owned-update path,
 // copy-on-write when shared and in place when unique — the analog of
 // Reussir's uniqueness-driven reuse for this linearly threaded
-// workload. Same workload and checksum as hash-map.rs.
+// workload. Same large broad-key workload and checksum as hash-map.rs.
 
 extern crate rpds;
 
 use rpds::HashTrieMap;
 
-const KEYSPACE: i64 = 524287;
-const BUILD: i64 = 1_000_000;
-const CHURN: i64 = 1_000_000;
-const LOOKUPS: i64 = 1_000_000;
-const EXPECTED: i64 = 105140861851414131;
+const BUILD: i64 = 4_000_000;
+const CHURN: i64 = 2_000_000;
+const LOOKUPS: i64 = 2_000_000;
+const EXPECTED: i64 = 166401892080070584;
 
 fn lcg(x: i64) -> i64 {
     (x * 48271) % 2147483647
@@ -25,23 +24,30 @@ fn main() {
     let mut x = 1i64;
     for i in 0..BUILD {
         x = lcg(x);
-        m.insert_mut(x % KEYSPACE, i);
+        m.insert_mut(x, i);
     }
+    let mut r = 1i64;
     for i in 0..CHURN {
         x = lcg(x);
-        let k = x % KEYSPACE;
         if x % 4 == 3 {
-            m.remove_mut(&k);
+            r = lcg(r);
+            m.remove_mut(&r);
         } else {
-            m.insert_mut(k, BUILD + i);
+            m.insert_mut(x, BUILD + i);
         }
     }
     let mut acc = 0i64;
     for _ in 0..LOOKUPS {
         x = lcg(x);
-        acc += m.get(&(x % KEYSPACE)).copied().unwrap_or(-1);
+        let k = if x % 2 == 0 {
+            r = lcg(r);
+            r
+        } else {
+            x
+        };
+        acc += m.get(&k).copied().unwrap_or(-1);
     }
-    let fold: i64 = m.iter().map(|(k, v)| k * 1000003 + v).sum();
+    let fold: i64 = m.iter().map(|(k, v)| k * 31 + v).sum();
     let result = acc + fold + 7 * (m.size() as i64);
     if result != EXPECTED {
         eprintln!("FAIL: expected {EXPECTED}, got {result}");

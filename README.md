@@ -50,12 +50,18 @@ intentionally left idiomatic.
   digit / 2–3 node algorithm. Rust uses persistent `Rc` paths. Reussir keeps
   persistent `Digit` nodes shared for elimination/construction reuse and uses
   `[value]` only for the temporary `ViewLeft` result.
-- **ordered-map / hash-map** — one shared associative workload on each
-  language's *standard-library* map: build 1M entries under MINSTD keys drawn
-  from a 524287 keyspace, churn 1M insert/remove rounds, sum 1M lookups, then
-  fold the final contents. The checksum depends only on final map contents
-  plus the lookup stream, so ordered, hashed, mutable, and persistent
-  representations must all agree. Reussir uses its std's `WavlMap`
+- **ordered-map / hash-map** — associative workloads on each language's
+  *standard-library* map: build under MINSTD keys, churn insert/remove
+  rounds, sum lookups, then fold the final contents. The checksum depends
+  only on final map contents plus the lookup stream, so ordered, hashed,
+  mutable, and persistent representations must all agree. ordered-map is
+  dense and narrow: 1M builds / 1M churn / 1M lookups over a 524287
+  keyspace (~77% final occupancy, ~401k entries). hash-map is large and
+  broad: keys are raw MINSTD draws, uniform over [1, 2^31-2] — a
+  full-period permutation, so fresh draws never repeat, and removals plus
+  the hit half of the lookups replay the build key stream through a second
+  MINSTD state (4M builds / 2M churn / 2M lookups, final size 4,999,834,
+  lookups split ~50/50 guaranteed-hit/guaranteed-miss). Reussir uses its std's `WavlMap`
   (persistent WAVL tree) and `HashMap` (persistent radix-32 HAMT with the
   pure FastHasher); Rust appears twice — `rust` uses std's `BTreeMap`/
   `HashMap` (mutable, SipHash-1-3) as the imperative baseline, and
