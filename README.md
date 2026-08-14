@@ -56,20 +56,22 @@ intentionally left idiomatic.
   only on final map contents plus the lookup stream, so ordered, hashed,
   mutable, and persistent representations must all agree. ordered-map is
   dense and narrow: 1M builds / 1M churn / 1M lookups over a 524287
-  keyspace (~77% final occupancy, ~401k entries). hash-map is a Zipfian
+  keyspace (~77% final occupancy, ending at 401,258 entries). Both map
+  benchmarks additionally retain old versions: during mutating rounds one
+  more draw per round parks the current version in an eight-slot ring when
+  divisible by 8192 (265 events for ordered-map, 977 for hash-map), where
+  it stays shared until the slot is overwritten; the checksum folds the
+  working map plus every ring slot, so persistent maps pay path copies
+  while a version is parked and mutable maps pay a full copy per parked
+  version. hash-map is a Zipfian
   mixed-op stream: keys follow an integer-only octave Zipf (theta ~ 1; a
   stratum s uniform in [0, 24), then a key uniform in [2^s, 2^(s+1)), so
   per-key probability decays as 1/key with no floating point involved),
   and 8M rounds each draw op/stratum/key from one MINSTD stream — 9/16
   insert, 5/16 delete, 2/16 lookup. Hot octaves saturate (the hottest key
   sees ~187k overwrites), the cold tail stays sparse, and deletes land on
-  present keys ~48% of the time. A fourth draw per round retains the
-  current version in an eight-slot ring when divisible by 8192 (977 times
-  over the run), so old versions stay live at random points: persistent
-  maps pay path copies while a version is parked, mutable maps pay a full
-  copy per parked version, and the final checksum folds the working map
-  plus every ring slot. The map ends at 1,120,619 entries with each ring
-  slot holding a ~1.1M-entry version. Reussir uses its std's `WavlMap`
+  present keys ~48% of the time, and the map ends at 1,120,619 entries
+  with each ring slot holding a ~1.1M-entry version. Reussir uses its std's `WavlMap`
   (persistent WAVL tree) and `HashMap` (persistent radix-32 HAMT with the
   pure FastHasher); Rust appears twice — `rust` uses std's `BTreeMap`/
   `HashMap` (mutable, SipHash-1-3) as the imperative baseline, and
