@@ -3,25 +3,25 @@
    mixed-op workload: keys follow an integer-only octave Zipf
    (theta ~ 1) — a stratum s drawn uniform in [0, 24), then a key
    uniform in [2^s, 2^(s+1)), so every octave carries equal mass and
-   per-key probability decays as 1/key. 8M rounds, each drawing op,
+   per-key probability decays as 1/key. 2M rounds, each drawing op,
    stratum, key from one MINSTD stream: 9/16 insert, 5/16 delete, 2/16
    lookup (sum, -1 on miss). Deletes land on present keys ~48% of the
    time.
 
    After each round one more draw decides retention: when it is
-   divisible by 8192 (977 times over the run) the current version is
+   divisible by 8192 (266 times over the run) the current version is
    parked in slot (draw / 8192) mod 8 of an eight-version ring, where
    it stays shared until that slot is next overwritten. A mutable table
    has no structural sharing, so retention is an explicit Hashtbl.copy
    at the event — the honest cost of versioning for this
    representation. The checksum folds the working map and every ring
    slot, so retained versions stay live and verified. Final size
-   1,120,619; each ring slot ends holding a ~1.1M-entry version. The
+   373,649; each ring slot ends holding a ~360k-entry version. The
    checksum is iteration-order independent so all representations
    agree. Replace semantics keep at most one binding per key. *)
 
-let ops_n = 8_000_000
-let expected = 1_271_164_153_412_359L
+let ops_n = 2_000_000
+let expected = 317_327_888_655_435L
 let lcg x = Int64.rem (Int64.mul x 48_271L) 2_147_483_647L
 
 let fold_one (m : (int64, int64) Hashtbl.t) (acc : int64) =

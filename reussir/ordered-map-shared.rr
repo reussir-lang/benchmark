@@ -1,22 +1,22 @@
 // Std-collection workload on the ordered map from Reussir's std
 // (std::collections::pure::wavlmap — a persistent WAVL tree).
 //
-// Build 1M MINSTD-keyed inserts over a 524287 keyspace, churn 1M
-// insert/remove rounds (remove when draw % 4 == 3), sum 1M lookups
+// Build 500k MINSTD-keyed inserts over a 524287 keyspace, churn 500k
+// insert/remove rounds (remove when draw % 4 == 3), sum 500k lookups
 // (-1 for a miss), then fold the final map. During the two mutating
 // phases a second draw per round decides retention: when it is
-// divisible by 8192 (265 times over the run) the current version is
+// divisible by 8192 (123 times over the run) the current version is
 // parked in slot (draw / 8192) mod 8 of an eight-version ring, where
 // it stays shared until that slot is next overwritten. Persistent maps
 // pay path copies while a parked version is live; mutable maps pay a
 // full copy per parked version. The checksum folds the final map and
 // every ring slot, so retained versions stay live and verified:
 // result = lookup-sum + sum over maps of (sum(key * 1000003 + value) +
-// 7 * size). Final size 401,258; each ring slot ends holding a
-// ~402k-entry version.
+// 7 * size). Final size 365,836; each ring slot ends holding a
+// ~366k-entry version.
 //
 // The build and churn rounds share one loop: round i of the combined
-// 2M inserts value i in either phase (churn round j writes 1000000+j),
+// 1M inserts value i in either phase (churn round j writes 500000+j),
 // and only the remove arm is churn-gated. The lookup phase draws once
 // per round and retains nothing.
 
@@ -41,7 +41,7 @@ fn fold_ring(ring : [WavlMap<i64, i64>; 8], i : i64, acc : i64) -> i64 {
 }
 
 fn lookups(i : i64, x : i64, m : WavlMap<i64, i64>, acc : i64) -> i64 {
-    if i == 1000000 {
+    if i == 500000 {
         acc
     } else {
         let x1 = lcg(x);
@@ -55,13 +55,13 @@ fn mutate(
     m : WavlMap<i64, i64>,
     ring : [WavlMap<i64, i64>; 8]
 ) -> i64 {
-    if i == 2000000 {
+    if i == 1000000 {
         let acc = lookups(0, x, m, 0);
         fold_ring(ring, 0, fold_one(m, acc))
     } else {
         let x1 = lcg(x);
         let k = x1 % 524287;
-        let m1 = if i >= 1000000 && x1 % 4 == 3 {
+        let m1 = if i >= 500000 && x1 % 4 == 3 {
             m.remove(k)
         } else {
             m.insert(k, i)

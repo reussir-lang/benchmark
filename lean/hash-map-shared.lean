@@ -5,19 +5,19 @@ import Std.Data.HashMap
    referenced). Zipfian mixed-op workload: keys follow an integer-only
    octave Zipf (theta ~ 1) — a stratum s drawn uniform in [0, 24), then
    a key uniform in [2^s, 2^(s+1)), so every octave carries equal mass
-   and per-key probability decays as 1/key. 8M rounds, each drawing op,
+   and per-key probability decays as 1/key. 2M rounds, each drawing op,
    stratum, key from one MINSTD stream: 9/16 insert, 5/16 delete, 2/16
    lookup (sum, -1 on miss). Deletes land on present keys ~48% of the
    time.
 
    After each round one more draw decides retention: when it is
-   divisible by 8192 (977 times over the run) the current version is
+   divisible by 8192 (266 times over the run) the current version is
    parked in slot (draw / 8192) mod 8 of an eight-version ring, where
    it stays shared until that slot is next overwritten. Persistent maps
    pay path copies while a parked version is live; mutable maps pay a
    full copy per parked version. The checksum folds the working map and
    every ring slot, so retained versions stay live and verified. Final
-   size 1,120,619; each ring slot ends holding a ~1.1M-entry version.
+   size 373,649; each ring slot ends holding a ~360k-entry version.
    Std.HashMap is updated in place only while uniquely referenced, so a
    parked version makes the next update copy the table — the honest cost
    of retention for this representation. The checksum is iteration-order
@@ -25,8 +25,8 @@ import Std.Data.HashMap
 
 open Std
 
-def opsN : Int64 := 8000000
-def expected : Int64 := 1271164153412359
+def opsN : Int64 := 2000000
+def expected : Int64 := 317327888655435
 
 def lcg (x : Int64) : Int64 :=
   (x * 48271) % 2147483647

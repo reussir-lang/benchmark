@@ -7,7 +7,7 @@ Haskell, and OCaml, organized as two sets:
 |---|---|---|
 | `functional-data-structures` | rbtree, rbtree-zipper, nbe-hoas, nbe-closure, derive, fingertree, functional-queue | allocation, pattern matching, persistence, and reuse/GC of linked structures |
 | `large-aggregates` | life, qsort, heap-array, heap-functional | flat arrays plus matched array/tree heap workloads |
-| `std-collections` | ordered-map, hash-map | each language's standard ordered map and hash map under one shared insert/remove/lookup workload |
+| `std-collections` | ordered-map-linear, ordered-map-shared, hash-map-linear, hash-map-shared, hash-map-dense | each language's standard ordered map and hash map under matched insert/remove/lookup workloads, without retention, with sparse retention, and (hash) with dense retention |
 
 Workloads use a roughly quarter-scale work factor while retaining the data
 shape each benchmark is intended to exercise. Every program hard-codes its
@@ -50,28 +50,36 @@ intentionally left idiomatic.
   digit / 2–3 node algorithm. Rust uses persistent `Rc` paths. Reussir keeps
   persistent `Digit` nodes shared for elimination/construction reuse and uses
   `[value]` only for the temporary `ViewLeft` result.
-- **ordered-map / hash-map** — associative workloads on each language's
-  *standard-library* map: build under MINSTD keys, churn insert/remove
-  rounds, sum lookups, then fold the final contents. The checksum depends
-  only on final map contents plus the lookup stream, so ordered, hashed,
-  mutable, and persistent representations must all agree. ordered-map is
-  dense and narrow: 1M builds / 1M churn / 1M lookups over a 524287
-  keyspace (~77% final occupancy, ending at 401,258 entries). Both map
-  benchmarks additionally retain old versions: during mutating rounds one
-  more draw per round parks the current version in an eight-slot ring when
-  divisible by 8192 (265 events for ordered-map, 977 for hash-map), where
-  it stays shared until the slot is overwritten; the checksum folds the
-  working map plus every ring slot, so persistent maps pay path copies
-  while a version is parked and mutable maps pay a full copy per parked
-  version. hash-map is a Zipfian
-  mixed-op stream: keys follow an integer-only octave Zipf (theta ~ 1; a
-  stratum s uniform in [0, 24), then a key uniform in [2^s, 2^(s+1)), so
-  per-key probability decays as 1/key with no floating point involved),
-  and 8M rounds each draw op/stratum/key from one MINSTD stream — 9/16
-  insert, 5/16 delete, 2/16 lookup. Hot octaves saturate (the hottest key
-  sees ~187k overwrites), the cold tail stays sparse, and deletes land on
-  present keys ~48% of the time, and the map ends at 1,120,619 entries
-  with each ring slot holding a ~1.1M-entry version. Reussir uses its std's `WavlMap`
+- **ordered-map / hash-map (`-linear` and `-shared`)** — associative
+  workloads on each language's *standard-library* map: build under MINSTD
+  keys, churn insert/remove rounds, sum lookups, then fold the final
+  contents. The checksum depends only on final map contents plus the
+  lookup stream, so ordered, hashed, mutable, and persistent
+  representations must all agree. The ordered-map workload is dense and
+  narrow: build/churn/lookup rounds over a 524287 keyspace. The hash-map
+  workload is a Zipfian mixed-op stream: keys follow an integer-only
+  octave Zipf (theta ~ 1; a stratum s uniform in [0, 24), then a key
+  uniform in [2^s, 2^(s+1)), so per-key probability decays as 1/key with
+  no floating point involved), and each round draws op/stratum/key from
+  one MINSTD stream — 9/16 insert, 5/16 delete, 2/16 lookup, with deletes
+  landing on present keys ~48% of the time. Each structure runs in two
+  configurations. The `-linear` cells thread exactly one live version and
+  retain nothing (ordered: 1M builds / 1M churn / 1M lookups, ending at
+  400,944 entries; hash: 8M rounds, ending at 1,120,773 entries), so
+  in-place and uniqueness-reuse updates stay unobstructed. The `-shared`
+  cells add version retention at reduced scale (ordered: 500k per phase;
+  hash: 2M rounds): during mutating rounds one more draw per round parks
+  the current version in an eight-slot ring when divisible by 8192 (123
+  events for ordered, 266 for hash), where it stays shared until the slot
+  is overwritten; the checksum folds the working map plus every ring slot,
+  so persistent maps pay path copies while a version is parked and mutable
+  maps pay a full copy per parked version (ordered ends at 365,836
+  entries with ~366k-entry ring slots; hash at 373,649 with ~360k-entry
+  slots). `hash-map-dense` is the same 2M-round hash workload with the
+  retention modulus dropped from 8192 to 512 (~3.9k events): past the
+  crossover (~1 park per 700–800 ops at this map size) where per-event
+  full copies dominate a mutable representation, while persistent maps
+  are insensitive to retention frequency. Reussir uses its std's `WavlMap`
   (persistent WAVL tree) and `HashMap` (persistent radix-32 HAMT with the
   pure FastHasher); Rust appears twice — `rust` uses std's `BTreeMap`/
   `HashMap` (mutable, SipHash-1-3) as the imperative baseline, and

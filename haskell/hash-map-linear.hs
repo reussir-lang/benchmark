@@ -11,15 +11,10 @@
 -- lookup (sum, -1 on miss). Deletes land on present keys ~48% of the
 -- time.
 --
--- After each round one more draw decides retention: when it is
--- divisible by 8192 (977 times over the run) the current version is
--- parked in slot (draw / 8192) mod 8 of an eight-version ring, where
--- it stays shared until that slot is next overwritten. A persistent
--- HAMT parks a version by keeping the handle; nothing is copied at the
--- event. The checksum folds the working map and every ring slot, so
--- retained versions stay live and verified. Final size 1,120,619; each
--- ring slot ends holding a ~1.1M-entry version. The checksum is
--- iteration-order independent so all representations agree.
+-- Linear variant: exactly one live version — the map handle is
+-- threaded linearly through every round and nothing is retained. The
+-- checksum folds the final map (iteration-order independent so all
+-- representations agree). Final size 1,120,773.
 
 import Data.Bits (shiftL)
 import Data.Int (Int64)
@@ -28,7 +23,7 @@ import System.Exit (exitFailure)
 
 opsN, expected :: Int64
 opsN = 8000000
-expected = 1271164153412359
+expected = 144585704074329
 
 lcg :: Int64 -> Int64
 lcg x = (x * 48271) `rem` 2147483647
@@ -39,16 +34,9 @@ foldOne m acc =
     + HM.foldlWithKey' (\a k v -> a + k * 31 + v) 0 m
     + 7 * fromIntegral (HM.size m)
 
-setAt :: Int -> a -> [a] -> [a]
-setAt n v xs = case splitAt n xs of
-  (before, _ : after) -> before ++ v : after
-  (before, []) -> before
-
-opsLoop ::
-  Int64 -> Int64 -> HM.HashMap Int64 Int64 ->
-  [HM.HashMap Int64 Int64] -> Int64 -> Int64
-opsLoop !i !x !m ring !acc
-  | i == opsN = foldr foldOne (foldOne m acc) ring
+opsLoop :: Int64 -> Int64 -> HM.HashMap Int64 Int64 -> Int64 -> Int64
+opsLoop !i !x !m !acc
+  | i == opsN = foldOne m acc
   | otherwise =
       let x1 = lcg x
           op = x1 `rem` 16
@@ -63,16 +51,11 @@ opsLoop !i !x !m ring !acc
           acc2
             | op < 14 = acc
             | otherwise = acc + HM.findWithDefault (-1) k m2
-          x4 = lcg x3
-       in if x4 `rem` 8192 == 0
-            then
-              let slot = fromIntegral ((x4 `div` 8192) `rem` 8) :: Int
-               in opsLoop (i + 1) x4 m2 (setAt slot m2 ring) acc2
-            else opsLoop (i + 1) x4 m2 ring acc2
+       in opsLoop (i + 1) x3 m2 acc2
 
 main :: IO ()
 main = do
-  let result = opsLoop 0 1 HM.empty (replicate 8 HM.empty) 0
+  let result = opsLoop 0 1 HM.empty 0
   if result == expected
     then pure ()
     else do

@@ -1,0 +1,55 @@
+// Std-collection workload on the ordered map from Reussir's std
+// (std::collections::pure::wavlmap — a persistent WAVL tree).
+//
+// Build 1M MINSTD-keyed inserts over a 524287 keyspace, churn 1M
+// insert/remove rounds (remove when draw % 4 == 3), sum 1M lookups
+// (-1 for a miss), then fold the final map:
+// result = lookup-sum + sum(key * 1000003 + value) + 7 * size.
+// Final size 400,944.
+//
+// Linear variant: exactly one live version — the map handle is
+// threaded linearly through every round and nothing is retained, so
+// uniqueness-driven reuse updates nodes in place throughout.
+//
+// The build and churn rounds share one loop: round i of the combined
+// 2M inserts value i in either phase (churn round j writes 1000000+j),
+// and only the remove arm is churn-gated. The lookup phase draws once
+// per round.
+
+import std::collections::pure::wavlmap::WavlMap;
+import std::option::Option;
+
+fn lcg(x : i64) -> i64 {
+    (x * 48271) % 2147483647
+}
+
+fn lookups(i : i64, x : i64, m : WavlMap<i64, i64>, acc : i64) -> i64 {
+    if i == 1000000 {
+        acc
+    } else {
+        let x1 = lcg(x);
+        lookups(i + 1, x1, m, acc + m.get(x1 % 524287).unwrap_or(0 - 1))
+    }
+}
+
+fn mutate(i : i64, x : i64, m : WavlMap<i64, i64>) -> i64 {
+    if i == 2000000 {
+        let acc = lookups(0, x, m, 0);
+        m.fold_left(acc, |a, k, v| a + k * 1000003 + v) + 7 * (m.len() as i64)
+    } else {
+        let x1 = lcg(x);
+        let k = x1 % 524287;
+        let m1 = if i >= 1000000 && x1 % 4 == 3 {
+            m.remove(k)
+        } else {
+            m.insert(k, i)
+        };
+        mutate(i + 1, x1, m1)
+    }
+}
+
+fn map_test() -> i64 {
+    mutate(0, 1, WavlMap::new())
+}
+
+extern "C" trampoline "map_test_ffi" = map_test;

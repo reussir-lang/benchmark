@@ -4,16 +4,16 @@
 // SipHash). Updates use the `_mut` methods: rpds's owned-update path,
 // copy-on-write when shared and in place when unique — the analog of
 // Reussir's uniqueness-driven reuse for this linearly threaded
-// workload. Same Zipfian mixed-op workload, eight-slot version
-// retention, and checksum as hash-map.rs; parking a version here is an
+// workload. Same Zipfian mixed-op workload, eight-slot dense-tier
+// version retention, and checksum as hash-map-dense.rs; parking a version here is an
 // O(1) handle clone, and later `_mut` updates path-copy while it lives.
 
 extern crate rpds;
 
 use rpds::HashTrieMap;
 
-const OPS: i64 = 8_000_000;
-const EXPECTED: i64 = 1271164153412359;
+const OPS: i64 = 2_000_000;
+const EXPECTED: i64 = 326234472953519;
 
 fn lcg(x: i64) -> i64 {
     (x * 48271) % 2147483647
@@ -39,8 +39,8 @@ fn main() {
             acc += m.get(&k).copied().unwrap_or(-1);
         }
         x = lcg(x);
-        if x % 8192 == 0 {
-            ring[((x / 8192) % 8) as usize] = m.clone();
+        if x % 512 == 0 {
+            ring[((x / 512) % 8) as usize] = m.clone();
         }
     }
     let fold_one = |m: &HashTrieMap<i64, i64>| -> i64 {

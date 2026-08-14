@@ -251,40 +251,123 @@ BENCHES = {
             haskell="haskell/fingertree.hs",
         ),
     },
-    # Standard-library collection benchmarks: one shared map workload
-    # (1M MINSTD-keyed builds, 1M insert/remove churn rounds, 1M lookups,
-    # then a content fold) on each language's standard ordered map and
-    # hash map. The Reussir cells use std's WavlMap/HashMap and compile
-    # against the bundled core+std packages (``reussir-std``); Koka's
-    # stdlib has no comparable containers, so it sits these two out.
-    "ordered-map": {
+    # Standard-library collection benchmarks: matched map workloads on
+    # each language's standard ordered map and hash map, in two
+    # configurations per structure. The ``-linear`` cells thread exactly
+    # one live version (no retention; 1M build/churn/lookup rounds for
+    # the ordered map, 8M mixed-op rounds for the hash map). The
+    # ``-shared`` cells park versions in an eight-slot retention ring at
+    # a reduced scale (500k rounds per ordered phase, 2M hash rounds) so
+    # explicit-copy representations stay in range. ``hash-map-dense``
+    # keeps the 2M-round shared workload but parks every 512th draw
+    # instead of every 8192nd (~3.9k events instead of 266) — past the
+    # crossover where per-event full copies dominate a mutable
+    # representation. The Reussir cells use std's WavlMap/HashMap and
+    # compile against the bundled core+std packages (``reussir-std``);
+    # Koka's stdlib has no comparable containers, so it sits these out.
+    "ordered-map-linear": {
         "set": _STD,
         "reussir-std": True,
         "sources": _sources(
             {
-                "lean": "lean/ordered-map.lean",
-                "reussir": ("reussir/ordered-map.rr", "reussir/map.rr.c"),
-                "reussir-nrac": ("reussir/ordered-map.rr", "reussir/map.rr.c"),
-                "rust": "rust/ordered-map.rs",
-                "rust-rpds": "rust/ordered-map-rpds.rs",
-                "ocaml": "ocaml/ordered-map.ml",
+                "lean": "lean/ordered-map-linear.lean",
+                "reussir": (
+                    "reussir/ordered-map-linear.rr",
+                    "reussir/ordered-map-linear.rr.c",
+                ),
+                "reussir-nrac": (
+                    "reussir/ordered-map-linear.rr",
+                    "reussir/ordered-map-linear.rr.c",
+                ),
+                "rust": "rust/ordered-map-linear.rs",
+                "rust-rpds": "rust/ordered-map-linear-rpds.rs",
+                "ocaml": "ocaml/ordered-map-linear.ml",
             },
-            haskell="haskell/ordered-map.hs",
+            haskell="haskell/ordered-map-linear.hs",
         ),
     },
-    "hash-map": {
+    "ordered-map-shared": {
         "set": _STD,
         "reussir-std": True,
         "sources": _sources(
             {
-                "lean": "lean/hash-map.lean",
-                "reussir": ("reussir/hash-map.rr", "reussir/hash-map.rr.c"),
-                "reussir-nrac": ("reussir/hash-map.rr", "reussir/hash-map.rr.c"),
-                "rust": "rust/hash-map.rs",
-                "rust-rpds": "rust/hash-map-rpds.rs",
-                "ocaml": "ocaml/hash-map.ml",
+                "lean": "lean/ordered-map-shared.lean",
+                "reussir": (
+                    "reussir/ordered-map-shared.rr",
+                    "reussir/ordered-map-shared.rr.c",
+                ),
+                "reussir-nrac": (
+                    "reussir/ordered-map-shared.rr",
+                    "reussir/ordered-map-shared.rr.c",
+                ),
+                "rust": "rust/ordered-map-shared.rs",
+                "rust-rpds": "rust/ordered-map-shared-rpds.rs",
+                "ocaml": "ocaml/ordered-map-shared.ml",
             },
-            haskell="haskell/hash-map.hs",
+            haskell="haskell/ordered-map-shared.hs",
+        ),
+    },
+    "hash-map-linear": {
+        "set": _STD,
+        "reussir-std": True,
+        "sources": _sources(
+            {
+                "lean": "lean/hash-map-linear.lean",
+                "reussir": (
+                    "reussir/hash-map-linear.rr",
+                    "reussir/hash-map-linear.rr.c",
+                ),
+                "reussir-nrac": (
+                    "reussir/hash-map-linear.rr",
+                    "reussir/hash-map-linear.rr.c",
+                ),
+                "rust": "rust/hash-map-linear.rs",
+                "rust-rpds": "rust/hash-map-linear-rpds.rs",
+                "ocaml": "ocaml/hash-map-linear.ml",
+            },
+            haskell="haskell/hash-map-linear.hs",
+        ),
+    },
+    "hash-map-shared": {
+        "set": _STD,
+        "reussir-std": True,
+        "sources": _sources(
+            {
+                "lean": "lean/hash-map-shared.lean",
+                "reussir": (
+                    "reussir/hash-map-shared.rr",
+                    "reussir/hash-map-shared.rr.c",
+                ),
+                "reussir-nrac": (
+                    "reussir/hash-map-shared.rr",
+                    "reussir/hash-map-shared.rr.c",
+                ),
+                "rust": "rust/hash-map-shared.rs",
+                "rust-rpds": "rust/hash-map-shared-rpds.rs",
+                "ocaml": "ocaml/hash-map-shared.ml",
+            },
+            haskell="haskell/hash-map-shared.hs",
+        ),
+    },
+    "hash-map-dense": {
+        "set": _STD,
+        "reussir-std": True,
+        "sources": _sources(
+            {
+                "lean": "lean/hash-map-dense.lean",
+                "reussir": (
+                    "reussir/hash-map-dense.rr",
+                    "reussir/hash-map-dense.rr.c",
+                ),
+                "reussir-nrac": (
+                    "reussir/hash-map-dense.rr",
+                    "reussir/hash-map-dense.rr.c",
+                ),
+                "rust": "rust/hash-map-dense.rs",
+                "rust-rpds": "rust/hash-map-dense-rpds.rs",
+                "ocaml": "ocaml/hash-map-dense.ml",
+            },
+            haskell="haskell/hash-map-dense.hs",
         ),
     },
     "functional-queue": {
