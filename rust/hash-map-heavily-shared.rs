@@ -21,7 +21,8 @@
 // representation. The checksum is iteration-order independent so all
 // representations agree.
 //
-// Dense tier: retention fires ~15x more often than hash-map-shared,
+// Heavily shared tier: retention fires ~15x more often than
+// hash-map-shared,
 // past the crossover where per-event full copies dominate a mutable
 // representation.
 

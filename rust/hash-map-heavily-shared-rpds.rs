@@ -4,8 +4,9 @@
 // SipHash). Updates use the `_mut` methods: rpds's owned-update path,
 // copy-on-write when shared and in place when unique — the analog of
 // Reussir's uniqueness-driven reuse for this linearly threaded
-// workload. Same Zipfian mixed-op workload, eight-slot dense-tier
-// version retention, and checksum as hash-map-dense.rs; parking a version here is an
+// workload. Same Zipfian mixed-op workload, eight-slot heavily-
+// shared-tier version retention, and checksum as
+// hash-map-heavily-shared.rs; parking a version here is an
 // O(1) handle clone, and later `_mut` updates path-copy while it lives.
 
 extern crate rpds;

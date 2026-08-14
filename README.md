@@ -7,7 +7,7 @@ Haskell, and OCaml, organized as two sets:
 |---|---|---|
 | `functional-data-structures` | rbtree, rbtree-zipper, nbe-hoas, nbe-closure, derive, fingertree, functional-queue | allocation, pattern matching, persistence, and reuse/GC of linked structures |
 | `large-aggregates` | life, qsort, heap-array, heap-functional | flat arrays plus matched array/tree heap workloads |
-| `std-collections` | ordered-map-linear, ordered-map-shared, hash-map-linear, hash-map-shared, hash-map-dense | each language's standard ordered map and hash map under matched insert/remove/lookup workloads, without retention, with sparse retention, and (hash) with dense retention |
+| `std-collections` | ordered-map-linear, ordered-map-shared, ordered-map-heavily-shared, hash-map-linear, hash-map-shared, hash-map-heavily-shared | each language's standard ordered map and hash map under matched insert/remove/lookup workloads at three retention tiers: none, sparse, and heavy |
 
 Workloads use a roughly quarter-scale work factor while retaining the data
 shape each benchmark is intended to exercise. Every program hard-codes its
@@ -75,11 +75,12 @@ intentionally left idiomatic.
   so persistent maps pay path copies while a version is parked and mutable
   maps pay a full copy per parked version (ordered ends at 365,836
   entries with ~366k-entry ring slots; hash at 373,649 with ~360k-entry
-  slots). `hash-map-dense` is the same 2M-round hash workload with the
-  retention modulus dropped from 8192 to 512 (~3.9k events): past the
-  crossover (~1 park per 700–800 ops at this map size) where per-event
-  full copies dominate a mutable representation, while persistent maps
-  are insensitive to retention frequency. Reussir uses its std's `WavlMap`
+  slots). The `-heavily-shared` cells are the same shared workloads with
+  the retention modulus dropped from 8192 to 512 (~1.95k ordered and
+  ~3.9k hash events): past the crossover (~1 park per 700–800 ops at
+  these map sizes) where per-event full copies dominate a mutable
+  representation, while persistent maps are insensitive to retention
+  frequency. Reussir uses its std's `WavlMap`
   (persistent WAVL tree) and `HashMap` (persistent radix-32 HAMT with the
   pure FastHasher); Rust appears twice — `rust` uses std's `BTreeMap`/
   `HashMap` (mutable, SipHash-1-3) as the imperative baseline, and

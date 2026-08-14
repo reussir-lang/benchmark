@@ -5,8 +5,11 @@ horizontal bar whose segments stack the mean runtime of that structure's
 configurations, so the bar length is the total time across the retention
 tiers and the segments show where it goes:
 
-- ordered:   ordered-map-linear + ordered-map-shared
-- unordered: hash-map-linear + hash-map-shared + hash-map-dense
+- ordered:   ordered-map-linear + ordered-map-shared + ordered-map-heavily-shared
+- unordered: hash-map-linear + hash-map-shared + hash-map-heavily-shared
+
+The time axis is logarithmic, so segment boundaries sit at true
+cumulative times but segment lengths are log-compressed.
 
 Feed it one or more aggregated results JSONs produced by
 ``main.py --output-json`` (later files override earlier ones per
@@ -30,6 +33,7 @@ FIGURES = {
         "segments": [
             ("ordered-map-linear", "linear"),
             ("ordered-map-shared", "shared"),
+            ("ordered-map-heavily-shared", "heavily shared"),
         ],
     },
     "hash-map-stacked": {
@@ -37,7 +41,7 @@ FIGURES = {
         "segments": [
             ("hash-map-linear", "linear"),
             ("hash-map-shared", "shared"),
-            ("hash-map-dense", "dense"),
+            ("hash-map-heavily-shared", "heavily shared"),
         ],
     },
 }
@@ -101,10 +105,21 @@ def plot_stacked(results, name, spec, output_path):
     labels = [r[0] for r in rows]
     totals = [sum(r[1]) for r in rows]
     axis_max = max(totals)
+    positive = [w for r in rows for w in r[1] if w > 0]
+    axis_min = min(min(positive) * 0.6, min(totals) * 0.5)
 
     fig, ax = plt.subplots(figsize=(9.5, 0.52 * len(rows) + 1.9))
     fig.patch.set_facecolor(SURFACE)
     ax.set_facecolor(SURFACE)
+    ax.set_xscale("log")
+    ax.set_xlim(axis_min, axis_max * 1.6)
+
+    from math import log10
+
+    log_span = log10(axis_max * 1.6) - log10(axis_min)
+
+    def _log_frac(lo, hi):
+        return (log10(max(hi, axis_min)) - log10(max(lo, axis_min))) / log_span
 
     y = range(len(rows))
     left = [0.0] * len(rows)
@@ -120,11 +135,15 @@ def plot_stacked(results, name, spec, output_path):
             edgecolor=SURFACE,
             linewidth=1.6,
         )
-        # Direct labels on segments wide enough to hold them.
+        # Direct labels on segments wide enough on the log axis to hold
+        # them, placed at the segment's on-screen (geometric) midpoint.
         for row_idx, width in enumerate(widths):
-            if width > 0.13 * axis_max:
+            lo = left[row_idx]
+            hi = lo + width
+            if width > 0 and _log_frac(lo, hi) > 0.08:
+                mid = (max(lo, axis_min) * hi) ** 0.5
                 ax.text(
-                    left[row_idx] + width / 2,
+                    mid,
                     row_idx,
                     _format_seconds(width),
                     ha="center",
@@ -136,7 +155,7 @@ def plot_stacked(results, name, spec, output_path):
 
     for row_idx, total in enumerate(totals):
         ax.text(
-            total + 0.012 * axis_max,
+            total * 1.05,
             row_idx,
             _format_seconds(total),
             ha="left",
@@ -147,9 +166,8 @@ def plot_stacked(results, name, spec, output_path):
 
     ax.set_yticks(list(y))
     ax.set_yticklabels(labels, fontsize=9, color=TEXT_PRIMARY)
-    ax.set_xlabel("Mean runtime (s)", fontsize=10, color=TEXT_SECONDARY)
+    ax.set_xlabel("Mean runtime (s, log scale)", fontsize=10, color=TEXT_SECONDARY)
     ax.set_title(spec["title"], fontsize=12, color=TEXT_PRIMARY, pad=34)
-    ax.set_xlim(0, axis_max * 1.12)
     ax.grid(axis="x", linestyle="--", linewidth=0.6, alpha=0.4)
     ax.grid(axis="y", visible=False)
     ax.tick_params(colors=TEXT_SECONDARY, labelsize=9)

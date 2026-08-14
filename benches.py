@@ -258,11 +258,11 @@ BENCHES = {
     # the ordered map, 8M mixed-op rounds for the hash map). The
     # ``-shared`` cells park versions in an eight-slot retention ring at
     # a reduced scale (500k rounds per ordered phase, 2M hash rounds) so
-    # explicit-copy representations stay in range. ``hash-map-dense``
-    # keeps the 2M-round shared workload but parks every 512th draw
-    # instead of every 8192nd (~3.9k events instead of 266) — past the
-    # crossover where per-event full copies dominate a mutable
-    # representation. The Reussir cells use std's WavlMap/HashMap and
+    # explicit-copy representations stay in range. The
+    # ``-heavily-shared`` cells keep the shared workloads but park every
+    # 512th draw instead of every 8192nd (~1.95k ordered / ~3.9k hash
+    # events) — past the crossover where per-event full copies dominate
+    # a mutable representation. The Reussir cells use std's WavlMap/HashMap and
     # compile against the bundled core+std packages (``reussir-std``);
     # Koka's stdlib has no comparable containers, so it sits these out.
     "ordered-map-linear": {
@@ -307,6 +307,27 @@ BENCHES = {
             haskell="haskell/ordered-map-shared.hs",
         ),
     },
+    "ordered-map-heavily-shared": {
+        "set": _STD,
+        "reussir-std": True,
+        "sources": _sources(
+            {
+                "lean": "lean/ordered-map-heavily-shared.lean",
+                "reussir": (
+                    "reussir/ordered-map-heavily-shared.rr",
+                    "reussir/ordered-map-heavily-shared.rr.c",
+                ),
+                "reussir-nrac": (
+                    "reussir/ordered-map-heavily-shared.rr",
+                    "reussir/ordered-map-heavily-shared.rr.c",
+                ),
+                "rust": "rust/ordered-map-heavily-shared.rs",
+                "rust-rpds": "rust/ordered-map-heavily-shared-rpds.rs",
+                "ocaml": "ocaml/ordered-map-heavily-shared.ml",
+            },
+            haskell="haskell/ordered-map-heavily-shared.hs",
+        ),
+    },
     "hash-map-linear": {
         "set": _STD,
         "reussir-std": True,
@@ -349,25 +370,25 @@ BENCHES = {
             haskell="haskell/hash-map-shared.hs",
         ),
     },
-    "hash-map-dense": {
+    "hash-map-heavily-shared": {
         "set": _STD,
         "reussir-std": True,
         "sources": _sources(
             {
-                "lean": "lean/hash-map-dense.lean",
+                "lean": "lean/hash-map-heavily-shared.lean",
                 "reussir": (
-                    "reussir/hash-map-dense.rr",
-                    "reussir/hash-map-dense.rr.c",
+                    "reussir/hash-map-heavily-shared.rr",
+                    "reussir/hash-map-heavily-shared.rr.c",
                 ),
                 "reussir-nrac": (
-                    "reussir/hash-map-dense.rr",
-                    "reussir/hash-map-dense.rr.c",
+                    "reussir/hash-map-heavily-shared.rr",
+                    "reussir/hash-map-heavily-shared.rr.c",
                 ),
-                "rust": "rust/hash-map-dense.rs",
-                "rust-rpds": "rust/hash-map-dense-rpds.rs",
-                "ocaml": "ocaml/hash-map-dense.ml",
+                "rust": "rust/hash-map-heavily-shared.rs",
+                "rust-rpds": "rust/hash-map-heavily-shared-rpds.rs",
+                "ocaml": "ocaml/hash-map-heavily-shared.ml",
             },
-            haskell="haskell/hash-map-dense.hs",
+            haskell="haskell/hash-map-heavily-shared.hs",
         ),
     },
     "functional-queue": {

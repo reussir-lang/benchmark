@@ -21,9 +21,10 @@
 // every ring slot, so retained versions stay live and verified:
 // result = lookup-sum + sum over maps of (sum(key * 31 + value) +
 // 7 * size). Final size 373,649; each ring slot ends holding a
-// ~373k-entry version from late in the run. Dense tier: retention
-// fires ~15x more often than hash-map-shared, past the crossover
-// where per-event full copies dominate a mutable representation.
+// ~373k-entry version from late in the run. Heavily shared tier:
+// retention fires ~15x more often than hash-map-shared, past the
+// crossover where per-event full copies dominate a mutable
+// representation.
 //
 // Std ships no Hash impl for primitive keys, so the logical i64 key
 // rides in a [value] newtype whose Hash feeds the i64 to the hasher —
