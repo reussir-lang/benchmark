@@ -8,8 +8,9 @@ tiers and the segments show where it goes:
 - ordered:   ordered-map-linear + ordered-map-shared + ordered-map-heavily-shared
 - unordered: hash-map-linear + hash-map-shared + hash-map-heavily-shared
 
-The time axis is logarithmic, so segment boundaries sit at true
-cumulative times but segment lengths are log-compressed.
+The time axis is linear. Outlier bars (totals far beyond the rest of
+the field) are truncated at the axis edge with a slashed torn-edge
+marker; their labels carry the true values.
 
 Feed it one or more aggregated results JSONs produced by
 ``main.py --output-json`` (later files override earlier ones per
@@ -104,46 +105,43 @@ def plot_stacked(results, name, spec, output_path):
     rows.sort(key=lambda r: sum(r[1]), reverse=True)
     labels = [r[0] for r in rows]
     totals = [sum(r[1]) for r in rows]
-    axis_max = max(totals)
-    positive = [w for r in rows for w in r[1] if w > 0]
-    axis_min = min(min(positive) * 0.6, min(totals) * 0.5)
+
+    # Cap the axis just above the largest non-outlier total so one
+    # runaway bar cannot flatten the field; anything past the cap is
+    # drawn truncated with a torn-edge marker.
+    ordered_totals = sorted(totals)
+    median = ordered_totals[len(ordered_totals) // 2]
+    cap = 1.02 * max(t for t in totals if t <= 4 * median)
+    truncated = [t > cap for t in totals]
 
     fig, ax = plt.subplots(figsize=(9.5, 0.52 * len(rows) + 1.9))
     fig.patch.set_facecolor(SURFACE)
     ax.set_facecolor(SURFACE)
-    ax.set_xscale("log")
-    ax.set_xlim(axis_min, axis_max * 1.6)
-
-    from math import log10
-
-    log_span = log10(axis_max * 1.6) - log10(axis_min)
-
-    def _log_frac(lo, hi):
-        return (log10(max(hi, axis_min)) - log10(max(lo, axis_min))) / log_span
 
     y = range(len(rows))
     left = [0.0] * len(rows)
     for seg_idx, (_, seg_label) in enumerate(spec["segments"]):
         widths = [r[1][seg_idx] for r in rows]
+        shown = [
+            max(0.0, min(l + w, cap) - min(l, cap))
+            for l, w in zip(left, widths)
+        ]
         ax.barh(
             y,
-            widths,
-            left=left,
+            shown,
+            left=[min(l, cap) for l in left],
             height=0.62,
             label=seg_label,
             color=SEGMENT_COLORS[seg_idx],
             edgecolor=SURFACE,
             linewidth=1.6,
         )
-        # Direct labels on segments wide enough on the log axis to hold
-        # them, placed at the segment's on-screen (geometric) midpoint.
-        for row_idx, width in enumerate(widths):
-            lo = left[row_idx]
-            hi = lo + width
-            if width > 0 and _log_frac(lo, hi) > 0.08:
-                mid = (max(lo, axis_min) * hi) ** 0.5
+        # Direct labels (true values) on segments whose displayed width
+        # can hold them.
+        for row_idx, (width, disp) in enumerate(zip(widths, shown)):
+            if disp > 0.13 * cap:
                 ax.text(
-                    mid,
+                    min(left[row_idx], cap) + disp / 2,
                     row_idx,
                     _format_seconds(width),
                     ha="center",
@@ -153,9 +151,29 @@ def plot_stacked(results, name, spec, output_path):
                 )
         left = [a + b for a, b in zip(left, widths)]
 
-    for row_idx, total in enumerate(totals):
+    # Torn edge on truncated bars: a surface-colored slash band with two
+    # diagonal cut lines through the bar height.
+    for row_idx, is_cut in enumerate(truncated):
+        if not is_cut:
+            continue
+        for dx, color, lw in (
+            (0.0, SURFACE, 5.0),
+            (-0.008 * cap, TEXT_SECONDARY, 1.2),
+            (0.008 * cap, TEXT_SECONDARY, 1.2),
+        ):
+            ax.plot(
+                [cap - 0.015 * cap + dx, cap + 0.005 * cap + dx],
+                [row_idx - 0.40, row_idx + 0.40],
+                color=color,
+                linewidth=lw,
+                solid_capstyle="butt",
+                clip_on=False,
+                zorder=5,
+            )
+
+    for row_idx, (total, is_cut) in enumerate(zip(totals, truncated)):
         ax.text(
-            total * 1.05,
+            min(total, cap) + 0.017 * cap,
             row_idx,
             _format_seconds(total),
             ha="left",
@@ -166,8 +184,12 @@ def plot_stacked(results, name, spec, output_path):
 
     ax.set_yticks(list(y))
     ax.set_yticklabels(labels, fontsize=9, color=TEXT_PRIMARY)
-    ax.set_xlabel("Mean runtime (s, log scale)", fontsize=10, color=TEXT_SECONDARY)
+    xlabel = "Mean runtime (s)"
+    if any(truncated):
+        xlabel += " — slashed bars continue past the axis"
+    ax.set_xlabel(xlabel, fontsize=10, color=TEXT_SECONDARY)
     ax.set_title(spec["title"], fontsize=12, color=TEXT_PRIMARY, pad=34)
+    ax.set_xlim(0, cap * 1.14)
     ax.grid(axis="x", linestyle="--", linewidth=0.6, alpha=0.4)
     ax.grid(axis="y", visible=False)
     ax.tick_params(colors=TEXT_SECONDARY, labelsize=9)
