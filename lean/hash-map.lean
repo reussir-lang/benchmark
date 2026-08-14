@@ -2,62 +2,44 @@ import Std.Data.HashMap
 
 /- Std-collection workload on Lean's standard hash map
    (Std.HashMap — an array-backed table, updated in place when uniquely
-   referenced). Large and broad: keys are raw MINSTD draws, uniform
-   over [1, 2^31-2]; MINSTD is a full-period permutation, so fresh
-   draws never repeat, and removals plus the hit half of the lookups
-   replay the build key stream through a second MINSTD state. Build 4M
-   inserts, churn 2M rounds, 2M lookups alternating replayed hits and
-   fresh misses. Final size 4,999,834; the checksum is iteration-order
+   referenced). Zipfian mixed-op workload: keys follow an integer-only
+   octave Zipf (theta ~ 1) — a stratum s drawn uniform in [0, 24), then
+   a key uniform in [2^s, 2^(s+1)), so every octave carries equal mass
+   and per-key probability decays as 1/key. 8M rounds, each drawing op,
+   stratum, key from one MINSTD stream: 9/16 insert, 5/16 delete, 2/16
+   lookup (sum, -1 on miss). Deletes land on present keys ~48% of the
+   time; final size 1,120,773. The checksum is iteration-order
    independent so all representations agree. -/
 
 open Std
 
-def buildN : Int64 := 4000000
-def churnN : Int64 := 2000000
-def lookupN : Int64 := 2000000
-def expected : Int64 := 166401892080070584
+def opsN : Int64 := 8000000
+def expected : Int64 := 144585704074329
 
 def lcg (x : Int64) : Int64 :=
   (x * 48271) % 2147483647
 
-partial def buildLoop (i : Int64) (x : Int64) (m : HashMap Int64 Int64) :
-    HashMap Int64 Int64 :=
-  if i == buildN then m
+partial def opsLoop (i : Int64) (x : Int64) (m : HashMap Int64 Int64)
+    (acc : Int64) : Int64 :=
+  if i == opsN then
+    acc + m.fold (fun a k v => a + k * 31 + v) 0 + 7 * Int64.ofNat m.size
   else
-    let x' := lcg x
-    buildLoop (i + 1) x' (m.insert x' i)
-
-partial def churnLoop (i : Int64) (x : Int64) (r : Int64)
-    (m : HashMap Int64 Int64) : Int64 × Int64 × HashMap Int64 Int64 :=
-  if i == churnN then (x, r, m)
-  else
-    let x' := lcg x
-    if x' % 4 == 3 then
-      let r' := lcg r
-      churnLoop (i + 1) x' r' (m.erase r')
+    let x1 := lcg x
+    let op := x1 % 16
+    let x2 := lcg x1
+    let s := (x2 % 24).toNatClampNeg
+    let x3 := lcg x2
+    let stratum : Int64 := 1 <<< Int64.ofNat s
+    let k := stratum + (x3 % stratum)
+    if op < 9 then
+      opsLoop (i + 1) x3 (m.insert k i) acc
+    else if op < 14 then
+      opsLoop (i + 1) x3 (m.erase k) acc
     else
-      churnLoop (i + 1) x' r (m.insert x' (buildN + i))
-
-partial def lookupLoop (i : Int64) (x : Int64) (r : Int64)
-    (m : HashMap Int64 Int64) (acc : Int64) : Int64 :=
-  if i == lookupN then acc
-  else
-    let x' := lcg x
-    if x' % 2 == 0 then
-      let r' := lcg r
-      lookupLoop (i + 1) x' r' m (acc + m.getD r' (-1))
-    else
-      lookupLoop (i + 1) x' r m (acc + m.getD x' (-1))
-
-def mapTest : Int64 :=
-  let built := buildLoop 0 1 (∅ : HashMap Int64 Int64)
-  let (x2, r1, m) := churnLoop 0 111912599 1 built
-  let acc := lookupLoop 0 x2 r1 m 0
-  let folded := m.fold (fun a k v => a + k * 31 + v) 0
-  acc + folded + 7 * Int64.ofNat m.size
+      opsLoop (i + 1) x3 m (acc + m.getD k (-1))
 
 def main : IO UInt32 := do
-  let r := mapTest
+  let r := opsLoop 0 1 (∅ : HashMap Int64 Int64) 0
   if r != expected then
     IO.eprintln s!"FAIL: expected {expected}, got {r}"
     return 1

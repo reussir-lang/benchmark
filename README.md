@@ -56,12 +56,14 @@ intentionally left idiomatic.
   only on final map contents plus the lookup stream, so ordered, hashed,
   mutable, and persistent representations must all agree. ordered-map is
   dense and narrow: 1M builds / 1M churn / 1M lookups over a 524287
-  keyspace (~77% final occupancy, ~401k entries). hash-map is large and
-  broad: keys are raw MINSTD draws, uniform over [1, 2^31-2] — a
-  full-period permutation, so fresh draws never repeat, and removals plus
-  the hit half of the lookups replay the build key stream through a second
-  MINSTD state (4M builds / 2M churn / 2M lookups, final size 4,999,834,
-  lookups split ~50/50 guaranteed-hit/guaranteed-miss). Reussir uses its std's `WavlMap`
+  keyspace (~77% final occupancy, ~401k entries). hash-map is a Zipfian
+  mixed-op stream: keys follow an integer-only octave Zipf (theta ~ 1; a
+  stratum s uniform in [0, 24), then a key uniform in [2^s, 2^(s+1)), so
+  per-key probability decays as 1/key with no floating point involved),
+  and 8M rounds each draw op/stratum/key from one MINSTD stream — 9/16
+  insert, 5/16 delete, 2/16 lookup. Hot octaves saturate (the hottest key
+  sees ~187k overwrites), the cold tail stays sparse, deletes land on
+  present keys ~48% of the time, and the map ends at 1,120,773 entries. Reussir uses its std's `WavlMap`
   (persistent WAVL tree) and `HashMap` (persistent radix-32 HAMT with the
   pure FastHasher); Rust appears twice — `rust` uses std's `BTreeMap`/
   `HashMap` (mutable, SipHash-1-3) as the imperative baseline, and

@@ -1,19 +1,18 @@
 // Std-collection workload on Rust's std hash map
 // (std::collections::HashMap, mutable in place, default SipHash-1-3
-// hasher). Large and broad: keys are raw MINSTD draws, uniform over
-// [1, 2^31-2]; MINSTD is a full-period permutation, so fresh draws
-// never repeat, and removals plus the hit half of the lookups replay
-// the build key stream through a second MINSTD state. Build 4M
-// inserts, churn 2M rounds, 2M lookups alternating replayed hits and
-// fresh misses. Final size 4,999,834; the checksum is iteration-order
+// hasher). Zipfian mixed-op workload: keys follow an integer-only
+// octave Zipf (theta ~ 1) — a stratum s drawn uniform in [0, 24), then
+// a key uniform in [2^s, 2^(s+1)), so every octave carries equal mass
+// and per-key probability decays as 1/key. 8M rounds, each drawing op,
+// stratum, key from one MINSTD stream: 9/16 insert, 5/16 delete, 2/16
+// lookup (sum, -1 on miss). Deletes land on present keys ~48% of the
+// time; final size 1,120,773. The checksum is iteration-order
 // independent so all representations agree.
 
 use std::collections::HashMap;
 
-const BUILD: i64 = 4_000_000;
-const CHURN: i64 = 2_000_000;
-const LOOKUPS: i64 = 2_000_000;
-const EXPECTED: i64 = 166401892080070584;
+const OPS: i64 = 8_000_000;
+const EXPECTED: i64 = 144585704074329;
 
 fn lcg(x: i64) -> i64 {
     (x * 48271) % 2147483647
@@ -22,30 +21,21 @@ fn lcg(x: i64) -> i64 {
 fn main() {
     let mut m: HashMap<i64, i64> = HashMap::new();
     let mut x = 1i64;
-    for i in 0..BUILD {
-        x = lcg(x);
-        m.insert(x, i);
-    }
-    let mut r = 1i64;
-    for i in 0..CHURN {
-        x = lcg(x);
-        if x % 4 == 3 {
-            r = lcg(r);
-            m.remove(&r);
-        } else {
-            m.insert(x, BUILD + i);
-        }
-    }
     let mut acc = 0i64;
-    for _ in 0..LOOKUPS {
+    for i in 0..OPS {
         x = lcg(x);
-        let k = if x % 2 == 0 {
-            r = lcg(r);
-            r
+        let op = x % 16;
+        x = lcg(x);
+        let s = x % 24;
+        x = lcg(x);
+        let k = (1i64 << s) + (x % (1i64 << s));
+        if op < 9 {
+            m.insert(k, i);
+        } else if op < 14 {
+            m.remove(&k);
         } else {
-            x
-        };
-        acc += m.get(&k).copied().unwrap_or(-1);
+            acc += m.get(&k).copied().unwrap_or(-1);
+        }
     }
     let fold: i64 = m.iter().map(|(k, v)| k * 31 + v).sum();
     let result = acc + fold + 7 * (m.len() as i64);

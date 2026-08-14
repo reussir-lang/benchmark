@@ -1,46 +1,36 @@
 (* Std-collection workload on OCaml's standard hash map
-   (Stdlib.Hashtbl, mutable in place, seeded polynomial hash). Large
-   and broad: keys are raw MINSTD draws, uniform over [1, 2^31-2];
-   MINSTD is a full-period permutation, so fresh draws never repeat,
-   and removals plus the hit half of the lookups replay the build key
-   stream through a second MINSTD state. Build 4M inserts, churn 2M
-   rounds, 2M lookups alternating replayed hits and fresh misses.
-   Final size 4,999,834; the checksum is iteration-order independent so
-   all representations agree. Replace semantics keep at most one
-   binding per key. *)
+   (Stdlib.Hashtbl, mutable in place, seeded polynomial hash). Zipfian
+   mixed-op workload: keys follow an integer-only octave Zipf
+   (theta ~ 1) — a stratum s drawn uniform in [0, 24), then a key
+   uniform in [2^s, 2^(s+1)), so every octave carries equal mass and
+   per-key probability decays as 1/key. 8M rounds, each drawing op,
+   stratum, key from one MINSTD stream: 9/16 insert, 5/16 delete, 2/16
+   lookup (sum, -1 on miss). Deletes land on present keys ~48% of the
+   time; final size 1,120,773. The checksum is iteration-order
+   independent so all representations agree. Replace semantics keep at
+   most one binding per key. *)
 
-let build_n = 4_000_000
-let churn_n = 2_000_000
-let lookup_n = 2_000_000
-let expected = 166_401_892_080_070_584L
+let ops_n = 8_000_000
+let expected = 144_585_704_074_329L
 let lcg x = Int64.rem (Int64.mul x 48_271L) 2_147_483_647L
 
 let () =
   let m : (int64, int64) Hashtbl.t = Hashtbl.create 1024 in
   let x = ref 1L in
-  for i = 0 to build_n - 1 do
-    x := lcg !x;
-    Hashtbl.replace m !x (Int64.of_int i)
-  done;
-  let r = ref 1L in
-  for i = 0 to churn_n - 1 do
-    x := lcg !x;
-    if Int64.rem !x 4L = 3L then (
-      r := lcg !r;
-      Hashtbl.remove m !r)
-    else Hashtbl.replace m !x (Int64.of_int (build_n + i))
-  done;
   let acc = ref 0L in
-  for _ = 0 to lookup_n - 1 do
+  for i = 0 to ops_n - 1 do
     x := lcg !x;
-    let k =
-      if Int64.rem !x 2L = 0L then (
-        r := lcg !r;
-        !r)
-      else !x
-    in
-    let v = match Hashtbl.find_opt m k with Some v -> v | None -> -1L in
-    acc := Int64.add !acc v
+    let op = Int64.rem !x 16L in
+    x := lcg !x;
+    let s = Int64.to_int (Int64.rem !x 24L) in
+    x := lcg !x;
+    let stratum = Int64.shift_left 1L s in
+    let k = Int64.add stratum (Int64.rem !x stratum) in
+    if op < 9L then Hashtbl.replace m k (Int64.of_int i)
+    else if op < 14L then Hashtbl.remove m k
+    else
+      let v = match Hashtbl.find_opt m k with Some v -> v | None -> -1L in
+      acc := Int64.add !acc v
   done;
   let folded =
     Hashtbl.fold
