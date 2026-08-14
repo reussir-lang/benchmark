@@ -59,7 +59,7 @@ partial def opsLoop (i : Int64) (x : Int64) (m : HashMap Int64 Int64)
       opsLoop (i + 1) x4 m2 ring acc2
 
 def main : IO UInt32 := do
-  let ring := Array.mkArray 8 (∅ : HashMap Int64 Int64)
+  let ring := Array.replicate 8 (∅ : HashMap Int64 Int64)
   let r := opsLoop 0 1 (∅ : HashMap Int64 Int64) ring 0
   if r != expected then
     IO.eprintln s!"FAIL: expected {expected}, got {r}"

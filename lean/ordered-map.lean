@@ -69,7 +69,7 @@ def foldOne (m : TreeMap Int64 Int64) (acc : Int64) : Int64 :=
   acc + m.foldl (fun a k v => a + k * 1000003 + v) 0 + 7 * Int64.ofNat m.size
 
 def mapTest : Int64 :=
-  let ring0 := Array.mkArray 8 (TreeMap.empty : TreeMap Int64 Int64)
+  let ring0 := Array.replicate 8 (TreeMap.empty : TreeMap Int64 Int64)
   let (x1, built, ring1) := buildLoop 0 1 TreeMap.empty ring0
   let (x2, m, ring) := churnLoop 0 x1 built ring1
   let acc := lookupLoop 0 x2 m 0
