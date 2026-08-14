@@ -4,14 +4,16 @@
 // SipHash). Updates use the `_mut` methods: rpds's owned-update path,
 // copy-on-write when shared and in place when unique — the analog of
 // Reussir's uniqueness-driven reuse for this linearly threaded
-// workload. Same Zipfian mixed-op workload and checksum as hash-map.rs.
+// workload. Same Zipfian mixed-op workload, eight-slot version
+// retention, and checksum as hash-map.rs; parking a version here is an
+// O(1) handle clone, and later `_mut` updates path-copy while it lives.
 
 extern crate rpds;
 
 use rpds::HashTrieMap;
 
 const OPS: i64 = 8_000_000;
-const EXPECTED: i64 = 144585704074329;
+const EXPECTED: i64 = 1271164153412359;
 
 fn lcg(x: i64) -> i64 {
     (x * 48271) % 2147483647
@@ -19,6 +21,7 @@ fn lcg(x: i64) -> i64 {
 
 fn main() {
     let mut m: HashTrieMap<i64, i64> = HashTrieMap::new();
+    let mut ring: Vec<HashTrieMap<i64, i64>> = vec![HashTrieMap::new(); 8];
     let mut x = 1i64;
     let mut acc = 0i64;
     for i in 0..OPS {
@@ -35,9 +38,15 @@ fn main() {
         } else {
             acc += m.get(&k).copied().unwrap_or(-1);
         }
+        x = lcg(x);
+        if x % 8192 == 0 {
+            ring[((x / 8192) % 8) as usize] = m.clone();
+        }
     }
-    let fold: i64 = m.iter().map(|(k, v)| k * 31 + v).sum();
-    let result = acc + fold + 7 * (m.size() as i64);
+    let fold_one = |m: &HashTrieMap<i64, i64>| -> i64 {
+        m.iter().map(|(k, v)| k * 31 + v).sum::<i64>() + 7 * (m.size() as i64)
+    };
+    let result = acc + fold_one(&m) + ring.iter().map(&fold_one).sum::<i64>();
     if result != EXPECTED {
         eprintln!("FAIL: expected {EXPECTED}, got {result}");
         std::process::exit(1);

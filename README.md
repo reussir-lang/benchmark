@@ -62,8 +62,14 @@ intentionally left idiomatic.
   per-key probability decays as 1/key with no floating point involved),
   and 8M rounds each draw op/stratum/key from one MINSTD stream — 9/16
   insert, 5/16 delete, 2/16 lookup. Hot octaves saturate (the hottest key
-  sees ~187k overwrites), the cold tail stays sparse, deletes land on
-  present keys ~48% of the time, and the map ends at 1,120,773 entries. Reussir uses its std's `WavlMap`
+  sees ~187k overwrites), the cold tail stays sparse, and deletes land on
+  present keys ~48% of the time. A fourth draw per round retains the
+  current version in an eight-slot ring when divisible by 8192 (977 times
+  over the run), so old versions stay live at random points: persistent
+  maps pay path copies while a version is parked, mutable maps pay a full
+  copy per parked version, and the final checksum folds the working map
+  plus every ring slot. The map ends at 1,120,619 entries with each ring
+  slot holding a ~1.1M-entry version. Reussir uses its std's `WavlMap`
   (persistent WAVL tree) and `HashMap` (persistent radix-32 HAMT with the
   pure FastHasher); Rust appears twice — `rust` uses std's `BTreeMap`/
   `HashMap` (mutable, SipHash-1-3) as the imperative baseline, and
