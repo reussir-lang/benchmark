@@ -3,11 +3,24 @@
 //
 // Build 1M MINSTD-keyed inserts over a 524287 keyspace, churn 1M
 // insert/remove rounds (remove when draw % 4 == 3), sum 1M lookups
-// (-1 for a miss), then fold the final map:
-// result = lookup-sum + sum(key * 1000003 + value) + 7 * size.
-// The checksum depends only on final contents plus the lookup stream,
-// so the ordered and hashed representations of this workload agree.
+// (-1 for a miss), then fold the final map. During the two mutating
+// phases a second draw per round decides retention: when it is
+// divisible by 8192 (265 times over the run) the current version is
+// parked in slot (draw / 8192) mod 8 of an eight-version ring, where
+// it stays shared until that slot is next overwritten. Persistent maps
+// pay path copies while a parked version is live; mutable maps pay a
+// full copy per parked version. The checksum folds the final map and
+// every ring slot, so retained versions stay live and verified:
+// result = lookup-sum + sum over maps of (sum(key * 1000003 + value) +
+// 7 * size). Final size 401,258; each ring slot ends holding a
+// ~402k-entry version.
+//
+// The build and churn rounds share one loop: round i of the combined
+// 2M inserts value i in either phase (churn round j writes 1000000+j),
+// and only the remove arm is churn-gated. The lookup phase draws once
+// per round and retains nothing.
 
+import core::intrinsic::array;
 import std::collections::pure::wavlmap::WavlMap;
 import std::option::Option;
 
@@ -15,27 +28,15 @@ fn lcg(x : i64) -> i64 {
     (x * 48271) % 2147483647
 }
 
-fn build(i : i64, x : i64, m : WavlMap<i64, i64>) -> WavlMap<i64, i64> {
-    if i == 1000000 {
-        m
-    } else {
-        let x1 = lcg(x);
-        build(i + 1, x1, m.insert(x1 % 524287, i))
-    }
+fn fold_one(m : WavlMap<i64, i64>, acc : i64) -> i64 {
+    m.fold_left(acc, |a, k, v| a + k * 1000003 + v) + 7 * (m.len() as i64)
 }
 
-fn churn(i : i64, x : i64, m : WavlMap<i64, i64>) -> WavlMap<i64, i64> {
-    if i == 1000000 {
-        m
+fn fold_ring(ring : [WavlMap<i64, i64>; 8], i : i64, acc : i64) -> i64 {
+    if i == 8 {
+        acc
     } else {
-        let x1 = lcg(x);
-        let k = x1 % 524287;
-        let m1 = if x1 % 4 == 3 {
-            m.remove(k)
-        } else {
-            m.insert(k, 1000000 + i)
-        };
-        churn(i + 1, x1, m1)
+        fold_ring(ring, i + 1, fold_one(array::get(ring, i), acc))
     }
 }
 
@@ -48,13 +49,37 @@ fn lookups(i : i64, x : i64, m : WavlMap<i64, i64>, acc : i64) -> i64 {
     }
 }
 
-// Each phase entry state is the MINSTD state after the previous phase's
-// million draws, hard-coded so every phase returns a single value.
+fn mutate(
+    i : i64,
+    x : i64,
+    m : WavlMap<i64, i64>,
+    ring : [WavlMap<i64, i64>; 8]
+) -> i64 {
+    if i == 2000000 {
+        let acc = lookups(0, x, m, 0);
+        fold_ring(ring, 0, fold_one(m, acc))
+    } else {
+        let x1 = lcg(x);
+        let k = x1 % 524287;
+        let m1 = if i >= 1000000 && x1 % 4 == 3 {
+            m.remove(k)
+        } else {
+            m.insert(k, i)
+        };
+        let x2 = lcg(x1);
+        if x2 % 8192 == 0 {
+            let kept = m1;
+            let ring2 = array::set(ring, (x2 / 8192) % 8, kept);
+            mutate(i + 1, x2, kept, ring2)
+        } else {
+            mutate(i + 1, x2, m1, ring)
+        }
+    }
+}
+
 fn map_test() -> i64 {
-    let built = build(0, 1, WavlMap::new());
-    let m = churn(0, 1263606197, built);
-    let acc = lookups(0, 24123260, m, 0);
-    acc + m.fold_left(0, |a, k, v| a + k * 1000003 + v) + 7 * (m.len() as i64)
+    let ring = array::splat<[WavlMap<i64, i64>; 8]>(WavlMap::new());
+    mutate(0, 1, WavlMap::new(), ring)
 }
 
 extern "C" trampoline "map_test_ffi" = map_test;

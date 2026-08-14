@@ -10,13 +10,24 @@
 // drawing op, stratum, key from one MINSTD stream: 9/16 insert,
 // 5/16 delete, 2/16 lookup (sum, -1 on miss). Hot octaves saturate
 // (the hottest key sees ~187k overwrites), the cold tail stays sparse,
-// and deletes land on present keys ~48% of the time. Final size
-// 1,120,773. result = lookup-sum + sum(key * 31 + value) + 7 * size.
+// and deletes land on present keys ~48% of the time.
+//
+// After each round one more draw decides retention: when it is
+// divisible by 8192 (977 times over the run) the current version is
+// parked in slot (draw / 8192) mod 8 of an eight-version ring, where
+// it stays shared until that slot is next overwritten. Persistent maps
+// pay path copies while a parked version is live; mutable maps pay a
+// full copy per parked version. The checksum folds the working map and
+// every ring slot, so retained versions stay live and verified:
+// result = lookup-sum + sum over maps of (sum(key * 31 + value) +
+// 7 * size). Final size 1,120,619; each ring slot ends holding a
+// ~1.1M-entry version from late in the run.
 //
 // Std ships no Hash impl for primitive keys, so the logical i64 key
 // rides in a [value] newtype whose Hash feeds the i64 to the hasher —
 // the same shape the std integration tests use.
 
+import core::intrinsic::array;
 import std::collections::pure::hashmap::HashMap;
 import std::hash::Hash;
 import std::hash::Hasher;
@@ -42,9 +53,27 @@ fn lcg(x : i64) -> i64 {
     (x * 48271) % 2147483647
 }
 
-fn ops(i : i64, x : i64, m : HashMap<Key, i64>, acc : i64) -> i64 {
+fn fold_one(m : HashMap<Key, i64>, acc : i64) -> i64 {
+    m.fold_left(acc, |a, k, v| a + k.id * 31 + v) + 7 * (m.len() as i64)
+}
+
+fn fold_ring(ring : [HashMap<Key, i64>; 8], i : i64, acc : i64) -> i64 {
+    if i == 8 {
+        acc
+    } else {
+        fold_ring(ring, i + 1, fold_one(array::get(ring, i), acc))
+    }
+}
+
+fn ops(
+    i : i64,
+    x : i64,
+    m : HashMap<Key, i64>,
+    ring : [HashMap<Key, i64>; 8],
+    acc : i64
+) -> i64 {
     if i == 8000000 {
-        acc + m.fold_left(0, |a, k, v| a + k.id * 31 + v) + 7 * (m.len() as i64)
+        fold_ring(ring, 0, fold_one(m, acc))
     } else {
         let x1 = lcg(x);
         let op = x1 % 16;
@@ -52,21 +81,30 @@ fn ops(i : i64, x : i64, m : HashMap<Key, i64>, acc : i64) -> i64 {
         let s = x2 % 24;
         let x3 = lcg(x2);
         let k = Key { id: (1 << s) + (x3 % (1 << s)) };
-        if op < 9 {
-            ops(i + 1, x3, m.insert(k, i), acc)
+        let m2 = if op < 9 {
+            m.insert(k, i)
         } else {
-            if op < 14 {
-                ops(i + 1, x3, m.remove(k), acc)
-            } else {
-                let v = m.get(k).unwrap_or(0 - 1);
-                ops(i + 1, x3, m, acc + v)
-            }
+            if op < 14 { m.remove(k) } else { m }
+        };
+        let acc2 = if op < 14 {
+            acc
+        } else {
+            acc + m2.get(k).unwrap_or(0 - 1)
+        };
+        let x4 = lcg(x3);
+        if x4 % 8192 == 0 {
+            let kept = m2;
+            let ring2 = array::set(ring, (x4 / 8192) % 8, kept);
+            ops(i + 1, x4, kept, ring2, acc2)
+        } else {
+            ops(i + 1, x4, m2, ring, acc2)
         }
     }
 }
 
 fn map_test() -> i64 {
-    ops(0, 1, HashMap::new(), 0)
+    let ring = array::splat<[HashMap<Key, i64>; 8]>(HashMap::new());
+    ops(0, 1, HashMap::new(), ring, 0)
 }
 
 extern "C" trampoline "map_test_ffi" = map_test;
