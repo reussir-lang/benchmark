@@ -39,10 +39,10 @@ def _targets(args):
         for variant in sorted(meta["sources"]):
             if args.variant and variant != args.variant:
                 continue
-            yield bench_name, variant, meta["sources"][variant]
+            yield bench_name, variant, meta, meta["sources"][variant]
 
 
-def _compile(variant, source, executable, resolve):
+def _compile(variant, bench_meta, source, executable, resolve):
     spec = VARIANTS[variant]
     kind = spec["kind"]
     if kind == "reussir":
@@ -53,13 +53,16 @@ def _compile(variant, source, executable, resolve):
             executable,
             reuse_across_call=spec.get("reuse_across_call", True),
             extra_compiler_flags=list(spec.get("extra_flags", [])),
+            use_std=bench_meta.get("reussir-std", False),
         )
     elif kind == "koka":
         compilers.compile_koka(resolve(source), executable)
     elif kind == "lean":
         compilers.compile_lean(resolve(source), executable)
     elif kind == "rust":
-        compilers.compile_rust(resolve(source), executable)
+        compilers.compile_rust(
+            resolve(source), executable, extern_crates=spec.get("extern_crates")
+        )
     elif kind == "haskell":
         compilers.compile_haskell(
             resolve(source), executable, rts_opts=spec.get("rts_opts")
@@ -83,12 +86,12 @@ def main():
         return path if os.path.isabs(path) else os.path.join(script_dir, path)
 
     failures = []
-    for bench_name, variant, source in _targets(args):
+    for bench_name, variant, meta, source in _targets(args):
         label = f"{bench_name}/{variant}"
         with tempfile.TemporaryDirectory() as tmpdir:
             executable = os.path.join(tmpdir, "bench")
             try:
-                _compile(variant, source, executable, resolve)
+                _compile(variant, meta, source, executable, resolve)
             except Exception as e:  # noqa: BLE001 - report and continue
                 print(f"FAIL {label}: compile: {e}", flush=True)
                 failures.append(label)

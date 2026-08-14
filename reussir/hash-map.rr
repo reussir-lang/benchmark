@@ -1,0 +1,83 @@
+// Std-collection workload on the hash map from Reussir's std
+// (std::collections::pure::hashmap — a persistent radix-32 HAMT keyed
+// by the pure FastHasher with its default seed).
+//
+// Same workload and checksum as ordered-map.rr: build 1M MINSTD-keyed
+// inserts over a 524287 keyspace, churn 1M insert/remove rounds, sum
+// 1M lookups, then fold the final map. The checksum depends only on
+// final contents plus the lookup stream, so it is iteration-order
+// independent and matches the ordered representation.
+//
+// Std ships no Hash impl for primitive keys, so the logical i64 key
+// rides in a [value] newtype whose Hash feeds the i64 to the hasher —
+// the same shape the std integration tests use.
+
+import std::collections::pure::hashmap::HashMap;
+import std::hash::Hash;
+import std::hash::Hasher;
+import std::option::Option;
+
+pub struct [value] Key {
+    id : i64
+}
+
+impl PartialEq for Key {
+    fn eq(self : Self, other : Self) -> bool { self.id == other.id }
+}
+
+impl Eq for Key {}
+
+impl Hash for Key {
+    fn hash<H : Hasher>(self : Self, state : H) -> H {
+        state.write_i64(self.id)
+    }
+}
+
+fn lcg(x : i64) -> i64 {
+    (x * 48271) % 2147483647
+}
+
+fn build(i : i64, x : i64, m : HashMap<Key, i64>) -> HashMap<Key, i64> {
+    if i == 1000000 {
+        m
+    } else {
+        let x1 = lcg(x);
+        build(i + 1, x1, m.insert(Key { id: x1 % 524287 }, i))
+    }
+}
+
+fn churn(i : i64, x : i64, m : HashMap<Key, i64>) -> HashMap<Key, i64> {
+    if i == 1000000 {
+        m
+    } else {
+        let x1 = lcg(x);
+        let k = Key { id: x1 % 524287 };
+        let m1 = if x1 % 4 == 3 {
+            m.remove(k)
+        } else {
+            m.insert(k, 1000000 + i)
+        };
+        churn(i + 1, x1, m1)
+    }
+}
+
+fn lookups(i : i64, x : i64, m : HashMap<Key, i64>, acc : i64) -> i64 {
+    if i == 1000000 {
+        acc
+    } else {
+        let x1 = lcg(x);
+        let v = m.get(Key { id: x1 % 524287 }).unwrap_or(0 - 1);
+        lookups(i + 1, x1, m, acc + v)
+    }
+}
+
+// Each phase entry state is the MINSTD state after the previous phase's
+// million draws, hard-coded so every phase returns a single value.
+fn map_test() -> i64 {
+    let built = build(0, 1, HashMap::new());
+    let m = churn(0, 1263606197, built);
+    let acc = lookups(0, 24123260, m, 0);
+    acc + m.fold_left(0, |a, k, v| a + k.id * 1000003 + v) + 7 * (m.len() as i64)
+}
+
+extern "C" trampoline "map_test_ffi" = map_test;

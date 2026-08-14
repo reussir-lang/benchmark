@@ -102,13 +102,18 @@ def run_benchmark(bench_name, bench_variant):
                 executable,
                 reuse_across_call=spec.get("reuse_across_call", True),
                 extra_compiler_flags=list(spec.get("extra_flags", [])),
+                use_std=bench.get("reussir-std", False),
             )
         elif kind == "koka":
             compile.compile_koka(resolve(bench_info), executable)
         elif kind == "lean":
             compile.compile_lean(resolve(bench_info), executable)
         elif kind == "rust":
-            compile.compile_rust(resolve(bench_info), executable)
+            compile.compile_rust(
+                resolve(bench_info),
+                executable,
+                extern_crates=spec.get("extern_crates"),
+            )
         elif kind == "haskell":
             compile.compile_haskell(
                 resolve(bench_info), executable, rts_opts=spec.get("rts_opts")

@@ -7,6 +7,7 @@ Haskell, and OCaml, organized as two sets:
 |---|---|---|
 | `functional-data-structures` | rbtree, rbtree-zipper, nbe-hoas, nbe-closure, derive, fingertree, functional-queue | allocation, pattern matching, persistence, and reuse/GC of linked structures |
 | `large-aggregates` | life, qsort, heap-array, heap-functional | flat arrays plus matched array/tree heap workloads |
+| `std-collections` | ordered-map, hash-map | each language's standard ordered map and hash map under one shared insert/remove/lookup workload |
 
 Workloads use a roughly quarter-scale work factor while retaining the data
 shape each benchmark is intended to exercise. Every program hard-codes its
@@ -49,6 +50,27 @@ intentionally left idiomatic.
   digit / 2–3 node algorithm. Rust uses persistent `Rc` paths. Reussir keeps
   persistent `Digit` nodes shared for elimination/construction reuse and uses
   `[value]` only for the temporary `ViewLeft` result.
+- **ordered-map / hash-map** — one shared associative workload on each
+  language's *standard-library* map: build 1M entries under MINSTD keys drawn
+  from a 524287 keyspace, churn 1M insert/remove rounds, sum 1M lookups, then
+  fold the final contents. The checksum depends only on final map contents
+  plus the lookup stream, so ordered, hashed, mutable, and persistent
+  representations must all agree. Reussir uses its std's `WavlMap`
+  (persistent WAVL tree) and `HashMap` (persistent radix-32 HAMT with the
+  pure FastHasher); Rust appears twice — `rust` uses std's `BTreeMap`/
+  `HashMap` (mutable, SipHash-1-3) as the imperative baseline, and
+  `rust-rpds` uses the `rpds` crate's `RedBlackTreeMap`/`HashTrieMap`
+  (Rc-linked persistent structures, updated through the owned-`_mut`
+  copy-on-write path) as the representation-matched comparison;
+  Haskell uses `Data.Map.Strict` (containers) and `Data.HashMap.Strict`
+  (unordered-containers, a HAMT like Reussir's); OCaml uses `Map.Make`
+  (persistent AVL) and `Hashtbl` (mutable); Lean uses `Std.TreeMap` and
+  `Std.HashMap` (in-place when uniquely referenced). Representations and
+  hash functions are intentionally each library's stock choice — this set
+  compares shipped standard libraries, not one algorithm. Koka's stdlib has
+  no comparable containers and sits this set out. The Reussir cells compile
+  against the pinned tree's bundled `core`+`std` packages (built once per
+  configuration with the same flags and folded into the same ThinLTO link).
 - **functional-queue** — strict Hood–Melville real-time queue with incremental
   `Reversing`/`Appending` rotation states. Build 65536 elements, perform 1M
   dequeue/enqueue rotations, then drain. The operation stream and schedule
@@ -67,6 +89,7 @@ intentionally left idiomatic.
 | `lean` | `lean -c` → `leanc -flto -O3` |
 | `rust` | `rustc -C opt-level=3` |
 | `rust-with-mimalloc` | same binary, `LD_PRELOAD` mimalloc |
+| `rust-rpds` / `rust-rpds-with-mimalloc` | same flags, linking the prebuilt `rpds` persistent-collection rlibs (std-collections set only) |
 | `haskell` | `ghc -O2 -rtsopts`, default RTS (purely functional sources) |
 | `haskell-a1g` | same sources, `-with-rtsopts=-A1G` (1 GiB nursery) |
 | `haskell-st` / `haskell-st-a1g` | mutable `Data.Array.ST` sources, both RTS configs (large-aggregates set only) |
@@ -88,11 +111,15 @@ Known toolchain quirks, encoded in the sources:
 ## Running
 
 The checked-in flake is the one-shot bootstrap. It pins Reussir main at
-`15a6e37e99b067e5722a7ec4544f5b976de67d54` and builds only the `rrc`
+`25f7884fde21165471487d522ec0272fc9c5668a` and builds only the `rrc`
 dependency closure plus `libreussir_rt.a`; TPDE, tests, the REPL, and unrelated
-tools are not built. It also supplies Clang/LLVM, Lean, Koka, Rust, GHC with
-the Hackage `fingertree` package, OCaml (and its GCC linker), hyperfine, GNU
-time, mimalloc, and the Python plotting dependencies.
+tools are not built. For the std-collections set it additionally stages the
+runtime's rlib closure (`REUSSIR_RUSTC`/`REUSSIR_RUSTC_DEPS`, consumed by
+rrc's polymorphic-FFI compiles) and exports the pinned source tree as
+`REUSSIR_SRC`, from which `compile.py` builds the bundled `core` and `std`
+packages. It also supplies Clang/LLVM, Lean, Koka, Rust, GHC with the Hackage
+`fingertree` and `unordered-containers` packages, OCaml (and its GCC linker),
+hyperfine, GNU time, mimalloc, and the Python plotting dependencies.
 
 ```bash
 direnv allow             # builds once, then reuses the Nix store result

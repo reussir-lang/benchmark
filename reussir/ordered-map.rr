@@ -1,0 +1,60 @@
+// Std-collection workload on the ordered map from Reussir's std
+// (std::collections::pure::wavlmap — a persistent WAVL tree).
+//
+// Build 1M MINSTD-keyed inserts over a 524287 keyspace, churn 1M
+// insert/remove rounds (remove when draw % 4 == 3), sum 1M lookups
+// (-1 for a miss), then fold the final map:
+// result = lookup-sum + sum(key * 1000003 + value) + 7 * size.
+// The checksum depends only on final contents plus the lookup stream,
+// so the ordered and hashed representations of this workload agree.
+
+import std::collections::pure::wavlmap::WavlMap;
+import std::option::Option;
+
+fn lcg(x : i64) -> i64 {
+    (x * 48271) % 2147483647
+}
+
+fn build(i : i64, x : i64, m : WavlMap<i64, i64>) -> WavlMap<i64, i64> {
+    if i == 1000000 {
+        m
+    } else {
+        let x1 = lcg(x);
+        build(i + 1, x1, m.insert(x1 % 524287, i))
+    }
+}
+
+fn churn(i : i64, x : i64, m : WavlMap<i64, i64>) -> WavlMap<i64, i64> {
+    if i == 1000000 {
+        m
+    } else {
+        let x1 = lcg(x);
+        let k = x1 % 524287;
+        let m1 = if x1 % 4 == 3 {
+            m.remove(k)
+        } else {
+            m.insert(k, 1000000 + i)
+        };
+        churn(i + 1, x1, m1)
+    }
+}
+
+fn lookups(i : i64, x : i64, m : WavlMap<i64, i64>, acc : i64) -> i64 {
+    if i == 1000000 {
+        acc
+    } else {
+        let x1 = lcg(x);
+        lookups(i + 1, x1, m, acc + m.get(x1 % 524287).unwrap_or(0 - 1))
+    }
+}
+
+// Each phase entry state is the MINSTD state after the previous phase's
+// million draws, hard-coded so every phase returns a single value.
+fn map_test() -> i64 {
+    let built = build(0, 1, WavlMap::new());
+    let m = churn(0, 1263606197, built);
+    let acc = lookups(0, 24123260, m, 0);
+    acc + m.fold_left(0, |a, k, v| a + k * 1000003 + v) + 7 * (m.len() as i64)
+}
+
+extern "C" trampoline "map_test_ffi" = map_test;

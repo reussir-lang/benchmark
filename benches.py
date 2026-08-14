@@ -32,6 +32,8 @@ Toolchain configurations
   (``--ccopts``/``--cclinkopts``).
 - lean: lean → C, then leanc ``-flto -O3``.
 - rust: ``-C opt-level=3``; the ``-with-mimalloc`` variant preloads mimalloc.
+  The ``rust-rpds`` variants additionally link the prebuilt ``rpds``
+  persistent-collection rlibs (``extern_crates``, resolved via RPDS_LIBS).
 - haskell: ghc ``-O2 -rtsopts``; the ``-a1g`` variants bake ``+RTS -A1G``
   (1 GiB nursery) via ``-with-rtsopts`` — both RTS configurations are
   first-class variants because the default-vs-large-nursery choice swings
@@ -52,6 +54,7 @@ the working-set shape that each benchmark is intended to measure.
 SETS = {
     "functional-data-structures": "Functional data structures",
     "large-aggregates": "Large aggregates",
+    "std-collections": "Standard-library collections",
 }
 
 VARIANTS = {
@@ -66,6 +69,12 @@ VARIANTS = {
     "lean": {"kind": "lean"},
     "rust": {"kind": "rust"},
     "rust-with-mimalloc": {"kind": "rust", "runtime_env_key": "rust-runtime-env"},
+    "rust-rpds": {"kind": "rust", "extern_crates": ["rpds"]},
+    "rust-rpds-with-mimalloc": {
+        "kind": "rust",
+        "extern_crates": ["rpds"],
+        "runtime_env_key": "rust-runtime-env",
+    },
     "haskell": {"kind": "haskell"},
     "haskell-a1g": {"kind": "haskell", "rts_opts": "-A1G"},
     "haskell-st": {"kind": "haskell"},
@@ -75,6 +84,7 @@ VARIANTS = {
 
 _FUNCTIONAL = "functional-data-structures"
 _AGGREGATES = "large-aggregates"
+_STD = "std-collections"
 
 
 def _sources(base, haskell=None, haskell_st=None):
@@ -86,6 +96,8 @@ def _sources(base, haskell=None, haskell_st=None):
     sources = dict(base)
     if "rust" in sources:
         sources["rust-with-mimalloc"] = sources["rust"]
+    if "rust-rpds" in sources:
+        sources["rust-rpds-with-mimalloc"] = sources["rust-rpds"]
     if haskell is not None:
         sources["haskell"] = haskell
         sources["haskell-a1g"] = haskell
@@ -237,6 +249,42 @@ BENCHES = {
                 "ocaml": "ocaml/fingertree.ml",
             },
             haskell="haskell/fingertree.hs",
+        ),
+    },
+    # Standard-library collection benchmarks: one shared map workload
+    # (1M MINSTD-keyed builds, 1M insert/remove churn rounds, 1M lookups,
+    # then a content fold) on each language's standard ordered map and
+    # hash map. The Reussir cells use std's WavlMap/HashMap and compile
+    # against the bundled core+std packages (``reussir-std``); Koka's
+    # stdlib has no comparable containers, so it sits these two out.
+    "ordered-map": {
+        "set": _STD,
+        "reussir-std": True,
+        "sources": _sources(
+            {
+                "lean": "lean/ordered-map.lean",
+                "reussir": ("reussir/ordered-map.rr", "reussir/map.rr.c"),
+                "reussir-nrac": ("reussir/ordered-map.rr", "reussir/map.rr.c"),
+                "rust": "rust/ordered-map.rs",
+                "rust-rpds": "rust/ordered-map-rpds.rs",
+                "ocaml": "ocaml/ordered-map.ml",
+            },
+            haskell="haskell/ordered-map.hs",
+        ),
+    },
+    "hash-map": {
+        "set": _STD,
+        "reussir-std": True,
+        "sources": _sources(
+            {
+                "lean": "lean/hash-map.lean",
+                "reussir": ("reussir/hash-map.rr", "reussir/map.rr.c"),
+                "reussir-nrac": ("reussir/hash-map.rr", "reussir/map.rr.c"),
+                "rust": "rust/hash-map.rs",
+                "rust-rpds": "rust/hash-map-rpds.rs",
+                "ocaml": "ocaml/hash-map.ml",
+            },
+            haskell="haskell/hash-map.hs",
         ),
     },
     "functional-queue": {

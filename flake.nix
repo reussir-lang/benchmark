@@ -10,18 +10,23 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Current Reussir main (2026-07-12).
+    # Current Reussir main (2026-08-13).
     reussir = {
-      url = "github:reussir-lang/reussir/15a6e37e99b067e5722a7ec4544f5b976de67d54";
+      url = "github:reussir-lang/reussir/25f7884fde21165471487d522ec0272fc9c5668a";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.fenix.follows = "fenix";
       inputs.flake-utils.follows = "flake-utils";
     };
 
-    # Reussir uses FetchContent for Immer. Make it an explicit flake input so
-    # the compiler build is network-free.
+    # Reussir uses FetchContent for Immer and mlir-sync. Make them explicit
+    # flake inputs so the compiler build is network-free. Keep the mlir-sync
+    # rev matched to cmake/MlirSync.cmake at the pinned Reussir commit.
     immer = {
       url = "github:arximboldi/immer/06d94ce48a02b11d3b225083a820f82c3d3ef462";
+      flake = false;
+    };
+    mlir-sync = {
+      url = "github:reussir-lang/mlir-sync/5e9721da4911c5b256a67922193a96e8dd417692";
       flake = false;
     };
   };
@@ -34,6 +39,7 @@
       fenix,
       reussir,
       immer,
+      mlir-sync,
       ...
     }:
     flake-utils.lib.eachDefaultSystem (
@@ -45,11 +51,8 @@
 
         rustToolchain = fenix.packages.${system}.fromToolchainFile {
           file = "${reussir}/rust-toolchain.toml";
-          sha256 = "sha256-7gtdtMrnS61/fyYXzXomlz9yIODc+zU9kfn2mIVsPYM=";
+          sha256 = "sha256-4ot8+Fs79G1hUwlEYI6700QBLKdkLb33yzwOou1o5Yk=";
         };
-
-        rustChannel =
-          (builtins.fromTOML (builtins.readFile "${reussir}/rust-toolchain.toml")).toolchain.channel;
 
         # mlir-sys and llvm-sys require one prefix containing both the runtime
         # libraries and the development files. nixpkgs splits those outputs.
@@ -100,7 +103,7 @@
 
         reussirCargoDeps = pkgs.rustPlatform.fetchCargoVendor {
           src = reussir;
-          hash = "sha256-GkAB8xFH6tNZqx+EnZyU0W7LlDQ8fhJgGzJnfXHyLZk=";
+          hash = "sha256-n6UMcjKsQlVO3WQ7o5Js6bz1AgKKoypnH69+TVNJmNA=";
         };
 
         reussirCompiler = llvmPkgs.stdenv.mkDerivation {
@@ -148,20 +151,14 @@
             substituteInPlace CMakeLists.txt \
               --replace-fail 'if(TARGET_OBJECT_FORMAT STREQUAL "ELF")' 'if(FALSE)'
 
-            # rrc needs libreussir_rt.a, not a private copy of the complete
-            # nightly Rust toolchain in build/{bin,lib}.
-            substituteInPlace crates/reussir-rt/CMakeLists.txt \
-              --replace-fail 'DEPENDS reussir-rt-install reussir-rust-install' 'DEPENDS reussir-rt-install' \
-              --replace-fail 'add_dependencies(reussir-rt reussir-rt-install reussir-rust-install)' 'add_dependencies(reussir-rt reussir-rt-install)'
-
             # rrc's Rust link consumes every archive listed by
             # reussir-backend-sys/build.rs.  Upstream's ReussirCAPI dependency
-            # list currently omits these two, so an explicit `rrc` build can
+            # list currently omits these three, so an explicit `rrc` build can
             # reach cargo before the archives exist.
             substituteInPlace lib/CAPI/CMakeLists.txt \
               --replace-fail \
                 '  # transformations' \
-                $'  # transformations\n  MLIRReussirClosureBetaReduction' \
+                $'  # transformations\n  MLIRReussirClosureBetaReduction\n  MLIRReussirDefaultInliner' \
               --replace-fail \
                 '  MLIRReussirTokenReuse' \
                 $'  MLIRReussirTokenReuse\n  MLIRReussirSpecialPointerTag'
@@ -197,19 +194,15 @@
             (lib.cmakeFeature "LLVM_DIR" "${llvmMlirJoin}/lib/cmake/llvm")
             (lib.cmakeFeature "MLIR_DIR" "${llvmMlirJoin}/lib/cmake/mlir")
             (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_IMMER" "${immer}")
+            (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_MLIRSYNC" "${mlir-sync}")
           ];
-
-          preConfigure = ''
-            rust_host=$(rustc -vV | sed -n 's/^host: //p')
-            toolchain_dir="build/.rustup/toolchains/${rustChannel}-$rust_host"
-            mkdir -p "$(dirname "$toolchain_dir")"
-            ln -s ${rustToolchain} "$toolchain_dir"
-          '';
 
           buildPhase = ''
             runHook preBuild
             # The CMake setup hook enters its out-of-source build directory.
-            cmake --build . --target rrc -j "$NIX_BUILD_CORES"
+            # `reussir-rt` builds the plain (non-LTO) runtime archive into
+            # target-rt/; upstream no longer stages it under build/lib.
+            cmake --build . --target rrc reussir-rt -j "$NIX_BUILD_CORES"
             runHook postBuild
           '';
 
@@ -217,7 +210,7 @@
             runHook preInstall
             mkdir -p "$out/bin" "$out/lib"
             cp bin/rrc "$out/bin/rrc"
-            cp lib/libreussir_rt.a "$out/lib/libreussir_rt.a"
+            cp target-rt/release/libreussir_rt.a "$out/lib/libreussir_rt.a"
             wrapProgram "$out/bin/rrc" \
               --prefix LD_LIBRARY_PATH : "${
                 lib.makeLibraryPath [
@@ -287,17 +280,107 @@
           };
         };
 
+        # The rlib form of the runtime plus its dependency rlibs, laid out for
+        # `rustc -L`: rrc's polymorphic-FFI textures compile generated Rust
+        # against these (discovered through REUSSIR_RUSTC/REUSSIR_RUSTC_DEPS).
+        # Std's package build reaches polyffi, so std-using benchmarks need
+        # this even though the final link still uses the LTO staticlib above.
+        reussirRtRlibs = llvmPkgs.stdenv.mkDerivation {
+          pname = "reussir-rt-rlibs";
+          version = "0.1.0-git-${builtins.substring 0 12 reussir.rev}";
+          src = reussir;
+
+          cargoDeps = reussirCargoDeps;
+          cargoRoot = ".";
+
+          nativeBuildInputs = [
+            pkgs.rustPlatform.cargoSetupHook
+            rustToolchain
+            llvmPkgs.clang
+          ];
+
+          buildPhase = ''
+            runHook preBuild
+            cargo build --release -p reussir-rt -j "$NIX_BUILD_CORES"
+            runHook postBuild
+          '';
+
+          installPhase = ''
+            runHook preInstall
+            mkdir -p "$out/lib/deps"
+            cp target/release/libreussir_rt.rlib "$out/lib/" 2>/dev/null \
+              || cp target/release/deps/libreussir_rt-*.rlib "$out/lib/"
+            # Proc-macro crates (num_enum_derive & co.) are dylibs, and
+            # rustc needs them next to the rlibs to load the metadata graph.
+            cp target/release/deps/*.rlib target/release/deps/*.so "$out/lib/deps/"
+            runHook postInstall
+          '';
+
+          meta = {
+            description = "Reussir runtime rlibs for rrc's polymorphic-FFI compiles";
+            homepage = "https://github.com/reussir-lang/reussir";
+            license = lib.licenses.asl20;
+            platforms = lib.platforms.linux;
+          };
+        };
+
+        # The rpds crate (persistent red-black tree and HAMT) for the
+        # rust-rpds benchmark variants, prebuilt as rlibs with the same
+        # rustc that compiles the benchmark sources so compile.py can pass
+        # them straight to `rustc --extern` without cargo.
+        rpdsCargoDeps = pkgs.rustPlatform.fetchCargoVendor {
+          src = ./rust/rpds-lib;
+          hash = "sha256-s535SjWLChCG4yvLG9ykfEWpfoFm+yCtbbTDH8caiXo=";
+        };
+
+        rpdsLibs = pkgs.stdenv.mkDerivation {
+          pname = "benchmark-rpds-rlibs";
+          version = "rpds-1";
+          src = ./rust/rpds-lib;
+
+          cargoDeps = rpdsCargoDeps;
+          cargoRoot = ".";
+
+          nativeBuildInputs = [
+            pkgs.rustPlatform.cargoSetupHook
+            pkgs.cargo
+            pkgs.rustc
+          ];
+
+          buildPhase = ''
+            runHook preBuild
+            cargo build --release --offline -j "$NIX_BUILD_CORES"
+            runHook postBuild
+          '';
+
+          installPhase = ''
+            runHook preInstall
+            mkdir -p "$out/lib"
+            cp target/release/deps/*.rlib "$out/lib/"
+            runHook postInstall
+          '';
+        };
+
         ghcBase = pkgs.haskellPackages.ghc;
-        fingertreePackage = pkgs.haskellPackages.fingertree;
-        fingertreePackageDb = pkgs.runCommand "fingertree-package-db" { } ''
+        # Hackage packages the benchmarks use beyond GHC's boot libraries:
+        # fingertree (the published finger tree), and unordered-containers
+        # (+ its hashable dependency) for the hash-map benchmark.
+        extraHaskellPackages = [
+          pkgs.haskellPackages.fingertree
+          pkgs.haskellPackages.unordered-containers
+          pkgs.haskellPackages.hashable
+        ];
+        extraPackageDb = pkgs.runCommand "benchmark-package-db" { } ''
           mkdir -p "$out"
-          cp ${fingertreePackage}/lib/ghc-${ghcBase.version}/lib/package.conf.d/*.conf "$out/"
+          for pkg in ${lib.concatStringsSep " " (map toString extraHaskellPackages)}; do
+            cp "$pkg"/lib/ghc-${ghcBase.version}/lib/package.conf.d/*.conf "$out/"
+          done
           chmod u+w "$out"/*.conf
           ${ghcBase}/lib/ghc-${ghcBase.version}/bin/ghc-pkg-${ghcBase.version} \
             --global-package-db="$out" recache
         '';
         ghc = pkgs.writeShellScriptBin "ghc" ''
-          exec ${ghcBase}/bin/ghc -package-db ${fingertreePackageDb} "$@"
+          exec ${ghcBase}/bin/ghc -package-db ${extraPackageDb} "$@"
         '';
 
         python = pkgs.python3.withPackages (pythonPackages: [
@@ -310,6 +393,7 @@
         packages.default = reussirCompiler;
         packages.reussir = reussirCompiler;
         packages.reussir-rt-xlto = reussirRtXlto;
+        packages.reussir-rt-rlibs = reussirRtRlibs;
         packages.ghc = ghc;
 
         devShells.default =
@@ -341,11 +425,20 @@
               # The bitcode runtime, so reussir's link gets the same
               # runtime-LTO treatment compile.py gives kklib.
               REUSSIR_LIBS = "${reussirRtXlto}/lib";
+              # The pinned Reussir source: compile.py builds the bundled
+              # core and std packages from here for std-using benchmarks.
+              REUSSIR_SRC = "${reussir}";
+              # Polymorphic-FFI discovery for rrc: the matching nightly rustc
+              # and the runtime rlib closure it compiles textures against.
+              REUSSIR_RUSTC = "${rustToolchain}/bin/rustc";
+              REUSSIR_RUSTC_DEPS = "${reussirRtRlibs}/lib:${reussirRtRlibs}/lib/deps";
               BENCHMARK_CC = "${llvmPkgs.clang}/bin/clang";
               BENCHMARK_LEAN = "${pkgs.lean4}/bin/lean";
               BENCHMARK_LEANC = "${pkgs.lean4}/bin/leanc";
               BENCHMARK_KOKA = "${pkgs.koka}/bin/koka";
               BENCHMARK_RUSTC = "${pkgs.rustc}/bin/rustc";
+              # Prebuilt rpds/archery rlibs for the rust-rpds variants.
+              RPDS_LIBS = "${rpdsLibs}/lib";
               BENCHMARK_GHC = "${ghc}/bin/ghc";
               BENCHMARK_OCAMLOPT = "${pkgs.ocaml}/bin/ocamlopt";
               BENCHMARK_HYPERFINE = "${pkgs.hyperfine}/bin/hyperfine";

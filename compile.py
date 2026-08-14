@@ -1,3 +1,4 @@
+import glob
 import os
 import shutil
 import stat
@@ -37,12 +38,86 @@ def _ensure_executable(path, step):
     os.chmod(path, mode | execute_bits)
 
 
+# Compiled core/std package artifacts (interface + LLVM IR), keyed by the
+# codegen flags they were built with. The cache holds TemporaryDirectory
+# objects alive for the process so verify/bench runs compile the packages
+# once per configuration instead of once per cell.
+_STD_CACHE = {}
+
+
+def _reussir_codegen_flags(reuse_across_call, extra_compiler_flags):
+    flags = ["-Oaggressive"]
+    if reuse_across_call:
+        flags.append("--reuse-across-call")
+    flags.extend(extra_compiler_flags)
+    flags.extend(["--relocation-mode", "pic"])
+    return flags
+
+
+def _reussir_std_artifacts(reuse_across_call, extra_compiler_flags):
+    """Build Reussir's bundled core and std packages to .rri + LLVM IR.
+
+    Returns the directory holding core.rri/core.ll/std.rri/std.ll. The
+    packages get the same codegen flags as the benchmark program, so
+    reuse analysis and LTO treat std code exactly like benchmark code.
+    """
+    key = (reuse_across_call, tuple(extra_compiler_flags))
+    cached = _STD_CACHE.get(key)
+    if cached is not None:
+        return cached.name
+    source_root = CONFIG.get("reussir-src")
+    if not source_root:
+        raise RuntimeError(
+            "std benchmarks need the pinned Reussir source tree; set "
+            "REUSSIR_SRC (exported by the Nix dev shell) or reussir-src "
+            "in config.json"
+        )
+    core_src = os.path.join(source_root, "library", "core", "src")
+    std_src = os.path.join(source_root, "library", "std", "src")
+    tmpdir = tempfile.TemporaryDirectory(prefix="reussir-std-")
+    d = tmpdir.name
+    codegen_flags = _reussir_codegen_flags(reuse_across_call, extra_compiler_flags)
+    rrc = CONFIG["reussir-compiler"]
+    core_pkg = [rrc, "--package-root", core_src, "--package-name", "core", "--core"]
+    _run_quiet(
+        core_pkg + ["-t", "rri", "-o", "core.rri"],
+        cwd=d,
+        step="reussir core interface",
+    )
+    _run_quiet(
+        core_pkg + ["-t", "llvm-ir", "-o", "core.ll"] + codegen_flags,
+        cwd=d,
+        step="reussir core compilation",
+    )
+    core_externs = [
+        "--extern",
+        f"core={os.path.join(d, 'core.rri')}",
+        "--extern-src",
+        f"core={core_src}",
+    ]
+    std_pkg = [rrc, "--package-root", std_src, "--package-name", "std"]
+    std_pkg += core_externs
+    _run_quiet(
+        std_pkg + ["-t", "rri", "-o", "std.rri"],
+        cwd=d,
+        step="reussir std interface",
+    )
+    _run_quiet(
+        std_pkg + ["-t", "llvm-ir", "-o", "std.ll"] + codegen_flags,
+        cwd=d,
+        step="reussir std compilation",
+    )
+    _STD_CACHE[key] = tmpdir
+    return d
+
+
 def compile_reussir(
     program: str,
     driver: str,
     output: str,
     reuse_across_call: bool = True,
     extra_compiler_flags=None,
+    use_std: bool = False,
 ) -> None:
     if extra_compiler_flags is None:
         extra_compiler_flags = []
@@ -50,15 +125,36 @@ def compile_reussir(
         CONFIG["reussir-compiler"],
         "-o",
         "reussir.ll",
-        "-Oaggressive",
     ]
-    if reuse_across_call:
-        compiler_cmd.append("--reuse-across-call")
-    compiler_cmd.extend(extra_compiler_flags)
+    extra_link_inputs = []
+    if use_std:
+        std_dir = _reussir_std_artifacts(reuse_across_call, extra_compiler_flags)
+        source_root = CONFIG["reussir-src"]
+        compiler_cmd.extend(
+            [
+                # --extern needs package mode; the input file becomes the
+                # crate root of this single-file benchmark package.
+                "--package-name",
+                "bench",
+                "--extern",
+                f"core={os.path.join(std_dir, 'core.rri')}",
+                "--extern-src",
+                f"core={os.path.join(source_root, 'library', 'core', 'src')}",
+                "--extern",
+                f"std={os.path.join(std_dir, 'std.rri')}",
+                "--extern-src",
+                f"std={os.path.join(source_root, 'library', 'std', 'src')}",
+            ]
+        )
+        extra_link_inputs = [
+            os.path.join(std_dir, "std.ll"),
+            os.path.join(std_dir, "core.ll"),
+        ]
+    compiler_cmd.extend(
+        _reussir_codegen_flags(reuse_across_call, extra_compiler_flags)
+    )
     compiler_cmd.extend(
         [
-            "--relocation-mode",
-            "pic",
             "-t",
             "llvm-ir",
             program,
@@ -76,6 +172,9 @@ def compile_reussir(
                 "-o",
                 output,
                 "reussir.ll",
+            ]
+            + extra_link_inputs
+            + [
                 driver,
                 "-flto=thin",
                 "-fuse-ld=lld",
@@ -110,12 +209,34 @@ def compile_koka(program: str, output: str) -> None:
     _ensure_executable(output, "koka compilation")
 
 
-def compile_rust(program: str, output: str) -> None:
+def compile_rust(program: str, output: str, extern_crates=None) -> None:
+    # ``extern_crates`` names crates prebuilt as rlibs in the ``rpds-libs``
+    # directory (RPDS_LIBS in the Nix shell, hashed cargo deps/ layout);
+    # each becomes an ``--extern`` and the directory a ``-L dependency=``
+    # so transitive rlibs resolve too.
+    extern_flags = []
+    if extern_crates:
+        libdir = CONFIG.get("rpds-libs")
+        if not libdir:
+            raise RuntimeError(
+                "rust extern-crate benchmarks need prebuilt rlibs; set "
+                "RPDS_LIBS (exported by the Nix dev shell) or rpds-libs "
+                "in config.json"
+            )
+        extern_flags = ["-L", f"dependency={libdir}"]
+        for crate in extern_crates:
+            matches = sorted(glob.glob(os.path.join(libdir, f"lib{crate}-*.rlib")))
+            if not matches:
+                raise RuntimeError(f"no rlib for crate {crate!r} in {libdir}")
+            extern_flags += ["--extern", f"{crate}={matches[-1]}"]
     _run_quiet(
         [
             CONFIG["rustc"],
             "-C",
             "opt-level=3",
+        ]
+        + extern_flags
+        + [
             "-o",
             output,
             program,

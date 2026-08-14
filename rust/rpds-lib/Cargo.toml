@@ -1,0 +1,15 @@
+# Vendored dependency closure for the rust-rpds benchmark variants: the
+# flake builds this crate's dependencies with the same rustc that compiles
+# the benchmark sources and exposes target/release/deps as RPDS_LIBS, so
+# plain `rustc --extern rpds=...` links against them without cargo at
+# benchmark-compile time.
+[package]
+name = "rpds-lib"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+path = "lib.rs"
+
+[dependencies]
+rpds = "1"

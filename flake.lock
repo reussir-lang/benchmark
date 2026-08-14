@@ -56,6 +56,23 @@
         "type": "github"
       }
     },
+    "mlir-sync": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1784322562,
+        "narHash": "sha256-9v3j7XFfBYVUcuLwVgz9cKvsfjjltluAZ8FgCoH2+XY=",
+        "owner": "reussir-lang",
+        "repo": "mlir-sync",
+        "rev": "5e9721da4911c5b256a67922193a96e8dd417692",
+        "type": "github"
+      },
+      "original": {
+        "owner": "reussir-lang",
+        "repo": "mlir-sync",
+        "rev": "5e9721da4911c5b256a67922193a96e8dd417692",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1783776592,
@@ -85,17 +102,17 @@
         ]
       },
       "locked": {
-        "lastModified": 1783900762,
-        "narHash": "sha256-VZw75nbdhZhPBa2caCn3kincyy8oQNKL3jphzs++RTQ=",
+        "lastModified": 1786493738,
+        "narHash": "sha256-Tq7rhSBRyqMnA3oaUo8Ibvzkn0HefJsD7+Dda4Et1vU=",
         "owner": "reussir-lang",
         "repo": "reussir",
-        "rev": "15a6e37e99b067e5722a7ec4544f5b976de67d54",
+        "rev": "25f7884fde21165471487d522ec0272fc9c5668a",
         "type": "github"
       },
       "original": {
         "owner": "reussir-lang",
         "repo": "reussir",
-        "rev": "15a6e37e99b067e5722a7ec4544f5b976de67d54",
+        "rev": "25f7884fde21165471487d522ec0272fc9c5668a",
         "type": "github"
       }
     },
@@ -104,6 +121,7 @@
         "fenix": "fenix",
         "flake-utils": "flake-utils",
         "immer": "immer",
+        "mlir-sync": "mlir-sync",
         "nixpkgs": "nixpkgs",
         "reussir": "reussir"
       }
