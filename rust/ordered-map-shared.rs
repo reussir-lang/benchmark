@@ -1,26 +1,26 @@
 // Std-collection workload on Rust's std ordered map
 // (std::collections::BTreeMap, mutable in place). Build 500k MINSTD-keyed
-// inserts over a 524287 keyspace, churn 500k insert/remove rounds, sum
+// inserts over a 524287 keyspace, churn 1M insert/remove rounds, sum
 // 500k lookups (-1 for a miss), then fold the final map:
 // result = lookup-sum + sum(key * 1000003 + value) + 7 * size.
 //
 // During the two mutating phases a second draw per round decides
-// retention: when it is divisible by 8192 (123 times over the run) the
+// retention: when it is divisible by 8192 (265 times over the run) the
 // current version is parked in slot (draw / 8192) mod 8 of an
 // eight-version ring, where it stays shared until that slot is next
 // overwritten. The checksum folds the final map and every ring slot, so
-// retained versions stay live and verified. Final size 365,836; each
-// ring slot ends holding a ~366k-entry version.
+// retained versions stay live and verified. Final size 401,258; each
+// ring slot ends holding a ~401k-entry version.
 // A mutable map has no structural sharing, so retention is an explicit
 // full clone at the event.
 
 use std::collections::BTreeMap;
 
 const KEYSPACE: i64 = 524287;
-const BUILD: i64 = 500_000;
-const CHURN: i64 = 500_000;
-const LOOKUPS: i64 = 500_000;
-const EXPECTED: i64 = 857062518301433262;
+const BUILD: i64 = 1_000_000;
+const CHURN: i64 = 1_000_000;
+const LOOKUPS: i64 = 1_000_000;
+const EXPECTED: i64 = 948266134564763663;
 
 fn lcg(x: i64) -> i64 {
     (x * 48271) % 2147483647

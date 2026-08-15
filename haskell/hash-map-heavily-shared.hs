@@ -6,19 +6,19 @@
 -- mixed-op workload: keys follow an integer-only octave Zipf
 -- (theta ~ 1) — a stratum s drawn uniform in [0, 24), then a key
 -- uniform in [2^s, 2^(s+1)), so every octave carries equal mass and
--- per-key probability decays as 1/key. 2M rounds, each drawing op,
+-- per-key probability decays as 1/key. 8M rounds, each drawing op,
 -- stratum, key from one MINSTD stream: 9/16 insert, 5/16 delete, 2/16
 -- lookup (sum, -1 on miss). Deletes land on present keys ~48% of the
 -- time.
 --
 -- After each round one more draw decides retention: when it is
--- divisible by 512 (3,908 times over the run) the current version is
+-- divisible by 512 (15,630 times over the run) the current version is
 -- parked in slot (draw / 512) mod 8 of an eight-version ring, where
 -- it stays shared until that slot is next overwritten. A persistent
 -- HAMT parks a version by keeping the handle; nothing is copied at the
 -- event. The checksum folds the working map and every ring slot, so
--- retained versions stay live and verified. Final size 373,649; each
--- ring slot ends holding a ~373k-entry version. The checksum is
+-- retained versions stay live and verified. Final size 1,120,619; each
+-- ring slot ends holding a ~1.1M-entry version. The checksum is
 -- iteration-order independent so all representations agree.
 --
 -- Heavily shared tier: retention fires ~15x more often than
@@ -32,8 +32,8 @@ import qualified Data.HashMap.Strict as HM
 import System.Exit (exitFailure)
 
 opsN, expected :: Int64
-opsN = 2000000
-expected = 326234472953519
+opsN = 8000000
+expected = 1285288094593426
 
 lcg :: Int64 -> Int64
 lcg x = (x * 48271) `rem` 2147483647

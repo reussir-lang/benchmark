@@ -63,24 +63,26 @@ intentionally left idiomatic.
   no floating point involved), and each round draws op/stratum/key from
   one MINSTD stream — 9/16 insert, 5/16 delete, 2/16 lookup, with deletes
   landing on present keys ~48% of the time. Each structure runs in two
-  configurations. The `-linear` cells thread exactly one live version and
-  retain nothing (ordered: 1M builds / 1M churn / 1M lookups, ending at
-  400,944 entries; hash: 8M rounds, ending at 1,120,773 entries), so
-  in-place and uniqueness-reuse updates stay unobstructed. The `-shared`
-  cells add version retention at reduced scale (ordered: 500k per phase;
-  hash: 2M rounds): during mutating rounds one more draw per round parks
-  the current version in an eight-slot ring when divisible by 8192 (123
-  events for ordered, 266 for hash), where it stays shared until the slot
-  is overwritten; the checksum folds the working map plus every ring slot,
-  so persistent maps pay path copies while a version is parked and mutable
-  maps pay a full copy per parked version (ordered ends at 365,836
-  entries with ~366k-entry ring slots; hash at 373,649 with ~360k-entry
-  slots). The `-heavily-shared` cells are the same shared workloads with
-  the retention modulus dropped from 8192 to 512 (~1.95k ordered and
-  ~3.9k hash events): past the crossover (~1 park per 700–800 ops at
-  these map sizes) where per-event full copies dominate a mutable
-  representation, while persistent maps are insensitive to retention
-  frequency. Reussir uses its std's `WavlMap`
+  configurations, and every configuration of a structure runs the same
+  round counts (ordered: 1M builds / 1M churn / 1M lookups; hash: 8M
+  rounds), so the per-configuration segments of a stacked plot weigh the
+  same workload. The `-linear` cells thread exactly one live version and
+  retain nothing (ordered ends at 400,944 entries; hash at 1,120,773),
+  so in-place and uniqueness-reuse updates stay unobstructed. The
+  `-shared` cells add version retention: during mutating rounds one more
+  draw per round parks the current version in an eight-slot ring when
+  divisible by 8192 (265 events for ordered, 977 for hash), where it
+  stays shared until the slot is overwritten; the checksum folds the
+  working map plus every ring slot, so persistent maps pay path copies
+  while a version is parked and mutable maps pay a full copy per parked
+  version (ordered ends at 401,258 entries with ~401k-entry ring slots;
+  hash at 1,120,619 with ~1.1M-entry slots — the retention bill for an
+  explicit-copy representation is deliberately part of the score). The
+  `-heavily-shared` cells are the same shared workloads with the
+  retention modulus dropped from 8192 to 512 (~3.9k ordered and ~15.6k
+  hash events): far past the crossover where per-event full copies
+  dominate a mutable representation, while persistent maps are
+  insensitive to retention frequency. Reussir uses its std's `WavlMap`
   (persistent WAVL tree) and `HashMap` (persistent radix-32 HAMT with the
   pure FastHasher); Rust appears twice — `rust` uses std's `BTreeMap`/
   `HashMap` (mutable, SipHash-1-3) as the imperative baseline, and

@@ -253,16 +253,19 @@ BENCHES = {
     },
     # Standard-library collection benchmarks: matched map workloads on
     # each language's standard ordered map and hash map, in two
-    # configurations per structure. The ``-linear`` cells thread exactly
-    # one live version (no retention; 1M build/churn/lookup rounds for
-    # the ordered map, 8M mixed-op rounds for the hash map). The
-    # ``-shared`` cells park versions in an eight-slot retention ring at
-    # a reduced scale (500k rounds per ordered phase, 2M hash rounds) so
-    # explicit-copy representations stay in range. The
+    # configurations per structure. Every configuration of a structure
+    # runs the same round counts (1M build/churn/lookup rounds for the
+    # ordered map, 8M mixed-op rounds for the hash map) so stacked
+    # per-configuration segments weigh the same workload. The
+    # ``-linear`` cells thread exactly one live version (no retention).
+    # The ``-shared`` cells park versions in an eight-slot retention
+    # ring on every draw divisible by 8192 (265 ordered / 977 hash
+    # events); explicit-copy representations pay a full copy per parked
+    # version, and that bill is deliberately part of the score. The
     # ``-heavily-shared`` cells keep the shared workloads but park every
-    # 512th draw instead of every 8192nd (~1.95k ordered / ~3.9k hash
-    # events) — past the crossover where per-event full copies dominate
-    # a mutable representation. The Reussir cells use std's WavlMap/HashMap and
+    # 512th draw instead of every 8192nd (~3.9k ordered / ~15.6k hash
+    # events) — far past the crossover where per-event full copies
+    # dominate a mutable representation. The Reussir cells use std's WavlMap/HashMap and
     # compile against the bundled core+std packages (``reussir-std``);
     # Koka's bundled stdlib has no comparable containers, so its cells
     # use the vendored koka-community/std subset (koka/community-std):

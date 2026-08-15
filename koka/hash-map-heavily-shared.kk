@@ -7,12 +7,12 @@
 // (theta ~ 1) — a stratum s drawn uniform in [0, 24), then a key
 // uniform in [2^s, 2^(s+1)), so every octave carries equal mass and
 // per-key probability decays as 1/key. No floating point, so the
-// distribution is bit-identical in every language. 2M rounds, each
+// distribution is bit-identical in every language. 8M rounds, each
 // drawing op, stratum, key from one MINSTD stream: 9/16 insert,
 // 5/16 delete, 2/16 lookup (sum, -1 on miss).
 //
 // After each round one more draw decides retention: when it is
-// divisible by 512 (3,908 times over the run) the current version is
+// divisible by 512 (15,630 times over the run) the current version is
 // parked in slot (draw / 512) mod 8 of an eight-version ring, where
 // it stays shared until that slot is next overwritten. Parking shares
 // the backing vector, so the next update on the working map pays one
@@ -20,8 +20,8 @@
 // the working map and every ring slot, so retained versions stay live
 // and verified:
 // result = lookup-sum + sum over maps of (sum(key * 31 + value) +
-// 7 * size). Final size 373,649; each ring slot ends holding a
-// ~373k-entry version from late in the run. Heavily shared tier:
+// 7 * size). Final size 1,120,619; each ring slot ends holding a
+// ~1.1M-entry version from late in the run. Heavily shared tier:
 // retention fires ~15x more often than hash-map-shared.
 
 import std/num/int64
@@ -41,7 +41,7 @@ fun fold-ring(ring : vector<hash-map<int,int>>, acc : int) : int
   ring.list.foldl(acc) fn(a, m) fold-one(m, a)
 
 fun ops(i : int, x : int, m : hash-map<int,int>, ring : vector<hash-map<int,int>>, acc : int) : <div,exn> int
-  if i == 2000000 then fold-ring(ring, fold-one(m, acc))
+  if i == 8000000 then fold-ring(ring, fold-one(m, acc))
   else
     val x1 = lcg(x)
     val op = x1 % 16
@@ -62,6 +62,6 @@ fun ops(i : int, x : int, m : hash-map<int,int>, ring : vector<hash-map<int,int>
 
 pub fun main()
   val c = ops(0, 1, hash-map-seeded(zero), vector(8, hash-map-seeded(zero)), 0)
-  if c != 326234472953519 then
-    println("FAIL: expected 326234472953519, got " ++ c.show)
+  if c != 1285288094593426 then
+    println("FAIL: expected 1285288094593426, got " ++ c.show)
     throw("wrong result")

@@ -12,8 +12,8 @@ extern crate rpds;
 
 use rpds::HashTrieMap;
 
-const OPS: i64 = 2_000_000;
-const EXPECTED: i64 = 317327888655435;
+const OPS: i64 = 8_000_000;
+const EXPECTED: i64 = 1271164153412359;
 
 fn lcg(x: i64) -> i64 {
     (x * 48271) % 2147483647

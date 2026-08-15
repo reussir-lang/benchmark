@@ -6,22 +6,22 @@
 // (theta ~ 1) — a stratum s drawn uniform in [0, 24), then a key
 // uniform in [2^s, 2^(s+1)), so every octave carries equal mass and
 // per-key probability decays as 1/key. No floating point, so the
-// distribution is bit-identical in every language. 2M rounds, each
+// distribution is bit-identical in every language. 8M rounds, each
 // drawing op, stratum, key from one MINSTD stream: 9/16 insert,
 // 5/16 delete, 2/16 lookup (sum, -1 on miss). Hot octaves saturate
-// (the hottest key sees ~47k overwrites), the cold tail stays sparse,
+// (the hottest key sees ~187k overwrites), the cold tail stays sparse,
 // and deletes land on present keys ~48% of the time.
 //
 // After each round one more draw decides retention: when it is
-// divisible by 8192 (266 times over the run) the current version is
+// divisible by 8192 (977 times over the run) the current version is
 // parked in slot (draw / 8192) mod 8 of an eight-version ring, where
 // it stays shared until that slot is next overwritten. Persistent maps
 // pay path copies while a parked version is live; mutable maps pay a
 // full copy per parked version. The checksum folds the working map and
 // every ring slot, so retained versions stay live and verified:
 // result = lookup-sum + sum over maps of (sum(key * 31 + value) +
-// 7 * size). Final size 373,649; each ring slot ends holding a
-// ~360k-entry version from late in the run.
+// 7 * size). Final size 1,120,619; each ring slot ends holding a
+// ~1.1M-entry version from late in the run.
 //
 // Std ships no Hash impl for primitive keys, so the logical i64 key
 // rides in a [value] newtype whose Hash feeds the i64 to the hasher —
@@ -72,7 +72,7 @@ fn ops(
     ring : [HashMap<Key, i64>; 8],
     acc : i64
 ) -> i64 {
-    if i == 2000000 {
+    if i == 8000000 {
         fold_ring(ring, 0, fold_one(m, acc))
     } else {
         let x1 = lcg(x);

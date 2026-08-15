@@ -5,7 +5,7 @@
 extern int64_t map_test_ffi(void);
 
 int main(void) {
-  const int64_t expected = 857062518301433262LL;
+  const int64_t expected = 948266134564763663LL;
   int64_t r = map_test_ffi();
   if (r != expected) {
     fprintf(stderr, "FAIL: expected %lld, got %lld\n", (long long)expected,

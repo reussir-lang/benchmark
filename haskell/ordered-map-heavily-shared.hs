@@ -2,18 +2,18 @@
 
 -- Std-collection workload on Haskell's standard ordered map
 -- (Data.Map.Strict from containers — a persistent size-balanced tree).
--- Build 500k MINSTD-keyed inserts over a 524287 keyspace, churn 500k
--- insert/remove rounds, sum 500k lookups (-1 for a miss), then fold the
+-- Build 1M MINSTD-keyed inserts over a 524287 keyspace, churn 1M
+-- insert/remove rounds, sum 1M lookups (-1 for a miss), then fold the
 -- final map: result = lookup-sum + sum(key * 1000003 + value) + 7 * size.
 --
 -- During the two mutating phases a second draw per round decides
--- retention: when it is divisible by 512 (1,951 times over the run) the
+-- retention: when it is divisible by 512 (3,933 times over the run) the
 -- current version is parked in slot (draw / 512) mod 8 of an
 -- eight-version ring, where it stays shared until that slot is next
 -- overwritten; a persistent tree parks a version by keeping the handle.
 -- The checksum folds the final map and every ring slot, so retained
--- versions stay live and verified. Final size 365,836; each ring slot
--- ends holding a ~366k-entry version.
+-- versions stay live and verified. Final size 401,258; each ring slot
+-- ends holding a ~401k-entry version.
 --
 -- Heavily shared tier: retention fires ~15x more often than
 -- ordered-map-shared, past the crossover where per-event full copies
@@ -25,10 +25,10 @@ import System.Exit (exitFailure)
 
 keyspace, buildN, churnN, lookupN, expected :: Int64
 keyspace = 524287
-buildN = 500000
-churnN = 500000
-lookupN = 500000
-expected = 861736461765462691
+buildN = 1000000
+churnN = 1000000
+lookupN = 1000000
+expected = 946706648628515214
 
 lcg :: Int64 -> Int64
 lcg x = (x * 48271) `rem` 2147483647

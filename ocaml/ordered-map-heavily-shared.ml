@@ -1,17 +1,17 @@
 (* Std-collection workload on OCaml's standard ordered map
    (Stdlib.Map.Make — a persistent AVL tree). Build 500k MINSTD-keyed
-   inserts over a 524287 keyspace, churn 500k insert/remove rounds, sum
+   inserts over a 524287 keyspace, churn 1M insert/remove rounds, sum
    500k lookups (-1 for a miss), then fold the final map:
    result = lookup-sum + sum(key * 1000003 + value) + 7 * size.
 
    During the two mutating phases a second draw per round decides
-   retention: when it is divisible by 512 (1,951 times over the run) the
+   retention: when it is divisible by 512 (3,933 times over the run) the
    current version is parked in slot (draw / 512) mod 8 of an
    eight-version ring, where it stays shared until that slot is next
    overwritten; a persistent tree parks a version by keeping the
    handle. The checksum folds the final map and every ring slot, so
-   retained versions stay live and verified. Final size 365,836; each
-   ring slot ends holding a ~366k-entry version.
+   retained versions stay live and verified. Final size 401,258; each
+   ring slot ends holding a ~401k-entry version.
 
    Heavily shared tier: retention fires ~15x more often than
    ordered-map-shared, past the crossover where per-event full copies
@@ -20,10 +20,10 @@
 module M = Map.Make (Int64)
 
 let keyspace = 524_287L
-let build_n = 500_000
-let churn_n = 500_000
-let lookup_n = 500_000
-let expected = 861_736_461_765_462_691L
+let build_n = 1_000_000
+let churn_n = 1_000_000
+let lookup_n = 1_000_000
+let expected = 946_706_648_628_515_214L
 let lcg x = Int64.rem (Int64.mul x 48_271L) 2_147_483_647L
 
 let retain x m ring =

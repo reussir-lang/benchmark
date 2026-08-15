@@ -15,10 +15,10 @@ extern crate rpds;
 use rpds::RedBlackTreeMap;
 
 const KEYSPACE: i64 = 524287;
-const BUILD: i64 = 500_000;
-const CHURN: i64 = 500_000;
-const LOOKUPS: i64 = 500_000;
-const EXPECTED: i64 = 861736461765462691;
+const BUILD: i64 = 1_000_000;
+const CHURN: i64 = 1_000_000;
+const LOOKUPS: i64 = 1_000_000;
+const EXPECTED: i64 = 946706648628515214;
 
 fn lcg(x: i64) -> i64 {
     (x * 48271) % 2147483647

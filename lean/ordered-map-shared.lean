@@ -2,18 +2,18 @@ import Std.Data.TreeMap
 
 /- Std-collection workload on Lean's standard ordered map
    (Std.TreeMap — a size-bounded balanced tree, updated in place when
-   uniquely referenced). Build 500k MINSTD-keyed inserts over a 524287
-   keyspace, churn 500k insert/remove rounds, sum 500k lookups (-1 for a
+   uniquely referenced). Build 1M MINSTD-keyed inserts over a 524287
+   keyspace, churn 1M insert/remove rounds, sum 1M lookups (-1 for a
    miss), then fold the final map:
    result = lookup-sum + sum(key * 1000003 + value) + 7 * size.
 
    During the two mutating phases a second draw per round decides
-   retention: when it is divisible by 8192 (123 times over the run) the
+   retention: when it is divisible by 8192 (265 times over the run) the
    current version is parked in slot (draw / 8192) mod 8 of an
    eight-version ring, where it stays shared until that slot is next
    overwritten. The checksum folds the final map and every ring slot,
-   so retained versions stay live and verified. Final size 365,836;
-   each ring slot ends holding a ~366k-entry version.
+   so retained versions stay live and verified. Final size 401,258;
+   each ring slot ends holding a ~401k-entry version.
    Std.TreeMap is updated in place only while uniquely referenced, so a
    parked version makes later updates copy their path — the honest cost
    of retention for this representation. -/
@@ -21,10 +21,10 @@ import Std.Data.TreeMap
 open Std
 
 def keyspace : Int64 := 524287
-def buildN : Int64 := 500000
-def churnN : Int64 := 500000
-def lookupN : Int64 := 500000
-def expected : Int64 := 857062518301433262
+def buildN : Int64 := 1000000
+def churnN : Int64 := 1000000
+def lookupN : Int64 := 1000000
+def expected : Int64 := 948266134564763663
 
 def lcg (x : Int64) : Int64 :=
   (x * 48271) % 2147483647
