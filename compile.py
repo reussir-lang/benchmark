@@ -191,6 +191,11 @@ def compile_reussir(
 def compile_koka(program: str, output: str) -> None:
     # -O3 with the same clang, thin-LTO, and -march=native the reussir
     # variant links with, so kklib participates in cross-module optimization.
+    # The include path serves the vendored koka-community/std subset the
+    # map benchmarks import (see koka/community-std/README.md).
+    community_std = os.path.join(
+        os.path.dirname(os.path.abspath(__file__)), "koka", "community-std"
+    )
     with tempfile.TemporaryDirectory() as tmpdir:
         _run_quiet(
             [
@@ -199,6 +204,7 @@ def compile_koka(program: str, output: str) -> None:
                 f"--cc={CONFIG['cc']}",
                 "--ccopts=-flto=thin -march=native",
                 "--cclinkopts=-flto=thin -fuse-ld=lld",
+                f"-i{community_std}",
                 program,
                 "-o",
                 output,

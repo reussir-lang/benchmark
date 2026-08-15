@@ -92,8 +92,14 @@ intentionally left idiomatic.
   (persistent AVL) and `Hashtbl` (mutable); Lean uses `Std.TreeMap` and
   `Std.HashMap` (in-place when uniquely referenced). Representations and
   hash functions are intentionally each library's stock choice — this set
-  compares shipped standard libraries, not one algorithm. Koka's stdlib has
-  no comparable containers and sits this set out. The Reussir cells compile
+  compares shipped standard libraries, not one algorithm. Koka's bundled
+  stdlib has no comparable containers, so its cells use the community
+  standard library ([koka-community/std](https://github.com/koka-community/std),
+  vendored under `koka/community-std`): `std/data/rbtree-bu` (persistent
+  red-black tree with bottom-up insert/remove) for the ordered map and
+  `std/data/hashmap` (bucket hash map over a uniqueness-adaptive vector,
+  copied in full when an update hits a shared table) for the hash map.
+  The Reussir cells compile
   against the pinned tree's bundled `core`+`std` packages (built once per
   configuration with the same flags and folded into the same ThinLTO link).
 - **functional-queue** — strict Hood–Melville real-time queue with incremental

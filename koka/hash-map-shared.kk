@@ -1,0 +1,66 @@
+// Std-collection workload on the hash map from koka-community/std
+// (std/data/hashmap, vendored under koka/community-std — a bucket hash
+// map over a uniqueness-adaptive vector, keyed by the kklib integer
+// hash with a zero seed).
+//
+// Zipfian mixed-op workload: keys follow an integer-only octave Zipf
+// (theta ~ 1) — a stratum s drawn uniform in [0, 24), then a key
+// uniform in [2^s, 2^(s+1)), so every octave carries equal mass and
+// per-key probability decays as 1/key. No floating point, so the
+// distribution is bit-identical in every language. 2M rounds, each
+// drawing op, stratum, key from one MINSTD stream: 9/16 insert,
+// 5/16 delete, 2/16 lookup (sum, -1 on miss).
+//
+// After each round one more draw decides retention: when it is
+// divisible by 8192 (266 times over the run) the current version is
+// parked in slot (draw / 8192) mod 8 of an eight-version ring, where
+// it stays shared until that slot is next overwritten. Parking shares
+// the backing vector, so the next update on the working map pays one
+// full table copy before mutating in place again. The checksum folds
+// the working map and every ring slot, so retained versions stay live
+// and verified:
+// result = lookup-sum + sum over maps of (sum(key * 31 + value) +
+// 7 * size). Final size 373,649; each ring slot ends holding a
+// ~360k-entry version from late in the run.
+
+import std/num/int64
+import std/core-extras
+import std/data/hashmap
+
+fun lcg(x : int) : int
+  (x * 48271) % 2147483647
+
+fun fold-one(m : hash-map<int,int>, acc : int) : int
+  var s := acc
+  m.foreach fn(k, v)
+    s := s + k * 31 + v
+  s + 7 * m.length
+
+fun fold-ring(ring : vector<hash-map<int,int>>, acc : int) : int
+  ring.list.foldl(acc) fn(a, m) fold-one(m, a)
+
+fun ops(i : int, x : int, m : hash-map<int,int>, ring : vector<hash-map<int,int>>, acc : int) : <div,exn> int
+  if i == 2000000 then fold-ring(ring, fold-one(m, acc))
+  else
+    val x1 = lcg(x)
+    val op = x1 % 16
+    val x2 = lcg(x1)
+    val s = x2 % 24
+    val x3 = lcg(x2)
+    val p = 1.int64.shl(s).int
+    val k = p + x3 % p
+    val m2 = if op < 9 then m.insert(k, i)
+             elif op < 14 then m.remove(k)
+             else m
+    val acc2 = if op < 14 then acc else acc + m2.get(k).default(-1)
+    val x4 = lcg(x3)
+    if x4 % 8192 == 0 then
+      ops(i + 1, x4, m2, ring.unsafe-set((x4 / 8192) % 8, m2), acc2)
+    else
+      ops(i + 1, x4, m2, ring, acc2)
+
+pub fun main()
+  val c = ops(0, 1, hash-map-seeded(zero), vector(8, hash-map-seeded(zero)), 0)
+  if c != 317327888655435 then
+    println("FAIL: expected 317327888655435, got " ++ c.show)
+    throw("wrong result")

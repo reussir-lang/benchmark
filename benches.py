@@ -264,7 +264,10 @@ BENCHES = {
     # events) — past the crossover where per-event full copies dominate
     # a mutable representation. The Reussir cells use std's WavlMap/HashMap and
     # compile against the bundled core+std packages (``reussir-std``);
-    # Koka's stdlib has no comparable containers, so it sits these out.
+    # Koka's bundled stdlib has no comparable containers, so its cells
+    # use the vendored koka-community/std subset (koka/community-std):
+    # rbtree-bu for the ordered map and the bucket hashmap for the hash
+    # map.
     "ordered-map-linear": {
         "set": _STD,
         "reussir-std": True,
@@ -279,6 +282,7 @@ BENCHES = {
                     "reussir/ordered-map-linear.rr",
                     "reussir/ordered-map-linear.rr.c",
                 ),
+                "koka": "koka/ordered-map-linear.kk",
                 "rust": "rust/ordered-map-linear.rs",
                 "rust-rpds": "rust/ordered-map-linear-rpds.rs",
                 "ocaml": "ocaml/ordered-map-linear.ml",
@@ -300,6 +304,7 @@ BENCHES = {
                     "reussir/ordered-map-shared.rr",
                     "reussir/ordered-map-shared.rr.c",
                 ),
+                "koka": "koka/ordered-map-shared.kk",
                 "rust": "rust/ordered-map-shared.rs",
                 "rust-rpds": "rust/ordered-map-shared-rpds.rs",
                 "ocaml": "ocaml/ordered-map-shared.ml",
@@ -321,6 +326,7 @@ BENCHES = {
                     "reussir/ordered-map-heavily-shared.rr",
                     "reussir/ordered-map-heavily-shared.rr.c",
                 ),
+                "koka": "koka/ordered-map-heavily-shared.kk",
                 "rust": "rust/ordered-map-heavily-shared.rs",
                 "rust-rpds": "rust/ordered-map-heavily-shared-rpds.rs",
                 "ocaml": "ocaml/ordered-map-heavily-shared.ml",
@@ -342,6 +348,7 @@ BENCHES = {
                     "reussir/hash-map-linear.rr",
                     "reussir/hash-map-linear.rr.c",
                 ),
+                "koka": "koka/hash-map-linear.kk",
                 "rust": "rust/hash-map-linear.rs",
                 "rust-rpds": "rust/hash-map-linear-rpds.rs",
                 "ocaml": "ocaml/hash-map-linear.ml",
@@ -363,6 +370,7 @@ BENCHES = {
                     "reussir/hash-map-shared.rr",
                     "reussir/hash-map-shared.rr.c",
                 ),
+                "koka": "koka/hash-map-shared.kk",
                 "rust": "rust/hash-map-shared.rs",
                 "rust-rpds": "rust/hash-map-shared-rpds.rs",
                 "ocaml": "ocaml/hash-map-shared.ml",
@@ -384,6 +392,7 @@ BENCHES = {
                     "reussir/hash-map-heavily-shared.rr",
                     "reussir/hash-map-heavily-shared.rr.c",
                 ),
+                "koka": "koka/hash-map-heavily-shared.kk",
                 "rust": "rust/hash-map-heavily-shared.rs",
                 "rust-rpds": "rust/hash-map-heavily-shared-rpds.rs",
                 "ocaml": "ocaml/hash-map-heavily-shared.ml",
