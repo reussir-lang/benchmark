@@ -12,7 +12,7 @@
 
     # Current Reussir main (2026-08-13).
     reussir = {
-      url = "github:reussir-lang/reussir/25f7884fde21165471487d522ec0272fc9c5668a";
+      url = "github:reussir-lang/reussir/8511d00f19e8cd64009d886146e2a413953fa050";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.fenix.follows = "fenix";
       inputs.flake-utils.follows = "flake-utils";

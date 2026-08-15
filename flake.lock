@@ -102,17 +102,17 @@
         ]
       },
       "locked": {
-        "lastModified": 1786493738,
-        "narHash": "sha256-Tq7rhSBRyqMnA3oaUo8Ibvzkn0HefJsD7+Dda4Et1vU=",
+        "lastModified": 1786815204,
+        "narHash": "sha256-6hpsH2qZmZ4aFORYhNTu2pKmvoKWYlIHtX/1cYvcHSQ=",
         "owner": "reussir-lang",
         "repo": "reussir",
-        "rev": "25f7884fde21165471487d522ec0272fc9c5668a",
+        "rev": "8511d00f19e8cd64009d886146e2a413953fa050",
         "type": "github"
       },
       "original": {
         "owner": "reussir-lang",
         "repo": "reussir",
-        "rev": "25f7884fde21165471487d522ec0272fc9c5668a",
+        "rev": "8511d00f19e8cd64009d886146e2a413953fa050",
         "type": "github"
       }
     },
