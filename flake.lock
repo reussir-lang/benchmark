@@ -8,11 +8,11 @@
         "rust-analyzer-src": "rust-analyzer-src"
       },
       "locked": {
-        "lastModified": 1783844668,
-        "narHash": "sha256-3MOpw4y3reoErRLvFBDz0t9aG6FWXUj7leKvUns5eQA=",
+        "lastModified": 1788261902,
+        "narHash": "sha256-N7UHRZbJzgWaad+SOgl9QlWKiBulHan2/ezZhLfnjlo=",
         "owner": "nix-community",
         "repo": "fenix",
-        "rev": "4e49ef62eedaa5c149d62b63b3f53844e1cc45d7",
+        "rev": "af85de9d317b402448a8ebb06bc16c7fd82f0375",
         "type": "github"
       },
       "original": {
@@ -59,27 +59,27 @@
     "mlir-sync": {
       "flake": false,
       "locked": {
-        "lastModified": 1784322562,
-        "narHash": "sha256-9v3j7XFfBYVUcuLwVgz9cKvsfjjltluAZ8FgCoH2+XY=",
+        "lastModified": 1788311117,
+        "narHash": "sha256-2P5bs4lMerRtK6YeRqIxFr4Jl51zl0xRz2vV8dX8X1A=",
         "owner": "reussir-lang",
         "repo": "mlir-sync",
-        "rev": "5e9721da4911c5b256a67922193a96e8dd417692",
+        "rev": "16199f4865245272fbbd39574f09c4afe330ce1e",
         "type": "github"
       },
       "original": {
         "owner": "reussir-lang",
         "repo": "mlir-sync",
-        "rev": "5e9721da4911c5b256a67922193a96e8dd417692",
+        "rev": "16199f4865245272fbbd39574f09c4afe330ce1e",
         "type": "github"
       }
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1783776592,
-        "narHash": "sha256-UgCQzxeWI75XM8G+hPrPh+MKzEPjG3SpAj7dtqSbksA=",
+        "lastModified": 1788179007,
+        "narHash": "sha256-hn1oU2rue2SYK8dAr8+WNZWtbsz1S2W5mnHlSEuh3bo=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "e7a3ca8092b61ff85b6a45bf863ea2b2d6a661b3",
+        "rev": "34ab99075ac4f7e40cf037eef32cb1c360bb85e9",
         "type": "github"
       },
       "original": {
@@ -102,17 +102,17 @@
         ]
       },
       "locked": {
-        "lastModified": 1786815204,
-        "narHash": "sha256-6hpsH2qZmZ4aFORYhNTu2pKmvoKWYlIHtX/1cYvcHSQ=",
+        "lastModified": 1788327027,
+        "narHash": "sha256-XJO1eBYXvS/e2qZ5TWbeBoOgQ0FhkN3uSX/QKd/moWY=",
         "owner": "reussir-lang",
         "repo": "reussir",
-        "rev": "8511d00f19e8cd64009d886146e2a413953fa050",
+        "rev": "f54301a61cfa4b29bcee5d84dff00803965c96f5",
         "type": "github"
       },
       "original": {
         "owner": "reussir-lang",
         "repo": "reussir",
-        "rev": "8511d00f19e8cd64009d886146e2a413953fa050",
+        "rev": "f54301a61cfa4b29bcee5d84dff00803965c96f5",
         "type": "github"
       }
     },
@@ -129,11 +129,11 @@
     "rust-analyzer-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1783779020,
-        "narHash": "sha256-vpm418WZa9l1KUl6HRs+Ga+SIfE+D2/sV4olwTlilYc=",
+        "lastModified": 1788194240,
+        "narHash": "sha256-dehprdAEnE6veOVeKq1wbOKmwPPoNbVHwwBj3l8rOFY=",
         "owner": "rust-lang",
         "repo": "rust-analyzer",
-        "rev": "5be5e89cf0145d73a85c805726821b4adfc3af48",
+        "rev": "ce43a12d9fe4a24e5d6a86d29a57234efcc902b7",
         "type": "github"
       },
       "original": {

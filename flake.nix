@@ -10,9 +10,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Current Reussir main (2026-08-13).
+    # Current Reussir main (2026-09-02, LLVM/MLIR 23.1).
     reussir = {
-      url = "github:reussir-lang/reussir/8511d00f19e8cd64009d886146e2a413953fa050";
+      url = "github:reussir-lang/reussir/f54301a61cfa4b29bcee5d84dff00803965c96f5";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.fenix.follows = "fenix";
       inputs.flake-utils.follows = "flake-utils";
@@ -26,7 +26,7 @@
       flake = false;
     };
     mlir-sync = {
-      url = "github:reussir-lang/mlir-sync/5e9721da4911c5b256a67922193a96e8dd417692";
+      url = "github:reussir-lang/mlir-sync/16199f4865245272fbbd39574f09c4afe330ce1e";
       flake = false;
     };
   };
@@ -47,11 +47,11 @@
       let
         pkgs = nixpkgs.legacyPackages.${system};
         lib = pkgs.lib;
-        llvmPkgs = pkgs.llvmPackages_22;
+        llvmPkgs = pkgs.llvmPackages_23;
 
         rustToolchain = fenix.packages.${system}.fromToolchainFile {
           file = "${reussir}/rust-toolchain.toml";
-          sha256 = "sha256-4ot8+Fs79G1hUwlEYI6700QBLKdkLb33yzwOou1o5Yk=";
+          sha256 = "sha256-ko0a8G9o/p60mphrxmH0dNQsUdWkKMBaGexsqEqtCF4=";
         };
 
         # mlir-sys and llvm-sys require one prefix containing both the runtime
@@ -103,7 +103,7 @@
 
         reussirCargoDeps = pkgs.rustPlatform.fetchCargoVendor {
           src = reussir;
-          hash = "sha256-n6UMcjKsQlVO3WQ7o5Js6bz1AgKKoypnH69+TVNJmNA=";
+          hash = "sha256-aLslW1z/oZzHIACmIqxHogsb4qISyKSZ/KvSx04VkoY=";
         };
 
         reussirCompiler = llvmPkgs.stdenv.mkDerivation {
@@ -153,12 +153,12 @@
 
             # rrc's Rust link consumes every archive listed by
             # reussir-backend-sys/build.rs.  Upstream's ReussirCAPI dependency
-            # list currently omits these three, so an explicit `rrc` build can
+            # list currently omits these four, so an explicit `rrc` build can
             # reach cargo before the archives exist.
             substituteInPlace lib/CAPI/CMakeLists.txt \
               --replace-fail \
                 '  # transformations' \
-                $'  # transformations\n  MLIRReussirClosureBetaReduction\n  MLIRReussirDefaultInliner' \
+                $'  # transformations\n  MLIRReussirClosureBetaReduction\n  MLIRReussirDefaultInliner\n  MLIRReussirInstrumentNonlinearFFI' \
               --replace-fail \
                 '  MLIRReussirTokenReuse' \
                 $'  MLIRReussirTokenReuse\n  MLIRReussirSpecialPointerTag'
@@ -166,10 +166,9 @@
 
           LLVM_DIR = "${llvmMlirJoin}/lib/cmake/llvm";
           MLIR_DIR = "${llvmMlirJoin}/lib/cmake/mlir";
-          MLIR_SYS_220_PREFIX = llvmMlirJoin;
-          MLIR_SYS_210_PREFIX = llvmMlirJoin;
-          TABLEGEN_220_PREFIX = llvmMlirJoin;
-          LLVM_SYS_221_PREFIX = llvmMlirJoin;
+          MLIR_SYS_230_PREFIX = llvmMlirJoin;
+          TABLEGEN_230_PREFIX = llvmMlirJoin;
+          LLVM_SYS_231_PREFIX = llvmMlirJoin;
           LIBCLANG_PATH = "${llvmPkgs.libclang.lib}/lib";
           BINDGEN_EXTRA_CLANG_ARGS = nixSystemFlags;
           MLIR_TABLEGEN_EXE_OVERRIDE = "${llvmPkgs.tblgen}/bin/mlir-tblgen";
@@ -310,9 +309,13 @@
             mkdir -p "$out/lib/deps"
             cp target/release/libreussir_rt.rlib "$out/lib/" 2>/dev/null \
               || cp target/release/deps/libreussir_rt-*.rlib "$out/lib/"
+            # The rlibs carry only stub metadata; the full metadata rides
+            # sibling .rmeta files rustc must find next to them.
+            cp target/release/deps/libreussir_rt.rmeta "$out/lib/" 2>/dev/null || true
             # Proc-macro crates (num_enum_derive & co.) are dylibs, and
             # rustc needs them next to the rlibs to load the metadata graph.
             cp target/release/deps/*.rlib target/release/deps/*.so "$out/lib/deps/"
+            cp target/release/deps/*.rmeta "$out/lib/deps/" 2>/dev/null || true
             runHook postInstall
           '';
 
