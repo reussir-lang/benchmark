@@ -37,6 +37,18 @@ fun fold-one(m : hash-map<int,int>, acc : int) : int
     s := s + k * 31 + v
   s + 7 * m.length
 
+// Park version `m` in ring slot `slot`, dropping the version that slot
+// held before. The community `unsafe-set` writes through
+// `kk_vector_unsafe_assign`, which stores the new element WITHOUT
+// dropping the old one, so every superseded version would leak (hundreds
+// of MB to tens of GB of peak RSS here) and the drop work every other
+// port pays would be skipped. Rebuilding the eight-slot ring lets Perceus
+// drop the old ring and, with it, the superseded version. `noinline` is
+// required for the same reason as `step` in life.kk: the -O3 specializer
+// diverges (>100 GB) on a recursive call whose argument builds a closure.
+noinline fun park(ring : vector<hash-map<int,int>>, slot : int, m : hash-map<int,int>) : exn vector<hash-map<int,int>>
+  vector-init(8) fn(j) if j == slot then m else ring[j]
+
 fun fold-ring(ring : vector<hash-map<int,int>>, acc : int) : int
   ring.list.foldl(acc) fn(a, m) fold-one(m, a)
 
@@ -56,7 +68,7 @@ fun ops(i : int, x : int, m : hash-map<int,int>, ring : vector<hash-map<int,int>
     val acc2 = if op < 14 then acc else acc + m2.get(k).default(-1)
     val x4 = lcg(x3)
     if x4 % 512 == 0 then
-      ops(i + 1, x4, m2, ring.unsafe-set((x4 / 512) % 8, m2), acc2)
+      ops(i + 1, x4, m2, ring.park((x4 / 512) % 8, m2), acc2)
     else
       ops(i + 1, x4, m2, ring, acc2)
 

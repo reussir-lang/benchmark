@@ -32,6 +32,18 @@ fun fold-one(m : rbtree<int,int>, acc : int) : int
   val sum = m.td/fold(acc) fn(a, k, v) a + k * 1000003 + v
   sum + 7 * m.td/fold(0) fn(n, _, _) n + 1
 
+// Park version `m` in ring slot `slot`, dropping the version that slot
+// held before. The community `unsafe-set` writes through
+// `kk_vector_unsafe_assign`, which stores the new element WITHOUT
+// dropping the old one, so every superseded version would leak (hundreds
+// of MB to tens of GB of peak RSS here) and the drop work every other
+// port pays would be skipped. Rebuilding the eight-slot ring lets Perceus
+// drop the old ring and, with it, the superseded version. `noinline` is
+// required for the same reason as `step` in life.kk: the -O3 specializer
+// diverges (>100 GB) on a recursive call whose argument builds a closure.
+noinline fun park(ring : vector<rbtree<int,int>>, slot : int, m : rbtree<int,int>) : exn vector<rbtree<int,int>>
+  vector-init(8) fn(j) if j == slot then m else ring[j]
+
 fun fold-ring(ring : vector<rbtree<int,int>>, acc : int) : int
   ring.list.foldl(acc) fn(a, m) fold-one(m, a)
 
@@ -50,7 +62,7 @@ fun mutate(i : int, x : int, m : rbtree<int,int>, ring : vector<rbtree<int,int>>
     val m1 = if i >= 1000000 && x1 % 4 == 3 then m.bu/remove(k) else m.bu/set(k, i)
     val x2 = lcg(x1)
     if x2 % 8192 == 0 then
-      mutate(i + 1, x2, m1, ring.unsafe-set((x2 / 8192) % 8, m1))
+      mutate(i + 1, x2, m1, ring.park((x2 / 8192) % 8, m1))
     else
       mutate(i + 1, x2, m1, ring)
 
