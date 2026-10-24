@@ -89,39 +89,7 @@ def run_benchmark(bench_name, bench_variant):
         executable = os.path.join(tmpdir, f"{bench_name}-{bench_variant}")
         runtime_env = _runtime_env(bench_variant)
 
-        kind = spec["kind"]
-        if kind == "reussir":
-            if not isinstance(bench_info, tuple) or len(bench_info) != 2:
-                raise ValueError(
-                    f"Invalid reussir bench info for {bench_name}: {bench_info!r}"
-                )
-            program, driver = bench_info
-            compile.compile_reussir(
-                resolve(program),
-                resolve(driver),
-                executable,
-                reuse_across_call=spec.get("reuse_across_call", True),
-                extra_compiler_flags=list(spec.get("extra_flags", [])),
-                use_std=bench.get("reussir-std", False),
-            )
-        elif kind == "koka":
-            compile.compile_koka(resolve(bench_info), executable)
-        elif kind == "lean":
-            compile.compile_lean(resolve(bench_info), executable)
-        elif kind == "rust":
-            compile.compile_rust(
-                resolve(bench_info),
-                executable,
-                extern_crates=spec.get("extern_crates"),
-            )
-        elif kind == "haskell":
-            compile.compile_haskell(
-                resolve(bench_info), executable, rts_opts=spec.get("rts_opts")
-            )
-        elif kind == "ocaml":
-            compile.compile_ocaml(resolve(bench_info), executable)
-        else:
-            raise ValueError(f"Unsupported variant kind: {kind}")
+        compile.compile_cell(bench, spec, bench_info, executable, resolve)
 
         json_file = tempfile.NamedTemporaryFile(
             mode="w",

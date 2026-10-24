@@ -327,21 +327,22 @@
           };
         };
 
-        # The rpds crate (persistent red-black tree and HAMT) for the
-        # rust-rpds benchmark variants, prebuilt as rlibs with the same
-        # rustc that compiles the benchmark sources so compile.py can pass
-        # them straight to `rustc --extern` without cargo.
-        rpdsCargoDeps = pkgs.rustPlatform.fetchCargoVendor {
-          src = ./rust/rpds-lib;
-          hash = "sha256-s535SjWLChCG4yvLG9ykfEWpfoFm+yCtbbTDH8caiXo=";
+        # The crates Rust cells link beyond std (rpds's persistent red-black
+        # tree and HAMT for the rust-rpds variants; num-bigint and its trait
+        # crates for the big-integer benchmarks), prebuilt as rlibs with the
+        # same rustc that compiles the benchmark sources so compile.py can
+        # pass them straight to `rustc --extern` without cargo.
+        externCratesCargoDeps = pkgs.rustPlatform.fetchCargoVendor {
+          src = ./rust/extern-crates;
+          hash = "sha256-zeU4R0jaV7M3Mbkjn6jy9LTUKKx3NXC0j3JjkSPvl14=";
         };
 
-        rpdsLibs = pkgs.stdenv.mkDerivation {
-          pname = "benchmark-rpds-rlibs";
-          version = "rpds-1";
-          src = ./rust/rpds-lib;
+        externCrates = pkgs.stdenv.mkDerivation {
+          pname = "benchmark-rust-extern-crates";
+          version = "1";
+          src = ./rust/extern-crates;
 
-          cargoDeps = rpdsCargoDeps;
+          cargoDeps = externCratesCargoDeps;
           cargoRoot = ".";
 
           nativeBuildInputs = [
@@ -363,6 +364,10 @@
             runHook postInstall
           '';
         };
+
+        # Zarith, OCaml's GMP-backed big integers, for the big-integer
+        # benchmarks; compile.py links it through ocamlfind.
+        ocamlPackages = pkgs.ocamlPackages;
 
         ghcBase = pkgs.haskellPackages.ghc;
         # Hackage packages the benchmarks use beyond GHC's boot libraries:
@@ -417,12 +422,16 @@
                 pkgs.rustc
                 pkgs.cargo
                 ghc
-                pkgs.ocaml
+                ocamlPackages.ocaml
+                ocamlPackages.findlib
                 pkgs.hyperfine
                 pkgs.time
                 pkgs.mimalloc
                 python
               ];
+              # GMP, which the big-integer cells link: the rcgmp runtime of
+              # the Reussir cells and Zarith of the OCaml cells.
+              buildInputs = [ pkgs.gmp ];
 
               REUSSIR_COMPILER = "${reussirCompiler}/bin/rrc";
               # The bitcode runtime, so reussir's link gets the same
@@ -440,10 +449,12 @@
               BENCHMARK_LEANC = "${pkgs.lean4}/bin/leanc";
               BENCHMARK_KOKA = "${pkgs.koka}/bin/koka";
               BENCHMARK_RUSTC = "${pkgs.rustc}/bin/rustc";
-              # Prebuilt rpds/archery rlibs for the rust-rpds variants.
-              RPDS_LIBS = "${rpdsLibs}/lib";
+              # Prebuilt rlibs for Rust cells that link crates beyond std.
+              RUST_EXTERN_LIBS = "${externCrates}/lib";
               BENCHMARK_GHC = "${ghc}/bin/ghc";
-              BENCHMARK_OCAMLOPT = "${pkgs.ocaml}/bin/ocamlopt";
+              BENCHMARK_OCAMLOPT = "${ocamlPackages.ocaml}/bin/ocamlopt";
+              BENCHMARK_OCAMLFIND = "${ocamlPackages.findlib}/bin/ocamlfind";
+              OCAMLPATH = "${ocamlPackages.zarith}/lib/ocaml/${ocamlPackages.ocaml.version}/site-lib";
               BENCHMARK_HYPERFINE = "${pkgs.hyperfine}/bin/hyperfine";
               BENCHMARK_TIME = "${pkgs.time}/bin/time";
               MIMALLOC_LIB = "${pkgs.mimalloc}/lib/libmimalloc.so";

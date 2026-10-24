@@ -33,7 +33,8 @@ Toolchain configurations
 - lean: lean → C, then leanc ``-flto -O3``.
 - rust: ``-C opt-level=3``; the ``-with-mimalloc`` variant preloads mimalloc.
   The ``rust-rpds`` variants additionally link the prebuilt ``rpds``
-  persistent-collection rlibs (``extern_crates``, resolved via RPDS_LIBS).
+  persistent-collection rlibs (``extern_crates``, resolved via
+  RUST_EXTERN_LIBS).
 - haskell: ghc ``-O2 -rtsopts``; the ``-a1g`` variants bake ``+RTS -A1G``
   (1 GiB nursery) via ``-with-rtsopts`` — both RTS configurations are
   first-class variants because the default-vs-large-nursery choice swings
@@ -266,14 +267,14 @@ BENCHES = {
     # 512th draw instead of every 8192nd (~3.9k ordered / ~15.6k hash
     # events) — far past the crossover where per-event full copies
     # dominate a mutable representation. The Reussir cells use std's WavlMap/HashMap and
-    # compile against the bundled core+std packages (``reussir-std``);
+    # compile against the bundled core+std packages (``reussir-packages``);
     # Koka's bundled stdlib has no comparable containers, so its cells
     # use the vendored koka-community/std subset (koka/community-std):
     # rbtree-bu for the ordered map and the bucket hashmap for the hash
     # map.
     "ordered-map-linear": {
         "set": _STD,
-        "reussir-std": True,
+        "reussir-packages": "std",
         "sources": _sources(
             {
                 "lean": "lean/ordered-map-linear.lean",
@@ -295,7 +296,7 @@ BENCHES = {
     },
     "ordered-map-shared": {
         "set": _STD,
-        "reussir-std": True,
+        "reussir-packages": "std",
         "sources": _sources(
             {
                 "lean": "lean/ordered-map-shared.lean",
@@ -317,7 +318,7 @@ BENCHES = {
     },
     "ordered-map-heavily-shared": {
         "set": _STD,
-        "reussir-std": True,
+        "reussir-packages": "std",
         "sources": _sources(
             {
                 "lean": "lean/ordered-map-heavily-shared.lean",
@@ -339,7 +340,7 @@ BENCHES = {
     },
     "hash-map-linear": {
         "set": _STD,
-        "reussir-std": True,
+        "reussir-packages": "std",
         "sources": _sources(
             {
                 "lean": "lean/hash-map-linear.lean",
@@ -361,7 +362,7 @@ BENCHES = {
     },
     "hash-map-shared": {
         "set": _STD,
-        "reussir-std": True,
+        "reussir-packages": "std",
         "sources": _sources(
             {
                 "lean": "lean/hash-map-shared.lean",
@@ -383,7 +384,7 @@ BENCHES = {
     },
     "hash-map-heavily-shared": {
         "set": _STD,
-        "reussir-std": True,
+        "reussir-packages": "std",
         "sources": _sources(
             {
                 "lean": "lean/hash-map-heavily-shared.lean",

@@ -1,0 +1,19 @@
+# Vendored dependency closure for the Rust cells that link crates beyond std
+# (the rust-rpds variants and the big-integer benchmarks): the flake builds
+# this crate's dependencies with the same rustc that compiles the benchmark
+# sources and exposes target/release/deps as RUST_EXTERN_LIBS, so plain
+# `rustc --extern name=...` links against them without cargo at
+# benchmark-compile time.
+[package]
+name = "extern-crates"
+version = "0.1.0"
+edition = "2021"
+
+[lib]
+path = "lib.rs"
+
+[dependencies]
+num-bigint = "0.5"
+num-integer = "0.1"
+num-traits = "0.2"
+rpds = "1"

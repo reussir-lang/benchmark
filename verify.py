@@ -42,37 +42,6 @@ def _targets(args):
             yield bench_name, variant, meta, meta["sources"][variant]
 
 
-def _compile(variant, bench_meta, source, executable, resolve):
-    spec = VARIANTS[variant]
-    kind = spec["kind"]
-    if kind == "reussir":
-        program, driver = source
-        compilers.compile_reussir(
-            resolve(program),
-            resolve(driver),
-            executable,
-            reuse_across_call=spec.get("reuse_across_call", True),
-            extra_compiler_flags=list(spec.get("extra_flags", [])),
-            use_std=bench_meta.get("reussir-std", False),
-        )
-    elif kind == "koka":
-        compilers.compile_koka(resolve(source), executable)
-    elif kind == "lean":
-        compilers.compile_lean(resolve(source), executable)
-    elif kind == "rust":
-        compilers.compile_rust(
-            resolve(source), executable, extern_crates=spec.get("extern_crates")
-        )
-    elif kind == "haskell":
-        compilers.compile_haskell(
-            resolve(source), executable, rts_opts=spec.get("rts_opts")
-        )
-    elif kind == "ocaml":
-        compilers.compile_ocaml(resolve(source), executable)
-    else:
-        raise ValueError(f"Unsupported variant kind: {kind}")
-
-
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--bench", choices=sorted(BENCHES.keys()))
@@ -91,7 +60,9 @@ def main():
         with tempfile.TemporaryDirectory() as tmpdir:
             executable = os.path.join(tmpdir, "bench")
             try:
-                _compile(variant, meta, source, executable, resolve)
+                compilers.compile_cell(
+                    meta, VARIANTS[variant], source, executable, resolve
+                )
             except Exception as e:  # noqa: BLE001 - report and continue
                 print(f"FAIL {label}: compile: {e}", flush=True)
                 failures.append(label)

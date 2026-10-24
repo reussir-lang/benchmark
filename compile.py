@@ -39,10 +39,10 @@ def _ensure_executable(path, step):
 
 
 # Compiled core/std package artifacts (interface + LLVM IR), keyed by the
-# codegen flags they were built with. The cache holds TemporaryDirectory
-# objects alive for the process so verify/bench runs compile the packages
-# once per configuration instead of once per cell.
-_STD_CACHE = {}
+# package set and the codegen flags they were built with. The cache holds
+# TemporaryDirectory objects alive for the process so verify/bench runs
+# compile the packages once per configuration instead of once per cell.
+_PACKAGE_CACHE = {}
 
 
 def _reussir_codegen_flags(reuse_across_call, extra_compiler_flags):
@@ -54,27 +54,29 @@ def _reussir_codegen_flags(reuse_across_call, extra_compiler_flags):
     return flags
 
 
-def _reussir_std_artifacts(reuse_across_call, extra_compiler_flags):
-    """Build Reussir's bundled core and std packages to .rri + LLVM IR.
+def _reussir_package_artifacts(packages, reuse_across_call, extra_compiler_flags):
+    """Build Reussir's bundled packages to .rri + LLVM IR.
 
-    Returns the directory holding core.rri/core.ll/std.rri/std.ll. The
-    packages get the same codegen flags as the benchmark program, so
-    reuse analysis and LTO treat std code exactly like benchmark code.
+    ``packages`` is ``"core"`` or ``"std"`` (which also builds core, its
+    dependency). Returns the directory holding core.rri/core.ll and, for
+    std, std.rri/std.ll. The packages get the same codegen flags as the
+    benchmark program, so reuse analysis and LTO treat library code exactly
+    like benchmark code.
     """
-    key = (reuse_across_call, tuple(extra_compiler_flags))
-    cached = _STD_CACHE.get(key)
+    key = (packages, reuse_across_call, tuple(extra_compiler_flags))
+    cached = _PACKAGE_CACHE.get(key)
     if cached is not None:
         return cached.name
     source_root = CONFIG.get("reussir-src")
     if not source_root:
         raise RuntimeError(
-            "std benchmarks need the pinned Reussir source tree; set "
-            "REUSSIR_SRC (exported by the Nix dev shell) or reussir-src "
-            "in config.json"
+            "benchmarks using Reussir's bundled packages need the pinned "
+            "Reussir source tree; set REUSSIR_SRC (exported by the Nix dev "
+            "shell) or reussir-src in config.json"
         )
     core_src = os.path.join(source_root, "library", "core", "src")
     std_src = os.path.join(source_root, "library", "std", "src")
-    tmpdir = tempfile.TemporaryDirectory(prefix="reussir-std-")
+    tmpdir = tempfile.TemporaryDirectory(prefix=f"reussir-{packages}-")
     d = tmpdir.name
     codegen_flags = _reussir_codegen_flags(reuse_across_call, extra_compiler_flags)
     rrc = CONFIG["reussir-compiler"]
@@ -89,25 +91,26 @@ def _reussir_std_artifacts(reuse_across_call, extra_compiler_flags):
         cwd=d,
         step="reussir core compilation",
     )
-    core_externs = [
-        "--extern",
-        f"core={os.path.join(d, 'core.rri')}",
-        "--extern-src",
-        f"core={core_src}",
-    ]
-    std_pkg = [rrc, "--package-root", std_src, "--package-name", "std"]
-    std_pkg += core_externs
-    _run_quiet(
-        std_pkg + ["-t", "rri", "-o", "std.rri"],
-        cwd=d,
-        step="reussir std interface",
-    )
-    _run_quiet(
-        std_pkg + ["-t", "llvm-ir", "-o", "std.ll"] + codegen_flags,
-        cwd=d,
-        step="reussir std compilation",
-    )
-    _STD_CACHE[key] = tmpdir
+    if packages == "std":
+        core_externs = [
+            "--extern",
+            f"core={os.path.join(d, 'core.rri')}",
+            "--extern-src",
+            f"core={core_src}",
+        ]
+        std_pkg = [rrc, "--package-root", std_src, "--package-name", "std"]
+        std_pkg += core_externs
+        _run_quiet(
+            std_pkg + ["-t", "rri", "-o", "std.rri"],
+            cwd=d,
+            step="reussir std interface",
+        )
+        _run_quiet(
+            std_pkg + ["-t", "llvm-ir", "-o", "std.ll"] + codegen_flags,
+            cwd=d,
+            step="reussir std compilation",
+        )
+    _PACKAGE_CACHE[key] = tmpdir
     return d
 
 
@@ -117,8 +120,16 @@ def compile_reussir(
     output: str,
     reuse_across_call: bool = True,
     extra_compiler_flags=None,
-    use_std: bool = False,
+    packages=None,
+    link_rcgmp: bool = False,
 ) -> None:
+    """Compile a Reussir benchmark and link it with its C driver.
+
+    ``packages`` selects the bundled packages the program compiles against:
+    ``None`` (a bare single file), ``"core"``, or ``"std"`` (core and std).
+    ``link_rcgmp`` links the rcgmp big-integer runtime and GMP, which
+    programs using ``Nat``/``Int`` need.
+    """
     if extra_compiler_flags is None:
         extra_compiler_flags = []
     compiler_cmd = [
@@ -127,29 +138,39 @@ def compile_reussir(
         "reussir.ll",
     ]
     extra_link_inputs = []
-    if use_std:
-        std_dir = _reussir_std_artifacts(reuse_across_call, extra_compiler_flags)
-        source_root = CONFIG["reussir-src"]
-        compiler_cmd.extend(
-            [
-                # --extern needs package mode; the input file becomes the
-                # crate root of this single-file benchmark package.
-                "--package-name",
-                "bench",
-                "--extern",
-                f"core={os.path.join(std_dir, 'core.rri')}",
-                "--extern-src",
-                f"core={os.path.join(source_root, 'library', 'core', 'src')}",
-                "--extern",
-                f"std={os.path.join(std_dir, 'std.rri')}",
-                "--extern-src",
-                f"std={os.path.join(source_root, 'library', 'std', 'src')}",
-            ]
+    if packages is not None:
+        package_dir = _reussir_package_artifacts(
+            packages, reuse_across_call, extra_compiler_flags
         )
+        library_root = os.path.join(CONFIG["reussir-src"], "library")
+        # --extern needs package mode; the input file becomes the crate root
+        # of this single-file benchmark package.
+        compiler_cmd.extend(["--package-name", "bench"])
+        linked = ["core"] if packages == "core" else ["core", "std"]
+        for package in linked:
+            compiler_cmd.extend(
+                [
+                    "--extern",
+                    f"{package}={os.path.join(package_dir, package + '.rri')}",
+                    "--extern-src",
+                    f"{package}={os.path.join(library_root, package, 'src')}",
+                ]
+            )
         extra_link_inputs = [
-            os.path.join(std_dir, "std.ll"),
-            os.path.join(std_dir, "core.ll"),
+            os.path.join(package_dir, package + ".ll") for package in reversed(linked)
         ]
+    rcgmp_link_inputs = []
+    if link_rcgmp:
+        runtime = CONFIG.get("reussir-rcgmp-runtime")
+        if not runtime:
+            raise RuntimeError(
+                "big-integer benchmarks need the rcgmp runtime archive; set "
+                "REUSSIR_RCGMP_RUNTIME or reussir-rcgmp-runtime in config.json "
+                "to the libRCGMPRuntime.a of the Reussir build"
+            )
+        # The runtime's allocation hooks come from the Reussir runtime, which
+        # follows it on the link line.
+        rcgmp_link_inputs = [runtime] + _gmp_link_flags()
     compiler_cmd.extend(
         _reussir_codegen_flags(reuse_across_call, extra_compiler_flags)
     )
@@ -180,12 +201,29 @@ def compile_reussir(
                 "-fuse-ld=lld",
                 "-O3",
                 "-march=native",
-                CONFIG["reussir-libs"] + "/libreussir_rt.a",
-            ],
+            ]
+            + rcgmp_link_inputs
+            + [CONFIG["reussir-libs"] + "/libreussir_rt.a"],
             cwd=tmpdir,
             step="reussir linking",
         )
     _ensure_executable(output, "reussir linking")
+
+
+def _gmp_link_flags() -> list:
+    """Link GMP with the directory the linker finds it in as the run path, so
+    the cells start without LD_LIBRARY_PATH. The search covers the -L
+    directories the toolchain passes (NIX_LDFLAGS) and LIBRARY_PATH."""
+    dirs = [
+        flag[2:]
+        for flag in os.environ.get("NIX_LDFLAGS", "").split()
+        if flag.startswith("-L")
+    ]
+    dirs += os.environ.get("LIBRARY_PATH", "").split(os.pathsep)
+    for libdir in dirs:
+        if libdir and glob.glob(os.path.join(libdir, "libgmp.so*")):
+            return [f"-Wl,-rpath,{libdir}", "-lgmp"]
+    return ["-lgmp"]
 
 
 def compile_koka(program: str, output: str) -> None:
@@ -216,18 +254,18 @@ def compile_koka(program: str, output: str) -> None:
 
 
 def compile_rust(program: str, output: str, extern_crates=None) -> None:
-    # ``extern_crates`` names crates prebuilt as rlibs in the ``rpds-libs``
-    # directory (RPDS_LIBS in the Nix shell, hashed cargo deps/ layout);
-    # each becomes an ``--extern`` and the directory a ``-L dependency=``
-    # so transitive rlibs resolve too.
+    # ``extern_crates`` names crates prebuilt as rlibs in the
+    # ``rust-extern-libs`` directory (RUST_EXTERN_LIBS in the Nix shell,
+    # hashed cargo deps/ layout); each becomes an ``--extern`` and the
+    # directory a ``-L dependency=`` so transitive rlibs resolve too.
     extern_flags = []
     if extern_crates:
-        libdir = CONFIG.get("rpds-libs")
+        libdir = CONFIG.get("rust-extern-libs")
         if not libdir:
             raise RuntimeError(
                 "rust extern-crate benchmarks need prebuilt rlibs; set "
-                "RPDS_LIBS (exported by the Nix dev shell) or rpds-libs "
-                "in config.json"
+                "RUST_EXTERN_LIBS (exported by the Nix dev shell) or "
+                "rust-extern-libs in config.json"
             )
         extern_flags = ["-L", f"dependency={libdir}"]
         for crate in extern_crates:
@@ -279,7 +317,15 @@ def compile_haskell(program: str, output: str, rts_opts: str | None = None) -> N
     _ensure_executable(output, "haskell compilation")
 
 
-def compile_ocaml(program: str, output: str) -> None:
+def compile_ocaml(program: str, output: str, packages=None) -> None:
+    # ``packages`` names findlib packages (e.g. zarith); with any, the
+    # compiler runs through ocamlfind so their include and link flags,
+    # including C libraries such as GMP, come from their META files.
+    if packages:
+        compiler = [CONFIG["ocamlfind"], "ocamlopt"]
+        compiler += ["-package", ",".join(packages), "-linkpkg"]
+    else:
+        compiler = [CONFIG["ocamlopt"]]
     with tempfile.TemporaryDirectory() as tmpdir:
         # OCaml derives a module name from the filename; benchmark names use
         # hyphens, which are not valid in module identifiers.
@@ -287,8 +333,8 @@ def compile_ocaml(program: str, output: str) -> None:
         local_program = os.path.join(tmpdir, local_name)
         shutil.copyfile(program, local_program)
         _run_quiet(
-            [
-                CONFIG["ocamlopt"],
+            compiler
+            + [
                 "-O3",
                 "-o",
                 output,
@@ -327,3 +373,44 @@ def compile_lean(program: str, output: str) -> None:
             step="lean linking",
         )
     _ensure_executable(output, "lean linking")
+
+
+def compile_cell(bench_meta, spec, source, output, resolve) -> None:
+    """Compile one benchmark cell: a benchmark's source for one variant.
+
+    ``bench_meta`` is the ``BENCHES`` entry, ``spec`` the ``VARIANTS`` entry,
+    and ``resolve`` maps a registry path to an absolute one. Options a
+    benchmark needs from every variant of a toolchain (bundled Reussir
+    packages, the big-integer runtime, Rust crates, OCaml packages) come from
+    the benchmark; options that distinguish variants come from the variant.
+    """
+    kind = spec["kind"]
+    if kind == "reussir":
+        if not isinstance(source, tuple) or len(source) != 2:
+            raise ValueError(f"Invalid reussir source (program, driver): {source!r}")
+        program, driver = source
+        compile_reussir(
+            resolve(program),
+            resolve(driver),
+            output,
+            reuse_across_call=spec.get("reuse_across_call", True),
+            extra_compiler_flags=list(spec.get("extra_flags", [])),
+            packages=bench_meta.get("reussir-packages"),
+            link_rcgmp=bench_meta.get("reussir-rcgmp", False),
+        )
+    elif kind == "koka":
+        compile_koka(resolve(source), output)
+    elif kind == "lean":
+        compile_lean(resolve(source), output)
+    elif kind == "rust":
+        crates = list(spec.get("extern_crates", []))
+        crates += bench_meta.get("rust-extern-crates", [])
+        compile_rust(resolve(source), output, extern_crates=crates)
+    elif kind == "haskell":
+        compile_haskell(resolve(source), output, rts_opts=spec.get("rts_opts"))
+    elif kind == "ocaml":
+        compile_ocaml(
+            resolve(source), output, packages=bench_meta.get("ocaml-packages")
+        )
+    else:
+        raise ValueError(f"Unsupported variant kind: {kind}")
