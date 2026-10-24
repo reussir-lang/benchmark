@@ -1,0 +1,23 @@
+// The binomial row C(200000, i) by the multiplicative recurrence
+// C(n, i + 1) = C(n, i) * (n - i) / (i + 1): every division is exact, by a
+// word-sized divisor. The row must sum to 2^n and end at 1; the checksum is
+// the sum modulo 1000000007, or -1 if the row does not end at 1.
+
+fn row(n: Nat, i: Nat, c: Nat, s: Nat) -> i64 {
+    if i >= n {
+        finish(c, s)
+    } else {
+        let c = c * (n - i) / (i + 1);
+        row(n, i + 1, c, s + c)
+    }
+}
+
+fn finish(last: Nat, s: Nat) -> i64 {
+    if last == 1 { (s % 1000000007) as i64 } else { -1 }
+}
+
+fn binomial_test(n: i64) -> i64 {
+    row((n as u64) as Nat, 0, 1, 1)
+}
+
+extern "C" trampoline "binomial_test_ffi" = binomial_test;

@@ -1,0 +1,17 @@
+// Iterative Fibonacci over Nat: 600000 steps of (a, b) -> (b, a + b), so
+// both operands soon grow far beyond a machine word. `a` is consumed by the
+// sum, so a uniquely owned `a` lends its storage to the result.
+
+fn fib_loop(n: i64, a: Nat, b: Nat) -> Nat {
+    if n == 0 {
+        a
+    } else {
+        fib_loop(n - 1, b, a + b)
+    }
+}
+
+fn fib_test(n: i64) -> i64 {
+    (fib_loop(n, 0, 1) % 1000000007) as i64
+}
+
+extern "C" trampoline "fib_test_ffi" = fib_test;

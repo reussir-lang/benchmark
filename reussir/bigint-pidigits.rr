@@ -1,0 +1,42 @@
+// The first 10000 decimal digits of pi with Gibbons' unbounded spigot (the
+// Computer Language Benchmarks Game algorithm), folded into a rolling hash.
+// The accumulator goes negative between digits, so the state is Int.
+
+fn spigot(count: i64, i: i64, k: Int, k1: Int, n: Int, a: Int, d: Int, h: Int) -> Int {
+    let k = k + 1;
+    let k1 = k1 + 2;
+    let a = (a + n * 2) * k1;
+    let n = n * k;
+    let d = d * k1;
+    if a < n {
+        spigot(count, i, k, k1, n, a, d, h)
+    } else {
+        extract(count, i, k, k1, n, a, d, h)
+    }
+}
+
+// The next digit is fixed once floor((3n + a) / d) equals floor((4n + a) / d).
+fn extract(count: i64, i: i64, k: Int, k1: Int, n: Int, a: Int, d: Int, h: Int) -> Int {
+    let x = n * 3 + a;
+    let q = x / d;
+    let u = x % d + n;
+    if d <= u {
+        spigot(count, i, k, k1, n, a, d, h)
+    } else {
+        emit(count, i, k, k1, n, a, d, (h * 10 + q) % 1000000007, q)
+    }
+}
+
+fn emit(count: i64, i: i64, k: Int, k1: Int, n: Int, a: Int, d: Int, h: Int, q: Int) -> Int {
+    if i + 1 >= count {
+        h
+    } else {
+        spigot(count, i + 1, k, k1, n * 10, (a - d * q) * 10, d, h)
+    }
+}
+
+fn pidigits_test(count: i64) -> i64 {
+    spigot(count, 0, 0, 1, 1, 0, 1, 0) as i64
+}
+
+extern "C" trampoline "pidigits_test_ffi" = pidigits_test;
