@@ -10,23 +10,28 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Current Reussir main (2026-09-02, LLVM/MLIR 23.1).
+    # Current Reussir main (2026-10-29, LLVM/MLIR 23.1).
     reussir = {
-      url = "github:reussir-lang/reussir/f54301a61cfa4b29bcee5d84dff00803965c96f5";
+      url = "github:reussir-lang/reussir/0cf8c9afa4f66568b52c3912debc05c046afc24c";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.fenix.follows = "fenix";
       inputs.flake-utils.follows = "flake-utils";
     };
 
-    # Reussir uses FetchContent for Immer and mlir-sync. Make them explicit
-    # flake inputs so the compiler build is network-free. Keep the mlir-sync
-    # rev matched to cmake/MlirSync.cmake at the pinned Reussir commit.
+    # Reussir uses FetchContent for Immer, mlir-sync, and mlir-rcgmp. Make them
+    # explicit flake inputs so the compiler build is network-free. Keep the
+    # revisions matched to cmake/{Immer,MlirSync,RCGMP}.cmake at the pinned
+    # Reussir commit.
     immer = {
       url = "github:arximboldi/immer/06d94ce48a02b11d3b225083a820f82c3d3ef462";
       flake = false;
     };
     mlir-sync = {
-      url = "github:reussir-lang/mlir-sync/16199f4865245272fbbd39574f09c4afe330ce1e";
+      url = "github:reussir-lang/mlir-sync/018206f4df254fe205f0b63068cd133e5e94ba42";
+      flake = false;
+    };
+    mlir-rcgmp = {
+      url = "github:reussir-lang/mlir-rcgmp/cc73b218f6ce90b005744c4e94b2b32a0e30c725";
       flake = false;
     };
   };
@@ -40,6 +45,7 @@
       reussir,
       immer,
       mlir-sync,
+      mlir-rcgmp,
       ...
     }:
     flake-utils.lib.eachDefaultSystem (
@@ -103,7 +109,7 @@
 
         reussirCargoDeps = pkgs.rustPlatform.fetchCargoVendor {
           src = reussir;
-          hash = "sha256-aLslW1z/oZzHIACmIqxHogsb4qISyKSZ/KvSx04VkoY=";
+          hash = "sha256-GiUnaUZD3x3Ifx6hGrBTOj9dWjRbRpAhn9R4HMSmkvM=";
         };
 
         reussirCompiler = llvmPkgs.stdenv.mkDerivation {
@@ -128,6 +134,7 @@
           ];
 
           buildInputs = [
+            pkgs.gmp
             pkgs.gtest
             pkgs.spdlog
             pkgs.zlib
@@ -150,18 +157,6 @@
             # submodules that GitHub flake archives do not contain.
             substituteInPlace CMakeLists.txt \
               --replace-fail 'if(TARGET_OBJECT_FORMAT STREQUAL "ELF")' 'if(FALSE)'
-
-            # rrc's Rust link consumes every archive listed by
-            # reussir-backend-sys/build.rs.  Upstream's ReussirCAPI dependency
-            # list currently omits these four, so an explicit `rrc` build can
-            # reach cargo before the archives exist.
-            substituteInPlace lib/CAPI/CMakeLists.txt \
-              --replace-fail \
-                '  # transformations' \
-                $'  # transformations\n  MLIRReussirClosureBetaReduction\n  MLIRReussirDefaultInliner\n  MLIRReussirInstrumentNonlinearFFI' \
-              --replace-fail \
-                '  MLIRReussirTokenReuse' \
-                $'  MLIRReussirTokenReuse\n  MLIRReussirSpecialPointerTag'
           '';
 
           LLVM_DIR = "${llvmMlirJoin}/lib/cmake/llvm";
@@ -194,6 +189,7 @@
             (lib.cmakeFeature "MLIR_DIR" "${llvmMlirJoin}/lib/cmake/mlir")
             (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_IMMER" "${immer}")
             (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_MLIRSYNC" "${mlir-sync}")
+            (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_RCGMP" "${mlir-rcgmp}")
           ];
 
           buildPhase = ''
@@ -210,11 +206,13 @@
             mkdir -p "$out/bin" "$out/lib"
             cp bin/rrc "$out/bin/rrc"
             cp target-rt/release/libreussir_rt.a "$out/lib/libreussir_rt.a"
+            cp lib/libRCGMPRuntime.a "$out/lib/libRCGMPRuntime.a"
             wrapProgram "$out/bin/rrc" \
               --prefix LD_LIBRARY_PATH : "${
                 lib.makeLibraryPath [
                   llvmPkgs.llvm.lib
                   llvmPkgs.mlir
+                  pkgs.gmp
                   pkgs.stdenv.cc.cc.lib
                   pkgs.zlib
                 ]
@@ -437,6 +435,7 @@
               # The bitcode runtime, so reussir's link gets the same
               # runtime-LTO treatment compile.py gives kklib.
               REUSSIR_LIBS = "${reussirRtXlto}/lib";
+              REUSSIR_RCGMP_RUNTIME = "${reussirCompiler}/lib/libRCGMPRuntime.a";
               # The pinned Reussir source: compile.py builds the bundled
               # core and std packages from here for std-using benchmarks.
               REUSSIR_SRC = "${reussir}";

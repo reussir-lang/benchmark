@@ -174,21 +174,18 @@ Known toolchain quirks, encoded in the sources:
 ## Running
 
 The checked-in flake is the one-shot bootstrap. It pins Reussir main at
-`25f7884fde21165471487d522ec0272fc9c5668a` and builds only the `rrc`
-dependency closure plus `libreussir_rt.a`; TPDE, tests, the REPL, and unrelated
-tools are not built. For the std-collections set it additionally stages the
-runtime's rlib closure (`REUSSIR_RUSTC`/`REUSSIR_RUSTC_DEPS`, consumed by
-rrc's polymorphic-FFI compiles) and exports the pinned source tree as
-`REUSSIR_SRC`, from which `compile.py` builds the bundled `core` and `std`
-packages. It also supplies Clang/LLVM, Lean, Koka, Rust with the prebuilt
-`rpds` and num-bigint crates (`RUST_EXTERN_LIBS`), GHC with the Hackage
-`fingertree` and `unordered-containers` packages, OCaml (and its GCC linker)
-with findlib and Zarith, GMP, hyperfine, GNU time, mimalloc, and the Python
-plotting dependencies.
-
-The big-integer set needs a Reussir with the `rcgmp` feature: point
-`REUSSIR_COMPILER`, `REUSSIR_LIBS`, and `REUSSIR_SRC` at such a build, and
-`REUSSIR_RCGMP_RUNTIME` at its `libRCGMPRuntime.a`.
+`0cf8c9afa4f66568b52c3912debc05c046afc24c` and builds only the `rrc`
+dependency closure plus `libreussir_rt.a` and `libRCGMPRuntime.a`
+(`REUSSIR_RCGMP_RUNTIME`); TPDE, tests, the REPL, and unrelated tools are
+not built. For the std-collections and big-integers sets it additionally
+stages the runtime's rlib closure (`REUSSIR_RUSTC`/`REUSSIR_RUSTC_DEPS`,
+consumed by rrc's polymorphic-FFI compiles) and exports the pinned source
+tree as `REUSSIR_SRC`, from which `compile.py` builds the bundled `core` and
+`std` packages. It also supplies Clang/LLVM, Lean, Koka, Rust with the
+prebuilt `rpds` and num-bigint crates (`RUST_EXTERN_LIBS`), GHC with the
+Hackage `fingertree` and `unordered-containers` packages, OCaml (and its GCC
+linker) with findlib and Zarith, GMP, hyperfine, GNU time, mimalloc, and the
+Python plotting dependencies.
 
 ```bash
 direnv allow             # builds once, then reuses the Nix store result

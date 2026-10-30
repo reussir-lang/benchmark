@@ -80,7 +80,7 @@ def _reussir_package_artifacts(packages, reuse_across_call, extra_compiler_flags
     d = tmpdir.name
     codegen_flags = _reussir_codegen_flags(reuse_across_call, extra_compiler_flags)
     rrc = CONFIG["reussir-compiler"]
-    core_pkg = [rrc, "--package-root", core_src, "--package-name", "core", "--core"]
+    core_pkg = [rrc, "--package-root", core_src, "--package-name", "core", "--builtin"]
     _run_quiet(
         core_pkg + ["-t", "rri", "-o", "core.rri"],
         cwd=d,
@@ -98,7 +98,7 @@ def _reussir_package_artifacts(packages, reuse_across_call, extra_compiler_flags
             "--extern-src",
             f"core={core_src}",
         ]
-        std_pkg = [rrc, "--package-root", std_src, "--package-name", "std"]
+        std_pkg = [rrc, "--package-root", std_src, "--package-name", "std", "--builtin"]
         std_pkg += core_externs
         _run_quiet(
             std_pkg + ["-t", "rri", "-o", "std.rri"],
