@@ -251,10 +251,16 @@
             pkgs.rustPlatform.cargoSetupHook
             rustToolchain
             llvmPkgs.clang
+            llvmPkgs.lld
           ];
 
           CFLAGS = "-flto=thin -DMI_MAX_ALIGN_SIZE=8";
-          RUSTFLAGS = "-Clinker-plugin-lto";
+          # RUSTFLAGS reach the build scripts too, whose objects are then
+          # bitcode: link them with clang and lld, which read it, rather than
+          # the gcc `cc` cargoSetupHook configures (which cannot, so the
+          # build failed on aarch64-linux).
+          RUSTFLAGS = "-Clinker-plugin-lto -Clink-arg=-fuse-ld=lld";
+          "CARGO_TARGET_${pkgs.stdenv.hostPlatform.rust.cargoEnvVarTarget}_LINKER" = "${llvmPkgs.clang}/bin/clang";
 
           buildPhase = ''
             runHook preBuild
