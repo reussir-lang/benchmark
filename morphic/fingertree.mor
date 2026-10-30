@@ -1,0 +1,113 @@
+// fingertree: build a 65536-element finger tree (unmeasured, 1-4 digits /
+// 2-3 nodes) with `snoc`, perform 1M `view_left`/`snoc` rotations, then drain
+// it, folding every removed element into a checksum mod 1000000007.
+// Matches koka/fingertree.kk.
+//
+// Deviation: Koka's `view-left` returns `maybe<(elem,finger-tree)>`; here it
+// returns the equivalent two-case `ViewLeft` type (as the Reussir port does),
+// which Morphic keeps unboxed.
+
+module Core = file "lib/core/core.mor"
+  expose {
+    module Io expose { writeln },
+    module String expose { i64_to_string, concat },
+  }
+
+type Elem {
+  Value(I64),
+  Node2(Elem, Elem),
+  Node3(Elem, Elem, Elem),
+}
+
+type Digit {
+  One(Elem),
+  Two(Elem, Elem),
+  Three(Elem, Elem, Elem),
+  Four(Elem, Elem, Elem, Elem),
+}
+
+type FingerTree {
+  Empty,
+  Single(Elem),
+  Deep(Digit, FingerTree, Digit),
+}
+
+type ViewLeft {
+  NoView,
+  View(Elem, FingerTree),
+}
+
+node_to_digit(node: Elem): Digit =
+  match node {
+    Node2(a, b) -> Two(a, b),
+    Node3(a, b, c) -> Three(a, b, c),
+    Value(_) -> One(Value(0)),
+  }
+
+digit_to_tree(digit: Digit): FingerTree =
+  match digit {
+    One(a) -> Single(a),
+    Two(a, b) -> Deep(One(a), Empty, One(b)),
+    Three(a, b, c) -> Deep(Two(a, b), Empty, One(c)),
+    Four(a, b, c, d) -> Deep(Two(a, b), Empty, Two(c, d)),
+  }
+
+snoc(tree: FingerTree, x: Elem): FingerTree =
+  match tree {
+    Empty -> Single(x),
+    Single(a) -> Deep(One(a), Empty, One(x)),
+    Deep(pr, middle, Four(a, b, c, d)) -> Deep(pr, snoc(middle, Node3(a, b, c)), Two(d, x)),
+    Deep(pr, middle, One(a)) -> Deep(pr, middle, Two(a, x)),
+    Deep(pr, middle, Two(a, b)) -> Deep(pr, middle, Three(a, b, x)),
+    Deep(pr, middle, Three(a, b, c)) -> Deep(pr, middle, Four(a, b, c, x)),
+  }
+
+view_left(tree: FingerTree): ViewLeft =
+  match tree {
+    Empty -> NoView,
+    Single(x) -> View(x, Empty),
+    Deep(One(x), middle, suffix) ->
+      match view_left(middle) {
+        NoView -> View(x, digit_to_tree(suffix)),
+        View(node, middle1) -> View(x, Deep(node_to_digit(node), middle1, suffix)),
+      },
+    Deep(Two(a, b), middle, suffix) -> View(a, Deep(One(b), middle, suffix)),
+    Deep(Three(a, b, c), middle, suffix) -> View(a, Deep(Two(b, c), middle, suffix)),
+    Deep(Four(a, b, c, d), middle, suffix) -> View(a, Deep(Three(b, c, d), middle, suffix)),
+  }
+
+modulus: I64 = 1000000007
+
+// Morphic has no `%`; every operand here is non-negative, so truncating
+// division gives the same remainder as Koka's `%`.
+rem(a: I64, b: I64): I64 = a - b * (a / b)
+
+build(index: I64, tree: FingerTree): FingerTree =
+  if index = 65536 { tree } else { build(index + 1, snoc(tree, Value(index))) }
+
+churn(round: I64, remaining: I64, tree: FingerTree, checksum: I64): (FingerTree, I64) =
+  if remaining = 0 { (tree, checksum) } else {
+    match view_left(tree) {
+      View(Value(x), rest) ->
+        let next = rem(x + round + 1, modulus) in
+        churn(round + 1, remaining - 1, snoc(rest, Value(next)), rem(checksum + x, modulus)),
+      _ -> (tree, checksum),
+    }
+  }
+
+drain(tree: FingerTree, checksum: I64): I64 =
+  match view_left(tree) {
+    NoView -> checksum,
+    View(Value(x), rest) -> drain(rest, rem(checksum + x, modulus)),
+    _ -> checksum,
+  }
+
+proc main(): () =
+  let (tree, checksum) = churn(0, 1000000, build(0, Empty), 0) in
+  let result = drain(tree, checksum) in
+  if result = 66797929 {
+    ()
+  } else {
+    do writeln(concat("FAIL: expected 66797929, got ", i64_to_string(result))) then
+    panic("wrong result\n")
+  }

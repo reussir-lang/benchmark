@@ -1,0 +1,59 @@
+pub max_i64: I64 = 2305843009213693951
+
+pub cmp_max(a: I64, b: I64): I64 =
+  if a > b {
+    a
+  } else {
+    b
+  }
+
+pub cmp_min(a: I64, b: I64): I64 =
+  if a < b {
+    a
+  } else {
+    b
+  }
+
+pub i64_bit_not(a: I64): I64 =
+  -a - 1
+
+pub rem(a: I64, b: I64): I64 =
+  a - b * (a / b)
+
+pub mod(a: I64, b: I64): I64 =
+  if a < 0 {
+    rem(a, b) + b
+  } else {
+    rem(a, b)
+  }
+
+pow_rec(accum: I64, a: I64, b: I64): I64 =
+  if (b = 0) {
+    accum
+  } else {
+    pow_rec(a * accum, a, b - 1)
+  }
+
+pub pow(a: I64, b: I64): I64 =
+  pow_rec(1, a, b)
+
+u8_pow_rec(accum: U8, a: U8, b: U8): U8 =
+  if (b = 0u8) {
+    accum
+  } else {
+    u8_pow_rec(a * accum, a, b - 1u8)
+  }
+
+pub u8_pow(a: U8, b: U8): U8 =
+  u8_pow_rec(1u8, a, b)
+
+pub f64_pow(base: F64, exp: I64): F64 =
+  if exp = 0 {
+    1.0
+  } else if exp < 0 {
+    1.0 / f64_pow(base, -exp)
+  } else if (exp & 1) = 0 {
+    f64_pow(base * base, exp >> 1)
+  } else {
+    base * f64_pow(base * base, exp >> 1)
+  }

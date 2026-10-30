@@ -1,0 +1,69 @@
+// life: Conway's Game of Life on a toroidal 64x64 grid of I32 cells (a flat
+// 4096-element array), 50k generations, then the live-cell population.
+// Matches lean/life.lean and reussir/life.rr: each generation is a fresh
+// tabulate over the previous grid (the persistent-array formulation, not a
+// mutation double-buffer), with the same seed hash, rule, and wrap. Morphic's
+// library has no index-passing array constructor, so `tabulate` below fills a
+// reserved array by `push`; Morphic has no `%` operator, so remainders are
+// written `a - b * (a / b)`.
+
+module Core = file "lib/core/core.mor"
+  expose {
+    module Io expose { writeln },
+    module String expose { i64_to_string, concat },
+    module Array,
+  }
+
+rem(a: I64, b: I64): I64 = a - b * (a / b)
+
+tabulate_rec(out: Array a, k: I64, n: I64, f: I64 -> a): Array a =
+  if k = n { out } else { tabulate_rec(push(out, f(k)), k + 1, n, f) }
+
+// The array [f(0), ..., f(n - 1)].
+tabulate(n: I64, f: I64 -> a): Array a = tabulate_rec(reserve([], n), 0, n, f)
+
+wrap(x: I64): I64 = rem(x + 64, 64)
+
+at(g: Array I32, i: I64, j: I64): I32 = Array.get(g, i * 64 + j)
+
+cell(g: Array I32, k: I64): I32 =
+  let i = k / 64 in
+  let j = rem(k, 64) in
+  let im = wrap(i - 1) in
+  let ip = wrap(i + 1) in
+  let jm = wrap(j - 1) in
+  let jp = wrap(j + 1) in
+  let n = at(g, im, jm) + at(g, im, j) + at(g, im, jp)
+        + at(g, i, jm) + at(g, i, jp)
+        + at(g, ip, jm) + at(g, ip, j) + at(g, ip, jp) in
+  let alive = at(g, i, j) in
+  if alive = 1i32 {
+    if n = 2i32 || n = 3i32 { 1i32 } else { 0i32 }
+  } else {
+    if n = 3i32 { 1i32 } else { 0i32 }
+  }
+
+step(g: Array I32): Array I32 = tabulate(4096, \k -> cell(g, k))
+
+run(n: I64, g: Array I32): Array I32 =
+  if n = 0 { g } else { run(n - 1, step(g)) }
+
+// Deterministic ~34% soup from a per-cell hash; no PRNG state to thread.
+seed_cell(k: I64): I32 =
+  let i = k / 64 in
+  let j = rem(k, 64) in
+  if rem(i * 2654435761 + j * 40503 + i * j * 2246822519, 97) < 33 { 1i32 } else { 0i32 }
+
+seed_grid(): Array I32 = tabulate(4096, seed_cell)
+
+population(g: Array I32): I64 =
+  Array.foldl(g, 0, \(acc, c) -> acc + i32_to_i64(c))
+
+proc main(): () =
+  let p = population(run(50000, seed_grid())) in
+  if p = 115 {
+    ()
+  } else {
+    do writeln(concat("FAIL: expected 115, got ", i64_to_string(p))) then
+    panic("wrong result\n")
+  }

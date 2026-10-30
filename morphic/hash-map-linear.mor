@@ -1,0 +1,89 @@
+// Std-collection workload on Morphic's sample hash map (lib/hashmap.mor,
+// vendored from the Morphic repo — separate chaining over copy-on-write
+// arrays of buckets, resized at load factor 0.75, updated in place while
+// the table is uniquely referenced). Morphic ships no I64 hash, so keys
+// hash with XXH64 of the key's eight bytes and a zero seed — the hash the
+// Koka cells use (koka-community's kk_integer_hash) — with the sign bit
+// cleared so the library's `abs`-then-remainder bucket index never sees
+// I64 minimum. Matches koka/hash-map-linear.kk.
+//
+// Zipfian mixed-op workload: keys follow an integer-only octave Zipf
+// (theta ~ 1) — a stratum s drawn uniform in [0, 24), then a key
+// uniform in [2^s, 2^(s+1)), so every octave carries equal mass and
+// per-key probability decays as 1/key. No floating point, so the
+// distribution is bit-identical in every language. 8M rounds, each
+// drawing op, stratum, key from one MINSTD stream: 9/16 insert,
+// 5/16 delete, 2/16 lookup (sum, -1 on miss).
+//
+// Linear variant: exactly one live version — the map is threaded
+// linearly through every round and nothing is retained, so the bucket
+// arrays stay unique and updates mutate them in place. The checksum
+// folds the final map:
+// result = lookup-sum + sum(key * 31 + value) + 7 * size.
+// Final size 1,120,773.
+
+module Core = file "lib/core/core.mor"
+  expose {
+    module Io expose { writeln },
+    module String expose { i64_to_string, concat },
+    module Option expose { Option { Some, None } },
+  }
+
+module HashMap = file "lib/hashmap.mor" with { Core } expose { HashMap }
+
+lcg(x: I64): I64 =
+  let y = x * 48271 in
+  y - 2147483647 * (y / 2147483647)
+
+rotl(x: U64, r: U64): U64 = (x << r) | (x >> (64u64 - r))
+
+// XXH64 of the eight little-endian bytes of `k`, seed 0, then the sign
+// bit cleared. Constants are XXH64's PRIME64_1..5.
+hash_i64(k: I64): I64 =
+  let p1 = 11400714785074694791u64 in
+  let p2 = 14029467366897019727u64 in
+  let p3 = 1609587929392839161u64 in
+  let p4 = 9650029242287828579u64 in
+  let p5 = 2870177450012600261u64 in
+  let h0 = (p5 + 8u64) ^ (rotl(i64_to_u64(k) * p2, 31u64) * p1) in
+  let h1 = rotl(h0, 27u64) * p1 + p4 in
+  let h2 = (h1 ^ (h1 >> 33u64)) * p2 in
+  let h3 = (h2 ^ (h2 >> 29u64)) * p3 in
+  u64_to_i64(h3 ^ (h3 >> 32u64)) & 9223372036854775807
+
+eq_i64(a: I64, b: I64): Bool = a = b
+
+fold_one(m: HashMap I64 I64, acc: I64): I64 =
+  HashMap.foldl(m, acc, \(s, k, v) -> s + k * 31 + v) + 7 * HashMap.size(m)
+
+ops(i: I64, x: I64, m: HashMap I64 I64, acc: I64): I64 =
+  if i = 8000000 { fold_one(m, acc) } else {
+    let x1 = lcg(x) in
+    let op = x1 - 16 * (x1 / 16) in
+    let x2 = lcg(x1) in
+    let s = x2 - 24 * (x2 / 24) in
+    let x3 = lcg(x2) in
+    let p = 1 << s in
+    let k = p + (x3 - p * (x3 / p)) in
+    let m2 =
+      if op < 9 { HashMap.insert(m, k, i) }
+      else if op < 14 { HashMap.remove(m, k) }
+      else { m } in
+    let acc2 =
+      if op < 14 { acc } else {
+        match HashMap.get(m2, k) {
+          Some(v) -> acc + v,
+          None -> acc - 1,
+        }
+      } in
+    ops(i + 1, x3, m2, acc2)
+  }
+
+proc main(): () =
+  let c = ops(0, 1, HashMap.empty(hash_i64, eq_i64), 0) in
+  if c = 144585704074329 {
+    ()
+  } else {
+    do writeln(concat("FAIL: expected 144585704074329, got ", i64_to_string(c))) then
+    panic("wrong result\n")
+  }

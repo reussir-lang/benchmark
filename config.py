@@ -22,6 +22,8 @@ _ENVIRONMENT_OVERRIDES = {
     "ghc": "BENCHMARK_GHC",
     "ocamlopt": "BENCHMARK_OCAMLOPT",
     "ocamlfind": "BENCHMARK_OCAMLFIND",
+    "morphic-compiler": "BENCHMARK_MORPHIC",
+    "morphic-clang": "MORPHIC_CLANG_PATH",
     "hyperfine": "BENCHMARK_HYPERFINE",
     "time": "BENCHMARK_TIME",
 }

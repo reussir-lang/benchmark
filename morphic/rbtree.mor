@@ -1,0 +1,92 @@
+// rbtree: insert 2.5M descending keys into a red-black tree (recursive
+// balance), then count the `true` values. Matches koka/rbtree.kk.
+
+module Core = file "lib/core/core.mor"
+  expose {
+    module Io expose { writeln },
+    module String expose { i64_to_string, concat },
+  }
+
+type Color {
+  Red,
+  Black,
+}
+
+type Tree {
+  Leaf,
+  Node(Color, Tree, I64, Bool, Tree),
+}
+
+is_red(t: Tree): Bool =
+  match t {
+    Node(Red, _, _, _, _) -> True,
+    _ -> False,
+  }
+
+balance_left(l: Tree, k: I64, v: Bool, r: Tree): Tree =
+  match l {
+    Node(_, Node(Red, lx, kx, vx, rx), ky, vy, ry) ->
+      Node(Red, Node(Black, lx, kx, vx, rx), ky, vy, Node(Black, ry, k, v, r)),
+    Node(_, ly, ky, vy, Node(Red, lx, kx, vx, rx)) ->
+      Node(Red, Node(Black, ly, ky, vy, lx), kx, vx, Node(Black, rx, k, v, r)),
+    Node(_, lx, kx, vx, rx) ->
+      Node(Black, Node(Red, lx, kx, vx, rx), k, v, r),
+    Leaf -> Leaf,
+  }
+
+balance_right(l: Tree, k: I64, v: Bool, r: Tree): Tree =
+  match r {
+    Node(_, Node(Red, lx, kx, vx, rx), ky, vy, ry) ->
+      Node(Red, Node(Black, l, k, v, lx), kx, vx, Node(Black, rx, ky, vy, ry)),
+    Node(_, lx, kx, vx, Node(Red, ly, ky, vy, ry)) ->
+      Node(Red, Node(Black, l, k, v, lx), kx, vx, Node(Black, ly, ky, vy, ry)),
+    Node(_, lx, kx, vx, rx) ->
+      Node(Black, l, k, v, Node(Red, lx, kx, vx, rx)),
+    Leaf -> Leaf,
+  }
+
+ins(t: Tree, k: I64, v: Bool): Tree =
+  match t {
+    Node(Red, l, kx, vx, r) ->
+      if k < kx { Node(Red, ins(l, k, v), kx, vx, r) }
+      else if k > kx { Node(Red, l, kx, vx, ins(r, k, v)) }
+      else { Node(Red, l, k, v, r) },
+    Node(Black, l, kx, vx, r) ->
+      if k < kx {
+        if is_red(l) { balance_left(ins(l, k, v), kx, vx, r) }
+        else { Node(Black, ins(l, k, v), kx, vx, r) }
+      } else if k > kx {
+        if is_red(r) { balance_right(l, kx, vx, ins(r, k, v)) }
+        else { Node(Black, l, kx, vx, ins(r, k, v)) }
+      } else { Node(Black, l, k, v, r) },
+    Leaf -> Node(Red, Leaf, k, v, Leaf),
+  }
+
+set_black(t: Tree): Tree =
+  match t {
+    Node(_, l, k, v, r) -> Node(Black, l, k, v, r),
+    _ -> t,
+  }
+
+insert(t: Tree, k: I64, v: Bool): Tree = set_black(ins(t, k, v))
+
+fold(t: Tree, acc: I64): I64 =
+  match t {
+    Node(_, l, _, v, r) -> fold(r, if v { fold(l, acc) + 1 } else { fold(l, acc) }),
+    Leaf -> acc,
+  }
+
+make_tree(n: I64, t: Tree): Tree =
+  if n <= 0 { t } else {
+    let n1 = n - 1 in
+    make_tree(n1, insert(t, n1, n1 - (n1 / 10) * 10 = 0))
+  }
+
+proc main(): () =
+  let v = fold(make_tree(2500000, Leaf), 0) in
+  if v = 250000 {
+    ()
+  } else {
+    do writeln(concat("FAIL: expected 250000, got ", i64_to_string(v))) then
+    panic("wrong result\n")
+  }

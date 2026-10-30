@@ -90,6 +90,23 @@
         "type": "github"
       }
     },
+    "morphic": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1793252028,
+        "narHash": "sha256-wHaDcyQ1iKQdb/S5nhiizIQ1xf8zwnEHKGFKDmgAUiY=",
+        "owner": "morphic-lang",
+        "repo": "morphic",
+        "rev": "da679c49a33655f2562c58d7d8314659b81dea0c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "morphic-lang",
+        "repo": "morphic",
+        "rev": "da679c49a33655f2562c58d7d8314659b81dea0c",
+        "type": "github"
+      }
+    },
     "nixpkgs": {
       "locked": {
         "lastModified": 1788179007,
@@ -102,6 +119,22 @@
       "original": {
         "owner": "NixOS",
         "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs-llvm16": {
+      "locked": {
+        "lastModified": 1767313136,
+        "narHash": "sha256-16KkgfdYqjaeRGBaYsNrhPRRENs0qzkQVUooNHtoy2w=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "ac62194c3917d5f474c1a844b6fd6da2db95077d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-25.05",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -140,7 +173,9 @@
         "immer": "immer",
         "mlir-rcgmp": "mlir-rcgmp",
         "mlir-sync": "mlir-sync",
+        "morphic": "morphic",
         "nixpkgs": "nixpkgs",
+        "nixpkgs-llvm16": "nixpkgs-llvm16",
         "reussir": "reussir"
       }
     },

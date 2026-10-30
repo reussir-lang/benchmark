@@ -1,0 +1,150 @@
+// nbe-hoas: normalization by evaluation of a 1M-redex Church-numeral term
+// (5 * (200 * 1000)) with higher-order abstract syntax: a semantic lambda
+// `VLam` holds a host-language closure `Value -> Value`. The normalization is
+// repeated 6 times, seeding each round's count with the round index so no
+// compiler can share rounds; expected total = 6 * 1000000 + (0 + 1 + .. + 5).
+// Matches koka/nbe-hoas.kk.
+
+module Core = file "lib/core/core.mor"
+  expose {
+    module Io expose { writeln },
+    module String expose { i64_to_string, concat },
+  }
+
+type Term {
+  Var(I64),
+  Lam(I64, Term),
+  App(Term, Term),
+  Let(I64, Term, Term),
+}
+
+type Value {
+  VVar(I64),
+  VApp(Value, Value),
+  VLam(I64, Value -> Value),
+}
+
+type Env {
+  EnvCons(I64, Value, Env),
+  EnvNil,
+}
+
+type Names {
+  NameCons(I64, Names),
+  NameNil,
+}
+
+max_of_names(n: Names, acc: I64): I64 =
+  match n {
+    NameCons(id, n1) -> max_of_names(n1, if acc > id { acc } else { id }),
+    NameNil -> acc,
+  }
+
+names_of_env(env: Env, acc: Names): Names =
+  match env {
+    EnvCons(id, _, env1) -> names_of_env(env1, NameCons(id, acc)),
+    EnvNil -> acc,
+  }
+
+fresh(n: Names): I64 = max_of_names(n, 0) + 1
+
+vapp(v1: Value, v2: Value): Value =
+  match v1 {
+    VLam(_, body) -> body(v2),
+    _ -> VApp(v1, v2),
+  }
+
+lookup(env: Env, id: I64): Value =
+  match env {
+    EnvCons(id1, v, env1) -> if id = id1 { v } else { lookup(env1, id) },
+    EnvNil -> VVar(id),
+  }
+
+eval(env: Env, x: Term): Value =
+  match x {
+    Var(id) -> lookup(env, id),
+    App(t, u) -> vapp(eval(env, t), eval(env, u)),
+    Lam(y, t) -> VLam(y, \u -> eval(EnvCons(y, u, env), t)),
+    Let(y, t, u) -> eval(EnvCons(y, eval(env, t), env), u),
+  }
+
+quote(n: Names, v: Value): Term =
+  match v {
+    VVar(i) -> Var(i),
+    VApp(v1, v2) -> App(quote(n, v1), quote(n, v2)),
+    VLam(_, f) -> let y = fresh(n) in Lam(y, quote(NameCons(y, n), f(VVar(y)))),
+  }
+
+norm_form(env: Env, t: Term): Term =
+  quote(names_of_env(env, NameNil), eval(env, t))
+
+five(): Term =
+  Lam(0, Lam(1, App(Var(0), App(Var(0), App(Var(0), App(Var(0), App(Var(0), Var(1))))))))
+
+add(): Term =
+  Lam(0, Lam(1, Lam(2, Lam(3, App(App(Var(0), Var(2)), App(App(Var(1), Var(2)), Var(3)))))))
+
+mul(): Term =
+  Lam(0, Lam(1, Lam(2, Lam(3, App(App(Var(0), App(Var(1), Var(2))), Var(3))))))
+
+ten(): Term =
+  let x = five() in
+  let y = add() in
+  App(App(y, x), x)
+
+twenty(): Term =
+  let x = ten() in
+  let y = add() in
+  App(App(y, x), x)
+
+hundred(): Term =
+  let x = ten() in
+  let y = mul() in
+  App(App(y, x), x)
+
+two_hundred(): Term =
+  let x = hundred() in
+  let y = add() in
+  App(App(y, x), x)
+
+thousand(): Term =
+  let x = hundred() in
+  let z = ten() in
+  let y = mul() in
+  App(App(y, x), z)
+
+term200000(): Term =
+  let x = two_hundred() in
+  let y = mul() in
+  let z = thousand() in
+  App(App(y, x), z)
+
+term1000000(): Term =
+  let x = five() in
+  let y = mul() in
+  let z = term200000() in
+  App(App(y, x), z)
+
+nf_to_int(t: Term, acc: I64): I64 =
+  match t {
+    Lam(_, x) -> nf_to_int(x, acc),
+    App(_, x) -> nf_to_int(x, acc + 1),
+    _ -> acc,
+  }
+
+nbe_test(i: I64): I64 =
+  let t = term1000000() in
+  let n = norm_form(EnvNil, t) in
+  nf_to_int(n, i)
+
+repeat_test(r: I64, acc: I64): I64 =
+  if r = 0 { acc } else { repeat_test(r - 1, acc + nbe_test(r - 1)) }
+
+proc main(): () =
+  let n = repeat_test(6, 0) in
+  if n = 6000015 {
+    ()
+  } else {
+    do writeln(concat("FAIL: expected 6000015, got ", i64_to_string(n))) then
+    panic("wrong result\n")
+  }
