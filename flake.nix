@@ -10,23 +10,28 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Current Reussir main (2026-09-02, LLVM/MLIR 23.1).
+    # Current Reussir main (2026-10-29, LLVM/MLIR 23.1).
     reussir = {
-      url = "github:reussir-lang/reussir/f54301a61cfa4b29bcee5d84dff00803965c96f5";
+      url = "github:reussir-lang/reussir/0cf8c9afa4f66568b52c3912debc05c046afc24c";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.fenix.follows = "fenix";
       inputs.flake-utils.follows = "flake-utils";
     };
 
-    # Reussir uses FetchContent for Immer and mlir-sync. Make them explicit
-    # flake inputs so the compiler build is network-free. Keep the mlir-sync
-    # rev matched to cmake/MlirSync.cmake at the pinned Reussir commit.
+    # Reussir uses FetchContent for Immer, mlir-sync, and mlir-rcgmp. Make them
+    # explicit flake inputs so the compiler build is network-free. Keep the
+    # revisions matched to cmake/{Immer,MlirSync,RCGMP}.cmake at the pinned
+    # Reussir commit.
     immer = {
       url = "github:arximboldi/immer/06d94ce48a02b11d3b225083a820f82c3d3ef462";
       flake = false;
     };
     mlir-sync = {
-      url = "github:reussir-lang/mlir-sync/16199f4865245272fbbd39574f09c4afe330ce1e";
+      url = "github:reussir-lang/mlir-sync/018206f4df254fe205f0b63068cd133e5e94ba42";
+      flake = false;
+    };
+    mlir-rcgmp = {
+      url = "github:reussir-lang/mlir-rcgmp/cc73b218f6ce90b005744c4e94b2b32a0e30c725";
       flake = false;
     };
   };
@@ -40,6 +45,7 @@
       reussir,
       immer,
       mlir-sync,
+      mlir-rcgmp,
       ...
     }:
     flake-utils.lib.eachDefaultSystem (
@@ -103,7 +109,7 @@
 
         reussirCargoDeps = pkgs.rustPlatform.fetchCargoVendor {
           src = reussir;
-          hash = "sha256-aLslW1z/oZzHIACmIqxHogsb4qISyKSZ/KvSx04VkoY=";
+          hash = "sha256-GiUnaUZD3x3Ifx6hGrBTOj9dWjRbRpAhn9R4HMSmkvM=";
         };
 
         reussirCompiler = llvmPkgs.stdenv.mkDerivation {
@@ -128,6 +134,7 @@
           ];
 
           buildInputs = [
+            pkgs.gmp
             pkgs.gtest
             pkgs.spdlog
             pkgs.zlib
@@ -150,18 +157,6 @@
             # submodules that GitHub flake archives do not contain.
             substituteInPlace CMakeLists.txt \
               --replace-fail 'if(TARGET_OBJECT_FORMAT STREQUAL "ELF")' 'if(FALSE)'
-
-            # rrc's Rust link consumes every archive listed by
-            # reussir-backend-sys/build.rs.  Upstream's ReussirCAPI dependency
-            # list currently omits these four, so an explicit `rrc` build can
-            # reach cargo before the archives exist.
-            substituteInPlace lib/CAPI/CMakeLists.txt \
-              --replace-fail \
-                '  # transformations' \
-                $'  # transformations\n  MLIRReussirClosureBetaReduction\n  MLIRReussirDefaultInliner\n  MLIRReussirInstrumentNonlinearFFI' \
-              --replace-fail \
-                '  MLIRReussirTokenReuse' \
-                $'  MLIRReussirTokenReuse\n  MLIRReussirSpecialPointerTag'
           '';
 
           LLVM_DIR = "${llvmMlirJoin}/lib/cmake/llvm";
@@ -194,6 +189,7 @@
             (lib.cmakeFeature "MLIR_DIR" "${llvmMlirJoin}/lib/cmake/mlir")
             (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_IMMER" "${immer}")
             (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_MLIRSYNC" "${mlir-sync}")
+            (lib.cmakeFeature "FETCHCONTENT_SOURCE_DIR_RCGMP" "${mlir-rcgmp}")
           ];
 
           buildPhase = ''
@@ -210,11 +206,13 @@
             mkdir -p "$out/bin" "$out/lib"
             cp bin/rrc "$out/bin/rrc"
             cp target-rt/release/libreussir_rt.a "$out/lib/libreussir_rt.a"
+            cp lib/libRCGMPRuntime.a "$out/lib/libRCGMPRuntime.a"
             wrapProgram "$out/bin/rrc" \
               --prefix LD_LIBRARY_PATH : "${
                 lib.makeLibraryPath [
                   llvmPkgs.llvm.lib
                   llvmPkgs.mlir
+                  pkgs.gmp
                   pkgs.stdenv.cc.cc.lib
                   pkgs.zlib
                 ]
@@ -327,21 +325,22 @@
           };
         };
 
-        # The rpds crate (persistent red-black tree and HAMT) for the
-        # rust-rpds benchmark variants, prebuilt as rlibs with the same
-        # rustc that compiles the benchmark sources so compile.py can pass
-        # them straight to `rustc --extern` without cargo.
-        rpdsCargoDeps = pkgs.rustPlatform.fetchCargoVendor {
-          src = ./rust/rpds-lib;
-          hash = "sha256-s535SjWLChCG4yvLG9ykfEWpfoFm+yCtbbTDH8caiXo=";
+        # The crates Rust cells link beyond std (rpds's persistent red-black
+        # tree and HAMT for the rust-rpds variants; num-bigint and its trait
+        # crates for the big-integer benchmarks), prebuilt as rlibs with the
+        # same rustc that compiles the benchmark sources so compile.py can
+        # pass them straight to `rustc --extern` without cargo.
+        externCratesCargoDeps = pkgs.rustPlatform.fetchCargoVendor {
+          src = ./rust/extern-crates;
+          hash = "sha256-zeU4R0jaV7M3Mbkjn6jy9LTUKKx3NXC0j3JjkSPvl14=";
         };
 
-        rpdsLibs = pkgs.stdenv.mkDerivation {
-          pname = "benchmark-rpds-rlibs";
-          version = "rpds-1";
-          src = ./rust/rpds-lib;
+        externCrates = pkgs.stdenv.mkDerivation {
+          pname = "benchmark-rust-extern-crates";
+          version = "1";
+          src = ./rust/extern-crates;
 
-          cargoDeps = rpdsCargoDeps;
+          cargoDeps = externCratesCargoDeps;
           cargoRoot = ".";
 
           nativeBuildInputs = [
@@ -363,6 +362,10 @@
             runHook postInstall
           '';
         };
+
+        # Zarith, OCaml's GMP-backed big integers, for the big-integer
+        # benchmarks; compile.py links it through ocamlfind.
+        ocamlPackages = pkgs.ocamlPackages;
 
         ghcBase = pkgs.haskellPackages.ghc;
         # Hackage packages the benchmarks use beyond GHC's boot libraries:
@@ -417,17 +420,22 @@
                 pkgs.rustc
                 pkgs.cargo
                 ghc
-                pkgs.ocaml
+                ocamlPackages.ocaml
+                ocamlPackages.findlib
                 pkgs.hyperfine
                 pkgs.time
                 pkgs.mimalloc
                 python
               ];
+              # GMP, which the big-integer cells link: the rcgmp runtime of
+              # the Reussir cells and Zarith of the OCaml cells.
+              buildInputs = [ pkgs.gmp ];
 
               REUSSIR_COMPILER = "${reussirCompiler}/bin/rrc";
               # The bitcode runtime, so reussir's link gets the same
               # runtime-LTO treatment compile.py gives kklib.
               REUSSIR_LIBS = "${reussirRtXlto}/lib";
+              REUSSIR_RCGMP_RUNTIME = "${reussirCompiler}/lib/libRCGMPRuntime.a";
               # The pinned Reussir source: compile.py builds the bundled
               # core and std packages from here for std-using benchmarks.
               REUSSIR_SRC = "${reussir}";
@@ -440,10 +448,12 @@
               BENCHMARK_LEANC = "${pkgs.lean4}/bin/leanc";
               BENCHMARK_KOKA = "${pkgs.koka}/bin/koka";
               BENCHMARK_RUSTC = "${pkgs.rustc}/bin/rustc";
-              # Prebuilt rpds/archery rlibs for the rust-rpds variants.
-              RPDS_LIBS = "${rpdsLibs}/lib";
+              # Prebuilt rlibs for Rust cells that link crates beyond std.
+              RUST_EXTERN_LIBS = "${externCrates}/lib";
               BENCHMARK_GHC = "${ghc}/bin/ghc";
-              BENCHMARK_OCAMLOPT = "${pkgs.ocaml}/bin/ocamlopt";
+              BENCHMARK_OCAMLOPT = "${ocamlPackages.ocaml}/bin/ocamlopt";
+              BENCHMARK_OCAMLFIND = "${ocamlPackages.findlib}/bin/ocamlfind";
+              OCAMLPATH = "${ocamlPackages.zarith}/lib/ocaml/${ocamlPackages.ocaml.version}/site-lib";
               BENCHMARK_HYPERFINE = "${pkgs.hyperfine}/bin/hyperfine";
               BENCHMARK_TIME = "${pkgs.time}/bin/time";
               MIMALLOC_LIB = "${pkgs.mimalloc}/lib/libmimalloc.so";

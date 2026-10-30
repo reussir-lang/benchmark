@@ -1,13 +1,14 @@
 # Reussir benchmark suite
 
 Cross-language benchmarks comparing Reussir against Lean, Koka, Rust,
-Haskell, and OCaml, organized as two sets:
+Haskell, and OCaml, organized as four sets:
 
 | Set | Benchmarks | What it exercises |
 |---|---|---|
 | `functional-data-structures` | rbtree, rbtree-zipper, nbe-hoas, nbe-closure, derive, fingertree, functional-queue | allocation, pattern matching, persistence, and reuse/GC of linked structures |
 | `large-aggregates` | life, qsort, heap-array, heap-functional | flat arrays plus matched array/tree heap workloads |
 | `std-collections` | ordered-map-linear, ordered-map-shared, ordered-map-heavily-shared, hash-map-linear, hash-map-shared, hash-map-heavily-shared | each language's standard ordered map and hash map under matched insert/remove/lookup workloads at three retention tiers: none, sparse, and heavy |
+| `big-integers` | bigint-fib, bigint-factorial, bigint-pidigits, bigint-binomial, bigint-rbtree, bigint-collatz | each language's arbitrary-precision integers on heap-sized values (sums, products and quotients by a word, spigot arithmetic) and on values that stay word-sized |
 
 Workloads use a roughly quarter-scale work factor while retaining the data
 shape each benchmark is intended to exercise. Every program hard-codes its
@@ -110,6 +111,31 @@ intentionally left idiomatic.
   advancement are identical in every language; Rust shares list tails with
   `Rc`. Reussir keeps `Queue` and its recursive `QList` shared, while its
   nonrecursive `Rotation` and `Pop` contracts are inline `[value]` types.
+- **big integers** — each language's built-in or de-facto standard
+  arbitrary-precision integers: Reussir `Nat`/`Int` (compiled to the rcgmp
+  dialect and runtime, so the cells compile against the bundled `core`),
+  Lean `Nat`/`Int`, GHC `Integer`, Koka `int`, OCaml Zarith, and Rust
+  num-bigint (std has no big integers; the cells link the prebuilt crate, and
+  update in place where the API allows). Loop counters use native integers
+  where the language has them. Each program checks a residue modulo
+  1000000007 (or an exact small result), so no decimal conversion is timed.
+  - **bigint-fib** — iterative Fibonacci to F(600000): 600k additions of
+    operands growing to 416k bits.
+  - **bigint-factorial** — 120000! by sequential products 2 · 3 · … · n: a
+    growing integer times a word.
+  - **bigint-pidigits** — the first 10000 digits of pi with Gibbons'
+    unbounded spigot (the Benchmarks Game algorithm), hashed. The
+    accumulator goes negative between digits, so every port uses signed
+    integers.
+  - **bigint-binomial** — the row C(200000, i) by C(n, i+1) = C(n, i) · (n−i)
+    / (i+1): exact divisions by a word; the row must sum to 2^n and end at 1.
+  - **bigint-rbtree** — rbtree's 2.5M descending inserts with big-integer
+    keys and values (each key mapped to itself), then the sum of the values.
+  - **bigint-collatz** — total Collatz trajectory length for starting values
+    1 … 999999 (131M steps; values stay below 2^37).
+  The last two keep every value word-sized and so measure the small-integer
+  path: tagged immediates in Reussir, Lean, Koka, and Zarith, GHC's
+  small-`Integer` constructor, and a heap-allocated `BigUint` in Rust.
 
 ## Variants and toolchain configurations
 
@@ -123,6 +149,10 @@ intentionally left idiomatic.
 | `rust` | `rustc -C opt-level=3` |
 | `rust-with-mimalloc` | same binary, `LD_PRELOAD` mimalloc |
 | `rust-rpds` / `rust-rpds-with-mimalloc` | same flags, linking the prebuilt `rpds` persistent-collection rlibs (std-collections set only) |
+
+The big-integer cells of `rust` and `rust-with-mimalloc` also link the
+prebuilt num-bigint rlibs, and those of `ocaml` link Zarith through
+`ocamlfind`.
 | `haskell` | `ghc -O2 -rtsopts`, default RTS (purely functional sources) |
 | `haskell-a1g` | same sources, `-with-rtsopts=-A1G` (1 GiB nursery) |
 | `haskell-st` / `haskell-st-a1g` | mutable `Data.Array.ST` sources, both RTS configs (large-aggregates set only) |
@@ -144,15 +174,18 @@ Known toolchain quirks, encoded in the sources:
 ## Running
 
 The checked-in flake is the one-shot bootstrap. It pins Reussir main at
-`25f7884fde21165471487d522ec0272fc9c5668a` and builds only the `rrc`
-dependency closure plus `libreussir_rt.a`; TPDE, tests, the REPL, and unrelated
-tools are not built. For the std-collections set it additionally stages the
-runtime's rlib closure (`REUSSIR_RUSTC`/`REUSSIR_RUSTC_DEPS`, consumed by
-rrc's polymorphic-FFI compiles) and exports the pinned source tree as
-`REUSSIR_SRC`, from which `compile.py` builds the bundled `core` and `std`
-packages. It also supplies Clang/LLVM, Lean, Koka, Rust, GHC with the Hackage
-`fingertree` and `unordered-containers` packages, OCaml (and its GCC linker),
-hyperfine, GNU time, mimalloc, and the Python plotting dependencies.
+`0cf8c9afa4f66568b52c3912debc05c046afc24c` and builds only the `rrc`
+dependency closure plus `libreussir_rt.a` and `libRCGMPRuntime.a`
+(`REUSSIR_RCGMP_RUNTIME`); TPDE, tests, the REPL, and unrelated tools are
+not built. For the std-collections and big-integers sets it additionally
+stages the runtime's rlib closure (`REUSSIR_RUSTC`/`REUSSIR_RUSTC_DEPS`,
+consumed by rrc's polymorphic-FFI compiles) and exports the pinned source
+tree as `REUSSIR_SRC`, from which `compile.py` builds the bundled `core` and
+`std` packages. It also supplies Clang/LLVM, Lean, Koka, Rust with the
+prebuilt `rpds` and num-bigint crates (`RUST_EXTERN_LIBS`), GHC with the
+Hackage `fingertree` and `unordered-containers` packages, OCaml (and its GCC
+linker) with findlib and Zarith, GMP, hyperfine, GNU time, mimalloc, and the
+Python plotting dependencies.
 
 ```bash
 direnv allow             # builds once, then reuses the Nix store result

@@ -56,20 +56,37 @@
         "type": "github"
       }
     },
+    "mlir-rcgmp": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1792974520,
+        "narHash": "sha256-UAIAewjuJkBxNq5RUEoy6eLk7FqcidmrNUsgTFuNTyU=",
+        "owner": "reussir-lang",
+        "repo": "mlir-rcgmp",
+        "rev": "cc73b218f6ce90b005744c4e94b2b32a0e30c725",
+        "type": "github"
+      },
+      "original": {
+        "owner": "reussir-lang",
+        "repo": "mlir-rcgmp",
+        "rev": "cc73b218f6ce90b005744c4e94b2b32a0e30c725",
+        "type": "github"
+      }
+    },
     "mlir-sync": {
       "flake": false,
       "locked": {
-        "lastModified": 1788311117,
-        "narHash": "sha256-2P5bs4lMerRtK6YeRqIxFr4Jl51zl0xRz2vV8dX8X1A=",
+        "lastModified": 1792348835,
+        "narHash": "sha256-cKYDN3HhQ/YhAPQO11KoLqN7HdPNTONCrqFyZ9LEW+E=",
         "owner": "reussir-lang",
         "repo": "mlir-sync",
-        "rev": "16199f4865245272fbbd39574f09c4afe330ce1e",
+        "rev": "018206f4df254fe205f0b63068cd133e5e94ba42",
         "type": "github"
       },
       "original": {
         "owner": "reussir-lang",
         "repo": "mlir-sync",
-        "rev": "16199f4865245272fbbd39574f09c4afe330ce1e",
+        "rev": "018206f4df254fe205f0b63068cd133e5e94ba42",
         "type": "github"
       }
     },
@@ -102,17 +119,17 @@
         ]
       },
       "locked": {
-        "lastModified": 1788327027,
-        "narHash": "sha256-XJO1eBYXvS/e2qZ5TWbeBoOgQ0FhkN3uSX/QKd/moWY=",
+        "lastModified": 1793255613,
+        "narHash": "sha256-5Q3MWu8TG++Ayrn4BDVDXOCH8Dm4Y9JJCjgmnDc5cq4=",
         "owner": "reussir-lang",
         "repo": "reussir",
-        "rev": "f54301a61cfa4b29bcee5d84dff00803965c96f5",
+        "rev": "0cf8c9afa4f66568b52c3912debc05c046afc24c",
         "type": "github"
       },
       "original": {
         "owner": "reussir-lang",
         "repo": "reussir",
-        "rev": "f54301a61cfa4b29bcee5d84dff00803965c96f5",
+        "rev": "0cf8c9afa4f66568b52c3912debc05c046afc24c",
         "type": "github"
       }
     },
@@ -121,6 +138,7 @@
         "fenix": "fenix",
         "flake-utils": "flake-utils",
         "immer": "immer",
+        "mlir-rcgmp": "mlir-rcgmp",
         "mlir-sync": "mlir-sync",
         "nixpkgs": "nixpkgs",
         "reussir": "reussir"

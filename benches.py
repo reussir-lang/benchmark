@@ -1,12 +1,15 @@
 """Benchmark registry: sets, language variants, and benchmark sources.
 
-The suite is organized as two benchmark sets:
+The suite is organized as four benchmark sets:
 
 - ``functional-data-structures``: constructor-based workloads (trees, terms,
   symbolic expressions, finger trees, and real-time queues) that exercise
   allocation, pattern matching, persistence, and reuse/GC.
 - ``large-aggregates``: flat-array workloads plus the paired array and Braun
   binary heaps, keeping the two heap representations in one result set.
+- ``std-collections``: each language's standard ordered and hash maps.
+- ``big-integers``: each language's arbitrary-precision integers, on
+  heap-sized values and on values that stay word-sized.
 
 Extending the suite
 ===================
@@ -33,14 +36,17 @@ Toolchain configurations
 - lean: lean → C, then leanc ``-flto -O3``.
 - rust: ``-C opt-level=3``; the ``-with-mimalloc`` variant preloads mimalloc.
   The ``rust-rpds`` variants additionally link the prebuilt ``rpds``
-  persistent-collection rlibs (``extern_crates``, resolved via RPDS_LIBS).
+  persistent-collection rlibs (``extern_crates``, resolved via
+  RUST_EXTERN_LIBS); big-integer benchmarks add num-bigint to every Rust
+  cell (``rust-extern-crates``).
 - haskell: ghc ``-O2 -rtsopts``; the ``-a1g`` variants bake ``+RTS -A1G``
   (1 GiB nursery) via ``-with-rtsopts`` — both RTS configurations are
   first-class variants because the default-vs-large-nursery choice swings
   results by -40%..+190% depending on the benchmark's live-set size.
   The ``-st`` variants are separate sources using mutable ST arrays where
   the plain variant is purely functional.
-- ocaml: ``ocamlopt -O3``.
+- ocaml: ``ocamlopt -O3``; big-integer benchmarks link Zarith through
+  ocamlfind (``ocaml-packages``).
 
 For matched data-structure workloads, logical payloads have the same explicit
 width in every language: signed 64-bit keys/elements for the red-black trees,
@@ -55,6 +61,7 @@ SETS = {
     "functional-data-structures": "Functional data structures",
     "large-aggregates": "Large aggregates",
     "std-collections": "Standard-library collections",
+    "big-integers": "Arbitrary-precision integers",
 }
 
 VARIANTS = {
@@ -85,6 +92,18 @@ VARIANTS = {
 _FUNCTIONAL = "functional-data-structures"
 _AGGREGATES = "large-aggregates"
 _STD = "std-collections"
+_BIGINT = "big-integers"
+
+
+# What every big-integer benchmark needs from each toolchain: Reussir's
+# ``Nat``/``Int`` live in core and run on the rcgmp runtime; Rust has no big
+# integers in std, so its cells link num-bigint; OCaml's link Zarith.
+_BIGINT_OPTIONS = {
+    "reussir-packages": "core",
+    "reussir-rcgmp": True,
+    "rust-extern-crates": ["num_bigint", "num_integer", "num_traits"],
+    "ocaml-packages": ["zarith"],
+}
 
 
 def _sources(base, haskell=None, haskell_st=None):
@@ -266,14 +285,14 @@ BENCHES = {
     # 512th draw instead of every 8192nd (~3.9k ordered / ~15.6k hash
     # events) — far past the crossover where per-event full copies
     # dominate a mutable representation. The Reussir cells use std's WavlMap/HashMap and
-    # compile against the bundled core+std packages (``reussir-std``);
+    # compile against the bundled core+std packages (``reussir-packages``);
     # Koka's bundled stdlib has no comparable containers, so its cells
     # use the vendored koka-community/std subset (koka/community-std):
     # rbtree-bu for the ordered map and the bucket hashmap for the hash
     # map.
     "ordered-map-linear": {
         "set": _STD,
-        "reussir-std": True,
+        "reussir-packages": "std",
         "sources": _sources(
             {
                 "lean": "lean/ordered-map-linear.lean",
@@ -295,7 +314,7 @@ BENCHES = {
     },
     "ordered-map-shared": {
         "set": _STD,
-        "reussir-std": True,
+        "reussir-packages": "std",
         "sources": _sources(
             {
                 "lean": "lean/ordered-map-shared.lean",
@@ -317,7 +336,7 @@ BENCHES = {
     },
     "ordered-map-heavily-shared": {
         "set": _STD,
-        "reussir-std": True,
+        "reussir-packages": "std",
         "sources": _sources(
             {
                 "lean": "lean/ordered-map-heavily-shared.lean",
@@ -339,7 +358,7 @@ BENCHES = {
     },
     "hash-map-linear": {
         "set": _STD,
-        "reussir-std": True,
+        "reussir-packages": "std",
         "sources": _sources(
             {
                 "lean": "lean/hash-map-linear.lean",
@@ -361,7 +380,7 @@ BENCHES = {
     },
     "hash-map-shared": {
         "set": _STD,
-        "reussir-std": True,
+        "reussir-packages": "std",
         "sources": _sources(
             {
                 "lean": "lean/hash-map-shared.lean",
@@ -383,7 +402,7 @@ BENCHES = {
     },
     "hash-map-heavily-shared": {
         "set": _STD,
-        "reussir-std": True,
+        "reussir-packages": "std",
         "sources": _sources(
             {
                 "lean": "lean/hash-map-heavily-shared.lean",
@@ -421,6 +440,103 @@ BENCHES = {
                 "ocaml": "ocaml/functional-queue.ml",
             },
             haskell="haskell/functional-queue.hs",
+        ),
+    },
+    # Arbitrary-precision integer benchmarks: each language's built-in or
+    # de-facto standard big integers (Reussir Nat on the rcgmp runtime, Lean
+    # Nat, GHC Integer, Koka int, OCaml Zarith, Rust num-bigint). fib,
+    # factorial, pidigits, and binomial grow heap-sized integers (additions;
+    # products by a word; spigot quotients and products; exact divisions by
+    # a word); rbtree and collatz keep every value small, measuring the
+    # immediate path.
+    "bigint-fib": {
+        "set": _BIGINT,
+        **_BIGINT_OPTIONS,
+        "sources": _sources(
+            {
+                "lean": "lean/bigint-fib.lean",
+                "reussir": ("reussir/bigint-fib.rr", "reussir/bigint-fib.rr.c"),
+                "reussir-nrac": ("reussir/bigint-fib.rr", "reussir/bigint-fib.rr.c"),
+                "koka": "koka/bigint-fib.kk",
+                "rust": "rust/bigint-fib.rs",
+                "ocaml": "ocaml/bigint-fib.ml",
+            },
+            haskell="haskell/bigint-fib.hs",
+        ),
+    },
+    "bigint-factorial": {
+        "set": _BIGINT,
+        **_BIGINT_OPTIONS,
+        "sources": _sources(
+            {
+                "lean": "lean/bigint-factorial.lean",
+                "reussir": ("reussir/bigint-factorial.rr", "reussir/bigint-factorial.rr.c"),
+                "reussir-nrac": ("reussir/bigint-factorial.rr", "reussir/bigint-factorial.rr.c"),
+                "koka": "koka/bigint-factorial.kk",
+                "rust": "rust/bigint-factorial.rs",
+                "ocaml": "ocaml/bigint-factorial.ml",
+            },
+            haskell="haskell/bigint-factorial.hs",
+        ),
+    },
+    "bigint-pidigits": {
+        "set": _BIGINT,
+        **_BIGINT_OPTIONS,
+        "sources": _sources(
+            {
+                "lean": "lean/bigint-pidigits.lean",
+                "reussir": ("reussir/bigint-pidigits.rr", "reussir/bigint-pidigits.rr.c"),
+                "reussir-nrac": ("reussir/bigint-pidigits.rr", "reussir/bigint-pidigits.rr.c"),
+                "koka": "koka/bigint-pidigits.kk",
+                "rust": "rust/bigint-pidigits.rs",
+                "ocaml": "ocaml/bigint-pidigits.ml",
+            },
+            haskell="haskell/bigint-pidigits.hs",
+        ),
+    },
+    "bigint-rbtree": {
+        "set": _BIGINT,
+        **_BIGINT_OPTIONS,
+        "sources": _sources(
+            {
+                "lean": "lean/bigint-rbtree.lean",
+                "reussir": ("reussir/bigint-rbtree.rr", "reussir/bigint-rbtree.rr.c"),
+                "reussir-nrac": ("reussir/bigint-rbtree.rr", "reussir/bigint-rbtree.rr.c"),
+                "koka": "koka/bigint-rbtree.kk",
+                "rust": "rust/bigint-rbtree.rs",
+                "ocaml": "ocaml/bigint-rbtree.ml",
+            },
+            haskell="haskell/bigint-rbtree.hs",
+        ),
+    },
+    "bigint-collatz": {
+        "set": _BIGINT,
+        **_BIGINT_OPTIONS,
+        "sources": _sources(
+            {
+                "lean": "lean/bigint-collatz.lean",
+                "reussir": ("reussir/bigint-collatz.rr", "reussir/bigint-collatz.rr.c"),
+                "reussir-nrac": ("reussir/bigint-collatz.rr", "reussir/bigint-collatz.rr.c"),
+                "koka": "koka/bigint-collatz.kk",
+                "rust": "rust/bigint-collatz.rs",
+                "ocaml": "ocaml/bigint-collatz.ml",
+            },
+            haskell="haskell/bigint-collatz.hs",
+        ),
+    },
+    "bigint-binomial": {
+        "set": _BIGINT,
+        **_BIGINT_OPTIONS,
+        "sources": _sources(
+            {
+                "lean": "lean/bigint-binomial.lean",
+                "reussir": ("reussir/bigint-binomial.rr", "reussir/bigint-binomial.rr.c"),
+                "reussir-nrac": ("reussir/bigint-binomial.rr", "reussir/bigint-binomial.rr.c"),
+                "koka": "koka/bigint-binomial.kk",
+                "rust": "rust/bigint-binomial.rs",
+                "ocaml": "ocaml/bigint-binomial.ml",
+            },
+            haskell="haskell/bigint-binomial.hs",
         ),
     },
 }

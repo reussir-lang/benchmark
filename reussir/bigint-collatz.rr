@@ -1,0 +1,24 @@
+// Total Collatz trajectory length over the starting values 1 .. 999999 in
+// Nat arithmetic. Every intermediate value stays below 2^37, so this
+// measures the small-integer path.
+
+fn steps(n: Nat, c: i64) -> i64 {
+    match n {
+        1 => c,
+        _ => if n % 2 == 0 { steps(n / 2, c + 1) } else { steps(n * 3 + 1, c + 1) }
+    }
+}
+
+fn total(s: i64, limit: i64, acc: i64) -> i64 {
+    if s >= limit {
+        acc
+    } else {
+        total(s + 1, limit, acc + steps((s as u64) as Nat, 0))
+    }
+}
+
+fn collatz_test(limit: i64) -> i64 {
+    total(1, limit, 0)
+}
+
+extern "C" trampoline "collatz_test_ffi" = collatz_test;

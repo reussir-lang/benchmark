@@ -1,0 +1,16 @@
+// 120000! by sequential multiplication 2 * 3 * ... * n: a growing big
+// integer times a word-sized factor.
+
+fn fact_loop(i: Nat, n: Nat, acc: Nat) -> Nat {
+    if i > n {
+        acc
+    } else {
+        fact_loop(i + 1, n, acc * i)
+    }
+}
+
+fn factorial_test(n: i64) -> i64 {
+    (fact_loop(2, (n as u64) as Nat, 1) % 1000000007) as i64
+}
+
+extern "C" trampoline "factorial_test_ffi" = factorial_test;
