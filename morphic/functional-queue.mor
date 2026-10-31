@@ -1,0 +1,113 @@
+// functional-queue: strict Hood-Melville real-time queue whose rotation runs
+// incrementally through `Reversing`/`Appending` states (two `exec` steps per
+// operation). Build 65536 elements, perform 1M uncons/snoc rotations, then
+// drain, folding every dequeued element into a checksum mod 1000000007.
+// Matches koka/functional-queue.kk.
+//
+// Deviation: Morphic has no record types, so Koka's `queue` struct is the
+// single-constructor type `Queue(len_front, front, state, len_rear, rear)`
+// taken apart by pattern matching instead of field accessors.
+
+module Core = file "lib/core/core.mor"
+  expose {
+    module Io expose { writeln },
+    module String expose { i64_to_string, concat },
+  }
+
+type QList {
+  QNil,
+  QCons(I64, QList),
+}
+
+// Reversing(ok, front, front_rev, rear, rear_rev)
+// Appending(ok, front_rev, rear_rev)
+type Rotation {
+  Idle,
+  Reversing(I64, QList, QList, QList, QList),
+  Appending(I64, QList, QList),
+  Done(QList),
+}
+
+// Queue(len_front, front, state, len_rear, rear)
+type Queue {
+  Queue(I64, QList, Rotation, I64, QList),
+}
+
+exec(state: Rotation): Rotation =
+  match state {
+    Reversing(ok, QCons(x, f), f1, QCons(y, r), r1) ->
+      Reversing(ok + 1, f, QCons(x, f1), r, QCons(y, r1)),
+    Reversing(ok, QNil, f1, QCons(y, QNil), r1) -> Appending(ok, f1, QCons(y, r1)),
+    Appending(0, _, r1) -> Done(r1),
+    Appending(ok, QCons(x, f1), r1) -> Appending(ok - 1, f1, QCons(x, r1)),
+    _ -> state,
+  }
+
+invalidate(state: Rotation): Rotation =
+  match state {
+    Reversing(ok, f, f1, r, r1) -> Reversing(ok - 1, f, f1, r, r1),
+    Appending(0, _, QCons(_, r1)) -> Done(r1),
+    Appending(ok, f1, r1) -> Appending(ok - 1, f1, r1),
+    _ -> state,
+  }
+
+exec2(q: Queue): Queue =
+  match q {
+    Queue(lenf, f, state, lenr, r) ->
+      match exec(exec(state)) {
+        Done(front) -> Queue(lenf, front, Idle, lenr, r),
+        state1 -> Queue(lenf, f, state1, lenr, r),
+      },
+  }
+
+check(q: Queue): Queue =
+  match q {
+    Queue(lenf, f, state, lenr, r) ->
+      if lenr <= lenf { exec2(q) } else {
+        exec2(Queue(lenf + lenr, f, Reversing(0, f, QNil, r, QNil), 0, QNil))
+      },
+  }
+
+snoc(q: Queue, value: I64): Queue =
+  match q {
+    Queue(lenf, f, state, lenr, r) -> check(Queue(lenf, f, state, lenr + 1, QCons(value, r))),
+  }
+
+uncons(q: Queue): (I64, Queue) =
+  match q {
+    Queue(lenf, QCons(value, f), state, lenr, r) ->
+      (value, check(Queue(lenf - 1, f, invalidate(state), lenr, r))),
+    Queue(_, QNil, _, _, _) -> (0, q),
+  }
+
+modulus: I64 = 1000000007
+
+// Morphic has no `%`; every operand here is non-negative, so truncating
+// division gives the same remainder as Koka's `%`.
+rem(a: I64, b: I64): I64 = a - b * (a / b)
+
+build(index: I64, q: Queue): Queue =
+  if index = 65536 { q } else { build(index + 1, snoc(q, index)) }
+
+churn(round: I64, remaining: I64, q: Queue, checksum: I64): (Queue, I64) =
+  if remaining = 0 { (q, checksum) } else {
+    let (value, rest) = uncons(q) in
+    let next = rem(value + round + 1, modulus) in
+    churn(round + 1, remaining - 1, snoc(rest, next), rem(checksum + value, modulus))
+  }
+
+drain(remaining: I64, q: Queue, checksum: I64): I64 =
+  if remaining = 0 { checksum } else {
+    let (value, rest) = uncons(q) in
+    drain(remaining - 1, rest, rem(checksum + value, modulus))
+  }
+
+proc main(): () =
+  let (q, checksum) = churn(0, 1000000, build(0, Queue(0, QNil, Idle, 0, QNil)), 0) in
+  let result = drain(65536, q, checksum) in
+  if result = 66797929 {
+    ()
+  } else {
+    do writeln(concat("FAIL: expected 66797929, got ", i64_to_string(result))) then
+    panic("wrong result\n")
+  }

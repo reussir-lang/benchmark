@@ -8,12 +8,13 @@ import tempfile
 from config import CONFIG
 
 
-def _run_quiet(cmd, cwd, step):
+def _run_quiet(cmd, cwd, step, env=None):
     try:
         subprocess.run(
             cmd,
             check=True,
             cwd=cwd,
+            env=env,
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             text=True,
@@ -375,6 +376,38 @@ def compile_lean(program: str, output: str) -> None:
     _ensure_executable(output, "lean linking")
 
 
+def compile_morphic(program: str, output: str, extra_flags=None) -> None:
+    # Morphic's own pipeline at LLVM -O3: lambda set specialization,
+    # mutation inference (copy-on-write arrays updated in place when
+    # unique), and borrow-inferred reference counting unless ``extra_flags``
+    # select another strategy. The backend already targets the host CPU, the
+    # counterpart of -march=native. It links through the clang of the LLVM it
+    # is built against (``morphic-clang``, MORPHIC_CLANG_PATH in the Nix
+    # shell). Programs import the vendored library next to them
+    # (morphic/lib, see morphic/README.md).
+    env = os.environ.copy()
+    clang = CONFIG.get("morphic-clang")
+    if clang:
+        env["MORPHIC_CLANG_PATH"] = clang
+    with tempfile.TemporaryDirectory() as tmpdir:
+        _run_quiet(
+            [
+                CONFIG["morphic-compiler"],
+                "build",
+                program,
+                "-o",
+                output,
+                "--llvm-opt-level",
+                "3",
+                *(extra_flags or []),
+            ],
+            cwd=tmpdir,
+            step="morphic compilation",
+            env=env,
+        )
+    _ensure_executable(output, "morphic compilation")
+
+
 def compile_cell(bench_meta, spec, source, output, resolve) -> None:
     """Compile one benchmark cell: a benchmark's source for one variant.
 
@@ -411,6 +444,10 @@ def compile_cell(bench_meta, spec, source, output, resolve) -> None:
     elif kind == "ocaml":
         compile_ocaml(
             resolve(source), output, packages=bench_meta.get("ocaml-packages")
+        )
+    elif kind == "morphic":
+        compile_morphic(
+            resolve(source), output, extra_flags=list(spec.get("extra_flags", []))
         )
     else:
         raise ValueError(f"Unsupported variant kind: {kind}")

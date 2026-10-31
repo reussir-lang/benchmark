@@ -1,0 +1,72 @@
+// qsort: 100 rounds of in-place Lomuto quicksort over a fresh 65536-element
+// I64 array filled from MINSTD, then a sortedness check plus checksum mod
+// 1e9+7. Matches reussir/qsort.rr and lean/qsort.lean: the array is threaded
+// linearly through the recursion, so Morphic's copy-on-write arrays update in
+// place, and partition's base case performs the recursive sort calls itself
+// (no (array, pivot-index) pair is returned). Morphic has no `%` operator, so
+// remainders are written `a - b * (a / b)`.
+
+module Core = file "lib/core/core.mor"
+  expose {
+    module Io expose { writeln },
+    module String expose { i64_to_string, concat },
+    module Array,
+  }
+
+rem(a: I64, b: I64): I64 = a - b * (a / b)
+
+lcg(x: I64): I64 = rem(x * 48271, 2147483647)
+
+fill(a: Array I64, i: I64, x: I64): Array I64 =
+  if i = 65536 { a } else {
+    let x1 = lcg(x) in
+    fill(Array.set(a, i, x1), i + 1, x1)
+  }
+
+swap(a: Array I64, i: I64, j: I64): Array I64 =
+  let x = Array.get(a, i) in
+  let y = Array.get(a, j) in
+  Array.set(Array.set(a, i, y), j, x)
+
+qsort_go(a: Array I64, lo: I64, hi: I64): Array I64 =
+  if lo >= hi { a } else {
+    let p = Array.get(a, hi) in
+    partition(a, lo, hi, p, lo, lo)
+  }
+
+// Lomuto partition with the pivot at hi; invariant: [lo, i) < p, [i, j) >= p.
+partition(a: Array I64, lo: I64, hi: I64, p: I64, i: I64, j: I64): Array I64 =
+  if j = hi {
+    let a1 = swap(a, i, hi) in
+    qsort_go(qsort_go(a1, lo, i - 1), i + 1, hi)
+  } else if Array.get(a, j) < p {
+    partition(swap(a, i, j), lo, hi, p, i + 1, j + 1)
+  } else {
+    partition(a, lo, hi, p, i, j + 1)
+  }
+
+// Sortedness check plus checksum; returns -1 on an ordering violation.
+check(a: Array I64, i: I64, prev: I64, acc: I64): I64 =
+  if i = 65536 { acc } else {
+    let v = Array.get(a, i) in
+    if prev > v { -1 } else { check(a, i + 1, v, rem(acc + v, 1000000007)) }
+  }
+
+round(seed: I64): I64 =
+  let a = fill(Array.fill(65536, 0), 0, seed) in
+  let s = qsort_go(a, 0, 65535) in
+  check(s, 0, -1, 0)
+
+rounds(r: I64, acc: I64): I64 =
+  if r = 0 { acc } else {
+    rounds(r - 1, rem(acc + round(42 + r), 1000000007))
+  }
+
+proc main(): () =
+  let v = rounds(100, 0) in
+  if v = 276066679 {
+    ()
+  } else {
+    do writeln(concat("FAIL: expected 276066679, got ", i64_to_string(v))) then
+    panic("wrong result\n")
+  }

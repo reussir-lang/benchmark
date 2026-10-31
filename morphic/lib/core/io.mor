@@ -1,0 +1,3 @@
+pub proc writeln(line: Array U8): () =
+  do output(line) then
+  do output("\n")

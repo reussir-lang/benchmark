@@ -1,0 +1,94 @@
+// rbtree-zipper: insert 2.5M descending keys into a red-black tree, walking
+// down with an explicit zipper and rebalancing on the way back up
+// (`balance_red` / `move_up`), then count the `true` values. Matches
+// koka/rbtree-zipper.kk.
+
+module Core = file "lib/core/core.mor"
+  expose {
+    module Io expose { writeln },
+    module String expose { i64_to_string, concat },
+  }
+
+type Color {
+  Red,
+  Black,
+}
+
+type Tree {
+  Leaf,
+  Node(Color, Tree, I64, Bool, Tree),
+}
+
+// The path from the focus back to the root: `NodeR` records a parent whose
+// right child is the focus, `NodeL` one whose left child is the focus.
+type Zipper {
+  NodeR(Color, Tree, I64, Bool, Zipper),
+  NodeL(Color, Zipper, I64, Bool, Tree),
+  Done,
+}
+
+move_up(z: Zipper, t: Tree): Tree =
+  match z {
+    NodeR(c, l, k, v, z1) -> move_up(z1, Node(c, l, k, v, t)),
+    NodeL(c, z1, k, v, r) -> move_up(z1, Node(c, t, k, v, r)),
+    Done -> t,
+  }
+
+// Plug the red node `Node(Red, l, k, v, r)` into the zipper, repairing
+// red-red violations upwards.
+balance_red(z: Zipper, l: Tree, k: I64, v: Bool, r: Tree): Tree =
+  match z {
+    NodeR(Black, l1, k1, v1, z1) ->
+      move_up(z1, Node(Black, l1, k1, v1, Node(Red, l, k, v, r))),
+    NodeL(Black, z1, k1, v1, r1) ->
+      move_up(z1, Node(Black, Node(Red, l, k, v, r), k1, v1, r1)),
+    NodeR(Red, l1, k1, v1, z1) ->
+      match z1 {
+        NodeR(_, l2, k2, v2, z2) ->
+          balance_red(z2, Node(Black, l2, k2, v2, l1), k1, v1, Node(Black, l, k, v, r)),
+        NodeL(_, z2, k2, v2, r2) ->
+          balance_red(z2, Node(Black, l1, k1, v1, l), k, v, Node(Black, r, k2, v2, r2)),
+        Done -> Node(Black, l1, k1, v1, Node(Red, l, k, v, r)),
+      },
+    NodeL(Red, z1, k1, v1, r1) ->
+      match z1 {
+        NodeR(_, l2, k2, v2, z2) ->
+          balance_red(z2, Node(Black, l2, k2, v2, l), k, v, Node(Black, r, k1, v1, r1)),
+        NodeL(_, z2, k2, v2, r2) ->
+          balance_red(z2, Node(Black, l, k, v, r), k1, v1, Node(Black, r1, k2, v2, r2)),
+        Done -> Node(Black, Node(Red, l, k, v, r), k1, v1, r1),
+      },
+    Done -> Node(Black, l, k, v, r),
+  }
+
+ins(t: Tree, k: I64, v: Bool, z: Zipper): Tree =
+  match t {
+    Node(c, l, kx, vx, r) ->
+      if k < kx { ins(l, k, v, NodeL(c, z, kx, vx, r)) }
+      else if k > kx { ins(r, k, v, NodeR(c, l, kx, vx, z)) }
+      else { move_up(z, Node(c, l, kx, vx, r)) },
+    Leaf -> balance_red(z, Leaf, k, v, Leaf),
+  }
+
+insert(t: Tree, k: I64, v: Bool): Tree = ins(t, k, v, Done)
+
+fold(t: Tree, acc: I64): I64 =
+  match t {
+    Node(_, l, _, v, r) -> fold(r, if v { fold(l, acc) + 1 } else { fold(l, acc) }),
+    Leaf -> acc,
+  }
+
+make_tree(n: I64, t: Tree): Tree =
+  if n <= 0 { t } else {
+    let m = n - 1 in
+    make_tree(m, insert(t, m, m - (m / 10) * 10 = 0))
+  }
+
+proc main(): () =
+  let v = fold(make_tree(2500000, Leaf), 0) in
+  if v = 250000 {
+    ()
+  } else {
+    do writeln(concat("FAIL: expected 250000, got ", i64_to_string(v))) then
+    panic("wrong result\n")
+  }

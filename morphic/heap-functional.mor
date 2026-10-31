@@ -1,0 +1,113 @@
+// heap-functional: the heap-array workload on a purely functional Braun
+// min-heap. 65535 I64 values from an Irwin-Hall stream (each draw is the sum
+// of 12 consecutive MINSTD outputs) are inserted, then 6.5M rounds of
+// unconditional replace-top (evict the minimum, add a fresh draw to it, sift
+// down). The checksum is the running sum of evicted minima plus the final
+// heap contents, mod 1e9+7, so it equals heap-array's. Matches
+// reussir/heap-functional.rr and lean/heap-functional.lean (same insert and
+// replace-top algorithm); build's base case continues into maintain directly,
+// as in the Reussir port. Morphic has no `%` operator, so remainders are
+// written `a - b * (a / b)`.
+
+module Core = file "lib/core/core.mor"
+  expose {
+    module Io expose { writeln },
+    module String expose { i64_to_string, concat },
+  }
+
+type Heap {
+  Node(I64, Heap, Heap),
+  Leaf,
+}
+
+rem(a: I64, b: I64): I64 = a - b * (a / b)
+
+lcg(x: I64): I64 = rem(x * 48271, 2147483647)
+
+insert(h: Heap, v: I64): Heap =
+  match h {
+    Leaf -> Node(v, Leaf, Leaf),
+    Node(w, l, r) ->
+      if v <= w { Node(v, insert(r, w), l) } else { Node(w, insert(r, v), l) },
+  }
+
+down(v: I64, l: Heap, r: Heap): Heap =
+  match (l, r) {
+    (Node(lv, ll, lr), Node(rv, rl, rr)) ->
+      if lv <= rv {
+        if v <= lv { Node(v, l, r) } else { Node(lv, down(v, ll, lr), r) }
+      } else {
+        if v <= rv { Node(v, l, r) } else { Node(rv, l, down(v, rl, rr)) }
+      },
+    (Node(lv, ll, lr), Leaf) ->
+      if v <= lv { Node(v, l, Leaf) } else { Node(lv, down(v, ll, lr), Leaf) },
+    (Leaf, Node(rv, rl, rr)) ->
+      if v <= rv { Node(v, Leaf, r) } else { Node(rv, Leaf, down(v, rl, rr)) },
+    (Leaf, Leaf) -> Node(v, Leaf, Leaf),
+  }
+
+replace_top(h: Heap, v: I64): Heap =
+  match h {
+    Node(_, l, r) -> down(v, l, r),
+    Leaf -> Node(v, Leaf, Leaf),
+  }
+
+top(h: Heap): I64 =
+  match h {
+    Node(w, _, _) -> w,
+    Leaf -> 0,
+  }
+
+heap_sum(h: Heap, acc: I64): I64 =
+  match h {
+    Leaf -> acc,
+    Node(w, l, r) -> heap_sum(r, heap_sum(l, rem(acc + w, 1000000007))),
+  }
+
+maintain(m: I64, x: I64, h: Heap, acc: I64): I64 =
+  if m = 0 { rem(acc + heap_sum(h, 0), 1000000007) } else {
+    let x1 = lcg(x) in
+    let x2 = lcg(x1) in
+    let x3 = lcg(x2) in
+    let x4 = lcg(x3) in
+    let x5 = lcg(x4) in
+    let x6 = lcg(x5) in
+    let x7 = lcg(x6) in
+    let x8 = lcg(x7) in
+    let x9 = lcg(x8) in
+    let x10 = lcg(x9) in
+    let x11 = lcg(x10) in
+    let x12 = lcg(x11) in
+    let g = x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8 + x9 + x10 + x11 + x12 in
+    let t = top(h) in
+    maintain(m - 1, x12, replace_top(h, t + g), rem(acc + t, 1000000007))
+  }
+
+build(k: I64, x: I64, h: Heap, m: I64): I64 =
+  if k = 65535 { maintain(m, x, h, 0) } else {
+    let x1 = lcg(x) in
+    let x2 = lcg(x1) in
+    let x3 = lcg(x2) in
+    let x4 = lcg(x3) in
+    let x5 = lcg(x4) in
+    let x6 = lcg(x5) in
+    let x7 = lcg(x6) in
+    let x8 = lcg(x7) in
+    let x9 = lcg(x8) in
+    let x10 = lcg(x9) in
+    let x11 = lcg(x10) in
+    let x12 = lcg(x11) in
+    let g = x1 + x2 + x3 + x4 + x5 + x6 + x7 + x8 + x9 + x10 + x11 + x12 in
+    build(k + 1, x12, insert(h, g), m)
+  }
+
+heap_test(m: I64): I64 = build(0, 20260711, Leaf, m)
+
+proc main(): () =
+  let v = heap_test(6500000) in
+  if v = 558972311 {
+    ()
+  } else {
+    do writeln(concat("FAIL: expected 558972311, got ", i64_to_string(v))) then
+    panic("wrong result\n")
+  }

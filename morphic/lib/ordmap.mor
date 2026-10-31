@@ -1,0 +1,182 @@
+// Ordered map from I64 keys to values of any type `v`, written for the
+// benchmark suite (Morphic's library ships no ordered map): a persistent
+// red-black tree. Every update returns a new map that shares all untouched
+// subtrees with the old one; old versions stay valid.
+//
+// Algorithm: the recursive functional red-black tree of Okasaki
+// ("Red-black trees in a functional setting", JFP 9(4), 1999) with Kahrs'
+// balance and deletion (Stefan Kahrs, "Red-black trees with types", JFP
+// 11(4), 2001; the untyped formulation verified in Isabelle's
+// HOL/Library/RBT_Impl as `balance`, `balance_left`, `balance_right`,
+// `combine`, `del`). Insertion rebalances on the way back up with
+// `balance`. Deletion descends with `del`; stepping into a black child
+// lowers that side's black height, which `bal_left`/`bal_right` repair on
+// the way back up (Kahrs' delfromLeft/delfromRight), and the matching node
+// is removed by merging its two subtrees with `app`.
+//
+// The Koka cells of the suite use koka-community's std/data/rbtree-bu, the
+// same node representation (color, left, key, value, right) with bottom-up
+// zipper-based insert/remove; the recursive formulation here performs the
+// same path copying on persistent versions without a separate zipper.
+//
+// Interface: empty, insert (insert or replace), remove, get, size, foldl
+// (in-order, ascending keys).
+
+import Core
+  expose {
+    module Option expose { Option { Some, None } },
+  }
+
+type Color {
+  Red,
+  Black,
+}
+
+pub type OrdMap v {
+  Leaf,
+  Node(Color, OrdMap v, I64, v, OrdMap v),
+}
+
+pub empty: OrdMap v = Leaf
+
+// Number of entries (walks the tree).
+pub size(m: OrdMap v): I64 =
+  match m {
+    Leaf -> 0,
+    Node(_, l, _, _, r) -> size(l) + 1 + size(r),
+  }
+
+pub get(m: OrdMap v, key: I64): Option v =
+  match m {
+    Leaf -> None,
+    Node(_, l, k, v, r) ->
+      if key < k { get(l, key) }
+      else if key > k { get(r, key) }
+      else { Some(v) },
+  }
+
+// In-order fold: `f` sees the entries in ascending key order.
+pub foldl(m: OrdMap v, init: a, f: (a, I64, v) -> a): a =
+  match m {
+    Leaf -> init,
+    Node(_, l, k, v, r) -> foldl(r, f(foldl(l, init, f), k, v), f),
+  }
+
+// Kahrs' balance: rebuild a black node whose children may carry one
+// red-red violation, resolving it by a rotation into a red node with two
+// black children.
+balance(l: OrdMap v, k: I64, v: v, r: OrdMap v): OrdMap v =
+  match (l, r) {
+    (Node(Red, a, xk, xv, b), Node(Red, c, zk, zv, d)) ->
+      Node(Red, Node(Black, a, xk, xv, b), k, v, Node(Black, c, zk, zv, d)),
+    (Node(Red, Node(Red, a, xk, xv, b), yk, yv, c), d) ->
+      Node(Red, Node(Black, a, xk, xv, b), yk, yv, Node(Black, c, k, v, d)),
+    (Node(Red, a, xk, xv, Node(Red, b, yk, yv, c)), d) ->
+      Node(Red, Node(Black, a, xk, xv, b), yk, yv, Node(Black, c, k, v, d)),
+    (a, Node(Red, b, yk, yv, Node(Red, c, zk, zv, d))) ->
+      Node(Red, Node(Black, a, k, v, b), yk, yv, Node(Black, c, zk, zv, d)),
+    (a, Node(Red, Node(Red, b, yk, yv, c), zk, zv, d)) ->
+      Node(Red, Node(Black, a, k, v, b), yk, yv, Node(Black, c, zk, zv, d)),
+    (a, b) -> Node(Black, a, k, v, b),
+  }
+
+ins(m: OrdMap v, key: I64, value: v): OrdMap v =
+  match m {
+    Leaf -> Node(Red, Leaf, key, value, Leaf),
+    Node(Black, l, k, v, r) ->
+      if key < k { balance(ins(l, key, value), k, v, r) }
+      else if key > k { balance(l, k, v, ins(r, key, value)) }
+      else { Node(Black, l, key, value, r) },
+    Node(Red, l, k, v, r) ->
+      if key < k { Node(Red, ins(l, key, value), k, v, r) }
+      else if key > k { Node(Red, l, k, v, ins(r, key, value)) }
+      else { Node(Red, l, key, value, r) },
+  }
+
+set_black(m: OrdMap v): OrdMap v =
+  match m {
+    Node(_, l, k, v, r) -> Node(Black, l, k, v, r),
+    Leaf -> Leaf,
+  }
+
+// Insert `key -> value`, replacing the value if `key` is present.
+pub insert(m: OrdMap v, key: I64, value: v): OrdMap v =
+  set_black(ins(m, key, value))
+
+// Recolor a black node red (lowers its black height by one).
+sub1(m: OrdMap v): OrdMap v =
+  match m {
+    Node(Black, l, k, v, r) -> Node(Red, l, k, v, r),
+    _ -> panic("OrdMap: red-black invariant violated in sub1\n"),
+  }
+
+// Rebuild a node whose left subtree lost one unit of black height.
+bal_left(l: OrdMap v, k: I64, v: v, r: OrdMap v): OrdMap v =
+  match (l, r) {
+    (Node(Red, a, xk, xv, b), c) ->
+      Node(Red, Node(Black, a, xk, xv, b), k, v, c),
+    (bl, Node(Black, a, yk, yv, b)) ->
+      balance(bl, k, v, Node(Red, a, yk, yv, b)),
+    (bl, Node(Red, Node(Black, a, yk, yv, b), zk, zv, c)) ->
+      Node(Red, Node(Black, bl, k, v, a), yk, yv, balance(b, zk, zv, sub1(c))),
+    _ -> panic("OrdMap: red-black invariant violated in bal_left\n"),
+  }
+
+// Rebuild a node whose right subtree lost one unit of black height.
+bal_right(l: OrdMap v, k: I64, v: v, r: OrdMap v): OrdMap v =
+  match (l, r) {
+    (a, Node(Red, b, yk, yv, c)) ->
+      Node(Red, a, k, v, Node(Black, b, yk, yv, c)),
+    (Node(Black, a, xk, xv, b), bl) ->
+      balance(Node(Red, a, xk, xv, b), k, v, bl),
+    (Node(Red, a, xk, xv, Node(Black, b, yk, yv, c)), bl) ->
+      Node(Red, balance(sub1(a), xk, xv, b), yk, yv, Node(Black, c, k, v, bl)),
+    _ -> panic("OrdMap: red-black invariant violated in bal_right\n"),
+  }
+
+// Merge the two subtrees of a removed node (every key of `l` is below
+// every key of `r`).
+app(l: OrdMap v, r: OrdMap v): OrdMap v =
+  match (l, r) {
+    (Leaf, x) -> x,
+    (x, Leaf) -> x,
+    (Node(Red, a, xk, xv, b), Node(Red, c, yk, yv, d)) ->
+      match app(b, c) {
+        Node(Red, b2, zk, zv, c2) ->
+          Node(Red, Node(Red, a, xk, xv, b2), zk, zv, Node(Red, c2, yk, yv, d)),
+        bc -> Node(Red, a, xk, xv, Node(Red, bc, yk, yv, d)),
+      },
+    (Node(Black, a, xk, xv, b), Node(Black, c, yk, yv, d)) ->
+      match app(b, c) {
+        Node(Red, b2, zk, zv, c2) ->
+          Node(Red, Node(Black, a, xk, xv, b2), zk, zv, Node(Black, c2, yk, yv, d)),
+        bc -> bal_left(a, xk, xv, Node(Black, bc, yk, yv, d)),
+      },
+    (a, Node(Red, b, xk, xv, c)) -> Node(Red, app(a, b), xk, xv, c),
+    (Node(Red, a, xk, xv, b), c) -> Node(Red, a, xk, xv, app(b, c)),
+  }
+
+is_black_node(m: OrdMap v): Bool =
+  match m {
+    Node(Black, _, _, _, _) -> True,
+    _ -> False,
+  }
+
+del(m: OrdMap v, key: I64): OrdMap v =
+  match m {
+    Leaf -> Leaf,
+    Node(_, l, k, v, r) ->
+      if key < k {
+        if is_black_node(l) { bal_left(del(l, key), k, v, r) }
+        else { Node(Red, del(l, key), k, v, r) }
+      } else if key > k {
+        if is_black_node(r) { bal_right(l, k, v, del(r, key)) }
+        else { Node(Red, l, k, v, del(r, key)) }
+      } else {
+        app(l, r)
+      },
+  }
+
+// Remove `key` if present.
+pub remove(m: OrdMap v, key: I64): OrdMap v =
+  set_black(del(m, key))

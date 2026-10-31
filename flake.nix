@@ -34,6 +34,15 @@
       url = "github:reussir-lang/mlir-rcgmp/cc73b218f6ce90b005744c4e94b2b32a0e30c725";
       flake = false;
     };
+
+    # Morphic at the revision morphic/lib was vendored from (the library must
+    # match the compiler). Its compiler builds against LLVM 16, which
+    # nixos-unstable has dropped and nixos-25.05 still carries.
+    morphic = {
+      url = "github:morphic-lang/morphic/da679c49a33655f2562c58d7d8314659b81dea0c";
+      flake = false;
+    };
+    nixpkgs-llvm16.url = "github:NixOS/nixpkgs/nixos-25.05";
   };
 
   outputs =
@@ -46,6 +55,8 @@
       immer,
       mlir-sync,
       mlir-rcgmp,
+      morphic,
+      nixpkgs-llvm16,
       ...
     }:
     flake-utils.lib.eachDefaultSystem (
@@ -54,6 +65,8 @@
         pkgs = nixpkgs.legacyPackages.${system};
         lib = pkgs.lib;
         llvmPkgs = pkgs.llvmPackages_23;
+        # Only for the Morphic compiler, which needs LLVM 16.
+        llvm16Pkgs = nixpkgs-llvm16.legacyPackages.${system}.llvmPackages_16;
 
         rustToolchain = fenix.packages.${system}.fromToolchainFile {
           file = "${reussir}/rust-toolchain.toml";
@@ -400,9 +413,55 @@
           pythonPackages.numpy
           pythonPackages.tqdm
         ]);
+        # The Morphic compiler. LLVM is linked statically into it; at compile
+        # time it drives clang 16 (MORPHIC_CLANG_PATH), and its build script
+        # compiles the runtime and the vendored Boehm GC with clang and CMake.
+        morphicCompiler = pkgs.rustPlatform.buildRustPackage {
+          pname = "morphic";
+          version = "0-git-${builtins.substring 0 12 morphic.rev}";
+          src = morphic;
+          cargoLock = {
+            lockFile = "${morphic}/Cargo.lock";
+            outputHashes = {
+              "inkwell-0.6.0" = "sha256-qtXfrGD9Bt5+hvob5DYsBPcjbUAtGzQD0NcLqsjg5Is=";
+            };
+          };
+          cargoBuildFlags = [ "-p" "morphic_compiler" ];
+          doCheck = false;
+          nativeBuildInputs = [
+            llvm16Pkgs.llvm.dev
+            llvm16Pkgs.clang
+            llvm16Pkgs.lld
+            pkgs.cmake
+          ];
+          buildInputs = [
+            pkgs.libffi
+            pkgs.zlib
+            pkgs.libxml2
+            pkgs.ncurses
+          ];
+          dontUseCmakeConfigure = true;
+          # The build script also compiles Morphic's wasm32 runtime through
+          # the wrapped clang; the wrapper's hardening flags (e.g.
+          # -fzero-call-used-regs) do not exist for that target.
+          hardeningDisable = [ "all" ];
+          LLVM_SYS_160_PREFIX = "${llvm16Pkgs.llvm.dev}";
+          MORPHIC_CLANG_PATH = "${llvm16Pkgs.clang}/bin/clang";
+          MORPHIC_CLANGXX_PATH = "${llvm16Pkgs.clang}/bin/clang++";
+          postInstall = ''
+            ln -s morphic_compiler "$out/bin/morphic"
+          '';
+          meta = {
+            description = "The Morphic compiler";
+            homepage = "https://github.com/morphic-lang/morphic";
+            license = lib.licenses.mit;
+            platforms = lib.platforms.linux;
+          };
+        };
       in
       {
         packages.default = reussirCompiler;
+        packages.morphic = morphicCompiler;
         packages.reussir = reussirCompiler;
         packages.reussir-rt-xlto = reussirRtXlto;
         packages.reussir-rt-rlibs = reussirRtRlibs;
@@ -431,6 +490,7 @@
                 pkgs.hyperfine
                 pkgs.time
                 pkgs.mimalloc
+                morphicCompiler
                 python
               ];
               # GMP, which the big-integer cells link: the rcgmp runtime of
@@ -463,6 +523,8 @@
               BENCHMARK_HYPERFINE = "${pkgs.hyperfine}/bin/hyperfine";
               BENCHMARK_TIME = "${pkgs.time}/bin/time";
               MIMALLOC_LIB = "${pkgs.mimalloc}/lib/libmimalloc.so";
+              BENCHMARK_MORPHIC = "${morphicCompiler}/bin/morphic";
+              MORPHIC_CLANG_PATH = "${llvm16Pkgs.clang}/bin/clang";
 
               shellHook = ''
                 # These are local benchmark executables, and the configured

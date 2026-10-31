@@ -47,6 +47,11 @@ Toolchain configurations
   the plain variant is purely functional.
 - ocaml: ``ocamlopt -O3``; big-integer benchmarks link Zarith through
   ocamlfind (``ocaml-packages``).
+- morphic: ``morphic build --llvm-opt-level 3`` (the backend targets the host
+  CPU) in Morphic's default configuration: borrow-inferred reference
+  counting, copy-on-write arrays, and its runtime's glibc malloc. The sources
+  are the standard FBIP-style formulations, not tuned for Morphic. Morphic
+  has no big integers, so the big-integers set has no Morphic cells.
 
 For matched data-structure workloads, logical payloads have the same explicit
 width in every language: signed 64-bit keys/elements for the red-black trees,
@@ -87,6 +92,7 @@ VARIANTS = {
     "haskell-st": {"kind": "haskell"},
     "haskell-st-a1g": {"kind": "haskell", "rts_opts": "-A1G"},
     "ocaml": {"kind": "ocaml"},
+    "morphic": {"kind": "morphic"},
 }
 
 _FUNCTIONAL = "functional-data-structures"
@@ -137,6 +143,7 @@ BENCHES = {
                 "koka": "koka/rbtree.kk",
                 "rust": "rust/rbtree.rs",
                 "ocaml": "ocaml/rbtree.ml",
+                "morphic": "morphic/rbtree.mor",
             },
             haskell="haskell/rbtree.hs",
         ),
@@ -152,6 +159,7 @@ BENCHES = {
                 "koka": "koka/rbtree-zipper.kk",
                 "rust": "rust/rbtree-zipper.rs",
                 "ocaml": "ocaml/rbtree-zipper.ml",
+                "morphic": "morphic/rbtree-zipper.mor",
             },
             haskell="haskell/rbtree-zipper.hs",
         ),
@@ -166,6 +174,7 @@ BENCHES = {
                 "koka": "koka/nbe-hoas.kk",
                 "rust": "rust/nbe-hoas.rs",
                 "ocaml": "ocaml/nbe-hoas.ml",
+                "morphic": "morphic/nbe-hoas.mor",
             },
             haskell="haskell/nbe-hoas.hs",
         ),
@@ -180,6 +189,7 @@ BENCHES = {
                 "koka": "koka/nbe-closure.kk",
                 "rust": "rust/nbe-closure.rs",
                 "ocaml": "ocaml/nbe-closure.ml",
+                "morphic": "morphic/nbe-closure.mor",
             },
             haskell="haskell/nbe-closure.hs",
         ),
@@ -194,6 +204,7 @@ BENCHES = {
                 "koka": "koka/derive.kk",
                 "rust": "rust/derive.rs",
                 "ocaml": "ocaml/derive.ml",
+                "morphic": "morphic/derive.mor",
             },
             haskell="haskell/derive.hs",
         ),
@@ -208,6 +219,7 @@ BENCHES = {
                 "koka": "koka/life.kk",
                 "rust": "rust/life.rs",
                 "ocaml": "ocaml/life.ml",
+                "morphic": "morphic/life.mor",
             },
             haskell="haskell/life.hs",
             haskell_st="haskell/life_st.hs",
@@ -223,6 +235,7 @@ BENCHES = {
                 "koka": "koka/qsort.kk",
                 "rust": "rust/qsort.rs",
                 "ocaml": "ocaml/qsort.ml",
+                "morphic": "morphic/qsort.mor",
             },
             haskell="haskell/qsort.hs",
             haskell_st="haskell/qsort_st.hs",
@@ -238,6 +251,7 @@ BENCHES = {
                 "koka": "koka/heap-array.kk",
                 "rust": "rust/heap.rs",
                 "ocaml": "ocaml/heap-array.ml",
+                "morphic": "morphic/heap-array.mor",
             },
             haskell_st="haskell/heap_st.hs",
         ),
@@ -252,6 +266,7 @@ BENCHES = {
                 "koka": "koka/heap.kk",
                 "rust": "rust/heap-functional.rs",
                 "ocaml": "ocaml/heap-functional.ml",
+                "morphic": "morphic/heap-functional.mor",
             },
             haskell="haskell/heap.hs",
         ),
@@ -266,6 +281,7 @@ BENCHES = {
                 "koka": "koka/fingertree.kk",
                 "rust": "rust/fingertree.rs",
                 "ocaml": "ocaml/fingertree.ml",
+                "morphic": "morphic/fingertree.mor",
             },
             haskell="haskell/fingertree.hs",
         ),
@@ -308,6 +324,7 @@ BENCHES = {
                 "rust": "rust/ordered-map-linear.rs",
                 "rust-rpds": "rust/ordered-map-linear-rpds.rs",
                 "ocaml": "ocaml/ordered-map-linear.ml",
+                "morphic": "morphic/ordered-map-linear.mor",
             },
             haskell="haskell/ordered-map-linear.hs",
         ),
@@ -330,6 +347,7 @@ BENCHES = {
                 "rust": "rust/ordered-map-shared.rs",
                 "rust-rpds": "rust/ordered-map-shared-rpds.rs",
                 "ocaml": "ocaml/ordered-map-shared.ml",
+                "morphic": "morphic/ordered-map-shared.mor",
             },
             haskell="haskell/ordered-map-shared.hs",
         ),
@@ -352,6 +370,7 @@ BENCHES = {
                 "rust": "rust/ordered-map-heavily-shared.rs",
                 "rust-rpds": "rust/ordered-map-heavily-shared-rpds.rs",
                 "ocaml": "ocaml/ordered-map-heavily-shared.ml",
+                "morphic": "morphic/ordered-map-heavily-shared.mor",
             },
             haskell="haskell/ordered-map-heavily-shared.hs",
         ),
@@ -374,6 +393,7 @@ BENCHES = {
                 "rust": "rust/hash-map-linear.rs",
                 "rust-rpds": "rust/hash-map-linear-rpds.rs",
                 "ocaml": "ocaml/hash-map-linear.ml",
+                "morphic": "morphic/hash-map-linear.mor",
             },
             haskell="haskell/hash-map-linear.hs",
         ),
@@ -396,6 +416,7 @@ BENCHES = {
                 "rust": "rust/hash-map-shared.rs",
                 "rust-rpds": "rust/hash-map-shared-rpds.rs",
                 "ocaml": "ocaml/hash-map-shared.ml",
+                "morphic": "morphic/hash-map-shared.mor",
             },
             haskell="haskell/hash-map-shared.hs",
         ),
@@ -418,6 +439,7 @@ BENCHES = {
                 "rust": "rust/hash-map-heavily-shared.rs",
                 "rust-rpds": "rust/hash-map-heavily-shared-rpds.rs",
                 "ocaml": "ocaml/hash-map-heavily-shared.ml",
+                "morphic": "morphic/hash-map-heavily-shared.mor",
             },
             haskell="haskell/hash-map-heavily-shared.hs",
         ),
@@ -438,6 +460,7 @@ BENCHES = {
                 "koka": "koka/functional-queue.kk",
                 "rust": "rust/functional-queue.rs",
                 "ocaml": "ocaml/functional-queue.ml",
+                "morphic": "morphic/functional-queue.mor",
             },
             haskell="haskell/functional-queue.hs",
         ),

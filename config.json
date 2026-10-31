@@ -12,6 +12,8 @@
     "ghc": "ghc",
     "ocamlopt": "ocamlopt",
     "ocamlfind": "ocamlfind",
+    "morphic-compiler": "morphic",
+    "morphic-clang": "",
     "hyperfine": "hyperfine",
     "time": "time",
     "warmup-runs": 5,

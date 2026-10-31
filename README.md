@@ -1,7 +1,7 @@
 # Reussir benchmark suite
 
 Cross-language benchmarks comparing Reussir against Lean, Koka, Rust,
-Haskell, and OCaml, organized as four sets:
+Haskell, OCaml, and Morphic, organized as four sets:
 
 | Set | Benchmarks | What it exercises |
 |---|---|---|
@@ -105,6 +105,11 @@ intentionally left idiomatic.
   The Reussir cells compile
   against the pinned tree's bundled `core`+`std` packages (built once per
   configuration with the same flags and folded into the same ThinLTO link).
+  Morphic's library has no ordered map, and its only hash map is the sample
+  `samples/lib/hashmap.mor` (separate chaining over copy-on-write arrays,
+  updated in place while the table is uniquely referenced and copied when
+  shared); its cells use that hash map (vendored under `morphic/lib`) and a
+  plain persistent red-black tree written for the suite (`morphic/lib/ordmap.mor`).
 - **functional-queue** — strict Hood–Melville real-time queue with incremental
   `Reversing`/`Appending` rotation states. Build 65536 elements, perform 1M
   dequeue/enqueue rotations, then drain. The operation stream and schedule
@@ -136,6 +141,8 @@ intentionally left idiomatic.
   The last two keep every value word-sized and so measure the small-integer
   path: tagged immediates in Reussir, Lean, Koka, and Zarith, GHC's
   small-`Integer` constructor, and a heap-allocated `BigUint` in Rust.
+  Morphic has no arbitrary-precision integers, so this set has no Morphic
+  cells.
 
 ## Variants and toolchain configurations
 
@@ -157,6 +164,7 @@ prebuilt num-bigint rlibs, and those of `ocaml` link Zarith through
 | `haskell-a1g` | same sources, `-with-rtsopts=-A1G` (1 GiB nursery) |
 | `haskell-st` / `haskell-st-a1g` | mutable `Data.Array.ST` sources, both RTS configs (large-aggregates set only) |
 | `ocaml` | `ocamlopt -O3` |
+| `morphic` | `morphic build --llvm-opt-level 3` (host CPU), default borrow-inferred RC and copy-on-write arrays |
 
 Both Haskell RTS configurations are first-class variants because the
 default-vs-1 GiB-nursery choice swings results dramatically in both
@@ -185,7 +193,9 @@ tree as `REUSSIR_SRC`, from which `compile.py` builds the bundled `core` and
 prebuilt `rpds` and num-bigint crates (`RUST_EXTERN_LIBS`), GHC with the
 Hackage `fingertree` and `unordered-containers` packages, OCaml (and its GCC
 linker) with findlib and Zarith, GMP, hyperfine, GNU time, mimalloc, and the
-Python plotting dependencies.
+Python plotting dependencies, and the Morphic compiler
+(`morphic-lang/morphic` at the revision `morphic/lib` was vendored from),
+built against LLVM 16 from nixos-25.05 since nixos-unstable has dropped it.
 
 ```bash
 direnv allow             # builds once, then reuses the Nix store result
@@ -219,7 +229,7 @@ group per benchmark, one bar per variant. Timing uses hyperfine
 
 Toolchain paths live in `config.json` (`reussir-compiler`, `cc`,
 `reussir-libs`, `koka-compiler`, `lean-compiler`/`leanc`, `rustc`, `ghc`,
-`ocamlopt`, `hyperfine`). The flake exports absolute overrides for all of
+`ocamlopt`, `morphic-compiler`/`morphic-clang`, `hyperfine`). The flake exports absolute overrides for all of
 these, so no manual path editing is needed inside `nix develop`/direnv.
 
 ## Extending
