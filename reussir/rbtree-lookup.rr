@@ -1,0 +1,170 @@
+// rbtree-lookup: insert 1M scattered keys into a red-black tree (rbtree's
+// recursive balance) and after every insert look up 8 keys in the current
+// tree, which stays live for the next insert. The inserts own the tree and
+// can update it in place; the lookups only read it.
+
+enum [value] Color {
+    Red,
+    Black
+}
+
+enum Tree {
+    Branch(Color, Tree, i64, bool, Tree),
+    Leaf
+}
+
+fn is_red(t: Tree) -> bool {
+    match t {
+        Tree::Branch(Color::Red, _, _, _, _) => true,
+        _ => false
+    }
+}
+
+fn balance_left(l: Tree, k: i64, v: bool, r: Tree) -> Tree {
+    match l {
+        Tree::Branch(_, Tree::Branch(Color::Red, lx, kx, vx, rx), ky, vy, ry) =>
+            Tree::Branch{
+                Color::Red,
+                Tree::Branch{Color::Black, lx, kx, vx, rx},
+                ky,
+                vy,
+                Tree::Branch{Color::Black, ry, k, v, r}
+            },
+
+        Tree::Branch(_, ly, ky, vy, Tree::Branch(Color::Red, lx, kx, vx, rx)) =>
+            Tree::Branch{
+                Color::Red,
+                Tree::Branch{Color::Black, ly, ky, vy, lx},
+                kx,
+                vx,
+                Tree::Branch{Color::Black, rx, k, v, r}
+            },
+
+        Tree::Branch(_, lx, kx, vx, rx) =>
+            Tree::Branch{
+                Color::Black,
+                Tree::Branch{Color::Red, lx, kx, vx, rx},
+                k,
+                v,
+                r
+            },
+
+        Tree::Leaf => Tree::Leaf
+    }
+}
+
+fn balance_right(l: Tree, k: i64, v: bool, r: Tree) -> Tree {
+    match r {
+        Tree::Branch(_, Tree::Branch(Color::Red, lx, kx, vx, rx), ky, vy, ry) =>
+            Tree::Branch{
+                Color::Red,
+                Tree::Branch{Color::Black, l, k, v, lx},
+                kx,
+                vx,
+                Tree::Branch{Color::Black, rx, ky, vy, ry}
+            },
+
+        Tree::Branch(_, lx, kx, vx, Tree::Branch(Color::Red, ly, ky, vy, ry)) =>
+            Tree::Branch{
+                Color::Red,
+                Tree::Branch{Color::Black, l, k, v, lx},
+                kx,
+                vx,
+                Tree::Branch{Color::Black, ly, ky, vy, ry}
+            },
+
+        Tree::Branch(_, lx, kx, vx, rx) =>
+            Tree::Branch{
+                Color::Black,
+                l,
+                k,
+                v,
+                Tree::Branch{Color::Red, lx, kx, vx, rx}
+            },
+
+        Tree::Leaf => Tree::Leaf
+    }
+}
+
+fn ins(t: Tree, k: i64, v: bool) -> Tree {
+    match t {
+        Tree::Branch(Color::Red, l, kx, vx, r) =>
+            if k < kx {
+                Tree::Branch{Color::Red, ins(l, k, v), kx, vx, r}
+            } else {
+                if k > kx {
+                    Tree::Branch{Color::Red, l, kx, vx, ins(r, k, v)}
+                } else {
+                    Tree::Branch{Color::Red, l, k, v, r}
+                }
+            },
+
+        Tree::Branch(Color::Black, l, kx, vx, r) =>
+            if k < kx {
+                if is_red(l) {
+                    balance_left(ins(l, k, v), kx, vx, r)
+                } else {
+                    Tree::Branch{Color::Black, ins(l, k, v), kx, vx, r}
+                }
+            } else {
+                if k > kx {
+                    if is_red(r) {
+                        balance_right(l, kx, vx, ins(r, k, v))
+                    } else {
+                        Tree::Branch{Color::Black, l, kx, vx, ins(r, k, v)}
+                    }
+                } else {
+                    Tree::Branch{Color::Black, l, k, v, r}
+                }
+            },
+
+        Tree::Leaf => Tree::Branch{Color::Red, Tree::Leaf, k, v, Tree::Leaf}
+    }
+}
+
+fn set_black(t: Tree) -> Tree {
+    match t {
+        Tree::Branch(_, l, k, v, r) => Tree::Branch{Color::Black, l, k, v, r},
+        Tree::Leaf => Tree::Leaf
+    }
+}
+
+fn insert(t: Tree, k: i64, v: bool) -> Tree {
+    set_black(ins(t, k, v))
+}
+
+fn get(t: Tree, k: i64) -> bool {
+    match t {
+        Tree::Branch(_, l, kx, _, r) =>
+            if k < kx { get(l, k) } else { if k > kx { get(r, k) } else { true } },
+        Tree::Leaf => false
+    }
+}
+
+fn probe(j: i64, i: i64, t: Tree, hits: i64) -> i64 {
+    if j == 0 {
+        hits
+    } else {
+        if get(t, (i * 31 + j * 7919) % 2000000) {
+            probe(j - 1, i, t, hits + 1)
+        } else {
+            probe(j - 1, i, t, hits)
+        }
+    }
+}
+
+fn rounds(i: i64, n: i64, t: Tree, hits: i64) -> i64 {
+    if i == n {
+        hits
+    } else {
+        let t2 = insert(t, (i * 7919) % n, true);
+        let h = probe(8, i, t2, hits);
+        rounds(i + 1, n, t2, h)
+    }
+}
+
+fn lookup_test(n: i64) -> i64 {
+    rounds(0, n, Tree::Leaf, 0)
+}
+
+extern "C" trampoline "lookup_test_ffi" = lookup_test;

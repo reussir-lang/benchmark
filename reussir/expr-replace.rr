@@ -1,0 +1,88 @@
+// expr-replace: substitution that keeps every unchanged subterm, the shape of
+// Lean's Expr.replace. The term is a balanced sum of 256 summands
+// Var(i % 16) * P that all share one polynomial P of 4096 literals. Each of
+// 100 rounds substitutes one variable of the same retained term. A subterm
+// is rebuilt only where the variable occurs, which an occurs check decides
+// first (Lean caches that answer in each Expr; here it is recomputed). The
+// check reads all of P at every summand it reaches, and P is shared, so the
+// work is a read-only traversal of shared data.
+
+enum Expr {
+    Lit(i64),
+    Var(i64),
+    Add(Expr, Expr),
+    Mul(Expr, Expr)
+}
+
+fn poly(d: i64, s: i64) -> Expr {
+    if d == 0 {
+        Expr::Lit{s % 7 + 1}
+    } else {
+        let l = poly(d - 1, 2 * s);
+        let r = poly(d - 1, 2 * s + 1);
+        if d % 2 == 1 { Expr::Add{l, r} } else { Expr::Mul{l, r} }
+    }
+}
+
+// Summands lo .. hi-1 as a balanced sum.
+fn sum(lo: i64, hi: i64, p: Expr) -> Expr {
+    if hi - lo == 1 {
+        Expr::Mul{Expr::Var{lo % 16}, p}
+    } else {
+        let mid = (lo + hi) / 2;
+        Expr::Add{sum(lo, mid, p), sum(mid, hi, p)}
+    }
+}
+
+fn occurs(v: i64, e: Expr) -> bool {
+    match e {
+        Expr::Lit(_) => false,
+        Expr::Var(x) => x == v,
+        Expr::Add(a, b) => if occurs(v, a) { true } else { occurs(v, b) },
+        Expr::Mul(a, b) => if occurs(v, a) { true } else { occurs(v, b) }
+    }
+}
+
+fn replace(v: i64, c: i64, e: Expr) -> Expr {
+    if occurs(v, e) {
+        match e {
+            Expr::Var(_) => Expr::Lit{c},
+            Expr::Add(a, b) => Expr::Add{replace(v, c, a), replace(v, c, b)},
+            Expr::Mul(a, b) => Expr::Mul{replace(v, c, a), replace(v, c, b)},
+            Expr::Lit(_) => e
+        }
+    } else {
+        e
+    }
+}
+
+fn leaf(x: Expr) -> i64 {
+    match x {
+        Expr::Lit(c) => c,
+        Expr::Var(y) => y,
+        _ => 0
+    }
+}
+
+// Sum of the summands' factors (never enters the polynomial).
+fn factors(e: Expr) -> i64 {
+    match e {
+        Expr::Add(a, b) => factors(a) + factors(b),
+        Expr::Mul(x, _) => leaf(x),
+        _ => 0
+    }
+}
+
+fn rounds(k: i64, n: i64, base: Expr, acc: i64) -> i64 {
+    if k == n {
+        acc
+    } else {
+        rounds(k + 1, n, base, acc + factors(replace(k % 16, k, base)))
+    }
+}
+
+fn replace_test(depth: i64, summands: i64, n: i64) -> i64 {
+    rounds(0, n, sum(0, summands, poly(depth, 1)), 0)
+}
+
+extern "C" trampoline "replace_test_ffi" = replace_test;
