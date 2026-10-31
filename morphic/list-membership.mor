@@ -1,0 +1,41 @@
+// list-membership: 40000 membership queries against one 10000-element list
+// that the caller keeps between queries (reussir-lang/reussir#762). Every
+// query only reads the list; half of them miss and walk all of it.
+
+module Core = file "lib/core/core.mor"
+  expose {
+    module Io expose { writeln },
+    module String expose { i64_to_string, concat },
+  }
+
+rem(a: I64, b: I64): I64 = a - b * (a / b)
+
+type List {
+  Nil,
+  Cons(I64, List),
+}
+
+mem(x: I64, xs: List): Bool =
+  match xs {
+    Nil -> False,
+    Cons(y, ys) -> if x = y { True } else { mem(x, ys) },
+  }
+
+// [1 .. n]
+build(n: I64, acc: List): List =
+  if n = 0 { acc } else { build(n - 1, Cons(n, acc)) }
+
+search(q: I64, n: I64, xs: List, hits: I64): I64 =
+  if q = 0 { hits } else {
+    let x = rem(q * 7919, 2 * n) + 1 in
+    search(q - 1, n, xs, if mem(x, xs) { hits + 1 } else { hits })
+  }
+
+proc main(): () =
+  let hits = search(40000, 10000, build(10000, Nil), 0) in
+  if hits = 20000 {
+    ()
+  } else {
+    do writeln(concat("FAIL: expected 20000, got ", i64_to_string(hits))) then
+    panic("wrong result\n")
+  }

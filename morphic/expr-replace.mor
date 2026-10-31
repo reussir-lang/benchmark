@@ -1,0 +1,84 @@
+// expr-replace: substitution that keeps every unchanged subterm, the shape of
+// Lean's Expr.replace. The term is a balanced sum of 256 summands
+// Var(i % 16) * P that all share one polynomial P of 4096 literals. Each of
+// 100 rounds substitutes one variable of the same retained term. A subterm
+// is rebuilt only where the variable occurs, which an occurs check decides
+// first (Lean caches that answer in each Expr; here it is recomputed). The
+// check reads all of P at every summand it reaches, and P is shared.
+
+module Core = file "lib/core/core.mor"
+  expose {
+    module Io expose { writeln },
+    module String expose { i64_to_string, concat },
+  }
+
+rem(a: I64, b: I64): I64 = a - b * (a / b)
+
+type Expr {
+  Lit(I64),
+  Var(I64),
+  Add(Expr, Expr),
+  Mul(Expr, Expr),
+}
+
+poly(d: I64, s: I64): Expr =
+  if d = 0 { Lit(rem(s, 7) + 1) } else {
+    let l = poly(d - 1, 2 * s) in
+    let r = poly(d - 1, 2 * s + 1) in
+    if rem(d, 2) = 1 { Add(l, r) } else { Mul(l, r) }
+  }
+
+// Summands lo .. hi-1 as a balanced sum.
+sum(lo: I64, hi: I64, p: Expr): Expr =
+  if hi - lo = 1 { Mul(Var(rem(lo, 16)), p) } else {
+    let mid = (lo + hi) / 2 in
+    Add(sum(lo, mid, p), sum(mid, hi, p))
+  }
+
+occurs(v: I64, e: Expr): Bool =
+  match e {
+    Lit(_) -> False,
+    Var(x) -> x = v,
+    Add(a, b) -> occurs(v, a) || occurs(v, b),
+    Mul(a, b) -> occurs(v, a) || occurs(v, b),
+  }
+
+replace(v: I64, c: I64, e: Expr): Expr =
+  if occurs(v, e) {
+    match e {
+      Var(_) -> Lit(c),
+      Add(a, b) -> Add(replace(v, c, a), replace(v, c, b)),
+      Mul(a, b) -> Mul(replace(v, c, a), replace(v, c, b)),
+      Lit(_) -> e,
+    }
+  } else { e }
+
+leaf(x: Expr): I64 =
+  match x {
+    Lit(c) -> c,
+    Var(y) -> y,
+    _ -> 0,
+  }
+
+// Sum of the summands' factors (never enters the polynomial).
+factors(e: Expr): I64 =
+  match e {
+    Add(a, b) -> factors(a) + factors(b),
+    Mul(x, _) -> leaf(x),
+    _ -> 0,
+  }
+
+rounds(k: I64, n: I64, base: Expr, acc: I64): I64 =
+  if k = n { acc } else {
+    rounds(k + 1, n, base, acc + factors(replace(rem(k, 16), k, base)))
+  }
+
+proc main(): () =
+  let base = sum(0, 256, poly(12, 1)) in
+  let r = rounds(0, 100, base, 0) in
+  if r = 259584 {
+    ()
+  } else {
+    do writeln(concat("FAIL: expected 259584, got ", i64_to_string(r))) then
+    panic("wrong result\n")
+  }

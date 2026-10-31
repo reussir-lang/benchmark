@@ -1,6 +1,6 @@
 """Benchmark registry: sets, language variants, and benchmark sources.
 
-The suite is organized as four benchmark sets:
+The suite is organized as five benchmark sets:
 
 - ``functional-data-structures``: constructor-based workloads (trees, terms,
   symbolic expressions, finger trees, and real-time queues) that exercise
@@ -10,6 +10,10 @@ The suite is organized as four benchmark sets:
 - ``std-collections``: each language's standard ordered and hash maps.
 - ``big-integers``: each language's arbitrary-precision integers, on
   heap-sized values and on values that stay word-sized.
+- ``shared-traversals``: read-only traversals of data the caller keeps
+  (list membership, substitution that keeps unchanged nodes, lookups between
+  inserts), where reference-counted runtimes either borrow or pay a count
+  update per visited node.
 
 Extending the suite
 ===================
@@ -67,6 +71,7 @@ SETS = {
     "large-aggregates": "Large aggregates",
     "std-collections": "Standard-library collections",
     "big-integers": "Arbitrary-precision integers",
+    "shared-traversals": "Traversals of shared data",
 }
 
 VARIANTS = {
@@ -99,6 +104,7 @@ _FUNCTIONAL = "functional-data-structures"
 _AGGREGATES = "large-aggregates"
 _STD = "std-collections"
 _BIGINT = "big-integers"
+_SHARED = "shared-traversals"
 
 
 # What every big-integer benchmark needs from each toolchain: Reussir's
@@ -463,6 +469,57 @@ BENCHES = {
                 "morphic": "morphic/functional-queue.mor",
             },
             haskell="haskell/functional-queue.hs",
+        ),
+    },
+    # Traversals of shared data: the caller keeps what is traversed, so a
+    # reference-counted runtime that cannot borrow updates a count per
+    # visited node. list-membership is reussir-lang/reussir#762's repro;
+    # expr-replace is the Expr.replace-style substitution lean2reussir
+    # measures at about 1.5x native Lean; rbtree-lookup mixes owned,
+    # in-place inserts with lookups into the live tree.
+    "list-membership": {
+        "set": _SHARED,
+        "sources": _sources(
+            {
+                "lean": "lean/list-membership.lean",
+                "reussir": ("reussir/list-membership.rr", "reussir/list-membership.rr.c"),
+                "reussir-nrac": ("reussir/list-membership.rr", "reussir/list-membership.rr.c"),
+                "koka": "koka/list-membership.kk",
+                "rust": "rust/list-membership.rs",
+                "ocaml": "ocaml/list-membership.ml",
+                "morphic": "morphic/list-membership.mor",
+            },
+            haskell="haskell/list-membership.hs",
+        ),
+    },
+    "expr-replace": {
+        "set": _SHARED,
+        "sources": _sources(
+            {
+                "lean": "lean/expr-replace.lean",
+                "reussir": ("reussir/expr-replace.rr", "reussir/expr-replace.rr.c"),
+                "reussir-nrac": ("reussir/expr-replace.rr", "reussir/expr-replace.rr.c"),
+                "koka": "koka/expr-replace.kk",
+                "rust": "rust/expr-replace.rs",
+                "ocaml": "ocaml/expr-replace.ml",
+                "morphic": "morphic/expr-replace.mor",
+            },
+            haskell="haskell/expr-replace.hs",
+        ),
+    },
+    "rbtree-lookup": {
+        "set": _SHARED,
+        "sources": _sources(
+            {
+                "lean": "lean/rbtree-lookup.lean",
+                "reussir": ("reussir/rbtree-lookup.rr", "reussir/rbtree-lookup.rr.c"),
+                "reussir-nrac": ("reussir/rbtree-lookup.rr", "reussir/rbtree-lookup.rr.c"),
+                "koka": "koka/rbtree-lookup.kk",
+                "rust": "rust/rbtree-lookup.rs",
+                "ocaml": "ocaml/rbtree-lookup.ml",
+                "morphic": "morphic/rbtree-lookup.mor",
+            },
+            haskell="haskell/rbtree-lookup.hs",
         ),
     },
     # Arbitrary-precision integer benchmarks: each language's built-in or

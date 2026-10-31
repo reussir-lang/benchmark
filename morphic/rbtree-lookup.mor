@@ -1,0 +1,104 @@
+// rbtree-lookup: rbtree's tree code with lookups. Insert 1M scattered keys
+// and after every insert look up 8 keys in the current tree, which stays
+// live for the next insert. The inserts own the tree; the lookups only read
+// it.
+
+module Core = file "lib/core/core.mor"
+  expose {
+    module Io expose { writeln },
+    module String expose { i64_to_string, concat },
+  }
+
+type Color {
+  Red,
+  Black,
+}
+
+type Tree {
+  Leaf,
+  Node(Color, Tree, I64, Bool, Tree),
+}
+
+is_red(t: Tree): Bool =
+  match t {
+    Node(Red, _, _, _, _) -> True,
+    _ -> False,
+  }
+
+balance_left(l: Tree, k: I64, v: Bool, r: Tree): Tree =
+  match l {
+    Node(_, Node(Red, lx, kx, vx, rx), ky, vy, ry) ->
+      Node(Red, Node(Black, lx, kx, vx, rx), ky, vy, Node(Black, ry, k, v, r)),
+    Node(_, ly, ky, vy, Node(Red, lx, kx, vx, rx)) ->
+      Node(Red, Node(Black, ly, ky, vy, lx), kx, vx, Node(Black, rx, k, v, r)),
+    Node(_, lx, kx, vx, rx) ->
+      Node(Black, Node(Red, lx, kx, vx, rx), k, v, r),
+    Leaf -> Leaf,
+  }
+
+balance_right(l: Tree, k: I64, v: Bool, r: Tree): Tree =
+  match r {
+    Node(_, Node(Red, lx, kx, vx, rx), ky, vy, ry) ->
+      Node(Red, Node(Black, l, k, v, lx), kx, vx, Node(Black, rx, ky, vy, ry)),
+    Node(_, lx, kx, vx, Node(Red, ly, ky, vy, ry)) ->
+      Node(Red, Node(Black, l, k, v, lx), kx, vx, Node(Black, ly, ky, vy, ry)),
+    Node(_, lx, kx, vx, rx) ->
+      Node(Black, l, k, v, Node(Red, lx, kx, vx, rx)),
+    Leaf -> Leaf,
+  }
+
+ins(t: Tree, k: I64, v: Bool): Tree =
+  match t {
+    Node(Red, l, kx, vx, r) ->
+      if k < kx { Node(Red, ins(l, k, v), kx, vx, r) }
+      else if k > kx { Node(Red, l, kx, vx, ins(r, k, v)) }
+      else { Node(Red, l, k, v, r) },
+    Node(Black, l, kx, vx, r) ->
+      if k < kx {
+        if is_red(l) { balance_left(ins(l, k, v), kx, vx, r) }
+        else { Node(Black, ins(l, k, v), kx, vx, r) }
+      } else if k > kx {
+        if is_red(r) { balance_right(l, kx, vx, ins(r, k, v)) }
+        else { Node(Black, l, kx, vx, ins(r, k, v)) }
+      } else { Node(Black, l, k, v, r) },
+    Leaf -> Node(Red, Leaf, k, v, Leaf),
+  }
+
+set_black(t: Tree): Tree =
+  match t {
+    Node(_, l, k, v, r) -> Node(Black, l, k, v, r),
+    _ -> t,
+  }
+
+insert(t: Tree, k: I64, v: Bool): Tree = set_black(ins(t, k, v))
+
+rem(a: I64, b: I64): I64 = a - b * (a / b)
+
+get(t: Tree, k: I64): Bool =
+  match t {
+    Node(_, l, kx, _, r) ->
+      if k < kx { get(l, k) } else if k > kx { get(r, k) } else { True },
+    Leaf -> False,
+  }
+
+probe(j: I64, i: I64, t: Tree, hits: I64): I64 =
+  if j = 0 { hits } else {
+    let k = rem(i * 31 + j * 7919, 2000000) in
+    probe(j - 1, i, t, if get(t, k) { hits + 1 } else { hits })
+  }
+
+rounds(i: I64, n: I64, t: Tree, hits: I64): I64 =
+  if i = n { hits } else {
+    let t2 = insert(t, rem(i * 7919, n), True) in
+    let h = probe(8, i, t2, hits) in
+    rounds(i + 1, n, t2, h)
+  }
+
+proc main(): () =
+  let hits = rounds(0, 1000000, Leaf, 0) in
+  if hits = 2059798 {
+    ()
+  } else {
+    do writeln(concat("FAIL: expected 2059798, got ", i64_to_string(hits))) then
+    panic("wrong result\n")
+  }

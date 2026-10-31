@@ -1,7 +1,7 @@
 # Reussir benchmark suite
 
 Cross-language benchmarks comparing Reussir against Lean, Koka, Rust,
-Haskell, OCaml, and Morphic, organized as four sets:
+Haskell, OCaml, and Morphic, organized as five sets:
 
 | Set | Benchmarks | What it exercises |
 |---|---|---|
@@ -9,6 +9,7 @@ Haskell, OCaml, and Morphic, organized as four sets:
 | `large-aggregates` | life, qsort, heap-array, heap-functional | flat arrays plus matched array/tree heap workloads |
 | `std-collections` | ordered-map-linear, ordered-map-shared, ordered-map-heavily-shared, hash-map-linear, hash-map-shared, hash-map-heavily-shared | each language's standard ordered map and hash map under matched insert/remove/lookup workloads at three retention tiers: none, sparse, and heavy |
 | `big-integers` | bigint-fib, bigint-factorial, bigint-pidigits, bigint-binomial, bigint-rbtree, bigint-collatz | each language's arbitrary-precision integers on heap-sized values (sums, products and quotients by a word, spigot arithmetic) and on values that stay word-sized |
+| `shared-traversals` | list-membership, expr-replace, rbtree-lookup | read-only traversals of data the caller keeps: what borrowed parameters save a reference-counted runtime |
 
 Workloads use a roughly quarter-scale work factor while retaining the data
 shape each benchmark is intended to exercise. Every program hard-codes its
@@ -143,6 +144,34 @@ intentionally left idiomatic.
   small-`Integer` constructor, and a heap-allocated `BigUint` in Rust.
   Morphic has no arbitrary-precision integers, so this set has no Morphic
   cells.
+- **shared traversals** — traversals that only read data the caller keeps
+  afterwards. A reference-counted runtime that can borrow the traversed
+  structure (Lean's inferred borrowed parameters, Morphic's borrow-inferred
+  RC, Rust's `&`) only reads it. One that cannot updates a count on every
+  visited node, and those counts are written into shared, often cold, cache
+  lines. The cases come from lean2reussir's measurements of what Reussir's
+  missing borrowed parameters cost (reussir-lang/reussir#762).
+  - **list-membership** — #762's repro at scale: 40000 membership queries
+    against one list of 10000 integers that stays live between queries (half
+    of the queries miss and walk the whole list).
+  - **expr-replace** — the `Expr.replace` shape: substitution that returns
+    every unchanged subterm itself. The term is a balanced sum of 256
+    summands `Var(i % 16) * P` that all share one polynomial `P` of 4096
+    literals, and each of 100 rounds substitutes one variable of the same
+    retained term. A subterm is rebuilt only where the variable occurs,
+    which an occurs check decides first; Lean caches that answer in each
+    `Expr`, here it is recomputed, so the check reads all of `P` at every
+    summand. Native Lean borrows the check's argument (no count updates). In
+    the formulation that returns `Option` and keeps unchanged children, Lean
+    instead takes the argument owned to reuse its cell, which is why the
+    occurs-check form is used.
+  - **rbtree-lookup** — rbtree's tree with 1M scattered inserts, each
+    followed by 8 lookups in the current tree, which stays live for the next
+    insert. The inserts own the tree and can update it in place, while the
+    lookups only read it. A compiler that borrows must keep the inserts'
+    in-place reuse.
+  Every port uses the same algorithm and checksums (20000 hits, 259584, and
+  2059798 hits).
 
 ## Variants and toolchain configurations
 
