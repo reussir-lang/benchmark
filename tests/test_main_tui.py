@@ -30,6 +30,17 @@ class MainTuiIntegrationTests(unittest.TestCase):
         self.assertIn("\x1b[?1049h", output)
         self.assertIn("\x1b[?1049l", output)
 
+    def test_budget_exhaustion_keeps_the_suite_running(self):
+        targets = [("derive", "reussir"), ("life", "reussir")]
+        exhausted = {"results": [], "sample_count": 0, "budget_limited": True}
+        samples = [exhausted, payload(0.1, 1024)]
+        with patch("main.run_benchmark", side_effect=samples) as benchmark:
+            with redirect_stderr(io.StringIO()):
+                results = run_targets(targets, tui_choice=True)
+        self.assertEqual(benchmark.call_count, 2)
+        self.assertEqual(results["derive"]["reussir"], exhausted)
+        self.assertEqual(results["life"]["reussir"], samples[1])
+
 
 if __name__ == "__main__":
     unittest.main()
