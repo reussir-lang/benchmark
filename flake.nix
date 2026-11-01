@@ -122,7 +122,7 @@
 
         reussirCargoDeps = pkgs.rustPlatform.fetchCargoVendor {
           src = reussir;
-          hash = "sha256-GiUnaUZD3x3Ifx6hGrBTOj9dWjRbRpAhn9R4HMSmkvM=";
+          hash = "sha256-spyTVWZueuLIJaK0x0Y26ivrEK5rZ+nnryXtyNfzQ3s=";
         };
 
         reussirCompiler = llvmPkgs.stdenv.mkDerivation {

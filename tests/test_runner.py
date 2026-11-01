@@ -59,6 +59,7 @@ class MeasurementBudgetTests(unittest.TestCase):
         self.assertEqual(commands, [])
         self.assertTrue(result["budget_limited"])
         self.assertEqual(result["timing_source"], "gnu-time")
+        self.assertEqual(result["warmup_runs"], 0)
         self.assertEqual(result["sample_count"], 1)
         self.assertEqual(result["results"][0]["mean"], 200)
         self.assertIsNone(result["results"][0]["stddev"])

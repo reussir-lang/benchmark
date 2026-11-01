@@ -131,6 +131,7 @@ def measure_executable(executable, env=None):
         # A completed long RSS run still provides a GNU time timing point.
         samples = [rss_sample]
         timing_source = "gnu-time"
+        warmups -= 1
     result = {
         "results": [],
         "timing_source": timing_source if samples else None,
