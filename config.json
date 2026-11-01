@@ -16,6 +16,7 @@
     "morphic-clang": "",
     "hyperfine": "hyperfine",
     "time": "time",
+    "case-time-budget-seconds": 300,
     "warmup-runs": 5,
     "runs": 10,
     "rust-runtime-env": [

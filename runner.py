@@ -1,8 +1,11 @@
 import json
 import os
 import resource
+import signal
+import statistics
 import subprocess
 import tempfile
+import time
 import compile
 
 from config import CONFIG
@@ -25,43 +28,123 @@ def _runtime_env(bench_variant):
     return env
 
 
-def _measure_peak_rss_kb(executable, env=None):
+def _run_until(command, deadline, env):
+    remaining = deadline - time.monotonic()
+    if remaining <= 0:
+        raise subprocess.TimeoutExpired(command, 0)
+    with subprocess.Popen(
+        command,
+        stdout=subprocess.DEVNULL,
+        stderr=subprocess.PIPE,
+        text=True,
+        preexec_fn=_unlimit_stack,
+        start_new_session=True,
+        env=env,
+    ) as process:
+        try:
+            _, stderr = process.communicate(timeout=remaining)
+        except subprocess.TimeoutExpired:
+            # hyperfine and GNU time launch children; stop the whole sample.
+            os.killpg(process.pid, signal.SIGKILL)
+            process.communicate()
+            raise
+        if process.returncode:
+            raise subprocess.CalledProcessError(process.returncode, command, stderr=stderr)
+
+
+def _measure_peak_rss_kb(executable, deadline, env):
     time_binary = CONFIG.get("time", "/usr/bin/time")
     if not os.path.isabs(time_binary):
         import shutil
 
         time_binary = shutil.which(time_binary)
     if not time_binary or not os.path.exists(time_binary):
+        _run_until([executable], deadline, env)
         return None
 
-    rss_file = tempfile.NamedTemporaryFile(
-        mode="w",
-        suffix=".rss",
-        delete=False,
-    )
-    rss_path = rss_file.name
-    rss_file.close()
-
-    try:
-        subprocess.run(
-            [time_binary, "-f", "%M", "-o", rss_path, executable],
-            check=True,
-            stdout=subprocess.DEVNULL,
-            stderr=subprocess.DEVNULL,
-            text=True,
-            preexec_fn=_unlimit_stack,
-            env=env,
+    with tempfile.TemporaryDirectory() as tmpdir:
+        rss_path = os.path.join(tmpdir, "peak.rss")
+        _run_until(
+            [time_binary, "-f", "%M", "-o", rss_path, executable], deadline, env
         )
-        with open(rss_path, "r", encoding="utf-8") as f:
-            rss_text = f.read().strip()
-        if not rss_text:
-            return None
-        return int(rss_text.splitlines()[0])
-    except (subprocess.SubprocessError, OSError, ValueError, IndexError):
-        return None
-    finally:
-        if os.path.exists(rss_path):
-            os.remove(rss_path)
+        with open(rss_path, "r", encoding="utf-8") as stream:
+            return int(stream.read().strip().splitlines()[0])
+
+
+def measure_executable(executable, env=None):
+    """Measure completed samples within one budget, including warmups and RSS."""
+    budget = float(CONFIG.get("case-time-budget-seconds", 300))
+    if budget <= 0:
+        raise ValueError("case-time-budget-seconds must be positive")
+    requested = int(CONFIG["runs"])
+    if requested <= 0:
+        raise ValueError("runs must be positive")
+    started = time.monotonic()
+    deadline = started + budget
+    samples = []
+    peak_rss_kb = None
+    warmups = 0
+    limited = False
+    try:
+        peak_rss_kb = _measure_peak_rss_kb(executable, deadline, env)
+        estimate = time.monotonic() - started
+        # The RSS run also warms the program. Reserve room for timing points
+        # before spending the remaining budget on additional warmups.
+        warmups = 1
+        desired_warmups = max(0, int(CONFIG["warmup-runs"]) - 1)
+        for _ in range(desired_warmups):
+            if deadline - time.monotonic() < estimate * (min(2, requested) + 1):
+                break
+            before = time.monotonic()
+            _run_until([executable], deadline, env)
+            estimate = max(estimate, time.monotonic() - before)
+            warmups += 1
+
+        with tempfile.TemporaryDirectory() as tmpdir:
+            json_path = os.path.join(tmpdir, "sample.json")
+            for _ in range(requested):
+                if deadline - time.monotonic() < estimate:
+                    limited = True
+                    break
+                before = time.monotonic()
+                _run_until(
+                    [CONFIG["hyperfine"], "--warmup", "0", "--runs", "1",
+                     "--export-json", json_path, executable],
+                    deadline,
+                    env,
+                )
+                with open(json_path, "r", encoding="utf-8") as stream:
+                    samples.append(json.load(stream)["results"][0])
+                estimate = max(estimate, time.monotonic() - before)
+    except subprocess.TimeoutExpired:
+        limited = True
+
+    result = {
+        "results": [],
+        "sample_count": len(samples),
+        "requested_samples": requested,
+        "warmup_runs": warmups,
+        "case_time_budget_seconds": budget,
+        "measurement_seconds": time.monotonic() - started,
+        "budget_limited": limited,
+    }
+    if peak_rss_kb is not None:
+        result["peak_rss_kb"] = peak_rss_kb
+    if samples:
+        times = [duration for sample in samples for duration in sample["times"]]
+        result["results"] = [{
+            "command": executable,
+            "mean": statistics.fmean(times),
+            "stddev": statistics.stdev(times) if len(times) > 1 else None,
+            "median": statistics.median(times),
+            "user": statistics.fmean(sample["user"] for sample in samples),
+            "system": statistics.fmean(sample["system"] for sample in samples),
+            "min": min(times),
+            "max": max(times),
+            "times": times,
+            "exit_codes": [code for sample in samples for code in sample["exit_codes"]],
+        }]
+    return result
 
 
 def run_benchmark(bench_name, bench_variant):
@@ -91,45 +174,10 @@ def run_benchmark(bench_name, bench_variant):
 
         compile.compile_cell(bench, spec, bench_info, executable, resolve)
 
-        json_file = tempfile.NamedTemporaryFile(
-            mode="w",
-            suffix=".json",
-            delete=False,
-        )
-        json_path = json_file.name
-        json_file.close()
         try:
-            hyperfine_cmd = [
-                CONFIG["hyperfine"],
-                "--warmup",
-                str(CONFIG["warmup-runs"]),
-                "--runs",
-                str(CONFIG["runs"]),
-                "--export-json",
-                json_path,
-                executable,
-            ]
-            try:
-                subprocess.run(
-                    hyperfine_cmd,
-                    check=True,
-                    stdout=subprocess.DEVNULL,
-                    stderr=subprocess.PIPE,
-                    text=True,
-                    preexec_fn=_unlimit_stack,
-                    env=runtime_env,
-                )
-            except subprocess.CalledProcessError as e:
-                error_details = e.stderr.strip() if e.stderr else "no error output"
-                raise RuntimeError(
-                    f"hyperfine failed for {bench_name}/{bench_variant}: {error_details}"
-                ) from e
-            with open(json_path, "r", encoding="utf-8") as f:
-                result = json.load(f)
-            peak_rss_kb = _measure_peak_rss_kb(executable, env=runtime_env)
-            if peak_rss_kb is not None:
-                result["peak_rss_kb"] = peak_rss_kb
-            return result
-        finally:
-            if os.path.exists(json_path):
-                os.remove(json_path)
+            return measure_executable(executable, runtime_env)
+        except subprocess.CalledProcessError as error:
+            details = error.stderr.strip() if error.stderr else "no error output"
+            raise RuntimeError(
+                f"benchmark failed for {bench_name}/{bench_variant}: {details}"
+            ) from error

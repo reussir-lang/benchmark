@@ -23,6 +23,13 @@ in every port (`i64`, `Int64`, or `int64`). Loop indices and representation
 metadata may use each language's native index type, and object layouts are
 intentionally left idiomatic.
 
+Each benchmark/variant has a five-minute measurement budget (`case-time-budget-seconds`
+in `config.json`), including warmups and peak-RSS measurement; compilation is separate.
+Slow cases use fewer warmups and timing samples. Results retain completed samples,
+their sample count and standard deviation, and indicate when the budget limited
+measurement. A single sample has no standard deviation; an interrupted RSS run
+does not supply a footprint.
+
 ## Benchmarks
 
 - **rbtree / rbtree-zipper** — insert 2.5M keys into a red-black tree
