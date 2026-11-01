@@ -27,7 +27,9 @@ Each benchmark/variant has a five-minute measurement budget (`case-time-budget-s
 in `config.json`), including warmups and peak-RSS measurement; compilation is separate.
 Slow cases use fewer warmups and timing samples. Results retain completed samples,
 their sample count and standard deviation, and indicate when the budget limited
-measurement. A single sample has no standard deviation; an interrupted RSS run
+measurement. If only the RSS run fits, its elapsed time is retained and labeled
+`gnu-time`; other timing samples come from hyperfine. A single sample has no
+standard deviation; an interrupted RSS run
 does not supply a footprint.
 
 ## Benchmarks

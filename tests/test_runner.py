@@ -16,7 +16,7 @@ class MeasurementBudgetTests(unittest.TestCase):
 
         def rss(executable, deadline, env):
             clock[0] += duration
-            return 2048
+            return {"peak_rss_kb": 2048, "times": [duration], "user": duration, "system": 0, "exit_codes": [0]}
 
         def run(command, deadline, env):
             commands.append(command)
@@ -35,7 +35,7 @@ class MeasurementBudgetTests(unittest.TestCase):
         with patch.dict(runner.CONFIG, {
             "case-time-budget-seconds": budget, "runs": runs, "warmup-runs": 5,
         }), patch("runner.time.monotonic", side_effect=lambda: clock[0]), patch(
-            "runner._measure_peak_rss_kb", side_effect=rss
+            "runner._measure_rss_sample", side_effect=rss
         ), patch("runner._run_until", side_effect=run):
             return runner.measure_executable("program"), commands
 
@@ -54,6 +54,15 @@ class MeasurementBudgetTests(unittest.TestCase):
         self.assertEqual(result["sample_count"], 1)
         self.assertIsNone(result["results"][0]["stddev"])
 
+    def test_long_rss_run_supplies_labeled_timing_when_no_more_points_fit(self):
+        result, commands = self.measure(200)
+        self.assertEqual(commands, [])
+        self.assertTrue(result["budget_limited"])
+        self.assertEqual(result["timing_source"], "gnu-time")
+        self.assertEqual(result["sample_count"], 1)
+        self.assertEqual(result["results"][0]["mean"], 200)
+        self.assertIsNone(result["results"][0]["stddev"])
+
     def test_fast_case_keeps_requested_samples_and_warmups(self):
         result, _ = self.measure(1)
         self.assertFalse(result["budget_limited"])
@@ -62,7 +71,7 @@ class MeasurementBudgetTests(unittest.TestCase):
         self.assertEqual(result["measurement_seconds"], 15)
 
     def test_incomplete_rss_run_does_not_report_a_footprint(self):
-        with patch("runner._measure_peak_rss_kb", side_effect=subprocess.TimeoutExpired("time", 1)):
+        with patch("runner._measure_rss_sample", side_effect=subprocess.TimeoutExpired("time", 1)):
             result = runner.measure_executable("program")
         self.assertTrue(result["budget_limited"])
         self.assertEqual(result["results"], [])

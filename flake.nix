@@ -10,9 +10,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Current Reussir main (2026-10-29, LLVM/MLIR 23.1).
+    # Reussir with backward cleanup by default (LLVM/MLIR 23.1).
     reussir = {
-      url = "github:reussir-lang/reussir/0cf8c9afa4f66568b52c3912debc05c046afc24c";
+      url = "github:reussir-lang/reussir/bcfff8d419169a09509b963714de0675630c7bc1";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.fenix.follows = "fenix";
       inputs.flake-utils.follows = "flake-utils";

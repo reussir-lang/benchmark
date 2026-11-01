@@ -52,7 +52,7 @@ def _run_until(command, deadline, env):
             raise subprocess.CalledProcessError(process.returncode, command, stderr=stderr)
 
 
-def _measure_peak_rss_kb(executable, deadline, env):
+def _measure_rss_sample(executable, deadline, env):
     time_binary = CONFIG.get("time", "/usr/bin/time")
     if not os.path.isabs(time_binary):
         import shutil
@@ -65,10 +65,17 @@ def _measure_peak_rss_kb(executable, deadline, env):
     with tempfile.TemporaryDirectory() as tmpdir:
         rss_path = os.path.join(tmpdir, "peak.rss")
         _run_until(
-            [time_binary, "-f", "%M", "-o", rss_path, executable], deadline, env
+            [time_binary, "-f", "%M %e %U %S", "-o", rss_path, executable], deadline, env
         )
         with open(rss_path, "r", encoding="utf-8") as stream:
-            return int(stream.read().strip().splitlines()[0])
+            rss, elapsed, user, system = stream.read().strip().split()
+            return {
+                "peak_rss_kb": int(rss),
+                "times": [float(elapsed)],
+                "user": float(user),
+                "system": float(system),
+                "exit_codes": [0],
+            }
 
 
 def measure_executable(executable, env=None):
@@ -82,11 +89,11 @@ def measure_executable(executable, env=None):
     started = time.monotonic()
     deadline = started + budget
     samples = []
-    peak_rss_kb = None
+    rss_sample = None
     warmups = 0
     limited = False
     try:
-        peak_rss_kb = _measure_peak_rss_kb(executable, deadline, env)
+        rss_sample = _measure_rss_sample(executable, deadline, env)
         estimate = time.monotonic() - started
         # The RSS run also warms the program. Reserve room for timing points
         # before spending the remaining budget on additional warmups.
@@ -119,8 +126,14 @@ def measure_executable(executable, env=None):
     except subprocess.TimeoutExpired:
         limited = True
 
+    timing_source = "hyperfine"
+    if not samples and rss_sample is not None:
+        # A completed long RSS run still provides a GNU time timing point.
+        samples = [rss_sample]
+        timing_source = "gnu-time"
     result = {
         "results": [],
+        "timing_source": timing_source if samples else None,
         "sample_count": len(samples),
         "requested_samples": requested,
         "warmup_runs": warmups,
@@ -128,8 +141,8 @@ def measure_executable(executable, env=None):
         "measurement_seconds": time.monotonic() - started,
         "budget_limited": limited,
     }
-    if peak_rss_kb is not None:
-        result["peak_rss_kb"] = peak_rss_kb
+    if rss_sample is not None:
+        result["peak_rss_kb"] = rss_sample["peak_rss_kb"]
     if samples:
         times = [duration for sample in samples for duration in sample["times"]]
         result["results"] = [{
