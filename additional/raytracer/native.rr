@@ -1,0 +1,263 @@
+// Adapted from kmill/lean4-raytracer, copyright 2021 Kyle Miller.
+// Apache-2.0; see LEAN-LICENSE.md.
+
+import core::intrinsic::math;
+import core::intrinsic::array;
+
+struct [value] Vec3 { x: f64, y: f64, z: f64 }
+struct [value] Ray { origin: Vec3, dir: Vec3 }
+enum [value] Material { Lambertian(Vec3), Metal(Vec3, f64), Dielectric(f64), Sky }
+struct [value] Sphere { center: Vec3, radius: f64, material: Material }
+struct [value] Hit { p: Vec3, t: f64, material: Material, normal: Vec3, front: bool }
+struct [value] Camera {
+    origin: Vec3, lower_left: Vec3, horizontal: Vec3, vertical: Vec3,
+    u: Vec3, v: Vec3, lens_radius: f64
+}
+
+fn vec(x: f64, y: f64, z: f64) -> Vec3 { Vec3 { x: x, y: y, z: z } }
+fn black() -> Vec3 { vec(0.0, 0.0, 0.0) }
+fn white() -> Vec3 { vec(1.0, 1.0, 1.0) }
+fn add(a: Vec3, b: Vec3) -> Vec3 { vec(a.x + b.x, a.y + b.y, a.z + b.z) }
+fn sub(a: Vec3, b: Vec3) -> Vec3 { vec(a.x - b.x, a.y - b.y, a.z - b.z) }
+fn mul(a: Vec3, b: Vec3) -> Vec3 { vec(a.x * b.x, a.y * b.y, a.z * b.z) }
+fn scale(s: f64, v: Vec3) -> Vec3 { vec(s * v.x, s * v.y, s * v.z) }
+fn divide(v: Vec3, s: f64) -> Vec3 { vec(v.x / s, v.y / s, v.z / s) }
+fn neg(v: Vec3) -> Vec3 { vec(-v.x, -v.y, -v.z) }
+fn dot(a: Vec3, b: Vec3) -> f64 { (a.x * b.x + a.y * b.y) + a.z * b.z }
+fn length(v: Vec3) -> f64 { math::sqrt(dot(v, v), 0) }
+fn normalize(v: Vec3) -> Vec3 { divide(v, length(v)) }
+fn cross(a: Vec3, b: Vec3) -> Vec3 {
+    vec(a.y * b.z - a.z * b.y, a.z * b.x - a.x * b.z, a.x * b.y - a.y * b.x)
+}
+fn reflect(v: Vec3, n: Vec3) -> Vec3 { sub(v, scale(2.0 * dot(v, n), n)) }
+fn min(a: f64, b: f64) -> f64 { if a < b { a } else { b } }
+fn refract(v: Vec3, n: Vec3, ratio: f64) -> Vec3 {
+    let cosine = min(-dot(v, n), 1.0);
+    let perp = scale(ratio, add(v, scale(cosine, n)));
+    let parallel = scale(-math::sqrt(math::absf(1.0 - dot(perp, perp), 0), 0), n);
+    add(perp, parallel)
+}
+
+fn camera(width: i64, height: i64) -> Camera {
+    let origin = vec(13.0, 2.0, 3.0);
+    let w = normalize(origin);
+    let u = normalize(cross(vec(0.0, 1.0, 0.0), w));
+    let v = cross(w, u);
+    let theta = 20.0 / 180.0 * 3.1415926535897932385;
+    let viewport_height = 2.0 * math::tan(theta / 2.0, 0);
+    let viewport_width = (width as f64 / height as f64) * viewport_height;
+    let horizontal = scale(10.0 * viewport_width, u);
+    let vertical = scale(10.0 * viewport_height, v);
+    Camera {
+        origin: origin,
+        lower_left: sub(sub(sub(origin, divide(horizontal, 2.0)), divide(vertical, 2.0)), scale(10.0, w)),
+        horizontal: horizontal, vertical: vertical, u: u, v: v, lens_radius: 0.05
+    }
+}
+
+fn hit_sphere(sphere: Sphere, ray: Ray, previous: Hit) -> Hit {
+    let oc = sub(ray.origin, sphere.center);
+    let a = dot(ray.dir, ray.dir);
+    let half_b = dot(oc, ray.dir);
+    let c = dot(oc, oc) - sphere.radius * sphere.radius;
+    let discr = half_b * half_b - a * c;
+    if discr < 0.0 { previous } else {
+        let sqrt_d = math::sqrt(discr, 0);
+        let near = (-half_b - sqrt_d) / a;
+        let root = if near < 0.001 || previous.t < near { (-half_b + sqrt_d) / a } else { near };
+        if root < 0.001 || previous.t < root { previous } else {
+            let p = add(ray.origin, scale(root, ray.dir));
+            let outward = divide(sub(p, sphere.center), sphere.radius);
+            let front = dot(ray.dir, outward) < 0.0;
+            Hit { p: p, t: root, material: sphere.material,
+                  normal: if front { outward } else { neg(outward) }, front: front }
+        }
+    }
+}
+
+struct World { spheres: [Sphere; 488], size: i64 }
+fn hit_loop(world: World, ray: Ray, i: i64, nearest: Hit) -> Hit {
+    if i == world.size { nearest } else {
+        hit_loop(world, ray, i + 1, hit_sphere(array::get(world.spheres, i), ray, nearest))
+    }
+}
+fn hit_world(world: World, ray: Ray) -> Hit {
+    hit_loop(world, ray, 0,
+        Hit { p: black(), t: 1e100, material: Material::Sky, normal: black(), front: true })
+}
+
+// Lean's StdGen, specialized to machine integers; both seeds stay below 2^31.
+struct [value] Rng { s1: i64, s2: i64 }
+struct [value] Sample { value: f64, rng: Rng }
+struct [value] VecSample { value: Vec3, rng: Rng }
+struct [value] RaySample { value: Ray, rng: Rng }
+struct [value] ColorSample { value: Vec3, rng: Rng }
+struct Scene { world: World, rng: Rng }
+fn seed(n: i64) -> Rng {
+    Rng { s1: n % 2147483562 + 1, s2: (n / 2147483562) % 2147483398 + 1 }
+}
+fn random(rng: Rng, lo: f64, hi: f64) -> Sample {
+    let k1 = rng.s1 / 53668;
+    let a = 40014 * (rng.s1 - k1 * 53668) - k1 * 12211;
+    let s1 = if a < 0 { a + 2147483563 } else { a };
+    let k2 = rng.s2 / 52774;
+    let b = 40692 * (rng.s2 - k2 * 52774) - k2 * 3791;
+    let s2 = if b < 0 { b + 2147483399 } else { b };
+    let z = s1 - s2;
+    let n = if z < 1 { z + 2147483562 } else { z % 2147483562 };
+    let nm1 = if n == 0 { 0 } else { n - 1 };
+    Sample { value: lo + (hi - lo) * ((nm1 as f64) / 2147483562.0), rng: Rng { s1: s1, s2: s2 } }
+}
+fn random_vec(rng: Rng, lo: f64, hi: f64) -> VecSample {
+    let x = random(rng, lo, hi);
+    let y = random(x.rng, lo, hi);
+    let z = random(y.rng, lo, hi);
+    VecSample { value: vec(x.value, y.value, z.value), rng: z.rng }
+}
+fn random_sphere(rng: Rng, attempts: i64) -> VecSample {
+    if attempts == 0 { VecSample { value: vec(1.0, 0.0, 0.0), rng: rng } } else {
+        let s = random_vec(rng, -1.0, 1.0);
+        if dot(s.value, s.value) < 1.0 { s } else { random_sphere(s.rng, attempts - 1) }
+    }
+}
+fn random_disk(rng: Rng, attempts: i64) -> VecSample {
+    if attempts == 0 { VecSample { value: black(), rng: rng } } else {
+        let x = random(rng, -1.0, 1.0);
+        let y = random(x.rng, -1.0, 1.0);
+        let p = vec(x.value, y.value, 0.0);
+        if dot(p, p) < 1.0 { VecSample { value: p, rng: y.rng } }
+        else { random_disk(y.rng, attempts - 1) }
+    }
+}
+fn camera_ray(cam: Camera, s: f64, t: f64, rng: Rng) -> RaySample {
+    let sample = random_disk(rng, 100);
+    let rd = scale(cam.lens_radius, sample.value);
+    let offset = add(scale(rd.x, cam.u), scale(rd.y, cam.v));
+    RaySample {
+        value: Ray { origin: add(cam.origin, offset),
+            dir: sub(sub(add(add(cam.lower_left, scale(s, cam.horizontal)), scale(t, cam.vertical)), cam.origin), offset) },
+        rng: sample.rng
+    }
+}
+fn ray_color(world: World, ray: Ray, depth: i64, acc: Vec3, rng: Rng) -> ColorSample {
+    if depth == 0 { ColorSample { value: black(), rng: rng } } else {
+        let hit = hit_world(world, ray);
+        match hit.material {
+            Material::Sky => {
+                let unit = normalize(ray.dir);
+                let t = 0.5 * (unit.y + 1.0);
+                let color = add(scale(1.0 - t, white()), scale(t, vec(0.5, 0.7, 1.0)));
+                ColorSample { value: mul(acc, color), rng: rng }
+            },
+            Material::Lambertian(albedo) => {
+                let sample = random_sphere(rng, 100);
+                let scatter = add(hit.normal, normalize(sample.value));
+                let dir = if dot(scatter, scatter) < 1e-16 { hit.normal } else { scatter };
+                ray_color(world, Ray { origin: hit.p, dir: dir }, depth - 1, mul(albedo, acc), sample.rng)
+            },
+            Material::Metal(albedo, fuzz) => {
+                let reflected = reflect(normalize(ray.dir), hit.normal);
+                let sample = random_sphere(rng, 100);
+                let dir = add(reflected, scale(fuzz, sample.value));
+                if dot(dir, hit.normal) > 0.0 {
+                    ray_color(world, Ray { origin: hit.p, dir: dir }, depth - 1, mul(albedo, acc), sample.rng)
+                } else { ColorSample { value: mul(acc, black()), rng: sample.rng } }
+            },
+            Material::Dielectric(index) => {
+                let ratio = if hit.front { 1.0 / index } else { index };
+                let unit = normalize(ray.dir);
+                let cosine = min(-dot(unit, hit.normal), 1.0);
+                let sine = math::sqrt(1.0 - cosine * cosine, 0);
+                let r0p = (1.0 - ratio) / (1.0 + ratio);
+                let r0 = r0p * r0p;
+                let reflectance = r0 + (1.0 - r0) * math::powf(1.0 - cosine, 5.0, 0);
+                if ratio * sine > 1.0 {
+                    ray_color(world, Ray { origin: hit.p, dir: reflect(unit, hit.normal) }, depth - 1, mul(white(), acc), rng)
+                } else {
+                    let sample = random(rng, 0.0, 1.0);
+                    let dir = if reflectance > sample.value { reflect(unit, hit.normal) } else { refract(unit, hit.normal, ratio) };
+                    ray_color(world, Ray { origin: hit.p, dir: dir }, depth - 1, mul(white(), acc), sample.rng)
+                }
+            }
+        }
+    }
+}
+fn push(world: World, center: Vec3, radius: f64, material: Material) -> World {
+    World { spheres: array::set(world.spheres, world.size, Sphere { center: center, radius: radius, material: material }), size: world.size + 1 }
+}
+fn scene_loop(world: World, i: i64, rng: Rng) -> Scene {
+    if i == 484 {
+        let world = push(world, vec(0.0, 1.0, 0.0), 1.0, Material::Dielectric(1.5));
+        let world = push(world, vec(-4.0, 1.0, 0.0), 1.0, Material::Lambertian(vec(0.4, 0.2, 0.1)));
+        let world = push(world, vec(4.0, 1.0, 0.0), 1.0, Material::Metal(vec(0.7, 0.6, 0.5), 0.0));
+        Scene { world: world, rng: rng }
+    } else {
+        let a = (i / 22) as f64 - 11.0;
+        let b = (i % 22) as f64 - 11.0;
+        let x = random(rng, 0.0, 1.0);
+        let z = random(x.rng, 0.0, 1.0);
+        let center = vec(a + 0.9 * x.value, 0.2, b + 0.9 * z.value);
+        if length(sub(center, vec(4.0, 0.2, 0.0))) > 0.9 {
+            let material = random(z.rng, 0.0, 1.0);
+            if material.value < 0.9 {
+                let first = random_vec(material.rng, 0.0, 1.0);
+                let second = random_vec(first.rng, 0.0, 1.0);
+                scene_loop(push(world, center, 0.2, Material::Lambertian(mul(first.value, second.value))), i + 1, second.rng)
+            } else {
+                if material.value < 0.95 {
+                    let albedo = random_vec(material.rng, 0.5, 1.0);
+                    let fuzz = random(albedo.rng, 0.0, 0.5);
+                    scene_loop(push(world, center, 0.2, Material::Metal(albedo.value, fuzz.value)), i + 1, fuzz.rng)
+                } else {
+                    scene_loop(push(world, center, 0.2, Material::Dielectric(1.5)), i + 1, material.rng)
+                }
+            }
+        } else { scene_loop(world, i + 1, z.rng) }
+    }
+}
+fn random_scene() -> Scene {
+    let ground = Sphere { center: vec(0.0, -1000.0, 0.0), radius: 1000.0, material: Material::Lambertian(vec(0.5, 0.5, 0.5)) };
+    scene_loop(World { spheres: array::splat<[Sphere; 488]>(ground), size: 1 }, 0, seed(0))
+}
+
+fn pixel_samples(world: World, cam: Camera, x: i64, y: i64, samples: i64, acc: Vec3, rng: Rng) -> ColorSample {
+    if samples == 0 { ColorSample { value: acc, rng: rng } } else {
+        let rx = random(rng, 0.0, 1.0);
+        let ry = random(rx.rng, 0.0, 1.0);
+        let ray = camera_ray(cam, (x as f64 + rx.value) / 128.0, (y as f64 + ry.value) / 85.0, ry.rng);
+        let color = ray_color(world, ray.value, 10, white(), ray.rng);
+        pixel_samples(world, cam, x, y, samples - 1, add(acc, color.value), color.rng)
+    }
+}
+fn channel(value: f64) -> u64 {
+    let scaled = 256.0 * math::sqrt(value / 4.0, 0);
+    let lower = if scaled < 0.0 { 0.0 } else { scaled };
+    let clamped = min(255.0, lower);
+    clamped as u64
+}
+struct [value] RowResult { checksum: u64, rng: Rng }
+fn row_pixels(world: World, cam: Camera, line: i64, x: i64, rng: Rng, checksum: u64) -> RowResult {
+    if x == 128 { RowResult { checksum: checksum, rng: rng } } else {
+        let sample = pixel_samples(world, cam, x, 85 - line - 1, 4, black(), rng);
+        let index = ((line * 128 + x) * 3) as u64;
+        let sum = (index + 1) * channel(sample.value.x) + (index + 2) * channel(sample.value.y) + (index + 3) * channel(sample.value.z);
+        row_pixels(world, cam, line, x + 1, sample.rng, checksum + sum)
+    }
+}
+fn image_rows(world: World, cam: Camera, line: i64, end: i64, rng: Rng, reset_rng: bool, checksum: u64) -> u64 {
+    if line == end { checksum } else {
+        let row = row_pixels(world, cam, line, 0, if reset_rng { seed(line + 1) } else { rng }, 0);
+        image_rows(world, cam, line + 1, end, row.rng, reset_rng, checksum + row.checksum)
+    }
+}
+fn original() -> u64 {
+    let scene = random_scene();
+    image_rows(scene.world, camera(128, 85), 0, 85, scene.rng, false, 0)
+}
+// Eight fixed row chunks give the same work partition at every worker count.
+fn chunk(job: i64) -> u64 {
+    let scene = random_scene();
+    image_rows(scene.world, camera(128, 85), job * 85 / 8, (job + 1) * 85 / 8, scene.rng, true, 0)
+}
+extern "C" trampoline "raytracer_original" = original;
+extern "C" trampoline "raytracer_chunk" = chunk;
