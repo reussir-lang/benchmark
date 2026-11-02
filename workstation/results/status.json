@@ -16,13 +16,13 @@
   },
   "bigint-binomial/lean": {
     "status": "complete",
-    "started": 1793576956.522531,
-    "finished": 1793576986.16824
+    "started": 1793650688.0685816,
+    "finished": 1793650717.94951
   },
   "bigint-binomial/ocaml": {
     "status": "complete",
-    "started": 1793576986.1685455,
-    "finished": 1793577010.0162253
+    "started": 1793649916.3575706,
+    "finished": 1793649936.705466
   },
   "bigint-binomial/reussir": {
     "status": "complete",
@@ -36,13 +36,13 @@
   },
   "bigint-binomial/rust": {
     "status": "complete",
-    "started": 1793577010.0184662,
-    "finished": 1793577038.0166087
+    "started": 1793652762.2300918,
+    "finished": 1793652790.3394237
   },
   "bigint-binomial/rust-with-mimalloc": {
     "status": "complete",
-    "started": 1793577038.016954,
-    "finished": 1793577066.0653846
+    "started": 1793652790.340883,
+    "finished": 1793652818.487242
   },
   "bigint-collatz/haskell": {
     "status": "complete",
@@ -61,13 +61,13 @@
   },
   "bigint-collatz/lean": {
     "status": "complete",
-    "started": 1793577108.8806617,
-    "finished": 1793577113.1735017
+    "started": 1793650682.2487087,
+    "finished": 1793650688.067841
   },
   "bigint-collatz/ocaml": {
     "status": "complete",
-    "started": 1793577113.1738527,
-    "finished": 1793577124.2735975
+    "started": 1793649904.762639,
+    "finished": 1793649916.357082
   },
   "bigint-collatz/reussir": {
     "status": "complete",
@@ -81,13 +81,13 @@
   },
   "bigint-collatz/rust": {
     "status": "complete",
-    "started": 1793577124.2761345,
-    "finished": 1793577131.2367287
+    "started": 1793652747.2194955,
+    "finished": 1793652754.710386
   },
   "bigint-collatz/rust-with-mimalloc": {
     "status": "complete",
-    "started": 1793577131.2371109,
-    "finished": 1793577138.219223
+    "started": 1793652754.7117646,
+    "finished": 1793652762.2286901
   },
   "bigint-factorial/haskell": {
     "status": "complete",
@@ -106,13 +106,13 @@
   },
   "bigint-factorial/lean": {
     "status": "complete",
-    "started": 1793577255.4988992,
-    "finished": 1793577277.6939301
+    "started": 1793650631.963583,
+    "finished": 1793650655.5553808
   },
   "bigint-factorial/ocaml": {
     "status": "complete",
-    "started": 1793577277.6943781,
-    "finished": 1793577295.9019308
+    "started": 1793649848.619405,
+    "finished": 1793649889.6950133
   },
   "bigint-factorial/reussir": {
     "status": "complete",
@@ -126,13 +126,13 @@
   },
   "bigint-factorial/rust": {
     "status": "complete",
-    "started": 1793577319.616715,
-    "finished": 1793577330.9686654
+    "started": 1793652592.1136534,
+    "finished": 1793652603.973039
   },
   "bigint-factorial/rust-with-mimalloc": {
     "status": "complete",
-    "started": 1793577330.9691265,
-    "finished": 1793577342.3632057
+    "started": 1793652603.9743323,
+    "finished": 1793652615.8618877
   },
   "bigint-fib/haskell": {
     "status": "complete",
@@ -151,13 +151,13 @@
   },
   "bigint-fib/lean": {
     "status": "complete",
-    "started": 1793577460.8339126,
-    "finished": 1793577479.034334
+    "started": 1793650612.538621,
+    "finished": 1793650631.9628391
   },
   "bigint-fib/ocaml": {
     "status": "complete",
-    "started": 1793577479.0348592,
-    "finished": 1793577492.5192087
+    "started": 1793649806.7816904,
+    "finished": 1793649848.618927
   },
   "bigint-fib/reussir": {
     "status": "complete",
@@ -171,13 +171,13 @@
   },
   "bigint-fib/rust": {
     "status": "complete",
-    "started": 1793577506.4648523,
-    "finished": 1793577515.1465287
+    "started": 1793652576.2983527,
+    "finished": 1793652584.2256863
   },
   "bigint-fib/rust-with-mimalloc": {
     "status": "complete",
-    "started": 1793577515.1470623,
-    "finished": 1793577523.839447
+    "started": 1793652584.22699,
+    "finished": 1793652592.1123211
   },
   "bigint-pidigits/haskell": {
     "status": "complete",
@@ -196,13 +196,13 @@
   },
   "bigint-pidigits/lean": {
     "status": "complete",
-    "started": 1793577618.7955415,
-    "finished": 1793577632.6012757
+    "started": 1793650655.5561004,
+    "finished": 1793650670.7002401
   },
   "bigint-pidigits/ocaml": {
     "status": "complete",
-    "started": 1793577632.6018765,
-    "finished": 1793577642.5935338
+    "started": 1793649889.6955018,
+    "finished": 1793649898.9677458
   },
   "bigint-pidigits/reussir": {
     "status": "complete",
@@ -216,13 +216,13 @@
   },
   "bigint-pidigits/rust": {
     "status": "complete",
-    "started": 1793577657.6822743,
-    "finished": 1793577682.7893076
+    "started": 1793652615.86324,
+    "finished": 1793652641.1024082
   },
   "bigint-pidigits/rust-with-mimalloc": {
     "status": "complete",
-    "started": 1793577682.789953,
-    "finished": 1793577703.1124313
+    "started": 1793652641.1037376,
+    "finished": 1793652661.382443
   },
   "bigint-rbtree/haskell": {
     "status": "complete",
@@ -241,13 +241,13 @@
   },
   "bigint-rbtree/lean": {
     "status": "complete",
-    "started": 1793577732.2136886,
-    "finished": 1793577746.4907057
+    "started": 1793650670.700968,
+    "finished": 1793650682.2479458
   },
   "bigint-rbtree/ocaml": {
     "status": "complete",
-    "started": 1793577746.4914107,
-    "finished": 1793577752.2303565
+    "started": 1793649898.968229,
+    "finished": 1793649904.762141
   },
   "bigint-rbtree/reussir": {
     "status": "complete",
@@ -261,13 +261,13 @@
   },
   "bigint-rbtree/rust": {
     "status": "complete",
-    "started": 1793577763.760757,
-    "finished": 1793577813.380943
+    "started": 1793652661.3838263,
+    "finished": 1793652711.0319538
   },
   "bigint-rbtree/rust-with-mimalloc": {
     "status": "complete",
-    "started": 1793577813.381696,
-    "finished": 1793577847.5965703
+    "started": 1793652711.0334103,
+    "finished": 1793652747.2180357
   },
   "derive/haskell": {
     "status": "complete",
@@ -286,8 +286,8 @@
   },
   "derive/lean": {
     "status": "complete",
-    "started": 1793577871.6096606,
-    "finished": 1793577878.956712
+    "started": 1793649994.6304712,
+    "finished": 1793650002.0441978
   },
   "derive/morphic": {
     "status": "complete",
@@ -296,8 +296,8 @@
   },
   "derive/ocaml": {
     "status": "complete",
-    "started": 1793577888.8701081,
-    "finished": 1793577896.9606235
+    "started": 1793648915.8239915,
+    "finished": 1793648922.943418
   },
   "derive/reussir": {
     "status": "complete",
@@ -311,13 +311,13 @@
   },
   "derive/rust": {
     "status": "complete",
-    "started": 1793577911.0779085,
-    "finished": 1793577932.106101
+    "started": 1793650987.088694,
+    "finished": 1793651007.8844063
   },
   "derive/rust-with-mimalloc": {
     "status": "complete",
-    "started": 1793577932.1069565,
-    "finished": 1793577946.5029235
+    "started": 1793651007.885357,
+    "finished": 1793651022.1973035
   },
   "expr-replace/haskell": {
     "status": "complete",
@@ -336,8 +336,8 @@
   },
   "expr-replace/lean": {
     "status": "complete",
-    "started": 1793577971.0540168,
-    "finished": 1793577978.120336
+    "started": 1793650587.6068337,
+    "finished": 1793650597.0639179
   },
   "expr-replace/morphic": {
     "status": "complete",
@@ -346,8 +346,8 @@
   },
   "expr-replace/ocaml": {
     "status": "complete",
-    "started": 1793577984.1630359,
-    "finished": 1793577990.5573165
+    "started": 1793649780.0771494,
+    "finished": 1793649786.3860888
   },
   "expr-replace/reussir": {
     "status": "complete",
@@ -361,13 +361,13 @@
   },
   "expr-replace/rust": {
     "status": "complete",
-    "started": 1793578008.0215263,
-    "finished": 1793578014.136897
+    "started": 1793652521.1863625,
+    "finished": 1793652527.736092
   },
   "expr-replace/rust-with-mimalloc": {
     "status": "complete",
-    "started": 1793578014.1377969,
-    "finished": 1793578020.227486
+    "started": 1793652527.7373335,
+    "finished": 1793652534.1930883
   },
   "fingertree/haskell": {
     "status": "complete",
@@ -386,8 +386,8 @@
   },
   "fingertree/lean": {
     "status": "complete",
-    "started": 1793578031.5362785,
-    "finished": 1793578033.9590654
+    "started": 1793650128.5658963,
+    "finished": 1793650131.863984
   },
   "fingertree/morphic": {
     "status": "complete",
@@ -396,8 +396,8 @@
   },
   "fingertree/ocaml": {
     "status": "complete",
-    "started": 1793578036.1937644,
-    "finished": 1793578037.3936028
+    "started": 1793649000.4809728,
+    "finished": 1793649001.7692606
   },
   "fingertree/reussir": {
     "status": "complete",
@@ -411,13 +411,13 @@
   },
   "fingertree/rust": {
     "status": "complete",
-    "started": 1793578040.8351412,
-    "finished": 1793578042.3351934
+    "started": 1793651123.1452546,
+    "finished": 1793651125.0907927
   },
   "fingertree/rust-with-mimalloc": {
     "status": "complete",
-    "started": 1793578042.336208,
-    "finished": 1793578043.8833747
+    "started": 1793651125.0917535,
+    "finished": 1793651127.0507948
   },
   "functional-queue/haskell": {
     "status": "complete",
@@ -436,8 +436,8 @@
   },
   "functional-queue/lean": {
     "status": "complete",
-    "started": 1793578051.9114132,
-    "finished": 1793578054.2550364
+    "started": 1793650577.7668817,
+    "finished": 1793650581.1821775
   },
   "functional-queue/morphic": {
     "status": "complete",
@@ -446,8 +446,8 @@
   },
   "functional-queue/ocaml": {
     "status": "complete",
-    "started": 1793578055.9460611,
-    "finished": 1793578057.461601
+    "started": 1793649774.6872365,
+    "finished": 1793649776.1520653
   },
   "functional-queue/reussir": {
     "status": "complete",
@@ -461,13 +461,13 @@
   },
   "functional-queue/rust": {
     "status": "complete",
-    "started": 1793578061.220497,
-    "finished": 1793578062.9345872
+    "started": 1793652507.2336779,
+    "finished": 1793652509.7527351
   },
   "functional-queue/rust-with-mimalloc": {
     "status": "complete",
-    "started": 1793578062.9356513,
-    "finished": 1793578064.6027658
+    "started": 1793652509.7539186,
+    "finished": 1793652512.2854545
   },
   "hash-map-heavily-shared/haskell": {
     "status": "complete",
@@ -486,8 +486,8 @@
   },
   "hash-map-heavily-shared/lean": {
     "status": "budget_limited",
-    "started": 1793578454.0946138,
-    "finished": 1793578684.1175654
+    "started": 1793650368.1592865,
+    "finished": 1793650577.7661922
   },
   "hash-map-heavily-shared/morphic": {
     "status": "budget_limited",
@@ -496,8 +496,8 @@
   },
   "hash-map-heavily-shared/ocaml": {
     "status": "budget_exhausted",
-    "started": 1793578960.5662444,
-    "finished": 1793579260.8045366
+    "started": 1793649394.629159,
+    "finished": 1793649694.9118736
   },
   "hash-map-heavily-shared/reussir": {
     "status": "complete",
@@ -511,23 +511,23 @@
   },
   "hash-map-heavily-shared/rust": {
     "status": "complete",
-    "started": 1793579366.9910753,
-    "finished": 1793579612.162475
+    "started": 1793651943.8255825,
+    "finished": 1793652189.5278223
   },
   "hash-map-heavily-shared/rust-rpds": {
     "status": "complete",
-    "started": 1793579612.1637394,
-    "finished": 1793579698.2721052
+    "started": 1793652189.5290768,
+    "finished": 1793652272.522076
   },
   "hash-map-heavily-shared/rust-rpds-with-mimalloc": {
     "status": "complete",
-    "started": 1793579698.2733378,
-    "finished": 1793579754.5060925
+    "started": 1793652272.523328,
+    "finished": 1793652326.5785265
   },
   "hash-map-heavily-shared/rust-with-mimalloc": {
     "status": "complete",
-    "started": 1793579754.5073278,
-    "finished": 1793579935.3906038
+    "started": 1793652326.5797544,
+    "finished": 1793652507.2323928
   },
   "hash-map-linear/haskell": {
     "status": "complete",
@@ -546,8 +546,8 @@
   },
   "hash-map-linear/lean": {
     "status": "complete",
-    "started": 1793580030.1319737,
-    "finished": 1793580043.2882905
+    "started": 1793650227.6431286,
+    "finished": 1793650241.9311478
   },
   "hash-map-linear/morphic": {
     "status": "complete",
@@ -556,8 +556,8 @@
   },
   "hash-map-linear/ocaml": {
     "status": "complete",
-    "started": 1793580053.6923048,
-    "finished": 1793580078.0300775
+    "started": 1793649096.6566985,
+    "finished": 1793649117.9112175
   },
   "hash-map-linear/reussir": {
     "status": "complete",
@@ -571,23 +571,23 @@
   },
   "hash-map-linear/rust": {
     "status": "complete",
-    "started": 1793580106.113479,
-    "finished": 1793580109.4226115
+    "started": 1793651721.2948546,
+    "finished": 1793651725.0952044
   },
   "hash-map-linear/rust-rpds": {
     "status": "complete",
-    "started": 1793580109.4239724,
-    "finished": 1793580130.397631
+    "started": 1793651725.0963545,
+    "finished": 1793651744.9500065
   },
   "hash-map-linear/rust-rpds-with-mimalloc": {
     "status": "complete",
-    "started": 1793580130.398962,
-    "finished": 1793580148.3782587
+    "started": 1793651744.951173,
+    "finished": 1793651761.741472
   },
   "hash-map-linear/rust-with-mimalloc": {
     "status": "complete",
-    "started": 1793580148.3796139,
-    "finished": 1793580151.6581097
+    "started": 1793651761.7426586,
+    "finished": 1793651765.5712647
   },
   "hash-map-shared/haskell": {
     "status": "complete",
@@ -606,8 +606,8 @@
   },
   "hash-map-shared/lean": {
     "status": "complete",
-    "started": 1793580360.6271832,
-    "finished": 1793580495.0108383
+    "started": 1793650241.931818,
+    "finished": 1793650368.1586084
   },
   "hash-map-shared/morphic": {
     "status": "complete",
@@ -616,8 +616,8 @@
   },
   "hash-map-shared/ocaml": {
     "status": "budget_limited",
-    "started": 1793580646.683404,
-    "finished": 1793580914.6275752
+    "started": 1793649117.9116197,
+    "finished": 1793649394.6287107
   },
   "hash-map-shared/reussir": {
     "status": "complete",
@@ -631,23 +631,23 @@
   },
   "hash-map-shared/rust": {
     "status": "complete",
-    "started": 1793581024.6492136,
-    "finished": 1793581043.366417
+    "started": 1793651765.5724616,
+    "finished": 1793651784.816355
   },
   "hash-map-shared/rust-rpds": {
     "status": "complete",
-    "started": 1793581043.367858,
-    "finished": 1793581134.8326519
+    "started": 1793651784.817547,
+    "finished": 1793651873.4713385
   },
   "hash-map-shared/rust-rpds-with-mimalloc": {
     "status": "complete",
-    "started": 1793581134.834108,
-    "finished": 1793581192.1160786
+    "started": 1793651873.4725587,
+    "finished": 1793651928.4641552
   },
   "hash-map-shared/rust-with-mimalloc": {
     "status": "complete",
-    "started": 1793581192.1175091,
-    "finished": 1793581206.970123
+    "started": 1793651928.4653447,
+    "finished": 1793651943.8243382
   },
   "heap-array/haskell-st": {
     "status": "complete",
@@ -666,8 +666,8 @@
   },
   "heap-array/lean": {
     "status": "complete",
-    "started": 1793581272.4188902,
-    "finished": 1793581294.7426274
+    "started": 1793650086.5269945,
+    "finished": 1793650105.405991
   },
   "heap-array/morphic": {
     "status": "complete",
@@ -676,8 +676,8 @@
   },
   "heap-array/ocaml": {
     "status": "complete",
-    "started": 1793581306.5075195,
-    "finished": 1793581334.402979
+    "started": 1793648956.3248303,
+    "finished": 1793648976.6374507
   },
   "heap-array/reussir": {
     "status": "complete",
@@ -691,13 +691,13 @@
   },
   "heap-array/rust": {
     "status": "complete",
-    "started": 1793581348.201269,
-    "finished": 1793581354.600817
+    "started": 1793651040.472137,
+    "finished": 1793651047.3266783
   },
   "heap-array/rust-with-mimalloc": {
     "status": "complete",
-    "started": 1793581354.6023347,
-    "finished": 1793581361.0218768
+    "started": 1793651047.3275857,
+    "finished": 1793651054.1861942
   },
   "heap-functional/haskell": {
     "status": "complete",
@@ -716,8 +716,8 @@
   },
   "heap-functional/lean": {
     "status": "complete",
-    "started": 1793581426.9279413,
-    "finished": 1793581446.505478
+    "started": 1793650105.4065773,
+    "finished": 1793650128.5652947
   },
   "heap-functional/morphic": {
     "status": "complete",
@@ -726,8 +726,8 @@
   },
   "heap-functional/ocaml": {
     "status": "complete",
-    "started": 1793581475.9516568,
-    "finished": 1793581507.570318
+    "started": 1793648976.6377978,
+    "finished": 1793649000.480607
   },
   "heap-functional/reussir": {
     "status": "complete",
@@ -741,13 +741,13 @@
   },
   "heap-functional/rust": {
     "status": "complete",
-    "started": 1793581534.3484397,
-    "finished": 1793581566.235678
+    "started": 1793651054.1871288,
+    "finished": 1793651085.5452232
   },
   "heap-functional/rust-with-mimalloc": {
     "status": "complete",
-    "started": 1793581566.2373421,
-    "finished": 1793581604.1811574
+    "started": 1793651085.5461824,
+    "finished": 1793651123.1442435
   },
   "life/haskell": {
     "status": "complete",
@@ -776,8 +776,8 @@
   },
   "life/lean": {
     "status": "complete",
-    "started": 1793581752.4483554,
-    "finished": 1793581798.865028
+    "started": 1793650002.044796,
+    "finished": 1793650068.1891615
   },
   "life/morphic": {
     "status": "complete",
@@ -786,8 +786,8 @@
   },
   "life/ocaml": {
     "status": "complete",
-    "started": 1793581811.1288133,
-    "finished": 1793581830.155777
+    "started": 1793648922.9437509,
+    "finished": 1793648941.7764802
   },
   "life/reussir": {
     "status": "complete",
@@ -801,13 +801,13 @@
   },
   "life/rust": {
     "status": "complete",
-    "started": 1793581841.645538,
-    "finished": 1793581845.4522367
+    "started": 1793651022.198235,
+    "finished": 1793651026.0054116
   },
   "life/rust-with-mimalloc": {
     "status": "complete",
-    "started": 1793581845.4539032,
-    "finished": 1793581849.3636372
+    "started": 1793651026.0062702,
+    "finished": 1793651029.939276
   },
   "list-membership/haskell": {
     "status": "complete",
@@ -826,8 +826,8 @@
   },
   "list-membership/lean": {
     "status": "complete",
-    "started": 1793581866.3773472,
-    "finished": 1793581871.849126
+    "started": 1793650581.1828408,
+    "finished": 1793650587.6061678
   },
   "list-membership/morphic": {
     "status": "complete",
@@ -836,8 +836,8 @@
   },
   "list-membership/ocaml": {
     "status": "complete",
-    "started": 1793581875.7202613,
-    "finished": 1793581879.6251163
+    "started": 1793649776.152488,
+    "finished": 1793649780.0767398
   },
   "list-membership/reussir": {
     "status": "complete",
@@ -851,13 +851,13 @@
   },
   "list-membership/rust": {
     "status": "complete",
-    "started": 1793581888.581038,
-    "finished": 1793581892.471599
+    "started": 1793652512.286687,
+    "finished": 1793652516.718902
   },
   "list-membership/rust-with-mimalloc": {
     "status": "complete",
-    "started": 1793581892.4733458,
-    "finished": 1793581896.386119
+    "started": 1793652516.720084,
+    "finished": 1793652521.1851401
   },
   "nbe-closure/haskell": {
     "status": "complete",
@@ -876,8 +876,8 @@
   },
   "nbe-closure/lean": {
     "status": "complete",
-    "started": 1793581905.96025,
-    "finished": 1793581908.5995297
+    "started": 1793649990.8493526,
+    "finished": 1793649994.6298652
   },
   "nbe-closure/morphic": {
     "status": "complete",
@@ -886,8 +886,8 @@
   },
   "nbe-closure/ocaml": {
     "status": "complete",
-    "started": 1793581918.3936248,
-    "finished": 1793581931.4737213
+    "started": 1793648905.801829,
+    "finished": 1793648915.8236554
   },
   "nbe-closure/reussir": {
     "status": "complete",
@@ -901,13 +901,13 @@
   },
   "nbe-closure/rust": {
     "status": "complete",
-    "started": 1793581938.0202522,
-    "finished": 1793581976.621403
+    "started": 1793650937.0110981,
+    "finished": 1793650974.71916
   },
   "nbe-closure/rust-with-mimalloc": {
     "status": "complete",
-    "started": 1793581976.6233966,
-    "finished": 1793581988.2085972
+    "started": 1793650974.72006,
+    "finished": 1793650987.0877442
   },
   "nbe-hoas/haskell": {
     "status": "complete",
@@ -926,8 +926,8 @@
   },
   "nbe-hoas/lean": {
     "status": "complete",
-    "started": 1793581998.359509,
-    "finished": 1793582001.1184456
+    "started": 1793649987.0315735,
+    "finished": 1793649990.8487499
   },
   "nbe-hoas/morphic": {
     "status": "complete",
@@ -936,8 +936,8 @@
   },
   "nbe-hoas/ocaml": {
     "status": "complete",
-    "started": 1793582009.1180305,
-    "finished": 1793582020.453112
+    "started": 1793648897.7463248,
+    "finished": 1793648905.80153
   },
   "nbe-hoas/reussir": {
     "status": "complete",
@@ -951,13 +951,13 @@
   },
   "nbe-hoas/rust": {
     "status": "complete",
-    "started": 1793582027.649023,
-    "finished": 1793582059.2407835
+    "started": 1793650894.4645934,
+    "finished": 1793650926.3160806
   },
   "nbe-hoas/rust-with-mimalloc": {
     "status": "complete",
-    "started": 1793582059.2428005,
-    "finished": 1793582069.9411995
+    "started": 1793650926.3169582,
+    "finished": 1793650937.0101964
   },
   "ordered-map-heavily-shared/haskell": {
     "status": "complete",
@@ -976,8 +976,8 @@
   },
   "ordered-map-heavily-shared/lean": {
     "status": "complete",
-    "started": 1793582242.4993505,
-    "finished": 1793582275.2592113
+    "started": 1793650193.6232204,
+    "finished": 1793650227.6424603
   },
   "ordered-map-heavily-shared/morphic": {
     "status": "complete",
@@ -986,8 +986,8 @@
   },
   "ordered-map-heavily-shared/ocaml": {
     "status": "complete",
-    "started": 1793582313.3879795,
-    "finished": 1793582353.5238008
+    "started": 1793649062.4199326,
+    "finished": 1793649096.6563098
   },
   "ordered-map-heavily-shared/reussir": {
     "status": "complete",
@@ -1001,23 +1001,23 @@
   },
   "ordered-map-heavily-shared/rust": {
     "status": "complete",
-    "started": 1793582379.467276,
-    "finished": 1793582566.3156643
+    "started": 1793651295.4932332,
+    "finished": 1793651475.9775333
   },
   "ordered-map-heavily-shared/rust-rpds": {
     "status": "complete",
-    "started": 1793582566.3177984,
-    "finished": 1793582616.66626
+    "started": 1793651475.9786339,
+    "finished": 1793651525.2874591
   },
   "ordered-map-heavily-shared/rust-rpds-with-mimalloc": {
     "status": "complete",
-    "started": 1793582616.6684167,
-    "finished": 1793582646.3738017
+    "started": 1793651525.2886105,
+    "finished": 1793651554.5008447
   },
   "ordered-map-heavily-shared/rust-with-mimalloc": {
     "status": "complete",
-    "started": 1793582646.3760028,
-    "finished": 1793582817.1725426
+    "started": 1793651554.5019765,
+    "finished": 1793651721.2937021
   },
   "ordered-map-linear/haskell": {
     "status": "complete",
@@ -1036,8 +1036,8 @@
   },
   "ordered-map-linear/lean": {
     "status": "complete",
-    "started": 1793582891.1893885,
-    "finished": 1793582909.7410614
+    "started": 1793650131.8646054,
+    "finished": 1793650152.3496644
   },
   "ordered-map-linear/morphic": {
     "status": "complete",
@@ -1046,8 +1046,8 @@
   },
   "ordered-map-linear/ocaml": {
     "status": "complete",
-    "started": 1793582930.863758,
-    "finished": 1793582964.7517445
+    "started": 1793649001.7696104,
+    "finished": 1793649028.6651793
   },
   "ordered-map-linear/reussir": {
     "status": "complete",
@@ -1061,23 +1061,23 @@
   },
   "ordered-map-linear/rust": {
     "status": "complete",
-    "started": 1793582982.2767813,
-    "finished": 1793582986.6995635
+    "started": 1793651127.0518131,
+    "finished": 1793651131.904259
   },
   "ordered-map-linear/rust-rpds": {
     "status": "complete",
-    "started": 1793582986.7017598,
-    "finished": 1793583010.6221123
+    "started": 1793651131.9052653,
+    "finished": 1793651156.1431413
   },
   "ordered-map-linear/rust-rpds-with-mimalloc": {
     "status": "complete",
-    "started": 1793583010.6243887,
-    "finished": 1793583025.8217952
+    "started": 1793651156.1441822,
+    "finished": 1793651171.5702271
   },
   "ordered-map-linear/rust-with-mimalloc": {
     "status": "complete",
-    "started": 1793583025.8241286,
-    "finished": 1793583029.999607
+    "started": 1793651171.5713007,
+    "finished": 1793651176.191604
   },
   "ordered-map-shared/haskell": {
     "status": "complete",
@@ -1096,8 +1096,8 @@
   },
   "ordered-map-shared/lean": {
     "status": "complete",
-    "started": 1793583211.5658777,
-    "finished": 1793583251.6446579
+    "started": 1793650152.3503273,
+    "finished": 1793650193.6225574
   },
   "ordered-map-shared/morphic": {
     "status": "complete",
@@ -1106,8 +1106,8 @@
   },
   "ordered-map-shared/ocaml": {
     "status": "complete",
-    "started": 1793583301.0182126,
-    "finished": 1793583341.1603417
+    "started": 1793649028.665567,
+    "finished": 1793649062.4195294
   },
   "ordered-map-shared/reussir": {
     "status": "complete",
@@ -1121,23 +1121,23 @@
   },
   "ordered-map-shared/rust": {
     "status": "complete",
-    "started": 1793583382.833692,
-    "finished": 1793583398.3464718
+    "started": 1793651176.1926577,
+    "finished": 1793651191.5743675
   },
   "ordered-map-shared/rust-rpds": {
     "status": "complete",
-    "started": 1793583398.348936,
-    "finished": 1793583453.7546196
+    "started": 1793651191.5755455,
+    "finished": 1793651245.5332708
   },
   "ordered-map-shared/rust-rpds-with-mimalloc": {
     "status": "complete",
-    "started": 1793583453.7569978,
-    "finished": 1793583489.5808606
+    "started": 1793651245.5343535,
+    "finished": 1793651281.0020366
   },
   "ordered-map-shared/rust-with-mimalloc": {
     "status": "complete",
-    "started": 1793583489.5832381,
-    "finished": 1793583503.9161453
+    "started": 1793651281.00312,
+    "finished": 1793651295.4921157
   },
   "qsort/haskell": {
     "status": "complete",
@@ -1166,8 +1166,8 @@
   },
   "qsort/lean": {
     "status": "complete",
-    "started": 1793583613.5438185,
-    "finished": 1793583629.2789288
+    "started": 1793650068.1897466,
+    "finished": 1793650086.5264175
   },
   "qsort/morphic": {
     "status": "complete",
@@ -1176,8 +1176,8 @@
   },
   "qsort/ocaml": {
     "status": "complete",
-    "started": 1793583636.6228426,
-    "finished": 1793583651.3946974
+    "started": 1793648941.7767828,
+    "finished": 1793648956.3244948
   },
   "qsort/reussir": {
     "status": "complete",
@@ -1191,13 +1191,13 @@
   },
   "qsort/rust": {
     "status": "complete",
-    "started": 1793583662.6186562,
-    "finished": 1793583667.3757327
+    "started": 1793651029.9401524,
+    "finished": 1793651035.174279
   },
   "qsort/rust-with-mimalloc": {
     "status": "complete",
-    "started": 1793583667.378079,
-    "finished": 1793583672.1731253
+    "started": 1793651035.1751606,
+    "finished": 1793651040.47119
   },
   "rbtree/haskell": {
     "status": "complete",
@@ -1216,8 +1216,8 @@
   },
   "rbtree/lean": {
     "status": "complete",
-    "started": 1793583697.354652,
-    "finished": 1793583711.0464184
+    "started": 1793649968.9278708,
+    "finished": 1793649980.22371
   },
   "rbtree/morphic": {
     "status": "complete",
@@ -1226,8 +1226,8 @@
   },
   "rbtree/ocaml": {
     "status": "complete",
-    "started": 1793583729.4048796,
-    "finished": 1793583735.152662
+    "started": 1793648887.5886805,
+    "finished": 1793648892.985588
   },
   "rbtree/reussir": {
     "status": "complete",
@@ -1241,13 +1241,13 @@
   },
   "rbtree/rust": {
     "status": "complete",
-    "started": 1793583745.7779493,
-    "finished": 1793583781.805627
+    "started": 1793650746.4233186,
+    "finished": 1793650782.0836031
   },
   "rbtree/rust-with-mimalloc": {
     "status": "complete",
-    "started": 1793583781.8083305,
-    "finished": 1793583803.395237
+    "started": 1793650782.0844471,
+    "finished": 1793650804.0307097
   },
   "rbtree-lookup/haskell": {
     "status": "complete",
@@ -1266,8 +1266,8 @@
   },
   "rbtree-lookup/lean": {
     "status": "complete",
-    "started": 1793583854.024122,
-    "finished": 1793583869.1191459
+    "started": 1793650597.064616,
+    "finished": 1793650612.5378833
   },
   "rbtree-lookup/morphic": {
     "status": "complete",
@@ -1276,8 +1276,8 @@
   },
   "rbtree-lookup/ocaml": {
     "status": "complete",
-    "started": 1793583887.732102,
-    "finished": 1793583910.6068769
+    "started": 1793649786.3865044,
+    "finished": 1793649806.7812335
   },
   "rbtree-lookup/reussir": {
     "status": "complete",
@@ -1291,13 +1291,13 @@
   },
   "rbtree-lookup/rust": {
     "status": "complete",
-    "started": 1793583930.0331893,
-    "finished": 1793583949.6867101
+    "started": 1793652534.1944036,
+    "finished": 1793652554.2353406
   },
   "rbtree-lookup/rust-with-mimalloc": {
     "status": "complete",
-    "started": 1793583949.6893892,
-    "finished": 1793583971.4744291
+    "started": 1793652554.236654,
+    "finished": 1793652576.2970278
   },
   "rbtree-zipper/haskell": {
     "status": "complete",
@@ -1316,8 +1316,8 @@
   },
   "rbtree-zipper/lean": {
     "status": "complete",
-    "started": 1793583995.460914,
-    "finished": 1793584004.4673848
+    "started": 1793649980.2242727,
+    "finished": 1793649987.0310266
   },
   "rbtree-zipper/morphic": {
     "status": "complete",
@@ -1326,8 +1326,8 @@
   },
   "rbtree-zipper/ocaml": {
     "status": "complete",
-    "started": 1793584025.161124,
-    "finished": 1793584030.292621
+    "started": 1793648892.9858754,
+    "finished": 1793648897.7460327
   },
   "rbtree-zipper/reussir": {
     "status": "complete",
@@ -1341,13 +1341,13 @@
   },
   "rbtree-zipper/rust": {
     "status": "complete",
-    "started": 1793584036.7435527,
-    "finished": 1793584086.0586224
+    "started": 1793650804.0315728,
+    "finished": 1793650851.5782337
   },
   "rbtree-zipper/rust-with-mimalloc": {
     "status": "complete",
-    "started": 1793584086.0614595,
-    "finished": 1793584129.11131
+    "started": 1793650851.5790968,
+    "finished": 1793650894.4637012
   },
   "raytracer/haskell": {
     "status": "complete",
@@ -1366,13 +1366,13 @@
   },
   "raytracer/lean": {
     "status": "complete",
-    "started": 1793630004.4745483,
-    "finished": 1793630044.2221215
+    "started": 1793649953.3156776,
+    "finished": 1793649968.9273403
   },
   "raytracer/ocaml": {
     "status": "complete",
-    "started": 1793630044.2224214,
-    "finished": 1793630050.434193
+    "started": 1793648885.1861699,
+    "finished": 1793648887.5884273
   },
   "raytracer/reussir": {
     "status": "complete",
@@ -1386,13 +1386,13 @@
   },
   "raytracer/rust": {
     "status": "complete",
-    "started": 1793630055.5534663,
-    "finished": 1793630057.47796
+    "started": 1793650742.1162732,
+    "finished": 1793650744.2538886
   },
   "raytracer/rust-with-mimalloc": {
     "status": "complete",
-    "started": 1793630057.4782715,
-    "finished": 1793630059.3276684
+    "started": 1793650744.2546673,
+    "finished": 1793650746.4225242
   },
   "mltt/reussir": {
     "status": "complete",
@@ -1421,22 +1421,22 @@
   },
   "mltt/lean": {
     "status": "complete",
-    "started": 1793645604.6217594,
-    "finished": 1793645621.9601383
+    "started": 1793649936.7059705,
+    "finished": 1793649953.3151817
   },
   "mltt/ocaml": {
     "status": "complete",
-    "started": 1793645621.960424,
-    "finished": 1793645627.1577814
+    "started": 1793648879.4743927,
+    "finished": 1793648885.1859407
   },
   "mltt/rust": {
     "status": "complete",
-    "started": 1793645627.1580603,
-    "finished": 1793645636.3176796
+    "started": 1793650717.9502676,
+    "finished": 1793650727.3350115
   },
   "mltt/rust-with-mimalloc": {
     "status": "complete",
-    "started": 1793645636.3179939,
-    "finished": 1793645650.7810335
+    "started": 1793650727.33581,
+    "finished": 1793650742.1154494
   }
 }

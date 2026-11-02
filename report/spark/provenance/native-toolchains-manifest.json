@@ -1,0 +1,690 @@
+{
+  "host": "promaxgb10-edf0",
+  "architecture": "aarch64",
+  "started": 1793648880.544988,
+  "benchmark_revision": "19efdd9334de1d1fb64bb32ff59e0a47aea7d039",
+  "oxcaml_revision": "dc1bd3914b0bae35f9cb227d113db620722a5d41",
+  "config": {
+    "reussir-compiler": "/tmp/reussir-final-comparison-20261101/current/build/bin/rrc",
+    "cc": "/nix/store/55nmzskx8ai6w4a60cpyf67zxj5lg8wz-clang-wrapper-23.1.0/bin/clang",
+    "reussir-libs": "/nix/store/zjdk9vdxcxyvz8fhsijx248mfm85c1va-reussir-rt-xlto-0.1.0-git-bcfff8d41916/lib",
+    "reussir-src": "/tmp/reussir-final-comparison-20261101/current",
+    "reussir-rcgmp-runtime": "/tmp/reussir-final-comparison-20261101/current/build/lib/libRCGMPRuntime.a",
+    "koka-compiler": "/nix/store/v9p3l36r96dqsn13ifm79i7qsizbh832-koka-3.2.3/bin/koka",
+    "lean-compiler": "/nix/store/azaq5kqiiyv34dr740vb8258yz2qhq60-lean4-4.30.0-thinlto/bin/lean",
+    "leanc": "/nix/store/azaq5kqiiyv34dr740vb8258yz2qhq60-lean4-4.30.0-thinlto/bin/leanc",
+    "rustc": "/nix/store/d6bnbpk6jr95frzmmksda4r7l3v8d3m6-rustc-wrapper-1.97.1/bin/rustc",
+    "rust-extern-libs": "/nix/store/53j3mgz22p7ns9xav0j8p66mcss5h9l7-benchmark-rust-extern-crates-2/lib",
+    "ghc": "/nix/store/kz4l78kg9df4hzcidf42xji95qsrw2ay-ghc/bin/ghc",
+    "ocamlopt": "/nix/store/y4hbc5aq2x4wyv7zip80cn79ak2wav4n-oxcaml-5.4.0+ox/bin/ocamlopt",
+    "ocamlfind": "/nix/store/di7z7h3hmbv3dcpbbn9kc196jx2as6v0-ocaml5.4.0+ox-findlib-1.9.8/bin/ocamlfind",
+    "morphic-compiler": "/nix/store/wxk174dm79z05phih371ygzn9rb3n9km-morphic-0-git-da679c49a336/bin/morphic",
+    "morphic-clang": "/nix/store/qz4h8k3r84di9k5pmqqi9jjz1fxg5dih-clang-wrapper-16.0.6/bin/clang",
+    "hyperfine": "/nix/store/xrvjcvdwlikj6fpkpi5fwxam3zfxqy1z-hyperfine-1.20.0/bin/hyperfine",
+    "time": "/nix/store/hmrflw7085axj7jyh65fyrmgyz4zmkvz-time-1.10/bin/time",
+    "compile-timeout-seconds": 300,
+    "case-time-budget-seconds": 300,
+    "warmup-runs": 5,
+    "runs": 10,
+    "rust-runtime-env": [
+      "LD_PRELOAD=/nix/store/qhhf9h7pqbqyfn9yd9gb69rbgbx8jrqb-mimalloc-3.4.5/lib/libmimalloc.so"
+    ]
+  },
+  "toolchain_versions": {
+    "ocamlopt": "5.4.0+ox",
+    "lean-compiler": "Lean (version 4.30.0, aarch64-unknown-linux-gnu, commit v4.30.0, Release)",
+    "rustc": "rustc 1.97.1 (8bab26f4f 2026-07-14) (built from a source tarball)",
+    "cc": "clang version 23.1.0\nTarget: aarch64-unknown-linux-gnu\nThread model: posix\nInstalledDir: /nix/store/g6qkgp3xr663bn0gms3ywv29fjn2xpx4-clang-23.1.0/bin"
+  },
+  "ocaml_config": "version: 5.4.0+ox\nstandard_library_default: /nix/store/y4hbc5aq2x4wyv7zip80cn79ak2wav4n-oxcaml-5.4.0+ox/lib/ocaml\nstandard_library: /nix/store/y4hbc5aq2x4wyv7zip80cn79ak2wav4n-oxcaml-5.4.0+ox/lib/ocaml\nccomp_type: cc\nc_compiler: gcc\nbytecode_cflags: -O2 -fno-strict-aliasing -fwrapv -fPIC  -pthread \nocamlc_cflags: -O2 -fno-strict-aliasing -fwrapv -fPIC  -pthread \nbytecode_cppflags:  -D_FILE_OFFSET_BITS=64 \nocamlc_cppflags:  -D_FILE_OFFSET_BITS=64 \nnative_cflags: -O2 -fno-strict-aliasing -fwrapv -fPIC  -pthread \nocamlopt_cflags: -O2 -fno-strict-aliasing -fwrapv -fPIC  -pthread \nnative_cppflags:  -D_FILE_OFFSET_BITS=64 \nocamlopt_cppflags:  -D_FILE_OFFSET_BITS=64 \nbytecomp_c_compiler: gcc -O2 -fno-strict-aliasing -fwrapv -fPIC  -pthread   -D_FILE_OFFSET_BITS=64 \nnative_c_compiler: gcc -O2 -fno-strict-aliasing -fwrapv -fPIC  -pthread   -D_FILE_OFFSET_BITS=64 \nbytecomp_c_libraries:   -lm  -lpthread\nnative_c_libraries:  -lm  -lpthread\ncompression_c_libraries: \nnative_ldflags: \nnative_pack_linker: ld -r -o \nnative_compiler: true\narchitecture: arm64\nmodel: default\nint_size: 63\nword_size: 64\nsystem: linux\nasm: /nix/store/s595c37zacba37wwrcw7fjn13q68av1n-llvm-21.1.8/bin/llvm-mc -large-code-model -filetype=obj\nasm_cfi_supported: true\nasm_file0_supported: true\nasm_size_type_directives: true\nwith_frame_pointers: false\nwith_address_sanitizer: false\nwith_cpp_mangling: false\nwith_nonexecstack_note: true\nname_mangling_scheme: flat\next_exe: \next_obj: .o\next_asm: .s\next_lib: .a\next_dll: .so\nos_type: Unix\ndefault_executable_name: a.out\nsysthread_supported: true\nhost: aarch64-unknown-linux-gnu\ntarget: aarch64-unknown-linux-gnu\nflambda: false\nflambda2: true\nsafe_string: true\ndefault_safe_string: true\nflat_float_array: true\nalign_double: false\nalign_int64: false\nfunction_sections: true\nafl_instrument: false\ntsan: false\nwindows_unicode: false\nsupports_shared_libraries: true\nnative_dynlink: true\nnaked_pointers: false\nparameterised_modules: true\nwith_codegen_invariants: true\nexec_magic_number: Caml1999X591\ncmi_magic_number: Caml1999I591\ncmo_magic_number: Caml1999O591\ncma_magic_number: Caml1999A591\ncmx_magic_number: Caml1999Y591\ncmxa_magic_number: Caml1999Z591\nast_impl_magic_number: Caml1999M591\nast_intf_magic_number: Caml1999N591\ncmxs_magic_number: Caml1999D591\ncmt_magic_number: Caml1999T591\ncms_magic_number: Caml1999S591\ncmj_magic_number: Caml1999J591\nlinear_magic_number: Caml1999L591\nflambda_backend: true\nprobes: true\nstack_allocation: true\nno_stack_checks: true\nmultidomain: false\npoll_insertion: false\nox: true\noxcaml_dwarf: false\nobjcopy: /nix/store/s595c37zacba37wwrcw7fjn13q68av1n-llvm-21.1.8/bin/llvm-objcopy",
+  "package_paths": {
+    "ocaml": "/nix/store/y4hbc5aq2x4wyv7zip80cn79ak2wav4n-oxcaml-5.4.0+ox",
+    "ocaml-findlib": "/nix/store/di7z7h3hmbv3dcpbbn9kc196jx2as6v0-ocaml5.4.0+ox-findlib-1.9.8",
+    "ocaml-zarith": "/nix/store/m6krcm6qr3i06kjhi7nsqx21a7aagzxl-ocaml5.4.0+ox-zarith-1.14",
+    "lean": "/nix/store/azaq5kqiiyv34dr740vb8258yz2qhq60-lean4-4.30.0-thinlto",
+    "rust-extern-crates": "/nix/store/53j3mgz22p7ns9xav0j8p66mcss5h9l7-benchmark-rust-extern-crates-2"
+  },
+  "ocamlpath": "/nix/store/m6krcm6qr3i06kjhi7nsqx21a7aagzxl-ocaml5.4.0+ox-zarith-1.14/lib/ocaml/5.4.0+ox/site-lib",
+  "measurement_cpu": 19,
+  "compile_affinity": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19
+  ],
+  "targets": [
+    [
+      "mltt",
+      "ocaml"
+    ],
+    [
+      "raytracer",
+      "ocaml"
+    ],
+    [
+      "rbtree",
+      "ocaml"
+    ],
+    [
+      "rbtree-zipper",
+      "ocaml"
+    ],
+    [
+      "nbe-hoas",
+      "ocaml"
+    ],
+    [
+      "nbe-closure",
+      "ocaml"
+    ],
+    [
+      "derive",
+      "ocaml"
+    ],
+    [
+      "life",
+      "ocaml"
+    ],
+    [
+      "qsort",
+      "ocaml"
+    ],
+    [
+      "heap-array",
+      "ocaml"
+    ],
+    [
+      "heap-functional",
+      "ocaml"
+    ],
+    [
+      "fingertree",
+      "ocaml"
+    ],
+    [
+      "ordered-map-linear",
+      "ocaml"
+    ],
+    [
+      "ordered-map-shared",
+      "ocaml"
+    ],
+    [
+      "ordered-map-heavily-shared",
+      "ocaml"
+    ],
+    [
+      "hash-map-linear",
+      "ocaml"
+    ],
+    [
+      "hash-map-shared",
+      "ocaml"
+    ],
+    [
+      "hash-map-heavily-shared",
+      "ocaml"
+    ],
+    [
+      "functional-queue",
+      "ocaml"
+    ],
+    [
+      "list-membership",
+      "ocaml"
+    ],
+    [
+      "expr-replace",
+      "ocaml"
+    ],
+    [
+      "rbtree-lookup",
+      "ocaml"
+    ],
+    [
+      "bigint-fib",
+      "ocaml"
+    ],
+    [
+      "bigint-factorial",
+      "ocaml"
+    ],
+    [
+      "bigint-pidigits",
+      "ocaml"
+    ],
+    [
+      "bigint-rbtree",
+      "ocaml"
+    ],
+    [
+      "bigint-collatz",
+      "ocaml"
+    ],
+    [
+      "bigint-binomial",
+      "ocaml"
+    ],
+    [
+      "mltt",
+      "lean"
+    ],
+    [
+      "raytracer",
+      "lean"
+    ],
+    [
+      "rbtree",
+      "lean"
+    ],
+    [
+      "rbtree-zipper",
+      "lean"
+    ],
+    [
+      "nbe-hoas",
+      "lean"
+    ],
+    [
+      "nbe-closure",
+      "lean"
+    ],
+    [
+      "derive",
+      "lean"
+    ],
+    [
+      "life",
+      "lean"
+    ],
+    [
+      "qsort",
+      "lean"
+    ],
+    [
+      "heap-array",
+      "lean"
+    ],
+    [
+      "heap-functional",
+      "lean"
+    ],
+    [
+      "fingertree",
+      "lean"
+    ],
+    [
+      "ordered-map-linear",
+      "lean"
+    ],
+    [
+      "ordered-map-shared",
+      "lean"
+    ],
+    [
+      "ordered-map-heavily-shared",
+      "lean"
+    ],
+    [
+      "hash-map-linear",
+      "lean"
+    ],
+    [
+      "hash-map-shared",
+      "lean"
+    ],
+    [
+      "hash-map-heavily-shared",
+      "lean"
+    ],
+    [
+      "functional-queue",
+      "lean"
+    ],
+    [
+      "list-membership",
+      "lean"
+    ],
+    [
+      "expr-replace",
+      "lean"
+    ],
+    [
+      "rbtree-lookup",
+      "lean"
+    ],
+    [
+      "bigint-fib",
+      "lean"
+    ],
+    [
+      "bigint-factorial",
+      "lean"
+    ],
+    [
+      "bigint-pidigits",
+      "lean"
+    ],
+    [
+      "bigint-rbtree",
+      "lean"
+    ],
+    [
+      "bigint-collatz",
+      "lean"
+    ],
+    [
+      "bigint-binomial",
+      "lean"
+    ],
+    [
+      "mltt",
+      "rust"
+    ],
+    [
+      "mltt",
+      "rust-with-mimalloc"
+    ],
+    [
+      "raytracer",
+      "rust"
+    ],
+    [
+      "raytracer",
+      "rust-with-mimalloc"
+    ],
+    [
+      "rbtree",
+      "rust"
+    ],
+    [
+      "rbtree",
+      "rust-with-mimalloc"
+    ],
+    [
+      "rbtree-zipper",
+      "rust"
+    ],
+    [
+      "rbtree-zipper",
+      "rust-with-mimalloc"
+    ],
+    [
+      "nbe-hoas",
+      "rust"
+    ],
+    [
+      "nbe-hoas",
+      "rust-with-mimalloc"
+    ],
+    [
+      "nbe-closure",
+      "rust"
+    ],
+    [
+      "nbe-closure",
+      "rust-with-mimalloc"
+    ],
+    [
+      "derive",
+      "rust"
+    ],
+    [
+      "derive",
+      "rust-with-mimalloc"
+    ],
+    [
+      "life",
+      "rust"
+    ],
+    [
+      "life",
+      "rust-with-mimalloc"
+    ],
+    [
+      "qsort",
+      "rust"
+    ],
+    [
+      "qsort",
+      "rust-with-mimalloc"
+    ],
+    [
+      "heap-array",
+      "rust"
+    ],
+    [
+      "heap-array",
+      "rust-with-mimalloc"
+    ],
+    [
+      "heap-functional",
+      "rust"
+    ],
+    [
+      "heap-functional",
+      "rust-with-mimalloc"
+    ],
+    [
+      "fingertree",
+      "rust"
+    ],
+    [
+      "fingertree",
+      "rust-with-mimalloc"
+    ],
+    [
+      "ordered-map-linear",
+      "rust"
+    ],
+    [
+      "ordered-map-linear",
+      "rust-rpds"
+    ],
+    [
+      "ordered-map-linear",
+      "rust-rpds-with-mimalloc"
+    ],
+    [
+      "ordered-map-linear",
+      "rust-with-mimalloc"
+    ],
+    [
+      "ordered-map-shared",
+      "rust"
+    ],
+    [
+      "ordered-map-shared",
+      "rust-rpds"
+    ],
+    [
+      "ordered-map-shared",
+      "rust-rpds-with-mimalloc"
+    ],
+    [
+      "ordered-map-shared",
+      "rust-with-mimalloc"
+    ],
+    [
+      "ordered-map-heavily-shared",
+      "rust"
+    ],
+    [
+      "ordered-map-heavily-shared",
+      "rust-rpds"
+    ],
+    [
+      "ordered-map-heavily-shared",
+      "rust-rpds-with-mimalloc"
+    ],
+    [
+      "ordered-map-heavily-shared",
+      "rust-with-mimalloc"
+    ],
+    [
+      "hash-map-linear",
+      "rust"
+    ],
+    [
+      "hash-map-linear",
+      "rust-rpds"
+    ],
+    [
+      "hash-map-linear",
+      "rust-rpds-with-mimalloc"
+    ],
+    [
+      "hash-map-linear",
+      "rust-with-mimalloc"
+    ],
+    [
+      "hash-map-shared",
+      "rust"
+    ],
+    [
+      "hash-map-shared",
+      "rust-rpds"
+    ],
+    [
+      "hash-map-shared",
+      "rust-rpds-with-mimalloc"
+    ],
+    [
+      "hash-map-shared",
+      "rust-with-mimalloc"
+    ],
+    [
+      "hash-map-heavily-shared",
+      "rust"
+    ],
+    [
+      "hash-map-heavily-shared",
+      "rust-rpds"
+    ],
+    [
+      "hash-map-heavily-shared",
+      "rust-rpds-with-mimalloc"
+    ],
+    [
+      "hash-map-heavily-shared",
+      "rust-with-mimalloc"
+    ],
+    [
+      "functional-queue",
+      "rust"
+    ],
+    [
+      "functional-queue",
+      "rust-with-mimalloc"
+    ],
+    [
+      "list-membership",
+      "rust"
+    ],
+    [
+      "list-membership",
+      "rust-with-mimalloc"
+    ],
+    [
+      "expr-replace",
+      "rust"
+    ],
+    [
+      "expr-replace",
+      "rust-with-mimalloc"
+    ],
+    [
+      "rbtree-lookup",
+      "rust"
+    ],
+    [
+      "rbtree-lookup",
+      "rust-with-mimalloc"
+    ],
+    [
+      "bigint-fib",
+      "rust"
+    ],
+    [
+      "bigint-fib",
+      "rust-with-mimalloc"
+    ],
+    [
+      "bigint-factorial",
+      "rust"
+    ],
+    [
+      "bigint-factorial",
+      "rust-with-mimalloc"
+    ],
+    [
+      "bigint-pidigits",
+      "rust"
+    ],
+    [
+      "bigint-pidigits",
+      "rust-with-mimalloc"
+    ],
+    [
+      "bigint-rbtree",
+      "rust"
+    ],
+    [
+      "bigint-rbtree",
+      "rust-with-mimalloc"
+    ],
+    [
+      "bigint-collatz",
+      "rust"
+    ],
+    [
+      "bigint-collatz",
+      "rust-with-mimalloc"
+    ],
+    [
+      "bigint-binomial",
+      "rust"
+    ],
+    [
+      "bigint-binomial",
+      "rust-with-mimalloc"
+    ]
+  ],
+  "target_count": 124,
+  "source_sha256": {
+    "ocaml/qsort.ml": "626ff74c134d6c1f31315068e1fd6860e74366b7fca901d6b31faa0c0f8b7328",
+    "ocaml/derive.ml": "3847d44a3566ec212912600e6b2dd0a705cb4748f1f91303dcd3a51fc44a7d92",
+    "ocaml/expr-replace.ml": "8823bd94155bb154ad3a1fb08bbfce438f3af0d382204cd32aadc35690212381",
+    "ocaml/list-membership.ml": "d1d9b7999647a62c950e6b3bd49dbd04be82e7e36a691ab3d994f223970c78bb",
+    "ocaml/hash-map-heavily-shared.ml": "513c3e914e34db32d3d14e326f2e2aafe1c81ae2c4578b44f3555aa35ee11b95",
+    "ocaml/bigint-fib.ml": "3918c2ac0f960025f62e0a7a60d4ca184008cc7228c372b4abcc62bd1b0ecea3",
+    "ocaml/hash-map-shared.ml": "8fbceef9dcb192387b9827540fbbd4809e9c5ceb8df8e020f30c4fbbde1fdd7e",
+    "ocaml/fingertree.ml": "aced61e80bc4a59bd63a41b5fe7ca456356f8a7bfadd8b6ca6167ea0bbda885f",
+    "ocaml/hash-map-linear.ml": "e7e351578409aaa03f74a6e3cddc05ff58ecbd233a0198866edf8af84c6aab5a",
+    "ocaml/ordered-map-heavily-shared.ml": "bfc909134b95728d2104a0dbe54e65573da77a8833d2e86777869c2f70e836a8",
+    "ocaml/functional-queue.ml": "a0f572f6cae733f245fc62d649956c7a0e0c82e7551ced8f7b1bfb41d014f2b9",
+    "ocaml/ordered-map-linear.ml": "875d448932d68640fb087aeef2dae72fb020c6e212c280d91239f90c9b5eddb6",
+    "ocaml/raytracer.ml": "5306d0b10fa3f8d9d849694db3d08403522fa27ab10af34b96d900b2851baf2d",
+    "ocaml/rbtree-zipper.ml": "ebd329c3d21e27b4f6ec727c4a65285c52c203c6b66408f1b8bd73f7ad7e24b9",
+    "ocaml/ordered-map-shared.ml": "4434bea23e119be7c2060ddc612756ef5fbf8a52b5637198acd82aaa59cdd4a7",
+    "ocaml/heap-array.ml": "79b97c3f296f06821c18be036e8be2d172e08e261f82ced56e2e9f0fa1e9aed6",
+    "ocaml/nbe-closure.ml": "00f41164df5663e338e62bdaa9a138c06858b0365509d224054c5f687fe0048a",
+    "ocaml/bigint-pidigits.ml": "f87da745e13ea8ad544f8ce6668b8cc6410f2371eda61228122ae80829223e5d",
+    "ocaml/nbe-hoas.ml": "f10132ee008239cea3fc1774892323f1daf785eb65170e83646206922c28256f",
+    "ocaml/bigint-collatz.ml": "cf29ece4f962e6fdbabd551e81ded07671f762dad29c283779b511f7ee46974d",
+    "ocaml/life.ml": "90daa2c99a507eadacd6b73528d13da945ab65ba112cbfa90ee5a89c06a5848f",
+    "ocaml/bigint-binomial.ml": "63ae49eb04038cc0e198e6e450c9377b53420aec02e3698e6a8e18211202395a",
+    "ocaml/bigint-factorial.ml": "fec9ec72abd541daf99296a3effa6c0c68941e100063cbfef7aaa13393548fa4",
+    "ocaml/rbtree.ml": "ff834f1bcff4894790e8e5fb5559bcd6709f367a62fb00c94bdba733f50cc8df",
+    "ocaml/mltt.ml": "a04123cf1e4a7829886140ed00b2e8c270aa78b9dc5bf7bdd996e41edd95ebd7",
+    "ocaml/bigint-rbtree.ml": "14691879ee5fe97f0b14c40713c4092b1e9defb947a8b0559d42dc7979cda4ad",
+    "ocaml/heap-functional.ml": "5cd3d93646a9a023233f666c1d94ba1e156a7e622c390eada1fd49679a594801",
+    "ocaml/rbtree-lookup.ml": "8d1f2a5393e3f651b00a998df048f855a0f291ae44a638c5ea83a1ca29d39f0c",
+    "lean/derive.lean": "94a43e9062e50da9517053d3f26bb5b390bbe126f7ad978ae76db6625af25880",
+    "lean/expr-replace.lean": "80103c5c7f917ce2f1d51b0fb80fdb46edbda4863a236d4f1b6de8e3bbdf8da1",
+    "lean/list-membership.lean": "f28d09907add9b9c1570ce0c7128251020a38017f2ab6bd5eb0cfc174dbb8c06",
+    "lean/hash-map-linear.lean": "2c4c6dfa2d3722066bd4658e5db813dea99c57fbc8a5e11114d988c0d15da52e",
+    "lean/bigint-factorial.lean": "9cd098822793862ed36bbaf7079d2c1bc2af0757483649a81d4b297bb525c2ac",
+    "lean/mltt.lean": "7d490f31b286aeafe373752e1828ea1050380b7885da6a48be74d37c4cc7560d",
+    "lean/rbtree-lookup.lean": "200f0a3ece302759fd8bc601a018915ce771b11469661ff7857e59f14fbdc0c8",
+    "lean/raytracer.lean": "f1932f5eeffa2ca1da4d3e24bc2046a19193f20018d60af88d7b6d2d5be151c0",
+    "lean/ordered-map-shared.lean": "a583c43acd51703b5c36af43e52218b99079b50c72df19396e5d8ee156cf32e6",
+    "lean/nbe-hoas.lean": "883bddf32aaf43f1a5672138322756d0e0a4f72ee221683aaf82e15153ecdef9",
+    "lean/bigint-pidigits.lean": "87c5115e6458480e59b5fb04cf3bbfd3e7e65f38fd1d45e9f897391a36bfef41",
+    "lean/hash-map-heavily-shared.lean": "90a7e522138ff10e2a76df4975fde9cca1fc9894474a661124e37eda208097ea",
+    "lean/rbtree-zipper.lean": "9e791defcc3be785137b8e9dc2308728c9a50096816dfed3c1670b5b72494e67",
+    "lean/qsort.lean": "4cb4e1c46fc57932552a63b0f7ae89c3db11d9a630eb109598d94b5ea521f2c8",
+    "lean/heap-functional.lean": "3611716ff6d40f7e9fb94ec2cf669ec8fe728aada08de27f590a785e7d0df8f2",
+    "lean/fingertree.lean": "fdf30f0aca758d31e90955c3c925cade27ad2e57fad5ac2881a250746f5098f8",
+    "lean/ordered-map-linear.lean": "c43d6abd4661ec2eb002bed81713470298ef815cabf1b53a964cb733147ebe25",
+    "lean/life.lean": "9492bf79096c8e4b174a778c3ecf0391060e8fd785862484e81f67cc191be438",
+    "lean/bigint-binomial.lean": "53e4f9289edca9eddbb8c8b22c6215edbb32b3ae2e236563cbb32dbd4ec21c25",
+    "lean/heap.lean": "8399f70d844920cc5bfc1aef043deed7f6ad2117af9ec1da74a718397b89691f",
+    "lean/functional-queue.lean": "0c16929e2cd066cba67026db203c36b640f0408eee805a16697d0ac8a938aeb1",
+    "lean/bigint-collatz.lean": "3a3ad598f1430a463df8cff4d4fdafdfd0f7caf59c01b177e85cee385cd86a05",
+    "lean/hash-map-shared.lean": "584345b0b13464ac19ec4d64b133efb97f7fa5d818c3c264776546c5d151963a",
+    "lean/nbe-closure.lean": "3834e40a0017ea8627cbf2281430a4269a0ef684ad6a2904a69266335aae8594",
+    "lean/rbtree-zipper-lambda.lean": "15700816c56242dff954fe4ebe1de08a70b10c5e218996f3919ed194a47a2a18",
+    "lean/rbtree.lean": "fe3b0d98fe6da4e7dcdad4e6c7b24866ef7e59f6f5e428ce4ac99a9d0efcc78a",
+    "lean/bigint-fib.lean": "a28f127bec0fa00a5c85f089dc60da14ec97ee7dc20fd7155b2193254f03e00c",
+    "lean/ordered-map-heavily-shared.lean": "474232b764533603636d6936843525383fecc80ae2f39688e7336eabab92a6ca",
+    "lean/bigint-rbtree.lean": "73a2db6da2a9c5cf2528e662dcfd9d93e1264644d2c6d068631e2e8eb1c4f9fd",
+    "rust/rbtree-zipper-lambda.rs": "d214327dc8530b2c8022ff9b5a01b105bec412ac312fef4cd2580435c6ae4b78",
+    "rust/ordered-map-linear.rs": "95131e9b8a4177c54654f6b2f6b3e010c2a39df26f4d8053db4076222b08f4f0",
+    "rust/hash-map-heavily-shared-rpds.rs": "06d90f1cbb3617d6f67cd86002ed600ea002b3a656efd31349e4758d35fe8fa5",
+    "rust/functional-queue.rs": "1cc3b56d908df047fe45566303748897ed8850459626ee7c7ff02e5643910bc7",
+    "rust/ordered-map-shared-rpds.rs": "a3e205a5f591290feb3defb77dde5e38dc06c209a6dc24cc89ad1c629455fa5c",
+    "rust/nbe-closure.rs": "180de59c8fb78f0f08060aeb8b6ecf9df7dcdde0600cbedd87fa5e33584e37ab",
+    "rust/bigint-factorial.rs": "f70b129f3db362118d7cec6b159ecff24919542766c2600b60f175d2bcafbe8a",
+    "rust/rbtree.rs": "05e6393728bfe151e56a557562e466950953c671aaaf5f4288570ae610fe2ace",
+    "rust/ordered-map-heavily-shared-rpds.rs": "a01be21ea23eb2749588335b554ef65f18277abb9adbfe9e3fbf80713ea8c70f",
+    "rust/qsort.rs": "cd97832900ff9c1e0f1406f34b7b70e49bec3de8bcc4be12a3c198ea10db5ea3",
+    "rust/heap.rs": "df24bdc0f2111afc2ae101f50af57b26a7ac60ba6fd8836412fe5c55b6c8af39",
+    "rust/bigint-fib.rs": "307f5626d752562d4db1abd9589276afc096f15405ccafd20531899ba42e6423",
+    "rust/ordered-map-shared.rs": "378ae8e6b47185f138b4d055883f19b353819a483d32fbd9c650ba639114407c",
+    "rust/fingertree.rs": "51cc3c6db6411aed7cf86ee3df9c5301b1baff321b0a1702c9d9b2d03cee5163",
+    "rust/hash-map-heavily-shared.rs": "b6a126c1e0d826ffd03f302c78530dec3727a09ee08d63ffaf7ffba52cae76f9",
+    "rust/derive.rs": "464f453a7b5346b12f40fa03045644ab52f5fabfa7414ec55fa168aa51d1d717",
+    "rust/hash-map-linear-rpds.rs": "e86fb9be18c563f106f4386e928d6e82f9750c9d00011859418ac408aefdc445",
+    "rust/ordered-map-linear-rpds.rs": "fa4e59707a7230337f573bcf2ee759dc9e1b45a95cf2bc3abaecb8dad325b66b",
+    "rust/bigint-rbtree.rs": "2b78d6393cf0776fdde0db545206096eaf960b895e9db85d554a2e8f68ba6dc8",
+    "rust/life.rs": "8e840d4d5d19e3b7530b55df3eee23494b95f80b30f07d153972f9306c497fae",
+    "rust/rbtree-zipper.rs": "76963324fab7db4680869865fdb07c7eefa4702d900d2f30b3c697bb1b0c4c3a",
+    "rust/nbe-hoas.rs": "0d6b0276f3779526cfb6a6cc9747cfcbd1e7c91efe14ab5086daa2253637f9cf",
+    "rust/ordered-map-heavily-shared.rs": "825c693a251096c4a592b85c26706c40c2a9a31878dd2b208a1c362f38b57dc8",
+    "rust/bigint-pidigits.rs": "5a419ef783be3249046ee6119620f256d50d77b9aa710ee10e61ee426b7ab259",
+    "rust/hash-map-shared.rs": "44a979d330af7a92a1d16e225a2d20431ec9999d1de2035826b2fe2d970aa8cd",
+    "rust/list-membership.rs": "fb3b0559b9ebdbd4f4330a533dfada1d19076f1f5ce8a74fca2b12d3529ea056",
+    "rust/expr-replace.rs": "a33df8248c1e26e77cb91f8937994434348686017b3046b24565e4c085fb0482",
+    "rust/hash-map-linear.rs": "eae5da9456895a5a532e956fdecda29b754621f7e592829231ae462b3e899f35",
+    "rust/rbtree-lookup.rs": "ce05b065e77c17f30df1ce6684c09ac74b0d271059c57c9f44a7879b7ef94c00",
+    "rust/bigint-binomial.rs": "53054c99e4f64362617f3e6a00c1902a0a8749b1895c130b66fa97913a12c5a5",
+    "rust/heap-functional.rs": "efc975532ee6fa8597780cc23b0e4a46b693402f260534270731e45b6225de79",
+    "rust/bigint-collatz.rs": "eccd55dca203304d75f8bc09dbdc9058b79cabb395d673b5ef4097253c676f33",
+    "rust/hash-map-shared-rpds.rs": "2b70367aebf3a13d308194baae3f69ff0a85bf9f857bb2598e43e5c863e6da6f",
+    "rust/mltt.rs": "d08eef748ae9beac1c17745008fbd64276a4e2d9f162d9bf700ebff3c3595f9c",
+    "rust/raytracer.rs": "6710686fc79039065cf5771e46b79cea31ddad0ec45bee5e7ee302e0b6eff8ff",
+    "rust/extern-crates/lib.rs": "c39917bb8de077924cd9c1aa738a24fa3c32bebe54eefe4e06ab645505aea393",
+    "rust/extern-crates/Cargo.lock": "64bb7c72dfefe1a0cf9593b8b39807697248dafad3f003be9d516e8b6e53dbef",
+    "rust/extern-crates/Cargo.toml": "a6422fd755ae4caa210df898dfbddafee0d410ac7e2da53c72af26b0302ae514"
+  },
+  "harness_sha256": {
+    "runner.py": "92f37de41c23c12a9124c3f89bf62e32b01535da4c5a671a1bde3398a2a5f2d3",
+    "compile.py": "3d9055db5400c3fe858770942d25b7bd187519a544d6f7e5972a40eb2856f132",
+    "benches.py": "e2cbaf132f4d251790f0bcea148eb7b7915f51f4b9c785e9ce5cccaf191e550f",
+    "config.py": "0c212cdde6e75f301bcf9a28f1495cead5dacb0c53a56412fd5f21bdb7f81d2e",
+    "config.json": "ba290dfdb66ce787b0e7f170c5fc45e150b3015a10efef89f43547c4c373a66b",
+    "flake.nix": "9f599832461b5e28cfba976c51e1546fc3214200706b16789d712dc2290fb14f",
+    "flake.lock": "6ee20139025ed9c63c3809c97e20e4aee462d2c89f2271fba7ddc7e99d9dfed0"
+  },
+  "starting_load": [
+    0.92431640625,
+    4.12353515625,
+    7.80224609375
+  ],
+  "resumed_at": [
+    1793649896.2845376
+  ],
+  "finished": 1793653308.860806,
+  "ending_load": [
+    1.07763671875,
+    1.43798828125,
+    1.3857421875
+  ]
+}

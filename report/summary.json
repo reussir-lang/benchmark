@@ -1,8 +1,51 @@
 {
+  "toolchain_change": [
+    {
+      "host": "workstation",
+      "language": "ocaml",
+      "complete_pairs": 26,
+      "geomean_speedup": 1.0826316579373974,
+      "runtime_change_percent": -7.6324812166332805
+    },
+    {
+      "host": "workstation",
+      "language": "lean",
+      "complete_pairs": 27,
+      "geomean_speedup": 1.1119933416441647,
+      "runtime_change_percent": -10.071403977884819
+    },
+    {
+      "host": "workstation",
+      "language": "rust",
+      "complete_pairs": 68,
+      "geomean_speedup": 1.0217704866581432,
+      "runtime_change_percent": -2.130663093367169
+    },
+    {
+      "host": "spark",
+      "language": "ocaml",
+      "complete_pairs": 26,
+      "geomean_speedup": 1.0040636775950027,
+      "runtime_change_percent": -0.4047230953256098
+    },
+    {
+      "host": "spark",
+      "language": "lean",
+      "complete_pairs": 27,
+      "geomean_speedup": 1.0564287040719809,
+      "runtime_change_percent": -5.341458808765576
+    },
+    {
+      "host": "spark",
+      "language": "rust",
+      "complete_pairs": 67,
+      "geomean_speedup": 1.0019271415618343,
+      "runtime_change_percent": -0.19234348306307325
+    }
+  ],
   "cells_per_host": 288,
-  "reussir_cells_updated_per_host": 56,
-  "other_language_cells_preserved_per_host": 225,
-  "other_language_mltt_cells_added_per_host": 7,
+  "toolchain_cells_updated_per_host": 124,
+  "other_cells_preserved_per_host": 164,
   "total_cells": 576,
   "hosts": [
     {
@@ -85,9 +128,9 @@
       "variant": "lean",
       "available_pairs": 28,
       "timing_pairs": 27,
-      "time_vs_reussir": 2.2565808092124207,
+      "time_vs_reussir": 2.0293114398292156,
       "memory_pairs": 27,
-      "rss_vs_reussir": 2.018131891493017
+      "rss_vs_reussir": 2.042043443977563
     },
     {
       "host": "workstation",
@@ -103,9 +146,9 @@
       "variant": "ocaml",
       "available_pairs": 28,
       "timing_pairs": 26,
-      "time_vs_reussir": 2.2741379186628645,
+      "time_vs_reussir": 2.100564769180586,
       "memory_pairs": 26,
-      "rss_vs_reussir": 1.8966065886816494
+      "rss_vs_reussir": 4.14272625801948
     },
     {
       "host": "workstation",
@@ -130,36 +173,36 @@
       "variant": "rust",
       "available_pairs": 28,
       "timing_pairs": 28,
-      "time_vs_reussir": 2.1928154099244113,
+      "time_vs_reussir": 2.148002444212347,
       "memory_pairs": 28,
-      "rss_vs_reussir": 1.5994161913279354
+      "rss_vs_reussir": 1.602584311149182
     },
     {
       "host": "workstation",
       "variant": "rust-rpds",
       "available_pairs": 6,
       "timing_pairs": 6,
-      "time_vs_reussir": 2.438824065512461,
+      "time_vs_reussir": 2.3471606670513165,
       "memory_pairs": 6,
-      "rss_vs_reussir": 2.1431779253114542
+      "rss_vs_reussir": 2.144053464360051
     },
     {
       "host": "workstation",
       "variant": "rust-rpds-with-mimalloc",
       "available_pairs": 6,
       "timing_pairs": 6,
-      "time_vs_reussir": 1.6011335429137865,
+      "time_vs_reussir": 1.5305913685836627,
       "memory_pairs": 6,
-      "rss_vs_reussir": 1.8116304030018064
+      "rss_vs_reussir": 1.8125869494562086
     },
     {
       "host": "workstation",
       "variant": "rust-with-mimalloc",
       "available_pairs": 28,
       "timing_pairs": 28,
-      "time_vs_reussir": 1.8932288787744478,
+      "time_vs_reussir": 1.8672976591720731,
       "memory_pairs": 28,
-      "rss_vs_reussir": 2.9566783290350065
+      "rss_vs_reussir": 2.9661746487093867
     },
     {
       "host": "spark",
@@ -211,9 +254,9 @@
       "variant": "lean",
       "available_pairs": 28,
       "timing_pairs": 27,
-      "time_vs_reussir": 2.19460022893259,
+      "time_vs_reussir": 2.0773765616870805,
       "memory_pairs": 27,
-      "rss_vs_reussir": 2.0951165317323435
+      "rss_vs_reussir": 2.101462066011482
     },
     {
       "host": "spark",
@@ -229,9 +272,9 @@
       "variant": "ocaml",
       "available_pairs": 28,
       "timing_pairs": 26,
-      "time_vs_reussir": 2.6129392278525976,
+      "time_vs_reussir": 2.602364059330655,
       "memory_pairs": 26,
-      "rss_vs_reussir": 1.8054777205367116
+      "rss_vs_reussir": 3.586858677695307
     },
     {
       "host": "spark",
@@ -256,36 +299,36 @@
       "variant": "rust",
       "available_pairs": 28,
       "timing_pairs": 27,
-      "time_vs_reussir": 2.328272968674892,
+      "time_vs_reussir": 2.3360528632731796,
       "memory_pairs": 27,
-      "rss_vs_reussir": 1.691563807518988
+      "rss_vs_reussir": 1.7190459978658654
     },
     {
       "host": "spark",
       "variant": "rust-rpds",
       "available_pairs": 6,
       "timing_pairs": 6,
-      "time_vs_reussir": 2.339164866944441,
+      "time_vs_reussir": 2.2997590526044287,
       "memory_pairs": 6,
-      "rss_vs_reussir": 2.1373109409000564
+      "rss_vs_reussir": 2.1371678019055826
     },
     {
       "host": "spark",
       "variant": "rust-rpds-with-mimalloc",
       "available_pairs": 6,
       "timing_pairs": 6,
-      "time_vs_reussir": 1.6002142890225644,
+      "time_vs_reussir": 1.5653811656576515,
       "memory_pairs": 6,
-      "rss_vs_reussir": 1.8093773279043022
+      "rss_vs_reussir": 1.8094833566884951
     },
     {
       "host": "spark",
       "variant": "rust-with-mimalloc",
       "available_pairs": 28,
       "timing_pairs": 28,
-      "time_vs_reussir": 1.8605314435021525,
+      "time_vs_reussir": 1.8615232976357106,
       "memory_pairs": 28,
-      "rss_vs_reussir": 2.993953162094211
+      "rss_vs_reussir": 2.999760785590165
     }
   ],
   "plots": [
