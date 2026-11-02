@@ -15,8 +15,8 @@ sccache --show-stats > sccache-before.txt
 "$lean_toolchain/bin/lean" -o Render/Vec3.olean -c Render/Vec3.c Render/Vec3.lean
 "$lean_toolchain/bin/lean" -o Raytracer.olean -c Raytracer.c Raytracer.lean
 "$lean_toolchain/bin/leanc" --sysroot "$lean_toolchain" -nostdinc \
-  -isystem "$lean_toolchain/include/clang" -O3 -flto -c Render/Vec3.c -o Vec3.o
+  -isystem "$lean_toolchain/include/clang" -O3 -flto -march=native -c Render/Vec3.c -o Vec3.o
 "$lean_toolchain/bin/leanc" --sysroot "$lean_toolchain" -nostdinc \
-  -isystem "$lean_toolchain/include/clang" -O3 -flto -c Raytracer.c -o Raytracer.o
-env -u LEAN_CC "$lean_toolchain/bin/leanc" -O3 -flto Raytracer.o Vec3.o -o lean-original
+  -isystem "$lean_toolchain/include/clang" -O3 -flto -march=native -c Raytracer.c -o Raytracer.o
+env -u LEAN_CC "$lean_toolchain/bin/leanc" -O3 -flto -march=native Raytracer.o Vec3.o -o lean-original
 sccache --show-stats > sccache-after.txt

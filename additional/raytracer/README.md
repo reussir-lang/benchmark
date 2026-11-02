@@ -39,3 +39,8 @@ taskset -c 1 env LEAN_NUM_THREADS=1 python -c \
 
 The configured sampler uses ten timing samples, five warmups, and a shared
 five-minute measurement budget. Peak RSS comes from one completed run.
+
+Both builds target the workstation CPU with `-march=native`. Lean uses its
+bundled Clang 22 at `-O3 -flto`; Reussir #913 emits optimized LLVM IR and
+links with Clang 23 at `-O3 -flto=thin`. These compiler/LTO differences are
+part of the language toolchains used for this comparison.
