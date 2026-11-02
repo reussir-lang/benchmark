@@ -16,6 +16,7 @@
     "morphic-clang": "",
     "hyperfine": "hyperfine",
     "time": "time",
+    "compile-timeout-seconds": 300,
     "case-time-budget-seconds": 300,
     "warmup-runs": 5,
     "runs": 10,

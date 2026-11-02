@@ -1,32 +1,55 @@
+import contextvars
 import glob
 import os
 import shutil
+import signal
 import stat
 import subprocess
 import tempfile
+import time
 
-from config import CONFIG
+from config import CONFIG, positive_seconds
+
+
+_BUILD_LIMIT = contextvars.ContextVar("build_limit", default=None)
+
+
+class CompilationTimeout(RuntimeError):
+    def __init__(self, step, seconds):
+        self.seconds = seconds
+        super().__init__(f"{step}: compilation exceeded {seconds:g} seconds")
 
 
 def _run_quiet(cmd, cwd, step, env=None):
-    try:
-        subprocess.run(
-            cmd,
-            check=True,
-            cwd=cwd,
-            env=env,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.PIPE,
-            text=True,
-        )
-    except subprocess.CalledProcessError as e:
+    limit = _BUILD_LIMIT.get()
+    remaining = None if limit is None else limit[0] - time.monotonic()
+    if remaining is not None and remaining <= 0:
+        raise CompilationTimeout(step, limit[1])
+    with subprocess.Popen(
+        cmd, cwd=cwd, env=env, stdout=subprocess.PIPE,
+        stderr=subprocess.PIPE, text=True, start_new_session=True,
+    ) as process:
+        try:
+            stdout, stderr = process.communicate(timeout=remaining)
+        except BaseException as error:
+            # Compilers can launch linkers and other children that inherit pipes.
+            # Kill the complete build process group before collecting output.
+            try:
+                os.killpg(process.pid, signal.SIGKILL)
+            except ProcessLookupError:
+                pass
+            process.communicate()
+            if isinstance(error, subprocess.TimeoutExpired):
+                raise CompilationTimeout(step, limit[1]) from error
+            raise
+    if process.returncode:
         streams = [
             stream.strip()
-            for stream in (e.stdout, e.stderr)
+            for stream in (stdout, stderr)
             if stream and stream.strip()
         ]
         error_details = "\n".join(streams) if streams else "no error output"
-        raise RuntimeError(f"{step} failed: {error_details}") from e
+        raise RuntimeError(f"{step} failed: {error_details}")
 
 
 def _ensure_executable(path, step):
@@ -409,6 +432,16 @@ def compile_morphic(program: str, output: str, extra_flags=None) -> None:
 
 
 def compile_cell(bench_meta, spec, source, output, resolve) -> None:
+    """Build a cell within one deadline shared by compilation and linking."""
+    seconds = positive_seconds(CONFIG.get("compile-timeout-seconds", 300))
+    token = _BUILD_LIMIT.set((time.monotonic() + seconds, seconds))
+    try:
+        _compile_cell(bench_meta, spec, source, output, resolve)
+    finally:
+        _BUILD_LIMIT.reset(token)
+
+
+def _compile_cell(bench_meta, spec, source, output, resolve) -> None:
     """Compile one benchmark cell: a benchmark's source for one variant.
 
     ``bench_meta`` is the ``BENCHES`` entry, ``spec`` the ``VARIANTS`` entry,

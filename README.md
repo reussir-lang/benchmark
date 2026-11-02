@@ -25,6 +25,12 @@ intentionally left idiomatic.
 
 Each benchmark/variant has a five-minute measurement budget (`case-time-budget-seconds`
 in `config.json`), including warmups and peak-RSS measurement; compilation is separate.
+Compilation and linking share their own five-minute deadline per cell. Set
+`--compile-timeout SECONDS` in `main.py` or `verify.py`, or change
+`compile-timeout-seconds` in `config.json`. On expiry, the compiler and its child
+processes are stopped. The benchmark runner records `status: "compile_timeout"`
+with no timing or RSS sample and continues; verification reports a failure and
+continues its sweep.
 Slow cases use fewer warmups and timing samples. Results retain completed samples,
 their sample count and standard deviation, and indicate when the budget limited
 measurement. If only the RSS run fits, its elapsed time is retained and labeled

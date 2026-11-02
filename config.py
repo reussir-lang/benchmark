@@ -1,5 +1,14 @@
 import os
 import json
+import math
+
+
+def positive_seconds(value):
+    seconds = float(value)
+    if not math.isfinite(seconds) or seconds <= 0:
+        raise ValueError("timeout must be a finite positive number of seconds")
+    return seconds
+
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 CONFIG_PATH = os.path.join(SCRIPT_DIR, "config.json")
