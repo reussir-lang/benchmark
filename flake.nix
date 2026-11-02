@@ -423,8 +423,12 @@
             (lib.cmakeFeature "CMAKE_CXX_FLAGS" "-flto=thin")
             (lib.cmakeFeature "LEANC_OPTS" "-flto=thin")
           ];
+          # Lake compiles the generated stdlib C separately from CMake's
+          # C/C++ targets; LEANC_OPTS covers the make-based link steps.
+          LEAN_AR = "${llvmPkgs.llvm}/bin/llvm-ar";
           preConfigure = (old.preConfigure or "") + ''
             cmakeFlagsArray+=("-DLEAN_EXTRA_LINKER_FLAGS=-flto=thin -fuse-ld=lld")
+            cmakeFlagsArray+=('-DLEAN_EXTRA_LAKEFILE_TOML=moreLeancArgs = ["-flto=thin"]')
           '';
           dontStrip = true;
         });
