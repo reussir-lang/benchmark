@@ -6,7 +6,7 @@ Haskell, OCaml, and Morphic, organized as five sets:
 | Set | Benchmarks | What it exercises |
 |---|---|---|
 | `functional-data-structures` | rbtree, rbtree-zipper, nbe-hoas, nbe-closure, derive, fingertree, functional-queue | allocation, pattern matching, persistence, and reuse/GC of linked structures |
-| `large-aggregates` | life, qsort, heap-array, heap-functional | flat arrays plus matched array/tree heap workloads |
+| `large-aggregates` | life, qsort, heap-array, heap-functional, raytracer | flat arrays, matched array/tree heaps, and ray tracing over a sphere array |
 | `std-collections` | ordered-map-linear, ordered-map-shared, ordered-map-heavily-shared, hash-map-linear, hash-map-shared, hash-map-heavily-shared | each language's standard ordered map and hash map under matched insert/remove/lookup workloads at three retention tiers: none, sparse, and heavy |
 | `big-integers` | bigint-fib, bigint-factorial, bigint-pidigits, bigint-binomial, bigint-rbtree, bigint-collatz | each language's arbitrary-precision integers on heap-sized values (sums, products and quotients by a word, spigot arithmetic) and on values that stay word-sized |
 | `shared-traversals` | list-membership, expr-replace, rbtree-lookup | read-only traversals of data the caller keeps: what borrowed parameters save a reference-counted runtime |
@@ -23,8 +23,24 @@ in every port (`i64`, `Int64`, or `int64`). Loop indices and representation
 metadata may use each language's native index type, and object layouts are
 intentionally left idiomatic.
 
+Each benchmark/variant has a five-minute measurement budget (`case-time-budget-seconds`
+in `config.json`), including warmups and peak-RSS measurement; compilation is separate.
+Slow cases use fewer warmups and timing samples. Results retain completed samples,
+their sample count and standard deviation, and indicate when the budget limited
+measurement. If only the RSS run fits, its elapsed time is retained and labeled
+`gnu-time`; other timing samples come from hyperfine. A single sample has no
+standard deviation; an interrupted RSS run
+does not supply a footprint.
+
 ## Benchmarks
 
+- **raytracer** — sequential rendering of 128×85 pixels, four samples per
+  pixel, depth ten, and the original Lean StdGen stream seeded with zero.
+  Every port checks the weighted RGB checksum `64158141444`; image-file
+  writing is excluded. Reussir uses `World` member methods and a `RefCell`
+  RNG, so repeated calls always advance the same state. Morphic is blocked:
+  its current compiler has no required floating-point math intrinsics or
+  source FFI. Upstream attribution is in `licenses/raytracer-NOTICE`.
 - **rbtree / rbtree-zipper** — insert 2.5M keys into a red-black tree
   (recursive balance vs. zipper-based), count the `true` values.
 - **nbe-hoas / nbe-closure** — normalization by evaluation of a 1M-redex
