@@ -5,6 +5,6 @@ Copyright (c) 2021 Kyle Miller. Apache-2.0; see raytracer.md.
 Benchmark adaptations: 128x85 pixels, four samples per pixel, depth ten;
 render directly on the main thread; compute and print a weighted RGB checksum;
 write PPM only when an output filename is supplied; replace Array.mkArray
-with Array.replicate for Lean 4.34. Rendering mathematics and RNG are unchanged.
+with Array.replicate. Rendering mathematics and RNG are unchanged.
 
-The sequential workload is also ported to Reussir, Rust, OCaml, Haskell, Koka, and Morphic.
+The sequential workload is also ported to Reussir, Rust, OCaml, Haskell, and Koka.
