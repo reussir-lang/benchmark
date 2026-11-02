@@ -135,13 +135,10 @@ fn camera_ray(cam: Camera, s: f64, t: f64, rng: Rng) -> Ray {
     }
 }
 
-
-
 fn random_scene(rng: Rng) -> World {
     let ground = Sphere { center: vec(0.0, -1000.0, 0.0), radius: 1000.0, material: Material::Lambertian{vec(0.5, 0.5, 0.5)} };
     World { spheres: array::splat<[Sphere; 488]>(ground), size: 1 }.scene_loop(0, rng)
 }
-
 
 fn channel(value: f64) -> u64 {
     let scaled = 256.0 * math::sqrt(value / 4.0, 0);
@@ -149,7 +146,6 @@ fn channel(value: f64) -> u64 {
     let clamped = min(255.0, lower);
     clamped as u64
 }
-
 
 fn original() -> u64 {
     let rng = seed(0);

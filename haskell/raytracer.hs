@@ -1,5 +1,5 @@
 -- Adapted from kmill/lean4-raytracer, copyright 2021 Kyle Miller.
--- Apache-2.0; see raytracer/LICENSE.md.
+-- Apache-2.0; see licenses/raytracer.md.
 {-# LANGUAGE BangPatterns #-}
 
 module Main where
