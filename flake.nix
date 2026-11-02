@@ -444,6 +444,7 @@
           dontStrip = true;
         });
 
+        leanRuntimeLibraries = lib.makeLibraryPath [ pkgs.stdenv.cc.cc.lib pkgs.gmp pkgs.libuv ];
         lean = pkgs.symlinkJoin {
           name = "lean4-${leanUnwrapped.version}-thinlto";
           inherit (leanUnwrapped) version meta;
@@ -453,7 +454,14 @@
           postBuild = ''
             for program in "$out"/bin/*; do
               if test -f "$program" && test -x "$program"; then
-                wrapProgram "$program" --prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath [ pkgs.stdenv.cc.cc.lib pkgs.gmp pkgs.libuv ]}
+                if test "$(basename "$program")" = leanc; then
+                  # Consumer executables also need these libraries after the
+                  # compiler wrapper's environment has gone away.
+                  wrapProgram "$program" --prefix LD_LIBRARY_PATH : ${leanRuntimeLibraries} \
+                    --add-flags "-Wl,-rpath,${leanRuntimeLibraries}"
+                else
+                  wrapProgram "$program" --prefix LD_LIBRARY_PATH : ${leanRuntimeLibraries}
+                fi
               fi
             done
           '';
