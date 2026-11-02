@@ -35,6 +35,12 @@
       flake = false;
     };
 
+    # OxCaml's Flambda 2 compiler, shared by the OCaml benchmark cells.
+    oxcaml = {
+      url = "github:oxcaml/oxcaml/dc1bd3914b0bae35f9cb227d113db620722a5d41";
+      flake = false;
+    };
+
     # Morphic at the revision morphic/lib was vendored from (the library must
     # match the compiler). Its compiler builds against LLVM 16, which
     # nixos-unstable has dropped and nixos-25.05 still carries.
@@ -56,6 +62,7 @@
       mlir-sync,
       mlir-rcgmp,
       morphic,
+      oxcaml,
       nixpkgs-llvm16,
       ...
     }:
@@ -386,8 +393,20 @@
 
         # Zarith, OCaml's GMP-backed big integers, for the big-integer
         # benchmarks; compile.py links it through ocamlfind.
+        oxcamlCompiler = (import "${oxcaml}/default.nix" {
+          inherit pkgs;
+          src = oxcaml;
+          gitRev = oxcaml.rev;
+          withMerlin = false;
+          withAstDependentLibs = false;
+          withJsoo = false;
+        }).overrideAttrs (old: {
+          # Expose the compiler interface expected by nixpkgs' OCaml packages.
+          passthru = old.passthru // { nativeCompilers = true; };
+          meta = old.meta // { platforms = [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" ]; };
+        });
         ocamlPackages = pkgs.ocamlPackages.overrideScope (final: prev: {
-          ocaml = prev.ocaml.override { flambdaSupport = true; };
+          ocaml = oxcamlCompiler;
         });
 
         # Keep the runtime and standard-library archives available to consumer
@@ -403,8 +422,10 @@
             (lib.cmakeFeature "CMAKE_C_FLAGS" "-flto=thin")
             (lib.cmakeFeature "CMAKE_CXX_FLAGS" "-flto=thin")
             (lib.cmakeFeature "LEANC_OPTS" "-flto=thin")
-            (lib.cmakeFeature "LEAN_EXTRA_LINKER_FLAGS" "-flto=thin -fuse-ld=lld")
           ];
+          preConfigure = (old.preConfigure or "") + ''
+            cmakeFlagsArray+=("-DLEAN_EXTRA_LINKER_FLAGS=-flto=thin -fuse-ld=lld")
+          '';
           dontStrip = true;
         });
 
@@ -507,7 +528,7 @@
                 llvmPkgs.lld
                 lean
                 pkgs.koka
-                # ocamlopt from nixpkgs is configured to invoke gcc when linking.
+                # OxCaml is configured to invoke GCC when linking.
                 pkgs.gcc
                 pkgs.rustc
                 pkgs.cargo

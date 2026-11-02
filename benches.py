@@ -50,7 +50,7 @@ Toolchain configurations
   results by -40%..+190% depending on the benchmark's live-set size.
   The ``-st`` variants are separate sources using mutable ST arrays where
   the plain variant is purely functional.
-- ocaml: Flambda-enabled ``ocamlopt -O3``; big-integer benchmarks link Zarith through
+- ocaml: OxCaml (Flambda 2) ``ocamlopt -O3``; big-integer benchmarks link Zarith through
   ocamlfind (``ocaml-packages``).
 - morphic: ``morphic build --llvm-opt-level 3`` (the backend targets the host
   CPU) in Morphic's default configuration: borrow-inferred reference

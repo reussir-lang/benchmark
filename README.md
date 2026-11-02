@@ -255,10 +255,11 @@ archives retain LLVM bitcode for cross-crate optimization. Lean uses Clang throu
 rebuilt with ThinLTO. CPU-specific benchmark executables are built on the host
 where they are measured; Nix dependency packages retain portable CPU targets.
 
-OCaml uses a Flambda-enabled compiler with `-O3`. Findlib and Zarith are rebuilt
-against the same compiler. Check `ocamlopt -config` for `flambda: true`; `-O3`
-alone does not enable Flambda in a compiler built without it. External native
-libraries such as GMP remain outside LLVM LTO.
+The `ocaml` configuration uses pinned [OxCaml](https://github.com/oxcaml/oxcaml)
+(OCaml 5.4 based, Flambda 2) with `-O3`. Findlib and Zarith are rebuilt against
+that compiler. Existing benchmark sources and result keys remain `ocaml`;
+the recorded toolchain identifies OxCaml. External native libraries such as
+GMP remain outside LLVM LTO.
 
 ## Running
 
