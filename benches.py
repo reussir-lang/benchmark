@@ -5,8 +5,8 @@ The suite is organized as five benchmark sets:
 - ``functional-data-structures``: constructor-based workloads (trees, terms,
   symbolic expressions, finger trees, and real-time queues) that exercise
   allocation, pattern matching, persistence, and reuse/GC.
-- ``large-aggregates``: flat-array workloads plus the paired array and Braun
-  binary heaps, keeping the two heap representations in one result set.
+- ``large-aggregates``: flat-array workloads, the paired array and Braun
+  binary heaps, and sequential ray tracing over an array of spheres.
 - ``std-collections``: each language's standard ordered and hash maps.
 - ``big-integers``: each language's arbitrary-precision integers, on
   heap-sized values and on values that stay word-sized.
@@ -139,6 +139,21 @@ def _sources(base, haskell=None, haskell_st=None):
 
 
 BENCHES = {
+    # Morphic is blocked on missing floating-point math intrinsics.
+    "raytracer": {
+        "set": _AGGREGATES,
+        "sources": _sources(
+            {
+                "lean": "lean/raytracer.lean",
+                "reussir": ("reussir/raytracer.rr", "reussir/raytracer.rr.c"),
+                "reussir-nrac": ("reussir/raytracer.rr", "reussir/raytracer.rr.c"),
+                "koka": "koka/raytracer.kk",
+                "rust": "rust/raytracer.rs",
+                "ocaml": "ocaml/raytracer.ml",
+            },
+            haskell="haskell/raytracer.hs",
+        ),
+    },
     "rbtree": {
         "set": _FUNCTIONAL,
         "sources": _sources(

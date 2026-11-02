@@ -204,7 +204,7 @@ def compile_reussir(
                 "-march=native",
             ]
             + rcgmp_link_inputs
-            + [CONFIG["reussir-libs"] + "/libreussir_rt.a"],
+            + [CONFIG["reussir-libs"] + "/libreussir_rt.a", "-lm"],
             cwd=tmpdir,
             step="reussir linking",
         )
