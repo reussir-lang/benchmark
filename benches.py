@@ -139,6 +139,20 @@ def _sources(base, haskell=None, haskell_st=None):
 
 
 BENCHES = {
+    "raytracer": {
+        "set": _AGGREGATES,
+        "sources": _sources(
+            {
+                "lean": "lean/raytracer.lean",
+                "reussir": ("reussir/raytracer.rr", "reussir/raytracer.rr.c"),
+                "reussir-nrac": ("reussir/raytracer.rr", "reussir/raytracer.rr.c"),
+                "koka": "koka/raytracer.kk",
+                "rust": "rust/raytracer.rs",
+                "ocaml": "ocaml/raytracer.ml",
+            },
+            haskell="haskell/raytracer.hs",
+        ),
+    },
     "rbtree": {
         "set": _FUNCTIONAL,
         "sources": _sources(
