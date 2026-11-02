@@ -162,35 +162,35 @@ struct Hit {
     front: bool,
 }
 impl Sphere {
-    fn hit(&self, ray: Ray, previous: Hit) -> Hit {
+    fn hit(&self, ray: Ray, closest: f64) -> Option<Hit> {
         let oc = ray.origin - self.center;
         let a = ray.direction.dot(ray.direction);
         let half_b = oc.dot(ray.direction);
         let c = oc.dot(oc) - self.radius * self.radius;
         let discriminant = half_b * half_b - a * c;
         if discriminant < 0.0 {
-            return previous;
+            return None;
         }
         let sqrt = discriminant.sqrt();
         let near = (-half_b - sqrt) / a;
-        let root = if near < 0.001 || previous.distance < near {
+        let root = if near < 0.001 || closest < near {
             (-half_b + sqrt) / a
         } else {
             near
         };
-        if root < 0.001 || previous.distance < root {
-            return previous;
+        if root < 0.001 || closest < root {
+            return None;
         }
         let point = ray.origin + ray.direction * root;
         let outward = (point - self.center) / self.radius;
         let front = ray.direction.dot(outward) < 0.0;
-        Hit {
+        Some(Hit {
             point,
             distance: root,
             material: self.material,
             normal: if front { outward } else { -outward },
             front,
-        }
+        })
     }
 }
 struct World {
@@ -250,17 +250,21 @@ impl World {
         world
     }
     fn hit(&self, ray: Ray) -> Hit {
-        self.spheres.iter().fold(
-            Hit {
-                point: BLACK,
-                distance: 1e100,
-                material: Material::Sky,
-                normal: BLACK,
-                front: true,
-            },
-            |nearest, sphere| sphere.hit(ray, nearest),
-        )
+        let mut nearest = Hit {
+            point: BLACK,
+            distance: 1e100,
+            material: Material::Sky,
+            normal: BLACK,
+            front: true,
+        };
+        for sphere in &self.spheres {
+            if let Some(hit) = sphere.hit(ray, nearest.distance) {
+                nearest = hit;
+            }
+        }
+        nearest
     }
+
     fn color(&self, mut ray: Ray, rng: &mut Rng) -> Vec3 {
         let mut accumulated = WHITE;
         for _ in 0..DEPTH {
