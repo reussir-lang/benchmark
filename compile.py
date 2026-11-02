@@ -405,7 +405,8 @@ def compile_lean(program: str, output: str) -> None:
             ],
             cwd=tmpdir,
             step="lean linking",
-            env=env,        )
+            env=env,
+        )
     _ensure_executable(output, "lean linking")
 
 
