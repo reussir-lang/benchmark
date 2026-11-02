@@ -15,3 +15,11 @@ All rendering and checksumming remain in Reussir; the C driver only checks
 and prints the result. Compiler reuse remarks show allocations confined to
 scene construction; the rendered image loop uses value records and borrowed
 scene access. LLVM optimization remarks are captured alongside measurements.
+
+The matching Lean source is in `lean/`, with its adaptations listed in
+`lean/NOTICE`. Run `build-lean.sh` with `LEAN4_ROOT` pointing to Lean 4.34,
+and `build-native.sh` with `REUSSIR_COMPILER` and `REUSSIR_LIBS` from the
+benchmark environment. Both scripts retain sccache statistics and accept an
+optional output directory. Native compilation also saves reuse and LLVM
+optimization remarks. The resulting executables print checksum `64158141444`.
+The Lean executable optionally accepts a PPM filename for image inspection.
