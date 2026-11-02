@@ -401,17 +401,28 @@
           withAstDependentLibs = false;
           withJsoo = false;
         }).overrideAttrs (old: {
+          # Benchmark correctness checks validate the programs we measure;
+          # building the compiler does not need its full upstream CI suite.
+          doCheck = false;
           # Expose the compiler interface expected by nixpkgs' OCaml packages.
           passthru = old.passthru // { nativeCompilers = true; };
           meta = old.meta // { platforms = [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" ]; };
         });
         ocamlPackages = pkgs.ocamlPackages.overrideScope (final: prev: {
           ocaml = oxcamlCompiler;
+          findlib = prev.findlib.overrideAttrs (old: {
+            postPatch = (old.postPatch or "") + ''
+              # OxCaml's prerr_endline accepts local strings. Eta-expand the
+              # no-op branch so both callbacks admit the same argument mode.
+              substituteInPlace src/findlib/topfind.ml \
+                --replace-fail 'then prerr_endline else ignore' 'then prerr_endline else (fun _ -> ())'
+            '';
+          });
         });
 
         # Keep the runtime and standard-library archives available to consumer
         # ThinLTO links. Bootstrap with the same pinned Lean version.
-        lean = (pkgs.lean4.override { stdenv = llvmPkgs.stdenv; }).overrideAttrs (old: {
+        leanUnwrapped = (pkgs.lean4.override { stdenv = llvmPkgs.stdenv; }).overrideAttrs (old: {
           nativeBuildInputs = old.nativeBuildInputs ++ [ llvmPkgs.lld llvmPkgs.llvm ];
           cmakeFlags = old.cmakeFlags ++ [
             (lib.cmakeFeature "STAGE1_PREV_STAGE" "${pkgs.lean4}")
@@ -432,6 +443,22 @@
           '';
           dontStrip = true;
         });
+
+        lean = pkgs.symlinkJoin {
+          name = "lean4-${leanUnwrapped.version}-thinlto";
+          inherit (leanUnwrapped) version meta;
+          paths = [ leanUnwrapped ];
+          nativeBuildInputs = [ pkgs.makeWrapper ];
+          # The Clang-built shared runtime needs GCC's C++ runtime on NixOS.
+          postBuild = ''
+            for program in "$out"/bin/*; do
+              if test -f "$program" && test -x "$program"; then
+                wrapProgram "$program" --prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath [ pkgs.stdenv.cc.cc.lib ]}
+              fi
+            done
+          '';
+          passthru = { inherit (leanUnwrapped) LEAN_AR; };
+        };
 
         ghcBase = pkgs.haskellPackages.ghc;
         # Hackage packages the benchmarks use beyond GHC's boot libraries:
