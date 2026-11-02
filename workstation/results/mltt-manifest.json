@@ -1,0 +1,187 @@
+{
+  "host": "schrodingerzy",
+  "architecture": "x86_64",
+  "started": 1793645546.7603118,
+  "reussir_revision": "36f05142f3b33f442f69afa421a10b7a39ee21f9",
+  "benchmark_revision": "10f3826d1525903de23a92bae1d005094d838609",
+  "config": {
+    "reussir-compiler": "/tmp/reussir-primary-refresh-20261102/rrc",
+    "cc": "/nix/store/b04h3phsrakl7sinx6zx931n4l5lc29v-clang-wrapper-23.1.0/bin/clang",
+    "reussir-libs": "/nix/store/79835jspl8gplpjfi28qa22vcsxi7k86-reussir-rt-xlto-0.1.0-git-bcfff8d41916/lib",
+    "reussir-src": "/tmp/reussir-final-comparison-20261101/current",
+    "reussir-rcgmp-runtime": "/tmp/reussir-final-comparison-20261101/current/build/lib/libRCGMPRuntime.a",
+    "koka-compiler": "/nix/store/kfrnbc6mr3wa1nh6i5m2ib1ajf7y1qxz-koka-3.2.3/bin/koka",
+    "lean-compiler": "/nix/store/09s0cg95jsi5vwd5a747w2xdsvn05a98-lean4-4.30.0/bin/lean",
+    "leanc": "/nix/store/09s0cg95jsi5vwd5a747w2xdsvn05a98-lean4-4.30.0/bin/leanc",
+    "rustc": "/nix/store/yaa1sq5g4jar7rvlspy7kk2wd98nj6qh-rustc-wrapper-1.97.1/bin/rustc",
+    "rust-extern-libs": "/nix/store/ibmcxs11h7lmmd5xz84bng0a569s8nvg-benchmark-rust-extern-crates-1/lib",
+    "ghc": "/nix/store/8mcxdpmjysczky71y8bbkn5qqzfqh2qi-ghc/bin/ghc",
+    "ocamlopt": "/nix/store/lvhh9h9kxidhy2il93rhbw94rmgzqhr0-ocaml-5.4.1/bin/ocamlopt",
+    "ocamlfind": "/nix/store/9qibfs92lzfqkzg0ipk5476pk12yy2hq-ocaml5.4.1-findlib-1.9.8/bin/ocamlfind",
+    "morphic-compiler": "/nix/store/kbyfqykxfmq2kad618cqqinav9gmzhdr-morphic-0-git-da679c49a336/bin/morphic",
+    "morphic-clang": "/nix/store/rr8q0dspcaa1wxf3mmbqyrkqvqckbr0r-clang-wrapper-16.0.6/bin/clang",
+    "hyperfine": "/nix/store/appgcalc3hd37546nzjgynr3j33513lc-hyperfine-1.20.0/bin/hyperfine",
+    "time": "/nix/store/0b6n1yq24vs9xwlxzbla0jvidaghwabz-time-1.10/bin/time",
+    "compile-timeout-seconds": 300,
+    "case-time-budget-seconds": 300,
+    "warmup-runs": 5,
+    "runs": 10,
+    "rust-runtime-env": [
+      "LD_PRELOAD=/nix/store/65nm2qiksk60hmj21qvinnvknrpp21i2-mimalloc-3.4.5/lib/libmimalloc.so"
+    ]
+  },
+  "measurement_cpu": 1,
+  "compile_affinity": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19,
+    20,
+    21,
+    22,
+    23,
+    24,
+    25,
+    26,
+    27,
+    28,
+    29,
+    30,
+    31
+  ],
+  "targets": [
+    [
+      "mltt",
+      "haskell"
+    ],
+    [
+      "mltt",
+      "haskell-a1g"
+    ],
+    [
+      "mltt",
+      "koka"
+    ],
+    [
+      "mltt",
+      "lean"
+    ],
+    [
+      "mltt",
+      "ocaml"
+    ],
+    [
+      "mltt",
+      "rust"
+    ],
+    [
+      "mltt",
+      "rust-with-mimalloc"
+    ]
+  ],
+  "target_count": 7,
+  "reussir_compiler_sha256": "fedc658ace8b914e0b9715852420293ecfb28abf288f7d954236b9ac78289ddc",
+  "compiler_launch_environment": {
+    "native_compiler": "/tmp/reussir-primary-refresh-20261102/rrc.native",
+    "native_compiler_sha256": "fedc658ace8b914e0b9715852420293ecfb28abf288f7d954236b9ac78289ddc",
+    "launcher_sha256": "6dbd99bb129da718ce9b4582445a0ebcab217c5c60fdc582193f030a1a9e5ad7",
+    "compiler_only_library_path": "/nix/store/qfiyw6qyrk4x0ly8qpak2rvf9wd1wa9l-llvm-23.1.0-lib/lib:/nix/store/f5526lfkaqpv3x82l9l5xcaqjzzy7m8j-mlir-23.1.0/lib:/nix/store/mczwc9iws3bjamnx0fi5kxgn9gpvin2g-openmp-21.1.8/lib:/nix/store/0vqb1mcas5j8dv6bhbrshinlgsg6bvgi-gcc-15.3.0-lib/lib:/nix/store/l3p6y554mkxi4vipnnp8809kxj0g1lyv-zlib-1.3.2/lib:/nix/store/jwyskbj2mc7izs67ib2msydsh0vbnwl9-gmp-with-cxx-6.3.0/lib"
+  },
+  "runtime_archive_sha256": "0234d94275893e8fff7d92677d28a74d050e0b3609ce1fba7834597d5fa4d200",
+  "rcgmp_runtime_sha256": "84dc6017920b15b40de1c1528d00188df2a5de1123a0446e2199105da22be6c1",
+  "source_sha256": {
+    "rust/mltt.rs": "d08eef748ae9beac1c17745008fbd64276a4e2d9f162d9bf700ebff3c3595f9c",
+    "ocaml/mltt.ml": "a04123cf1e4a7829886140ed00b2e8c270aa78b9dc5bf7bdd996e41edd95ebd7",
+    "haskell/mltt.hs": "3e1842b0eac816622b8c8b39beb718ba4b785691704d694a0680104f3cf2e66e",
+    "koka/mltt.kk": "2f0ae16623e2ff701f086ccb553337e888995333f5adeaf6796809b32a778b12",
+    "morphic/mltt.mor": "52a4b0fd7711db90400b13ce7865df0ef35537299fe171ca9aed95012348c0dd",
+    "lean/mltt.lean": "7d490f31b286aeafe373752e1828ea1050380b7885da6a48be74d37c4cc7560d",
+    "reussir/mltt.rr.c": "073973fe39d0f82123a6688ee8272c5434565b83d07d0ef1c63920351d6bd110",
+    "reussir/mltt.rr": "bbd08f4c3dd21091dfd7d8c8e8c9187c2ce6f737cdf9acfc3af81dc8d7e519a9"
+  },
+  "library_source_sha256": {
+    "library/std/.gitignore": "501d674e27e50b1b2e3e9148eb2fa854fdea34fd26f923620aab8ca023cb5451",
+    "library/std/rene.ncl": "50d2a383d641f2821e637c14f070b6f72ebab6796625929d0b2ccabd42f66029",
+    "library/test_utils/.gitignore": "501d674e27e50b1b2e3e9148eb2fa854fdea34fd26f923620aab8ca023cb5451",
+    "library/test_utils/rene.ncl": "7009d947b0f086b90ebc054c57e2f4f6bdcc345da31ed24e37807b854e244cd3",
+    "library/core/rene.ncl": "a7a5524bf163e34425eadcd745f1c7cdfbb7aaabc4c8dff5308d028091ddd38c",
+    "library/core/src/lib.rr": "24d6a01e5e06779facea8bb8a732addfa1fb4834df01b1e870bcdc074d0a3da2",
+    "library/core/src/cmp.rr": "f282d766b0492015746a94e3a0b95a7c4775f07675041a2c0e6cf9980892d375",
+    "library/core/src/pjrt.rr": "a9ea5120416f7f384042f1b202a5029ec459158554f19cf981e1dfc05de91368",
+    "library/core/src/num.rr": "4d3dbebf914d94e897bcd684706941b12dfef995838bf3c67cb8ab135cc13986",
+    "library/core/src/marker.rr": "549ffb9c395e6fad2a4efa13caa9f7b789697bb83c7c287470e12b368a5791b8",
+    "library/core/src/intrinsic/str.rr": "503b509523577cef7a10f21d39c107fa4c2fef95a1392622d1230b2318dcc8d8",
+    "library/core/src/intrinsic/const_seq.rr": "b9fb532cb35a50e3b421eaba43deb33a8531e32559bb590f3a693027f504c887",
+    "library/core/src/intrinsic/nullable.rr": "9eda4d48f3e2f667c3604fa783ebc61f3eaef2395a008d6db859a89b6e9f96a9",
+    "library/core/src/intrinsic/math.rr": "2bec6059b4ded1d0d01614e0bdcf56cf0e8e24f638a4b646ec3e946d73bf13ef",
+    "library/core/src/intrinsic/cell.rr": "b45a967fd796f9fba15090fd9455a9a22209a295621a56907bf6e18a5258eef5",
+    "library/core/src/intrinsic/panic.rr": "befb5fdb2e2704412f81404df4ff202ec0d6c8fcc8ff7ce4ea53945e9505b552",
+    "library/core/src/intrinsic/arc.rr": "6ce1da87ac31c5af94435cde2a2777a44e8f319786f80ceaa396a3d27766dceb",
+    "library/core/src/intrinsic/tensor.rr": "b11faebb578c13ccd81d0add782fdc8ddaed0e7771de402beee5afa22c5bbeba",
+    "library/core/src/intrinsic/mod.rr": "0ec27a6ae1e362428d7a9510a3acc11061590664a70a1b016238837eda62cc7c",
+    "library/core/src/intrinsic/bigint.rr": "6413ba55411dc281111c600934ee425a2a656eb3f4bb89f39dac9b56da054ac8",
+    "library/core/src/intrinsic/pjrt.rr": "e876c814a1689cb8afb645019edbfd9a4bc375a81180e6874a891d311629db87",
+    "library/test_utils/src/io.rr": "bebc2f06174d83848939699fbc1fddf53f03b8f460c185b3e59c5e966abf6b53",
+    "library/test_utils/src/lib.rr": "a4113449395433c9b9aded8932c37d432eddb65387e2e5ab4ac3739c4b93985e",
+    "library/std/src/option.rr": "c41e9e91cac130892f5c9a4e92cf834345512d662304f207957f7d496bfefc79",
+    "library/std/src/string.rr": "fede1bbaf47c1217dd8766a10eaef117fb2dd6459fa9c230bd46098e423a2b6e",
+    "library/std/src/process.rr": "88d1d297abee6ecbe30dbe76d7311a04baceb11e46cafa0d3bef5a9ec2393364",
+    "library/std/src/result.rr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "library/std/src/bigint.rr": "29be8d059c3c0b99fba67fee14fbc34aea75010c1a306d32c90156773d93d1e7",
+    "library/std/src/hash.rr": "5d3129dcf8e4edb980401b7efdf24e2e5eec2b08b48cc7b81d94035443b6e962",
+    "library/std/src/lib.rr": "35e83961248cef70d2278c453a80b2f516ac6cdd1e46617bca64f1192b76e631",
+    "library/std/src/collections/mod.rr": "1afd8977e906ff1ba288647c5faf9a2f6a38aed6920eeb5afd9cedade87e35d6",
+    "library/std/src/collections/pure/rtqueue.rr": "4ebfd119916eae8f5813ee0547e0e03fb309cc68f63db0caa93290dc9a54f736",
+    "library/std/src/collections/pure/wavlset.rr": "d5ea5d44f4610bcdccb2bae9eb5985e899c84a5a47d8a79d6d9b47fa93deff13",
+    "library/std/src/collections/pure/wavlmap.rr": "bbfb52b664cd60e72584e37876cf9ded01bcede344add554b5eecc577fe56836",
+    "library/std/src/collections/pure/hashset.rr": "45bb3febc26b2bdbb43ea78dbd632fbc17bdfdc88c248074d0a2a47076438eb3",
+    "library/std/src/collections/pure/pairing_heap.rr": "2fe75ea11de9bae2c8a16e5dbe0002f6987399c3d579f9596e855177f8b20407",
+    "library/std/src/collections/pure/hashmap.rr": "7af4614f0c505e087c32e41875cd2328b54f1a4bac9754c5bcd9799c7147a6cc",
+    "library/std/src/collections/pure/list.rr": "5ee884807fed9166cc8bb7894e31775109072f9fab60e22872ba8e5b6f72a2fc",
+    "library/std/src/collections/pure/binomial_heap.rr": "face0cc9ca7616471aa8d7a697db368c67d5b4440a4f040e418a92e51c423f3b",
+    "library/std/src/collections/pure/mod.rr": "6cf1805c303f8b5a264823cfbf69747f03613509c04f229988ad23d7bcf714f7",
+    "library/std/src/collections/pure/fingertree.rr": "b5c0fac90f626e72e96526dbf392e89bcb14229c8aef37a31981360f32ff86c6",
+    "library/std/src/collections/cow/hashset.rr": "566bedf90e2c704076caecda016013ab2f525ea6611c58ba338aa3bc83fa6f36",
+    "library/std/src/collections/cow/vec.rr": "3de027af085354ae480cba1509f18f9ccf0ac7b8f5af4fa68bc762c0229ebf97",
+    "library/std/src/collections/cow/hashmap.rr": "1e3559f43cd108f5ca1b4e57b07877d99a743b36f97a3e3df108d14a7691a2f5",
+    "library/std/src/collections/cow/btreeset.rr": "8528cadb92efd44c63ca3f6b65e77bb5ecc822a4bb85c549666d633db89c2a67",
+    "library/std/src/collections/cow/btreemap.rr": "b7ecfa731d16a195b95ac008d7ab6cd209e6749b00f902add0a15e2ad8ee2b64",
+    "library/std/src/collections/cow/mod.rr": "a7c4504604c52c98ab7d026c23fa7678246bafc551c141b4d7fd446c5fb11d5b",
+    "library/std/src/collections/cow/vecdeque.rr": "d7e4772d5eb2652e13e125409c1d96c1ab8d524b2a6974b9357ccb385f8aa2d3",
+    "library/std/src/collections/cow/binaryheap.rr": "e7128d1da41cb3bb793413ea26fb46d9dd7da7c1cab50c4d03afffb722c37fc7"
+  },
+  "harness_sha256": {
+    "runner.py": "92f37de41c23c12a9124c3f89bf62e32b01535da4c5a671a1bde3398a2a5f2d3",
+    "compile.py": "340b40a40388a29bda4bc9a348c895e16b3f9537363cff08b656a63b299bd668",
+    "benches.py": "678ca9359ac179a14301aacae8655bca0ce37e0dc6fe380c6e10ea1af32f655f",
+    "config.py": "0c212cdde6e75f301bcf9a28f1495cead5dacb0c53a56412fd5f21bdb7f81d2e",
+    "config.json": "ba290dfdb66ce787b0e7f170c5fc45e150b3015a10efef89f43547c4c373a66b"
+  },
+  "starting_load": [
+    0.138671875,
+    0.82373046875,
+    0.751953125
+  ],
+  "finished": 1793645650.7813563,
+  "ending_load": [
+    0.89208984375,
+    0.9052734375,
+    0.79345703125
+  ]
+}

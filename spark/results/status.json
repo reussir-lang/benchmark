@@ -26,13 +26,13 @@
   },
   "bigint-binomial/reussir": {
     "status": "complete",
-    "started": 1793577084.8922815,
-    "finished": 1793577108.3601382
+    "started": 1793645424.2790825,
+    "finished": 1793645445.7743354
   },
   "bigint-binomial/reussir-nrac": {
     "status": "complete",
-    "started": 1793577108.3604367,
-    "finished": 1793577131.7993202
+    "started": 1793645445.775116,
+    "finished": 1793645467.3255098
   },
   "bigint-binomial/rust": {
     "status": "complete",
@@ -71,13 +71,13 @@
   },
   "bigint-collatz/reussir": {
     "status": "complete",
-    "started": 1793577364.8931277,
-    "finished": 1793577369.738752
+    "started": 1793645418.2796805,
+    "finished": 1793645421.2964406
   },
   "bigint-collatz/reussir-nrac": {
     "status": "complete",
-    "started": 1793577369.7391367,
-    "finished": 1793577374.5802732
+    "started": 1793645421.297195,
+    "finished": 1793645424.278306
   },
   "bigint-collatz/rust": {
     "status": "complete",
@@ -116,13 +116,13 @@
   },
   "bigint-factorial/reussir": {
     "status": "complete",
-    "started": 1793577641.9182398,
-    "finished": 1793577654.447753
+    "started": 1793645369.8424585,
+    "finished": 1793645380.5221603
   },
   "bigint-factorial/reussir-nrac": {
     "status": "complete",
-    "started": 1793577654.4482265,
-    "finished": 1793577666.9688962
+    "started": 1793645380.5228765,
+    "finished": 1793645391.1407013
   },
   "bigint-factorial/rust": {
     "status": "complete",
@@ -161,13 +161,13 @@
   },
   "bigint-fib/reussir": {
     "status": "complete",
-    "started": 1793577803.7717657,
-    "finished": 1793577814.2833705
+    "started": 1793645352.4595358,
+    "finished": 1793645361.1907833
   },
   "bigint-fib/reussir-nrac": {
     "status": "complete",
-    "started": 1793577814.283926,
-    "finished": 1793577824.8103206
+    "started": 1793645361.1914723,
+    "finished": 1793645369.8417578
   },
   "bigint-fib/rust": {
     "status": "complete",
@@ -206,13 +206,13 @@
   },
   "bigint-pidigits/reussir": {
     "status": "complete",
-    "started": 1793578042.6666188,
-    "finished": 1793578051.9226804
+    "started": 1793645391.14142,
+    "finished": 1793645398.551137
   },
   "bigint-pidigits/reussir-nrac": {
     "status": "complete",
-    "started": 1793578051.9233227,
-    "finished": 1793578061.1758919
+    "started": 1793645398.5518508,
+    "finished": 1793645405.9089093
   },
   "bigint-pidigits/rust": {
     "status": "complete",
@@ -251,13 +251,13 @@
   },
   "bigint-rbtree/reussir": {
     "status": "complete",
-    "started": 1793578179.908846,
-    "finished": 1793578186.992115
+    "started": 1793645405.9096508,
+    "finished": 1793645410.9024527
   },
   "bigint-rbtree/reussir-nrac": {
     "status": "complete",
-    "started": 1793578186.9929385,
-    "finished": 1793578196.4347599
+    "started": 1793645410.9032423,
+    "finished": 1793645418.2788634
   },
   "bigint-rbtree/rust": {
     "status": "complete",
@@ -301,13 +301,13 @@
   },
   "derive/reussir": {
     "status": "complete",
-    "started": 1793578340.3049452,
-    "finished": 1793578347.44015
+    "started": 1793644858.4931164,
+    "finished": 1793644863.5416627
   },
   "derive/reussir-nrac": {
     "status": "complete",
-    "started": 1793578347.4410434,
-    "finished": 1793578354.5714402
+    "started": 1793644863.542072,
+    "finished": 1793644868.5241082
   },
   "derive/rust": {
     "status": "complete",
@@ -351,13 +351,13 @@
   },
   "expr-replace/reussir": {
     "status": "complete",
-    "started": 1793578430.913273,
-    "finished": 1793578438.2033947
+    "started": 1793645319.296305,
+    "finished": 1793645324.5873418
   },
   "expr-replace/reussir-nrac": {
     "status": "complete",
-    "started": 1793578438.2043552,
-    "finished": 1793578445.4893627
+    "started": 1793645324.587992,
+    "finished": 1793645329.7918348
   },
   "expr-replace/rust": {
     "status": "complete",
@@ -401,13 +401,13 @@
   },
   "fingertree/reussir": {
     "status": "complete",
-    "started": 1793578482.8543005,
-    "finished": 1793578486.5549395
+    "started": 1793644924.6949139,
+    "finished": 1793644926.3382902
   },
   "fingertree/reussir-nrac": {
     "status": "complete",
-    "started": 1793578486.5559976,
-    "finished": 1793578490.3044515
+    "started": 1793644926.3387477,
+    "finished": 1793644928.1033483
   },
   "fingertree/rust": {
     "status": "complete",
@@ -451,13 +451,13 @@
   },
   "functional-queue/reussir": {
     "status": "complete",
-    "started": 1793578515.6225355,
-    "finished": 1793578519.3316472
+    "started": 1793645303.6079621,
+    "finished": 1793645305.4257545
   },
   "functional-queue/reussir-nrac": {
     "status": "complete",
-    "started": 1793578519.332811,
-    "finished": 1793578523.039434
+    "started": 1793645305.4263473,
+    "finished": 1793645307.2357192
   },
   "functional-queue/rust": {
     "status": "complete",
@@ -501,13 +501,13 @@
   },
   "hash-map-heavily-shared/reussir": {
     "status": "complete",
-    "started": 1793579585.5259619,
-    "finished": 1793579646.218789
+    "started": 1793645186.0242016,
+    "finished": 1793645244.675318
   },
   "hash-map-heavily-shared/reussir-nrac": {
     "status": "complete",
-    "started": 1793579646.220247,
-    "finished": 1793579707.2419307
+    "started": 1793645244.6759741,
+    "finished": 1793645303.6073105
   },
   "hash-map-heavily-shared/rust": {
     "status": "budget_limited",
@@ -561,13 +561,13 @@
   },
   "hash-map-linear/reussir": {
     "status": "complete",
-    "started": 1793580483.6052854,
-    "finished": 1793580502.9986744
+    "started": 1793645045.4892771,
+    "finished": 1793645061.9694428
   },
   "hash-map-linear/reussir-nrac": {
     "status": "complete",
-    "started": 1793580503.0000129,
-    "finished": 1793580522.4477687
+    "started": 1793645061.9700582,
+    "finished": 1793645079.037761
   },
   "hash-map-linear/rust": {
     "status": "complete",
@@ -621,13 +621,13 @@
   },
   "hash-map-shared/reussir": {
     "status": "complete",
-    "started": 1793581353.2690215,
-    "finished": 1793581409.0699363
+    "started": 1793645079.038383,
+    "finished": 1793645132.2356598
   },
   "hash-map-shared/reussir-nrac": {
     "status": "complete",
-    "started": 1793581409.0714207,
-    "finished": 1793581465.4486198
+    "started": 1793645132.2362833,
+    "finished": 1793645186.023564
   },
   "hash-map-shared/rust": {
     "status": "complete",
@@ -681,13 +681,13 @@
   },
   "heap-array/reussir": {
     "status": "complete",
-    "started": 1793581852.3433492,
-    "finished": 1793581860.4898045
+    "started": 1793644887.02907,
+    "finished": 1793644893.2222269
   },
   "heap-array/reussir-nrac": {
     "status": "complete",
-    "started": 1793581860.4912477,
-    "finished": 1793581868.6340227
+    "started": 1793644893.2226298,
+    "finished": 1793644899.4032507
   },
   "heap-array/rust": {
     "status": "complete",
@@ -731,13 +731,13 @@
   },
   "heap-functional/reussir": {
     "status": "complete",
-    "started": 1793582051.6659517,
-    "finished": 1793582063.2948225
+    "started": 1793644899.4036694,
+    "finished": 1793644909.0752873
   },
   "heap-functional/reussir-nrac": {
     "status": "complete",
-    "started": 1793582063.296384,
-    "finished": 1793582080.8981762
+    "started": 1793644909.0757189,
+    "finished": 1793644924.6944628
   },
   "heap-functional/rust": {
     "status": "complete",
@@ -791,13 +791,13 @@
   },
   "life/reussir": {
     "status": "complete",
-    "started": 1793582431.3969653,
-    "finished": 1793582437.656031
+    "started": 1793644868.5245173,
+    "finished": 1793644872.962989
   },
   "life/reussir-nrac": {
     "status": "complete",
-    "started": 1793582437.6576765,
-    "finished": 1793582443.9155777
+    "started": 1793644872.9633725,
+    "finished": 1793644877.4314923
   },
   "life/rust": {
     "status": "complete",
@@ -841,13 +841,13 @@
   },
   "list-membership/reussir": {
     "status": "complete",
-    "started": 1793582508.1128175,
-    "finished": 1793582515.9708967
+    "started": 1793645307.23632,
+    "finished": 1793645313.2465599
   },
   "list-membership/reussir-nrac": {
     "status": "complete",
-    "started": 1793582515.9726317,
-    "finished": 1793582523.83146
+    "started": 1793645313.2471793,
+    "finished": 1793645319.2956855
   },
   "list-membership/rust": {
     "status": "complete",
@@ -891,13 +891,13 @@
   },
   "nbe-closure/reussir": {
     "status": "complete",
-    "started": 1793582577.5248008,
-    "finished": 1793582583.1914759
+    "started": 1793644850.889299,
+    "finished": 1793644854.62396
   },
   "nbe-closure/reussir-nrac": {
     "status": "complete",
-    "started": 1793582583.193468,
-    "finished": 1793582589.1008737
+    "started": 1793644854.6243575,
+    "finished": 1793644858.492729
   },
   "nbe-closure/rust": {
     "status": "complete",
@@ -941,13 +941,13 @@
   },
   "nbe-hoas/reussir": {
     "status": "complete",
-    "started": 1793582650.4397335,
-    "finished": 1793582656.435614
+    "started": 1793644842.7072785,
+    "finished": 1793644846.729603
   },
   "nbe-hoas/reussir-nrac": {
     "status": "complete",
-    "started": 1793582656.4376876,
-    "finished": 1793582662.6091743
+    "started": 1793644846.7299752,
+    "finished": 1793644850.888938
   },
   "nbe-hoas/rust": {
     "status": "complete",
@@ -991,13 +991,13 @@
   },
   "ordered-map-heavily-shared/reussir": {
     "status": "complete",
-    "started": 1793583045.3279493,
-    "finished": 1793583069.762038
+    "started": 1793645000.8633611,
+    "finished": 1793645023.161623
   },
   "ordered-map-heavily-shared/reussir-nrac": {
     "status": "complete",
-    "started": 1793583069.7642457,
-    "finished": 1793583094.2895155
+    "started": 1793645023.1622083,
+    "finished": 1793645045.4886804
   },
   "ordered-map-heavily-shared/rust": {
     "status": "complete",
@@ -1051,13 +1051,13 @@
   },
   "ordered-map-linear/reussir": {
     "status": "complete",
-    "started": 1793583694.1593726,
-    "finished": 1793583707.2542245
+    "started": 1793644928.103818,
+    "finished": 1793644939.4689422
   },
   "ordered-map-linear/reussir-nrac": {
     "status": "complete",
-    "started": 1793583707.2563732,
-    "finished": 1793583720.531761
+    "started": 1793644939.4694593,
+    "finished": 1793644951.0237944
   },
   "ordered-map-linear/rust": {
     "status": "complete",
@@ -1111,13 +1111,13 @@
   },
   "ordered-map-shared/reussir": {
     "status": "complete",
-    "started": 1793584156.9348636,
-    "finished": 1793584183.9501
+    "started": 1793644951.0243447,
+    "finished": 1793644975.8718822
   },
   "ordered-map-shared/reussir-nrac": {
     "status": "complete",
-    "started": 1793584183.9524553,
-    "finished": 1793584211.1029696
+    "started": 1793644975.8724504,
+    "finished": 1793645000.8627875
   },
   "ordered-map-shared/rust": {
     "status": "complete",
@@ -1181,13 +1181,13 @@
   },
   "qsort/reussir": {
     "status": "complete",
-    "started": 1793584505.9187186,
-    "finished": 1793584512.5490754
+    "started": 1793644877.4318733,
+    "finished": 1793644882.2222092
   },
   "qsort/reussir-nrac": {
     "status": "complete",
-    "started": 1793584512.5513372,
-    "finished": 1793584519.1760936
+    "started": 1793644882.2225926,
+    "finished": 1793644887.028673
   },
   "qsort/rust": {
     "status": "complete",
@@ -1231,13 +1231,13 @@
   },
   "rbtree/reussir": {
     "status": "complete",
-    "started": 1793584606.117937,
-    "finished": 1793584612.9541936
+    "started": 1793644822.1614547,
+    "finished": 1793644827.017628
   },
   "rbtree/reussir-nrac": {
     "status": "complete",
-    "started": 1793584612.956592,
-    "finished": 1793584622.2642298
+    "started": 1793644827.0179448,
+    "finished": 1793644834.3978252
   },
   "rbtree/rust": {
     "status": "complete",
@@ -1281,13 +1281,13 @@
   },
   "rbtree-lookup/reussir": {
     "status": "complete",
-    "started": 1793584821.6937823,
-    "finished": 1793584831.78465
+    "started": 1793645329.7924864,
+    "finished": 1793645337.7802064
   },
   "rbtree-lookup/reussir-nrac": {
     "status": "complete",
-    "started": 1793584831.787122,
-    "finished": 1793584848.5614336
+    "started": 1793645337.7809303,
+    "finished": 1793645352.4587817
   },
   "rbtree-lookup/rust": {
     "status": "complete",
@@ -1331,13 +1331,13 @@
   },
   "rbtree-zipper/reussir": {
     "status": "complete",
-    "started": 1793584987.7386081,
-    "finished": 1793584993.7749565
+    "started": 1793644834.3981438,
+    "finished": 1793644838.6181908
   },
   "rbtree-zipper/reussir-nrac": {
     "status": "complete",
-    "started": 1793584993.7775078,
-    "finished": 1793584999.8081555
+    "started": 1793644838.6185164,
+    "finished": 1793644842.7069368
   },
   "rbtree-zipper/rust": {
     "status": "complete",
@@ -1376,13 +1376,13 @@
   },
   "raytracer/reussir": {
     "status": "complete",
-    "started": 1793630055.6565008,
-    "finished": 1793630058.1448586
+    "started": 1793644817.2938607,
+    "finished": 1793644819.7620878
   },
   "raytracer/reussir-nrac": {
     "status": "complete",
-    "started": 1793630058.1451454,
-    "finished": 1793630060.5881336
+    "started": 1793644819.7623265,
+    "finished": 1793644822.1611981
   },
   "raytracer/rust": {
     "status": "complete",
@@ -1393,5 +1393,50 @@
     "status": "complete",
     "started": 1793630062.393336,
     "finished": 1793630064.2699761
+  },
+  "mltt/reussir": {
+    "status": "complete",
+    "started": 1793644776.9908526,
+    "finished": 1793644797.0853877
+  },
+  "mltt/reussir-nrac": {
+    "status": "complete",
+    "started": 1793644797.0855708,
+    "finished": 1793644817.2936068
+  },
+  "mltt/haskell": {
+    "status": "complete",
+    "started": 1793645548.8515456,
+    "finished": 1793645558.1826649
+  },
+  "mltt/haskell-a1g": {
+    "status": "complete",
+    "started": 1793645558.1828694,
+    "finished": 1793645585.3115954
+  },
+  "mltt/koka": {
+    "status": "complete",
+    "started": 1793645585.3118618,
+    "finished": 1793645603.1806626
+  },
+  "mltt/lean": {
+    "status": "complete",
+    "started": 1793645603.180922,
+    "finished": 1793645619.0577924
+  },
+  "mltt/ocaml": {
+    "status": "complete",
+    "started": 1793645619.0580688,
+    "finished": 1793645628.2156677
+  },
+  "mltt/rust": {
+    "status": "complete",
+    "started": 1793645628.2159607,
+    "finished": 1793645640.4511633
+  },
+  "mltt/rust-with-mimalloc": {
+    "status": "complete",
+    "started": 1793645640.4514666,
+    "finished": 1793645650.231429
   }
 }

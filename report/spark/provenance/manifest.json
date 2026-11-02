@@ -1,261 +1,37 @@
 {
   "host": "promaxgb10-edf0",
   "architecture": "aarch64",
-  "started": 1793576825.2928216,
-  "flake_inputs": {
-    "fenix": {
-      "inputs": {
-        "nixpkgs": [
-          "nixpkgs"
-        ],
-        "rust-analyzer-src": "rust-analyzer-src"
-      },
-      "locked": {
-        "lastModified": 1788261902,
-        "narHash": "sha256-N7UHRZbJzgWaad+SOgl9QlWKiBulHan2/ezZhLfnjlo=",
-        "owner": "nix-community",
-        "repo": "fenix",
-        "rev": "af85de9d317b402448a8ebb06bc16c7fd82f0375",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-community",
-        "repo": "fenix",
-        "type": "github"
-      }
-    },
-    "flake-utils": {
-      "inputs": {
-        "systems": "systems"
-      },
-      "locked": {
-        "lastModified": 1731533236,
-        "narHash": "sha256-l0KFg5HjrsfsO/JpG+r7fRrqm12kzFHyUHqHCVpMMbI=",
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "rev": "11707dc2f618dd54ca8739b309ec4fc024de578b",
-        "type": "github"
-      },
-      "original": {
-        "owner": "numtide",
-        "repo": "flake-utils",
-        "type": "github"
-      }
-    },
-    "immer": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1764710710,
-        "narHash": "sha256-jP0DXOu21jMkPunXv4CIBb4wVusT21GAWaGcVDnxzzE=",
-        "owner": "arximboldi",
-        "repo": "immer",
-        "rev": "06d94ce48a02b11d3b225083a820f82c3d3ef462",
-        "type": "github"
-      },
-      "original": {
-        "owner": "arximboldi",
-        "repo": "immer",
-        "rev": "06d94ce48a02b11d3b225083a820f82c3d3ef462",
-        "type": "github"
-      }
-    },
-    "mlir-rcgmp": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1792974520,
-        "narHash": "sha256-UAIAewjuJkBxNq5RUEoy6eLk7FqcidmrNUsgTFuNTyU=",
-        "owner": "reussir-lang",
-        "repo": "mlir-rcgmp",
-        "rev": "cc73b218f6ce90b005744c4e94b2b32a0e30c725",
-        "type": "github"
-      },
-      "original": {
-        "owner": "reussir-lang",
-        "repo": "mlir-rcgmp",
-        "rev": "cc73b218f6ce90b005744c4e94b2b32a0e30c725",
-        "type": "github"
-      }
-    },
-    "mlir-sync": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1792348835,
-        "narHash": "sha256-cKYDN3HhQ/YhAPQO11KoLqN7HdPNTONCrqFyZ9LEW+E=",
-        "owner": "reussir-lang",
-        "repo": "mlir-sync",
-        "rev": "018206f4df254fe205f0b63068cd133e5e94ba42",
-        "type": "github"
-      },
-      "original": {
-        "owner": "reussir-lang",
-        "repo": "mlir-sync",
-        "rev": "018206f4df254fe205f0b63068cd133e5e94ba42",
-        "type": "github"
-      }
-    },
-    "morphic": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1793252028,
-        "narHash": "sha256-wHaDcyQ1iKQdb/S5nhiizIQ1xf8zwnEHKGFKDmgAUiY=",
-        "owner": "morphic-lang",
-        "repo": "morphic",
-        "rev": "da679c49a33655f2562c58d7d8314659b81dea0c",
-        "type": "github"
-      },
-      "original": {
-        "owner": "morphic-lang",
-        "repo": "morphic",
-        "rev": "da679c49a33655f2562c58d7d8314659b81dea0c",
-        "type": "github"
-      }
-    },
-    "nixpkgs": {
-      "locked": {
-        "lastModified": 1788179007,
-        "narHash": "sha256-hn1oU2rue2SYK8dAr8+WNZWtbsz1S2W5mnHlSEuh3bo=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "34ab99075ac4f7e40cf037eef32cb1c360bb85e9",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "nixos-unstable",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "nixpkgs-llvm16": {
-      "locked": {
-        "lastModified": 1767313136,
-        "narHash": "sha256-16KkgfdYqjaeRGBaYsNrhPRRENs0qzkQVUooNHtoy2w=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "ac62194c3917d5f474c1a844b6fd6da2db95077d",
-        "type": "github"
-      },
-      "original": {
-        "owner": "NixOS",
-        "ref": "nixos-25.05",
-        "repo": "nixpkgs",
-        "type": "github"
-      }
-    },
-    "reussir": {
-      "inputs": {
-        "fenix": [
-          "fenix"
-        ],
-        "flake-utils": [
-          "flake-utils"
-        ],
-        "nixpkgs": [
-          "nixpkgs"
-        ]
-      },
-      "locked": {
-        "lastModified": 1793575798,
-        "narHash": "sha256-ZGe3c3AYwKfBbo9WpHxHUGLeBeBflQjvkAMv+w7jGkE=",
-        "owner": "reussir-lang",
-        "repo": "reussir",
-        "rev": "bcfff8d419169a09509b963714de0675630c7bc1",
-        "type": "github"
-      },
-      "original": {
-        "owner": "reussir-lang",
-        "repo": "reussir",
-        "rev": "bcfff8d419169a09509b963714de0675630c7bc1",
-        "type": "github"
-      }
-    },
-    "root": {
-      "inputs": {
-        "fenix": "fenix",
-        "flake-utils": "flake-utils",
-        "immer": "immer",
-        "mlir-rcgmp": "mlir-rcgmp",
-        "mlir-sync": "mlir-sync",
-        "morphic": "morphic",
-        "nixpkgs": "nixpkgs",
-        "nixpkgs-llvm16": "nixpkgs-llvm16",
-        "reussir": "reussir"
-      }
-    },
-    "rust-analyzer-src": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1788194240,
-        "narHash": "sha256-dehprdAEnE6veOVeKq1wbOKmwPPoNbVHwwBj3l8rOFY=",
-        "owner": "rust-lang",
-        "repo": "rust-analyzer",
-        "rev": "ce43a12d9fe4a24e5d6a86d29a57234efcc902b7",
-        "type": "github"
-      },
-      "original": {
-        "owner": "rust-lang",
-        "ref": "nightly",
-        "repo": "rust-analyzer",
-        "type": "github"
-      }
-    },
-    "systems": {
-      "locked": {
-        "lastModified": 1681028828,
-        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
-        "owner": "nix-systems",
-        "repo": "default",
-        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-systems",
-        "repo": "default",
-        "type": "github"
-      }
-    }
+  "started": 1793644776.8119311,
+  "reussir_revision": "36f05142f3b33f442f69afa421a10b7a39ee21f9",
+  "benchmark_revision": "10f3826d1525903de23a92bae1d005094d838609",
+  "config": {
+    "reussir-compiler": "/tmp/reussir-primary-refresh-20261102/rrc",
+    "cc": "/nix/store/55nmzskx8ai6w4a60cpyf67zxj5lg8wz-clang-wrapper-23.1.0/bin/clang",
+    "reussir-libs": "/nix/store/zjdk9vdxcxyvz8fhsijx248mfm85c1va-reussir-rt-xlto-0.1.0-git-bcfff8d41916/lib",
+    "reussir-src": "/tmp/reussir-final-comparison-20261101/current",
+    "reussir-rcgmp-runtime": "/tmp/reussir-final-comparison-20261101/current/build/lib/libRCGMPRuntime.a",
+    "koka-compiler": "/nix/store/v9p3l36r96dqsn13ifm79i7qsizbh832-koka-3.2.3/bin/koka",
+    "lean-compiler": "/nix/store/zpwg9w370cwv1mdgn6s3k2s8gs8i6wz2-lean4-4.30.0/bin/lean",
+    "leanc": "/nix/store/zpwg9w370cwv1mdgn6s3k2s8gs8i6wz2-lean4-4.30.0/bin/leanc",
+    "rustc": "/nix/store/d6bnbpk6jr95frzmmksda4r7l3v8d3m6-rustc-wrapper-1.97.1/bin/rustc",
+    "rust-extern-libs": "/nix/store/yj7ycx45lp575481gqcra6798nskq717-benchmark-rust-extern-crates-1/lib",
+    "ghc": "/nix/store/kz4l78kg9df4hzcidf42xji95qsrw2ay-ghc/bin/ghc",
+    "ocamlopt": "/nix/store/bzr9ynac081gk2qizv585fbl3cnnd20q-ocaml-5.4.1/bin/ocamlopt",
+    "ocamlfind": "/nix/store/vgxdyb71hdys16ayfmxyv10kbm2km7d4-ocaml5.4.1-findlib-1.9.8/bin/ocamlfind",
+    "morphic-compiler": "/nix/store/wxk174dm79z05phih371ygzn9rb3n9km-morphic-0-git-da679c49a336/bin/morphic",
+    "morphic-clang": "/nix/store/qz4h8k3r84di9k5pmqqi9jjz1fxg5dih-clang-wrapper-16.0.6/bin/clang",
+    "hyperfine": "/nix/store/xrvjcvdwlikj6fpkpi5fwxam3zfxqy1z-hyperfine-1.20.0/bin/hyperfine",
+    "time": "/nix/store/hmrflw7085axj7jyh65fyrmgyz4zmkvz-time-1.10/bin/time",
+    "compile-timeout-seconds": 300,
+    "case-time-budget-seconds": 300,
+    "warmup-runs": 5,
+    "runs": 10,
+    "rust-runtime-env": [
+      "LD_PRELOAD=/nix/store/qhhf9h7pqbqyfn9yd9gb69rbgbx8jrqb-mimalloc-3.4.5/lib/libmimalloc.so"
+    ]
   },
-  "benchmark_revision": {
-    "argv": [
-      "git",
-      "-C",
-      "/tmp/reussir-final-comparison-20261101/benchmark",
-      "rev-parse",
-      "HEAD"
-    ],
-    "returncode": 0,
-    "output": "959c9ac4e1e956c8b7acff44f6298b6d52d46c15\n"
-  },
-  "reussir_revision": {
-    "argv": [
-      "git",
-      "-C",
-      "/tmp/reussir-final-comparison-20261101/current",
-      "rev-parse",
-      "HEAD"
-    ],
-    "returncode": 0,
-    "output": "bcfff8d419169a09509b963714de0675630c7bc1\n"
-  },
-  "reussir_compiler_sha256": "a1c59c5f5efd5be5ae77fae0d3d9aa747b1918a3d75da5ebcf1f2dde2b5c3259",
-  "compiler_elf": {
-    "argv": [
-      "readelf",
-      "-h",
-      "/tmp/reussir-final-comparison-20261101/current/build/bin/rrc"
-    ],
-    "returncode": 0,
-    "output": "ELF Header:\n  Magic:   7f 45 4c 46 02 01 01 03 00 00 00 00 00 00 00 00 \n  Class:                             ELF64\n  Data:                              2's complement, little endian\n  Version:                           1 (current)\n  OS/ABI:                            UNIX - GNU\n  ABI Version:                       0\n  Type:                              DYN (Position-Independent Executable file)\n  Machine:                           AArch64\n  Version:                           0x1\n  Entry point address:               0x58e680\n  Start of program headers:          64 (bytes into file)\n  Start of section headers:          237624056 (bytes into file)\n  Flags:                             0x0\n  Size of this header:               64 (bytes)\n  Size of program headers:           56 (bytes)\n  Number of program headers:         10\n  Size of section headers:           64 (bytes)\n  Number of section headers:         32\n  Section header string table index: 31\n"
-  },
-  "lscpu": {
-    "argv": [
-      "lscpu",
-      "-J"
-    ],
-    "returncode": 0,
-    "output": "{\n   \"lscpu\": [\n      {\n         \"field\": \"Architecture:\",\n         \"data\": \"aarch64\"\n      },{\n         \"field\": \"CPU op-mode(s):\",\n         \"data\": \"64-bit\"\n      },{\n         \"field\": \"Byte Order:\",\n         \"data\": \"Little Endian\"\n      },{\n         \"field\": \"CPU(s):\",\n         \"data\": \"20\"\n      },{\n         \"field\": \"On-line CPU(s) list:\",\n         \"data\": \"0-19\"\n      },{\n         \"field\": \"Vendor ID:\",\n         \"data\": \"ARM\"\n      },{\n         \"field\": \"Model name:\",\n         \"data\": \"Cortex-X925\"\n      },{\n         \"field\": \"Model:\",\n         \"data\": \"1\"\n      },{\n         \"field\": \"Thread(s) per core:\",\n         \"data\": \"1\"\n      },{\n         \"field\": \"Core(s) per socket:\",\n         \"data\": \"10\"\n      },{\n         \"field\": \"Socket(s):\",\n         \"data\": \"1\"\n      },{\n         \"field\": \"Stepping:\",\n         \"data\": \"r0p1\"\n      },{\n         \"field\": \"Frequency boost:\",\n         \"data\": \"disabled\"\n      },{\n         \"field\": \"CPU(s) scaling MHz:\",\n         \"data\": \"100%\"\n      },{\n         \"field\": \"CPU max MHz:\",\n         \"data\": \"3900.0000\"\n      },{\n         \"field\": \"CPU min MHz:\",\n         \"data\": \"1378.0000\"\n      },{\n         \"field\": \"BogoMIPS:\",\n         \"data\": \"2000.00\"\n      },{\n         \"field\": \"Flags:\",\n         \"data\": \"fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics fphp asimdhp cpuid asimdrdm jscvt fcma lrcpc dcpop sha3 sm3 sm4 asimddp sha512 sve asimdfhm dit uscat ilrcpc flagm sb paca pacg dcpodp sve2 sveaes svepmull svebitperm svesha3 svesm4 flagm2 frint svei8mm svebf16 i8mm bf16 dgh bti ecv afp wfxt\"\n      },{\n         \"field\": \"Model name:\",\n         \"data\": \"Cortex-A725\"\n      },{\n         \"field\": \"Model:\",\n         \"data\": \"1\"\n      },{\n         \"field\": \"Thread(s) per core:\",\n         \"data\": \"1\"\n      },{\n         \"field\": \"Core(s) per socket:\",\n         \"data\": \"10\"\n      },{\n         \"field\": \"Socket(s):\",\n         \"data\": \"1\"\n      },{\n         \"field\": \"Stepping:\",\n         \"data\": \"r0p1\"\n      },{\n         \"field\": \"CPU(s) scaling MHz:\",\n         \"data\": \"100%\"\n      },{\n         \"field\": \"CPU max MHz:\",\n         \"data\": \"2808.0000\"\n      },{\n         \"field\": \"CPU min MHz:\",\n         \"data\": \"338.0000\"\n      },{\n         \"field\": \"BogoMIPS:\",\n         \"data\": \"2000.00\"\n      },{\n         \"field\": \"Flags:\",\n         \"data\": \"fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics fphp asimdhp cpuid asimdrdm jscvt fcma lrcpc dcpop sha3 sm3 sm4 asimddp sha512 sve asimdfhm dit uscat ilrcpc flagm sb paca pacg dcpodp sve2 sveaes svepmull svebitperm svesha3 svesm4 flagm2 frint svei8mm svebf16 i8mm bf16 dgh bti ecv afp wfxt\"\n      },{\n         \"field\": \"L1d cache:\",\n         \"data\": \"1.3 MiB (20 instances)\"\n      },{\n         \"field\": \"L1i cache:\",\n         \"data\": \"1.3 MiB (20 instances)\"\n      },{\n         \"field\": \"L2 cache:\",\n         \"data\": \"25 MiB (20 instances)\"\n      },{\n         \"field\": \"L3 cache:\",\n         \"data\": \"24 MiB (2 instances)\"\n      },{\n         \"field\": \"NUMA node(s):\",\n         \"data\": \"1\"\n      },{\n         \"field\": \"NUMA node0 CPU(s):\",\n         \"data\": \"0-19\"\n      },{\n         \"field\": \"Vulnerability Gather data sampling:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Ghostwrite:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Indirect target selection:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Itlb multihit:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability L1tf:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Mds:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Meltdown:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Mmio stale data:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Old microcode:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Reg file data sampling:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Retbleed:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Spec rstack overflow:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Spec store bypass:\",\n         \"data\": \"Mitigation; Speculative Store Bypass disabled via prctl\"\n      },{\n         \"field\": \"Vulnerability Spectre v1:\",\n         \"data\": \"Mitigation; __user pointer sanitization\"\n      },{\n         \"field\": \"Vulnerability Spectre v2:\",\n         \"data\": \"Mitigation; CSV2, BHB\"\n      },{\n         \"field\": \"Vulnerability Srbds:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Tsa:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Tsx async abort:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Vmscape:\",\n         \"data\": \"Not affected\"\n      }\n   ]\n}\n"
-  },
-  "original_affinity": [
+  "measurement_cpu": 19,
+  "compile_affinity": [
     0,
     1,
     2,
@@ -277,62 +53,6 @@
     18,
     19
   ],
-  "compile_affinity": [
-    19
-  ],
-  "measurement_cpu": 19,
-  "cpu_capacity": {
-    "0": 718,
-    "1": 718,
-    "2": 718,
-    "3": 718,
-    "4": 718,
-    "5": 997,
-    "6": 997,
-    "7": 997,
-    "8": 997,
-    "9": 997,
-    "10": 731,
-    "11": 731,
-    "12": 731,
-    "13": 731,
-    "14": 731,
-    "15": 1017,
-    "16": 1017,
-    "17": 1017,
-    "18": 1017,
-    "19": 1024
-  },
-  "starting_load": [
-    0.57861328125,
-    2.3837890625,
-    1.50048828125
-  ],
-  "config": {
-    "reussir-compiler": "/tmp/reussir-final-comparison-20261101/current/build/bin/rrc",
-    "cc": "/nix/store/55nmzskx8ai6w4a60cpyf67zxj5lg8wz-clang-wrapper-23.1.0/bin/clang",
-    "reussir-libs": "/nix/store/zjdk9vdxcxyvz8fhsijx248mfm85c1va-reussir-rt-xlto-0.1.0-git-bcfff8d41916/lib",
-    "reussir-src": "/tmp/reussir-final-comparison-20261101/current",
-    "reussir-rcgmp-runtime": "/tmp/reussir-final-comparison-20261101/current/build/lib/libRCGMPRuntime.a",
-    "koka-compiler": "/nix/store/v9p3l36r96dqsn13ifm79i7qsizbh832-koka-3.2.3/bin/koka",
-    "lean-compiler": "/nix/store/zpwg9w370cwv1mdgn6s3k2s8gs8i6wz2-lean4-4.30.0/bin/lean",
-    "leanc": "/nix/store/zpwg9w370cwv1mdgn6s3k2s8gs8i6wz2-lean4-4.30.0/bin/leanc",
-    "rustc": "/nix/store/d6bnbpk6jr95frzmmksda4r7l3v8d3m6-rustc-wrapper-1.97.1/bin/rustc",
-    "rust-extern-libs": "/nix/store/yj7ycx45lp575481gqcra6798nskq717-benchmark-rust-extern-crates-1/lib",
-    "ghc": "/nix/store/kz4l78kg9df4hzcidf42xji95qsrw2ay-ghc/bin/ghc",
-    "ocamlopt": "/nix/store/bzr9ynac081gk2qizv585fbl3cnnd20q-ocaml-5.4.1/bin/ocamlopt",
-    "ocamlfind": "/nix/store/vgxdyb71hdys16ayfmxyv10kbm2km7d4-ocaml5.4.1-findlib-1.9.8/bin/ocamlfind",
-    "morphic-compiler": "/nix/store/wxk174dm79z05phih371ygzn9rb3n9km-morphic-0-git-da679c49a336/bin/morphic",
-    "morphic-clang": "/nix/store/qz4h8k3r84di9k5pmqqi9jjz1fxg5dih-clang-wrapper-16.0.6/bin/clang",
-    "hyperfine": "/nix/store/xrvjcvdwlikj6fpkpi5fwxam3zfxqy1z-hyperfine-1.20.0/bin/hyperfine",
-    "time": "/nix/store/hmrflw7085axj7jyh65fyrmgyz4zmkvz-time-1.10/bin/time",
-    "case-time-budget-seconds": 300,
-    "warmup-runs": 5,
-    "runs": 10,
-    "rust-runtime-env": [
-      "LD_PRELOAD=/nix/store/qhhf9h7pqbqyfn9yd9gb69rbgbx8jrqb-mimalloc-3.4.5/lib/libmimalloc.so"
-    ]
-  },
   "targets": [
     [
       "bigint-binomial",
@@ -1023,6 +743,42 @@
       "rust-with-mimalloc"
     ],
     [
+      "mltt",
+      "haskell"
+    ],
+    [
+      "mltt",
+      "haskell-a1g"
+    ],
+    [
+      "mltt",
+      "koka"
+    ],
+    [
+      "mltt",
+      "lean"
+    ],
+    [
+      "mltt",
+      "ocaml"
+    ],
+    [
+      "mltt",
+      "reussir"
+    ],
+    [
+      "mltt",
+      "reussir-nrac"
+    ],
+    [
+      "mltt",
+      "rust"
+    ],
+    [
+      "mltt",
+      "rust-with-mimalloc"
+    ],
+    [
       "nbe-closure",
       "haskell"
     ],
@@ -1295,6 +1051,42 @@
       "rust-with-mimalloc"
     ],
     [
+      "raytracer",
+      "haskell"
+    ],
+    [
+      "raytracer",
+      "haskell-a1g"
+    ],
+    [
+      "raytracer",
+      "koka"
+    ],
+    [
+      "raytracer",
+      "lean"
+    ],
+    [
+      "raytracer",
+      "ocaml"
+    ],
+    [
+      "raytracer",
+      "reussir"
+    ],
+    [
+      "raytracer",
+      "reussir-nrac"
+    ],
+    [
+      "raytracer",
+      "rust"
+    ],
+    [
+      "raytracer",
+      "rust-with-mimalloc"
+    ],
+    [
       "rbtree",
       "haskell"
     ],
@@ -1412,56 +1204,18 @@
     ],
     [
       "rbtree-zipper",
-      "rust-with-mimalloc"
-    ],
-    [
-      "raytracer",
-      "haskell"
-    ],
-    [
-      "raytracer",
-      "haskell-a1g"
-    ],
-    [
-      "raytracer",
-      "koka"
-    ],
-    [
-      "raytracer",
-      "lean"
-    ],
-    [
-      "raytracer",
-      "ocaml"
-    ],
-    [
-      "raytracer",
-      "reussir"
-    ],
-    [
-      "raytracer",
-      "reussir-nrac"
-    ],
-    [
-      "raytracer",
-      "rust"
-    ],
-    [
-      "raytracer",
       "rust-with-mimalloc"
     ]
   ],
-  "target_count": 279,
-  "reussir_flags": [
-    "-Oaggressive",
-    "--reuse-across-call (ordinary reussir only)",
-    "--relocation-mode",
-    "pic"
-  ],
-  "reussir_drop_order": "compiler default: backward; no override",
-  "runtime_archive": "/nix/store/zjdk9vdxcxyvz8fhsijx248mfm85c1va-reussir-rt-xlto-0.1.0-git-bcfff8d41916/lib/libreussir_rt.a",
+  "target_count": 288,
+  "reussir_compiler_sha256": "333d097f4ed376748cbf8ebf66c9a823bae44ada3a6683b73b373ea2bad1ffeb",
+  "compiler_launch_environment": {
+    "native_compiler": "/tmp/reussir-primary-refresh-20261102/rrc.native",
+    "native_compiler_sha256": "333d097f4ed376748cbf8ebf66c9a823bae44ada3a6683b73b373ea2bad1ffeb",
+    "launcher_sha256": "579b45df67bbf7757f24c58fd694f5a451df9aa444810d87559f79298955a506",
+    "compiler_only_library_path": "/nix/store/3f383yqqck1hqdq9biscgpmv3sz7ml35-llvm-23.1.0-lib/lib:/nix/store/5ijsi20041scm3lp9y9zv7gg580vijli-mlir-23.1.0/lib:/nix/store/z5w4wq7mfcjbkpmvzi0wa32kwrw83z4k-openmp-21.1.8/lib:/nix/store/60afk5jlqmx8xh5pr76j7j8vdrhwzrmv-gcc-15.3.0-lib/lib:/nix/store/4my1cjkysivszznv4342x12r3z2pwdpl-zlib-1.3.2/lib:/nix/store/np1ym239sl7vml5k1aha3hc6lh6i2gr5-gmp-with-cxx-6.3.0/lib"
+  },
   "runtime_archive_sha256": "628e257031f7189529ad89e68b582ff33f3d20ffd3ea17e303a0f7d4a06c0719",
-  "rcgmp_runtime": "/tmp/reussir-final-comparison-20261101/current/build/lib/libRCGMPRuntime.a",
   "rcgmp_runtime_sha256": "50d03cb7cc963b6fc0458a04baaf02c73fe124fc381f68361af407c62447763d",
   "source_sha256": {
     "lean/rbtree.lean": "fe3b0d98fe6da4e7dcdad4e6c7b24866ef7e59f6f5e428ce4ac99a9d0efcc78a",
@@ -1680,129 +1434,375 @@
     "reussir/raytracer.rr.c": "fe85dc9191d0c84a2aca7750d3e7ac9391e8d038d523067559ebf297595f8219",
     "ocaml/raytracer.ml": "5306d0b10fa3f8d9d849694db3d08403522fa27ab10af34b96d900b2851baf2d",
     "haskell/raytracer.hs": "d816a1429b366465f5ae5259d24e9dd0d14125e0c8c8c641c98262c9372a498a",
-    "koka/raytracer.kk": "db2175937e8da9185248560571a17185db72595495f23137b9a686b86150c1e8"
+    "koka/raytracer.kk": "db2175937e8da9185248560571a17185db72595495f23137b9a686b86150c1e8",
+    "reussir/mltt.rr.c": "073973fe39d0f82123a6688ee8272c5434565b83d07d0ef1c63920351d6bd110",
+    "reussir/mltt.rr": "bbd08f4c3dd21091dfd7d8c8e8c9187c2ce6f737cdf9acfc3af81dc8d7e519a9",
+    "reussir/rbtree-zipper-lambda.rr": "053aa8c9d06ce4ecaa032b43d1b009765433fa0de2b5f343a03cd4aff0047a80",
+    "lean/mltt.lean": "7d490f31b286aeafe373752e1828ea1050380b7885da6a48be74d37c4cc7560d",
+    "rust/mltt.rs": "d08eef748ae9beac1c17745008fbd64276a4e2d9f162d9bf700ebff3c3595f9c",
+    "ocaml/mltt.ml": "a04123cf1e4a7829886140ed00b2e8c270aa78b9dc5bf7bdd996e41edd95ebd7",
+    "haskell/mltt.hs": "3e1842b0eac816622b8c8b39beb718ba4b785691704d694a0680104f3cf2e66e",
+    "morphic/mltt.mor": "52a4b0fd7711db90400b13ce7865df0ef35537299fe171ca9aed95012348c0dd",
+    "koka/mltt.kk": "2f0ae16623e2ff701f086ccb553337e888995333f5adeaf6796809b32a778b12"
   },
-  "toolchains": {
-    "reussir-compiler": {
-      "argv": [
-        "/tmp/reussir-final-comparison-20261101/current/build/bin/rrc",
-        "--version"
-      ],
-      "returncode": 2,
-      "output": "unexpected argument '--version'\n"
-    },
-    "cc": {
-      "argv": [
-        "/nix/store/55nmzskx8ai6w4a60cpyf67zxj5lg8wz-clang-wrapper-23.1.0/bin/clang",
-        "--version"
-      ],
-      "returncode": 0,
-      "output": "clang version 23.1.0\nTarget: aarch64-unknown-linux-gnu\nThread model: posix\nInstalledDir: /nix/store/g6qkgp3xr663bn0gms3ywv29fjn2xpx4-clang-23.1.0/bin\n"
-    },
-    "koka-compiler": {
-      "argv": [
-        "/nix/store/v9p3l36r96dqsn13ifm79i7qsizbh832-koka-3.2.3/bin/koka",
-        "--version"
-      ],
-      "returncode": 0,
-      "output": "Koka 3.2.3, 00:00:00 Jan  1 1980 (ghc release version)\nversion: 3.2.3\nbin    : /nix/store/v9p3l36r96dqsn13ifm79i7qsizbh832-koka-3.2.3/bin\nlib    : /nix/store/v9p3l36r96dqsn13ifm79i7qsizbh832-koka-3.2.3/lib/koka/v3.2.3\nshare  : /nix/store/v9p3l36r96dqsn13ifm79i7qsizbh832-koka-3.2.3/share/koka/v3.2.3\noutput : .koka/v3.2.3/cc-debug-2efd68\ncc     : /nix/store/bv4iz5h4bsy9ivn45c71j78m8rq233ss-gcc-wrapper-15.3.0/bin/cc\nflags  : 2efd68\nCopyright 2019-2024, Microsoft Research, Daan Leijen, and others.\nThis program is free software; see the source for copying conditions.\nThis program is distributed in the hope that it will be useful,\nbut without any warranty; without even the implied warranty\nof merchantability or fitness for a particular purpose.\n"
-    },
-    "lean-compiler": {
-      "argv": [
-        "/nix/store/zpwg9w370cwv1mdgn6s3k2s8gs8i6wz2-lean4-4.30.0/bin/lean",
-        "--version"
-      ],
-      "returncode": 0,
-      "output": "Lean (version 4.30.0, commit v4.30.0, Release)\n"
-    },
-    "leanc": {
-      "argv": [
-        "/nix/store/zpwg9w370cwv1mdgn6s3k2s8gs8i6wz2-lean4-4.30.0/bin/leanc",
-        "--version"
-      ],
-      "returncode": 0,
-      "output": "gcc (GCC) 15.3.0\nCopyright (C) 2025 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n"
-    },
-    "rustc": {
-      "argv": [
-        "/nix/store/d6bnbpk6jr95frzmmksda4r7l3v8d3m6-rustc-wrapper-1.97.1/bin/rustc",
-        "--version"
-      ],
-      "returncode": 0,
-      "output": "rustc 1.97.1 (8bab26f4f 2026-07-14) (built from a source tarball)\n"
-    },
-    "ghc": {
-      "argv": [
-        "/nix/store/kz4l78kg9df4hzcidf42xji95qsrw2ay-ghc/bin/ghc",
-        "--version"
-      ],
-      "returncode": 0,
-      "output": "The Glorious Glasgow Haskell Compilation System, version 9.10.3\n"
-    },
-    "ocamlopt": {
-      "argv": [
-        "/nix/store/bzr9ynac081gk2qizv585fbl3cnnd20q-ocaml-5.4.1/bin/ocamlopt",
-        "--version"
-      ],
-      "returncode": 0,
-      "output": "5.4.1\n"
-    },
-    "ocamlfind": {
-      "argv": [
-        "/nix/store/vgxdyb71hdys16ayfmxyv10kbm2km7d4-ocaml5.4.1-findlib-1.9.8/bin/ocamlfind",
-        "--version"
-      ],
-      "returncode": 2,
-      "output": "Usage: ocamlfind query        [-help | other options] <package_name> ...\n   or: ocamlfind ocamlc       [-help | other options] <file> ...\n   or: ocamlfind ocamlcp      [-help | other options] <file> ...\n   or: ocamlfind ocamlmklib   [-help | other options] <file> ...\n   or: ocamlfind ocamlmktop   [-help | other options] <file> ...\n   or: ocamlfind ocamlopt     [-help | other options] <file> ...\n   or: ocamlfind ocamloptp    [-help | other options] <file> ...\n   or: ocamlfind ocamldep     [-help | other options] <file> ...\n   or: ocamlfind ocamlbrowser [-help | other options]\n   or: ocamlfind ocamldoc     [-help | other options] <file> ...\n   or: ocamlfind install      [-help | other options] <package_name> <file> ...\n   or: ocamlfind remove       [-help | other options] <package_name>\n   or: ocamlfind printppx     [-help | other options] <package_name> ...\n   or: ocamlfind printconf    [-help] [variable]\n   or: ocamlfind lint         [-help] <file>\n   or: ocamlfind list\n   or: ocamlfind pkg/cmd arg ...\nSelect toolchain with:\n  ocamlfind -toolchain <t> <command>\nAbbreviations:\n  e.g. ocamlfind opt instead of ocamlfind ocamlopt\n"
-    },
-    "morphic-compiler": {
-      "argv": [
-        "/nix/store/wxk174dm79z05phih371ygzn9rb3n9km-morphic-0-git-da679c49a336/bin/morphic",
-        "--version"
-      ],
-      "returncode": 0,
-      "output": "morphic_compiler 0.1.0\n"
-    },
-    "morphic-clang": {
-      "argv": [
-        "/nix/store/qz4h8k3r84di9k5pmqqi9jjz1fxg5dih-clang-wrapper-16.0.6/bin/clang",
-        "--version"
-      ],
-      "returncode": 0,
-      "output": "clang version 16.0.6\nTarget: aarch64-unknown-linux-gnu\nThread model: posix\nInstalledDir: /nix/store/ba87j334cr04db547c0j6mf6bxwvfwxv-clang-16.0.6/bin\n"
-    },
-    "hyperfine": {
-      "argv": [
-        "/nix/store/xrvjcvdwlikj6fpkpi5fwxam3zfxqy1z-hyperfine-1.20.0/bin/hyperfine",
-        "--version"
-      ],
-      "returncode": 0,
-      "output": "hyperfine 1.20.0\n"
-    },
-    "time": {
-      "argv": [
-        "/nix/store/hmrflw7085axj7jyh65fyrmgyz4zmkvz-time-1.10/bin/time",
-        "--version"
-      ],
-      "returncode": 0,
-      "output": "time (GNU Time) 1.10\nCopyright (C) 2026 Free Software Foundation, Inc.\nLicense GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>.\nThis is free software: you are free to change and redistribute it.\nThere is NO WARRANTY, to the extent permitted by law.\n\nWritten by David Keppel, David MacKenzie, and Assaf Gordon.\n"
-    }
+  "library_source_sha256": {
+    "library/test_utils/rene.ncl": "7009d947b0f086b90ebc054c57e2f4f6bdcc345da31ed24e37807b854e244cd3",
+    "library/test_utils/.gitignore": "501d674e27e50b1b2e3e9148eb2fa854fdea34fd26f923620aab8ca023cb5451",
+    "library/core/rene.ncl": "a7a5524bf163e34425eadcd745f1c7cdfbb7aaabc4c8dff5308d028091ddd38c",
+    "library/std/rene.ncl": "50d2a383d641f2821e637c14f070b6f72ebab6796625929d0b2ccabd42f66029",
+    "library/std/.gitignore": "501d674e27e50b1b2e3e9148eb2fa854fdea34fd26f923620aab8ca023cb5451",
+    "library/std/src/lib.rr": "35e83961248cef70d2278c453a80b2f516ac6cdd1e46617bca64f1192b76e631",
+    "library/std/src/hash.rr": "5d3129dcf8e4edb980401b7efdf24e2e5eec2b08b48cc7b81d94035443b6e962",
+    "library/std/src/option.rr": "c41e9e91cac130892f5c9a4e92cf834345512d662304f207957f7d496bfefc79",
+    "library/std/src/bigint.rr": "29be8d059c3c0b99fba67fee14fbc34aea75010c1a306d32c90156773d93d1e7",
+    "library/std/src/process.rr": "88d1d297abee6ecbe30dbe76d7311a04baceb11e46cafa0d3bef5a9ec2393364",
+    "library/std/src/string.rr": "fede1bbaf47c1217dd8766a10eaef117fb2dd6459fa9c230bd46098e423a2b6e",
+    "library/std/src/result.rr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "library/std/src/collections/mod.rr": "1afd8977e906ff1ba288647c5faf9a2f6a38aed6920eeb5afd9cedade87e35d6",
+    "library/std/src/collections/pure/binomial_heap.rr": "face0cc9ca7616471aa8d7a697db368c67d5b4440a4f040e418a92e51c423f3b",
+    "library/std/src/collections/pure/wavlmap.rr": "bbfb52b664cd60e72584e37876cf9ded01bcede344add554b5eecc577fe56836",
+    "library/std/src/collections/pure/hashset.rr": "45bb3febc26b2bdbb43ea78dbd632fbc17bdfdc88c248074d0a2a47076438eb3",
+    "library/std/src/collections/pure/wavlset.rr": "d5ea5d44f4610bcdccb2bae9eb5985e899c84a5a47d8a79d6d9b47fa93deff13",
+    "library/std/src/collections/pure/hashmap.rr": "7af4614f0c505e087c32e41875cd2328b54f1a4bac9754c5bcd9799c7147a6cc",
+    "library/std/src/collections/pure/pairing_heap.rr": "2fe75ea11de9bae2c8a16e5dbe0002f6987399c3d579f9596e855177f8b20407",
+    "library/std/src/collections/pure/fingertree.rr": "b5c0fac90f626e72e96526dbf392e89bcb14229c8aef37a31981360f32ff86c6",
+    "library/std/src/collections/pure/list.rr": "5ee884807fed9166cc8bb7894e31775109072f9fab60e22872ba8e5b6f72a2fc",
+    "library/std/src/collections/pure/mod.rr": "6cf1805c303f8b5a264823cfbf69747f03613509c04f229988ad23d7bcf714f7",
+    "library/std/src/collections/pure/rtqueue.rr": "4ebfd119916eae8f5813ee0547e0e03fb309cc68f63db0caa93290dc9a54f736",
+    "library/std/src/collections/cow/hashset.rr": "566bedf90e2c704076caecda016013ab2f525ea6611c58ba338aa3bc83fa6f36",
+    "library/std/src/collections/cow/binaryheap.rr": "e7128d1da41cb3bb793413ea26fb46d9dd7da7c1cab50c4d03afffb722c37fc7",
+    "library/std/src/collections/cow/vecdeque.rr": "d7e4772d5eb2652e13e125409c1d96c1ab8d524b2a6974b9357ccb385f8aa2d3",
+    "library/std/src/collections/cow/btreeset.rr": "8528cadb92efd44c63ca3f6b65e77bb5ecc822a4bb85c549666d633db89c2a67",
+    "library/std/src/collections/cow/hashmap.rr": "1e3559f43cd108f5ca1b4e57b07877d99a743b36f97a3e3df108d14a7691a2f5",
+    "library/std/src/collections/cow/vec.rr": "3de027af085354ae480cba1509f18f9ccf0ac7b8f5af4fa68bc762c0229ebf97",
+    "library/std/src/collections/cow/btreemap.rr": "b7ecfa731d16a195b95ac008d7ab6cd209e6749b00f902add0a15e2ad8ee2b64",
+    "library/std/src/collections/cow/mod.rr": "a7c4504604c52c98ab7d026c23fa7678246bafc551c141b4d7fd446c5fb11d5b",
+    "library/core/src/lib.rr": "24d6a01e5e06779facea8bb8a732addfa1fb4834df01b1e870bcdc074d0a3da2",
+    "library/core/src/pjrt.rr": "a9ea5120416f7f384042f1b202a5029ec459158554f19cf981e1dfc05de91368",
+    "library/core/src/marker.rr": "549ffb9c395e6fad2a4efa13caa9f7b789697bb83c7c287470e12b368a5791b8",
+    "library/core/src/num.rr": "4d3dbebf914d94e897bcd684706941b12dfef995838bf3c67cb8ab135cc13986",
+    "library/core/src/cmp.rr": "f282d766b0492015746a94e3a0b95a7c4775f07675041a2c0e6cf9980892d375",
+    "library/core/src/intrinsic/nullable.rr": "9eda4d48f3e2f667c3604fa783ebc61f3eaef2395a008d6db859a89b6e9f96a9",
+    "library/core/src/intrinsic/cell.rr": "b45a967fd796f9fba15090fd9455a9a22209a295621a56907bf6e18a5258eef5",
+    "library/core/src/intrinsic/pjrt.rr": "e876c814a1689cb8afb645019edbfd9a4bc375a81180e6874a891d311629db87",
+    "library/core/src/intrinsic/str.rr": "503b509523577cef7a10f21d39c107fa4c2fef95a1392622d1230b2318dcc8d8",
+    "library/core/src/intrinsic/arc.rr": "6ce1da87ac31c5af94435cde2a2777a44e8f319786f80ceaa396a3d27766dceb",
+    "library/core/src/intrinsic/bigint.rr": "6413ba55411dc281111c600934ee425a2a656eb3f4bb89f39dac9b56da054ac8",
+    "library/core/src/intrinsic/tensor.rr": "b11faebb578c13ccd81d0add782fdc8ddaed0e7771de402beee5afa22c5bbeba",
+    "library/core/src/intrinsic/const_seq.rr": "b9fb532cb35a50e3b421eaba43deb33a8531e32559bb590f3a693027f504c887",
+    "library/core/src/intrinsic/math.rr": "2bec6059b4ded1d0d01614e0bdcf56cf0e8e24f638a4b646ec3e946d73bf13ef",
+    "library/core/src/intrinsic/panic.rr": "befb5fdb2e2704412f81404df4ff202ec0d6c8fcc8ff7ce4ea53945e9505b552",
+    "library/core/src/intrinsic/mod.rr": "0ec27a6ae1e362428d7a9510a3acc11061590664a70a1b016238837eda62cc7c",
+    "library/test_utils/src/lib.rr": "a4113449395433c9b9aded8932c37d432eddb65387e2e5ab4ac3739c4b93985e",
+    "library/test_utils/src/io.rr": "bebc2f06174d83848939699fbc1fddf53f03b8f460c185b3e59c5e966abf6b53"
   },
-  "finished": 1793585091.846008,
+  "harness_sha256": {
+    "runner.py": "92f37de41c23c12a9124c3f89bf62e32b01535da4c5a671a1bde3398a2a5f2d3",
+    "compile.py": "340b40a40388a29bda4bc9a348c895e16b3f9537363cff08b656a63b299bd668",
+    "benches.py": "678ca9359ac179a14301aacae8655bca0ce37e0dc6fe380c6e10ea1af32f655f",
+    "config.py": "0c212cdde6e75f301bcf9a28f1495cead5dacb0c53a56412fd5f21bdb7f81d2e",
+    "config.json": "ba290dfdb66ce787b0e7f170c5fc45e150b3015a10efef89f43547c4c373a66b"
+  },
+  "starting_load": [
+    2.28759765625,
+    0.78857421875,
+    0.26953125
+  ],
+  "finished": 1793645467.326324,
   "ending_load": [
-    0.919921875,
-    1.24169921875,
-    1.2666015625
+    1.3115234375,
+    1.4306640625,
+    0.9140625
   ],
-  "retry_finished": 1793585103.496739,
-  "incremental_runs": [
-    {
-      "benchmark": "raytracer",
-      "benchmark_revision": "2e1ec4fe82558112529c872733d3162a6e887e05",
-      "manifest": "raytracer-manifest.json",
-      "started": 1793629986.0873368,
-      "finished": 1793630064.270305
-    }
-  ],
-  "dataset_note": "Original 270 cells retain the baseline revision and provenance. The nine raytracer cells use the incremental revision in raytracer-manifest.json with the same compiler, runtime, toolchains and measurement CPU."
+  "dataset_note": "All Reussir cells were rerun and seven missing other-language MLTT cells were added. All 225 existing other-language cells per host retain their original result and status records. Per-cell provenance names the applicable batch manifest.",
+  "cell_provenance": {
+    "bigint-binomial/haskell": "baseline-manifest.json",
+    "bigint-binomial/haskell-a1g": "baseline-manifest.json",
+    "bigint-binomial/koka": "baseline-manifest.json",
+    "bigint-binomial/lean": "baseline-manifest.json",
+    "bigint-binomial/ocaml": "baseline-manifest.json",
+    "bigint-binomial/reussir": "reussir-manifest.json",
+    "bigint-binomial/reussir-nrac": "reussir-manifest.json",
+    "bigint-binomial/rust": "baseline-manifest.json",
+    "bigint-binomial/rust-with-mimalloc": "baseline-manifest.json",
+    "bigint-collatz/haskell": "baseline-manifest.json",
+    "bigint-collatz/haskell-a1g": "baseline-manifest.json",
+    "bigint-collatz/koka": "baseline-manifest.json",
+    "bigint-collatz/lean": "baseline-manifest.json",
+    "bigint-collatz/ocaml": "baseline-manifest.json",
+    "bigint-collatz/reussir": "reussir-manifest.json",
+    "bigint-collatz/reussir-nrac": "reussir-manifest.json",
+    "bigint-collatz/rust": "baseline-manifest.json",
+    "bigint-collatz/rust-with-mimalloc": "baseline-manifest.json",
+    "bigint-factorial/haskell": "baseline-manifest.json",
+    "bigint-factorial/haskell-a1g": "baseline-manifest.json",
+    "bigint-factorial/koka": "baseline-manifest.json",
+    "bigint-factorial/lean": "baseline-manifest.json",
+    "bigint-factorial/ocaml": "baseline-manifest.json",
+    "bigint-factorial/reussir": "reussir-manifest.json",
+    "bigint-factorial/reussir-nrac": "reussir-manifest.json",
+    "bigint-factorial/rust": "baseline-manifest.json",
+    "bigint-factorial/rust-with-mimalloc": "baseline-manifest.json",
+    "bigint-fib/haskell": "baseline-manifest.json",
+    "bigint-fib/haskell-a1g": "baseline-manifest.json",
+    "bigint-fib/koka": "baseline-manifest.json",
+    "bigint-fib/lean": "baseline-manifest.json",
+    "bigint-fib/ocaml": "baseline-manifest.json",
+    "bigint-fib/reussir": "reussir-manifest.json",
+    "bigint-fib/reussir-nrac": "reussir-manifest.json",
+    "bigint-fib/rust": "baseline-manifest.json",
+    "bigint-fib/rust-with-mimalloc": "baseline-manifest.json",
+    "bigint-pidigits/haskell": "baseline-manifest.json",
+    "bigint-pidigits/haskell-a1g": "baseline-manifest.json",
+    "bigint-pidigits/koka": "baseline-manifest.json",
+    "bigint-pidigits/lean": "baseline-manifest.json",
+    "bigint-pidigits/ocaml": "baseline-manifest.json",
+    "bigint-pidigits/reussir": "reussir-manifest.json",
+    "bigint-pidigits/reussir-nrac": "reussir-manifest.json",
+    "bigint-pidigits/rust": "baseline-manifest.json",
+    "bigint-pidigits/rust-with-mimalloc": "baseline-manifest.json",
+    "bigint-rbtree/haskell": "baseline-manifest.json",
+    "bigint-rbtree/haskell-a1g": "baseline-manifest.json",
+    "bigint-rbtree/koka": "baseline-manifest.json",
+    "bigint-rbtree/lean": "baseline-manifest.json",
+    "bigint-rbtree/ocaml": "baseline-manifest.json",
+    "bigint-rbtree/reussir": "reussir-manifest.json",
+    "bigint-rbtree/reussir-nrac": "reussir-manifest.json",
+    "bigint-rbtree/rust": "baseline-manifest.json",
+    "bigint-rbtree/rust-with-mimalloc": "baseline-manifest.json",
+    "derive/haskell": "baseline-manifest.json",
+    "derive/haskell-a1g": "baseline-manifest.json",
+    "derive/koka": "baseline-manifest.json",
+    "derive/lean": "baseline-manifest.json",
+    "derive/morphic": "baseline-manifest.json",
+    "derive/ocaml": "baseline-manifest.json",
+    "derive/reussir": "reussir-manifest.json",
+    "derive/reussir-nrac": "reussir-manifest.json",
+    "derive/rust": "baseline-manifest.json",
+    "derive/rust-with-mimalloc": "baseline-manifest.json",
+    "expr-replace/haskell": "baseline-manifest.json",
+    "expr-replace/haskell-a1g": "baseline-manifest.json",
+    "expr-replace/koka": "baseline-manifest.json",
+    "expr-replace/lean": "baseline-manifest.json",
+    "expr-replace/morphic": "baseline-manifest.json",
+    "expr-replace/ocaml": "baseline-manifest.json",
+    "expr-replace/reussir": "reussir-manifest.json",
+    "expr-replace/reussir-nrac": "reussir-manifest.json",
+    "expr-replace/rust": "baseline-manifest.json",
+    "expr-replace/rust-with-mimalloc": "baseline-manifest.json",
+    "fingertree/haskell": "baseline-manifest.json",
+    "fingertree/haskell-a1g": "baseline-manifest.json",
+    "fingertree/koka": "baseline-manifest.json",
+    "fingertree/lean": "baseline-manifest.json",
+    "fingertree/morphic": "baseline-manifest.json",
+    "fingertree/ocaml": "baseline-manifest.json",
+    "fingertree/reussir": "reussir-manifest.json",
+    "fingertree/reussir-nrac": "reussir-manifest.json",
+    "fingertree/rust": "baseline-manifest.json",
+    "fingertree/rust-with-mimalloc": "baseline-manifest.json",
+    "functional-queue/haskell": "baseline-manifest.json",
+    "functional-queue/haskell-a1g": "baseline-manifest.json",
+    "functional-queue/koka": "baseline-manifest.json",
+    "functional-queue/lean": "baseline-manifest.json",
+    "functional-queue/morphic": "baseline-manifest.json",
+    "functional-queue/ocaml": "baseline-manifest.json",
+    "functional-queue/reussir": "reussir-manifest.json",
+    "functional-queue/reussir-nrac": "reussir-manifest.json",
+    "functional-queue/rust": "baseline-manifest.json",
+    "functional-queue/rust-with-mimalloc": "baseline-manifest.json",
+    "hash-map-heavily-shared/haskell": "baseline-manifest.json",
+    "hash-map-heavily-shared/haskell-a1g": "baseline-manifest.json",
+    "hash-map-heavily-shared/koka": "baseline-manifest.json",
+    "hash-map-heavily-shared/lean": "baseline-manifest.json",
+    "hash-map-heavily-shared/morphic": "baseline-manifest.json",
+    "hash-map-heavily-shared/ocaml": "baseline-manifest.json",
+    "hash-map-heavily-shared/reussir": "reussir-manifest.json",
+    "hash-map-heavily-shared/reussir-nrac": "reussir-manifest.json",
+    "hash-map-heavily-shared/rust": "baseline-manifest.json",
+    "hash-map-heavily-shared/rust-rpds": "baseline-manifest.json",
+    "hash-map-heavily-shared/rust-rpds-with-mimalloc": "baseline-manifest.json",
+    "hash-map-heavily-shared/rust-with-mimalloc": "baseline-manifest.json",
+    "hash-map-linear/haskell": "baseline-manifest.json",
+    "hash-map-linear/haskell-a1g": "baseline-manifest.json",
+    "hash-map-linear/koka": "baseline-manifest.json",
+    "hash-map-linear/lean": "baseline-manifest.json",
+    "hash-map-linear/morphic": "baseline-manifest.json",
+    "hash-map-linear/ocaml": "baseline-manifest.json",
+    "hash-map-linear/reussir": "reussir-manifest.json",
+    "hash-map-linear/reussir-nrac": "reussir-manifest.json",
+    "hash-map-linear/rust": "baseline-manifest.json",
+    "hash-map-linear/rust-rpds": "baseline-manifest.json",
+    "hash-map-linear/rust-rpds-with-mimalloc": "baseline-manifest.json",
+    "hash-map-linear/rust-with-mimalloc": "baseline-manifest.json",
+    "hash-map-shared/haskell": "baseline-manifest.json",
+    "hash-map-shared/haskell-a1g": "baseline-manifest.json",
+    "hash-map-shared/koka": "baseline-manifest.json",
+    "hash-map-shared/lean": "baseline-manifest.json",
+    "hash-map-shared/morphic": "baseline-manifest.json",
+    "hash-map-shared/ocaml": "baseline-manifest.json",
+    "hash-map-shared/reussir": "reussir-manifest.json",
+    "hash-map-shared/reussir-nrac": "reussir-manifest.json",
+    "hash-map-shared/rust": "baseline-manifest.json",
+    "hash-map-shared/rust-rpds": "baseline-manifest.json",
+    "hash-map-shared/rust-rpds-with-mimalloc": "baseline-manifest.json",
+    "hash-map-shared/rust-with-mimalloc": "baseline-manifest.json",
+    "heap-array/haskell-st": "baseline-manifest.json",
+    "heap-array/haskell-st-a1g": "baseline-manifest.json",
+    "heap-array/koka": "baseline-manifest.json",
+    "heap-array/lean": "baseline-manifest.json",
+    "heap-array/morphic": "baseline-manifest.json",
+    "heap-array/ocaml": "baseline-manifest.json",
+    "heap-array/reussir": "reussir-manifest.json",
+    "heap-array/reussir-nrac": "reussir-manifest.json",
+    "heap-array/rust": "baseline-manifest.json",
+    "heap-array/rust-with-mimalloc": "baseline-manifest.json",
+    "heap-functional/haskell": "baseline-manifest.json",
+    "heap-functional/haskell-a1g": "baseline-manifest.json",
+    "heap-functional/koka": "baseline-manifest.json",
+    "heap-functional/lean": "baseline-manifest.json",
+    "heap-functional/morphic": "baseline-manifest.json",
+    "heap-functional/ocaml": "baseline-manifest.json",
+    "heap-functional/reussir": "reussir-manifest.json",
+    "heap-functional/reussir-nrac": "reussir-manifest.json",
+    "heap-functional/rust": "baseline-manifest.json",
+    "heap-functional/rust-with-mimalloc": "baseline-manifest.json",
+    "life/haskell": "baseline-manifest.json",
+    "life/haskell-a1g": "baseline-manifest.json",
+    "life/haskell-st": "baseline-manifest.json",
+    "life/haskell-st-a1g": "baseline-manifest.json",
+    "life/koka": "baseline-manifest.json",
+    "life/lean": "baseline-manifest.json",
+    "life/morphic": "baseline-manifest.json",
+    "life/ocaml": "baseline-manifest.json",
+    "life/reussir": "reussir-manifest.json",
+    "life/reussir-nrac": "reussir-manifest.json",
+    "life/rust": "baseline-manifest.json",
+    "life/rust-with-mimalloc": "baseline-manifest.json",
+    "list-membership/haskell": "baseline-manifest.json",
+    "list-membership/haskell-a1g": "baseline-manifest.json",
+    "list-membership/koka": "baseline-manifest.json",
+    "list-membership/lean": "baseline-manifest.json",
+    "list-membership/morphic": "baseline-manifest.json",
+    "list-membership/ocaml": "baseline-manifest.json",
+    "list-membership/reussir": "reussir-manifest.json",
+    "list-membership/reussir-nrac": "reussir-manifest.json",
+    "list-membership/rust": "baseline-manifest.json",
+    "list-membership/rust-with-mimalloc": "baseline-manifest.json",
+    "mltt/haskell": "mltt-manifest.json",
+    "mltt/haskell-a1g": "mltt-manifest.json",
+    "mltt/koka": "mltt-manifest.json",
+    "mltt/lean": "mltt-manifest.json",
+    "mltt/ocaml": "mltt-manifest.json",
+    "mltt/reussir": "reussir-manifest.json",
+    "mltt/reussir-nrac": "reussir-manifest.json",
+    "mltt/rust": "mltt-manifest.json",
+    "mltt/rust-with-mimalloc": "mltt-manifest.json",
+    "nbe-closure/haskell": "baseline-manifest.json",
+    "nbe-closure/haskell-a1g": "baseline-manifest.json",
+    "nbe-closure/koka": "baseline-manifest.json",
+    "nbe-closure/lean": "baseline-manifest.json",
+    "nbe-closure/morphic": "baseline-manifest.json",
+    "nbe-closure/ocaml": "baseline-manifest.json",
+    "nbe-closure/reussir": "reussir-manifest.json",
+    "nbe-closure/reussir-nrac": "reussir-manifest.json",
+    "nbe-closure/rust": "baseline-manifest.json",
+    "nbe-closure/rust-with-mimalloc": "baseline-manifest.json",
+    "nbe-hoas/haskell": "baseline-manifest.json",
+    "nbe-hoas/haskell-a1g": "baseline-manifest.json",
+    "nbe-hoas/koka": "baseline-manifest.json",
+    "nbe-hoas/lean": "baseline-manifest.json",
+    "nbe-hoas/morphic": "baseline-manifest.json",
+    "nbe-hoas/ocaml": "baseline-manifest.json",
+    "nbe-hoas/reussir": "reussir-manifest.json",
+    "nbe-hoas/reussir-nrac": "reussir-manifest.json",
+    "nbe-hoas/rust": "baseline-manifest.json",
+    "nbe-hoas/rust-with-mimalloc": "baseline-manifest.json",
+    "ordered-map-heavily-shared/haskell": "baseline-manifest.json",
+    "ordered-map-heavily-shared/haskell-a1g": "baseline-manifest.json",
+    "ordered-map-heavily-shared/koka": "baseline-manifest.json",
+    "ordered-map-heavily-shared/lean": "baseline-manifest.json",
+    "ordered-map-heavily-shared/morphic": "baseline-manifest.json",
+    "ordered-map-heavily-shared/ocaml": "baseline-manifest.json",
+    "ordered-map-heavily-shared/reussir": "reussir-manifest.json",
+    "ordered-map-heavily-shared/reussir-nrac": "reussir-manifest.json",
+    "ordered-map-heavily-shared/rust": "baseline-manifest.json",
+    "ordered-map-heavily-shared/rust-rpds": "baseline-manifest.json",
+    "ordered-map-heavily-shared/rust-rpds-with-mimalloc": "baseline-manifest.json",
+    "ordered-map-heavily-shared/rust-with-mimalloc": "baseline-manifest.json",
+    "ordered-map-linear/haskell": "baseline-manifest.json",
+    "ordered-map-linear/haskell-a1g": "baseline-manifest.json",
+    "ordered-map-linear/koka": "baseline-manifest.json",
+    "ordered-map-linear/lean": "baseline-manifest.json",
+    "ordered-map-linear/morphic": "baseline-manifest.json",
+    "ordered-map-linear/ocaml": "baseline-manifest.json",
+    "ordered-map-linear/reussir": "reussir-manifest.json",
+    "ordered-map-linear/reussir-nrac": "reussir-manifest.json",
+    "ordered-map-linear/rust": "baseline-manifest.json",
+    "ordered-map-linear/rust-rpds": "baseline-manifest.json",
+    "ordered-map-linear/rust-rpds-with-mimalloc": "baseline-manifest.json",
+    "ordered-map-linear/rust-with-mimalloc": "baseline-manifest.json",
+    "ordered-map-shared/haskell": "baseline-manifest.json",
+    "ordered-map-shared/haskell-a1g": "baseline-manifest.json",
+    "ordered-map-shared/koka": "baseline-manifest.json",
+    "ordered-map-shared/lean": "baseline-manifest.json",
+    "ordered-map-shared/morphic": "baseline-manifest.json",
+    "ordered-map-shared/ocaml": "baseline-manifest.json",
+    "ordered-map-shared/reussir": "reussir-manifest.json",
+    "ordered-map-shared/reussir-nrac": "reussir-manifest.json",
+    "ordered-map-shared/rust": "baseline-manifest.json",
+    "ordered-map-shared/rust-rpds": "baseline-manifest.json",
+    "ordered-map-shared/rust-rpds-with-mimalloc": "baseline-manifest.json",
+    "ordered-map-shared/rust-with-mimalloc": "baseline-manifest.json",
+    "qsort/haskell": "baseline-manifest.json",
+    "qsort/haskell-a1g": "baseline-manifest.json",
+    "qsort/haskell-st": "baseline-manifest.json",
+    "qsort/haskell-st-a1g": "baseline-manifest.json",
+    "qsort/koka": "baseline-manifest.json",
+    "qsort/lean": "baseline-manifest.json",
+    "qsort/morphic": "baseline-manifest.json",
+    "qsort/ocaml": "baseline-manifest.json",
+    "qsort/reussir": "reussir-manifest.json",
+    "qsort/reussir-nrac": "reussir-manifest.json",
+    "qsort/rust": "baseline-manifest.json",
+    "qsort/rust-with-mimalloc": "baseline-manifest.json",
+    "raytracer/haskell": "raytracer-manifest.json",
+    "raytracer/haskell-a1g": "raytracer-manifest.json",
+    "raytracer/koka": "raytracer-manifest.json",
+    "raytracer/lean": "raytracer-manifest.json",
+    "raytracer/ocaml": "raytracer-manifest.json",
+    "raytracer/reussir": "reussir-manifest.json",
+    "raytracer/reussir-nrac": "reussir-manifest.json",
+    "raytracer/rust": "raytracer-manifest.json",
+    "raytracer/rust-with-mimalloc": "raytracer-manifest.json",
+    "rbtree/haskell": "baseline-manifest.json",
+    "rbtree/haskell-a1g": "baseline-manifest.json",
+    "rbtree/koka": "baseline-manifest.json",
+    "rbtree/lean": "baseline-manifest.json",
+    "rbtree/morphic": "baseline-manifest.json",
+    "rbtree/ocaml": "baseline-manifest.json",
+    "rbtree/reussir": "reussir-manifest.json",
+    "rbtree/reussir-nrac": "reussir-manifest.json",
+    "rbtree/rust": "baseline-manifest.json",
+    "rbtree/rust-with-mimalloc": "baseline-manifest.json",
+    "rbtree-lookup/haskell": "baseline-manifest.json",
+    "rbtree-lookup/haskell-a1g": "baseline-manifest.json",
+    "rbtree-lookup/koka": "baseline-manifest.json",
+    "rbtree-lookup/lean": "baseline-manifest.json",
+    "rbtree-lookup/morphic": "baseline-manifest.json",
+    "rbtree-lookup/ocaml": "baseline-manifest.json",
+    "rbtree-lookup/reussir": "reussir-manifest.json",
+    "rbtree-lookup/reussir-nrac": "reussir-manifest.json",
+    "rbtree-lookup/rust": "baseline-manifest.json",
+    "rbtree-lookup/rust-with-mimalloc": "baseline-manifest.json",
+    "rbtree-zipper/haskell": "baseline-manifest.json",
+    "rbtree-zipper/haskell-a1g": "baseline-manifest.json",
+    "rbtree-zipper/koka": "baseline-manifest.json",
+    "rbtree-zipper/lean": "baseline-manifest.json",
+    "rbtree-zipper/morphic": "baseline-manifest.json",
+    "rbtree-zipper/ocaml": "baseline-manifest.json",
+    "rbtree-zipper/reussir": "reussir-manifest.json",
+    "rbtree-zipper/reussir-nrac": "reussir-manifest.json",
+    "rbtree-zipper/rust": "baseline-manifest.json",
+    "rbtree-zipper/rust-with-mimalloc": "baseline-manifest.json"
+  }
 }

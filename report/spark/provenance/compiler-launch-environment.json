@@ -1,9 +1,6 @@
 {
-  "timestamp": 1793577220.8665228,
-  "compiler": "/tmp/reussir-final-comparison-20261101/current/build/bin/rrc",
-  "native_compiler": "/tmp/reussir-final-comparison-20261101/current/build/bin/rrc.native",
-  "native_compiler_sha256": "a1c59c5f5efd5be5ae77fae0d3d9aa747b1918a3d75da5ebcf1f2dde2b5c3259",
+  "native_compiler": "/tmp/reussir-primary-refresh-20261102/rrc.native",
+  "native_compiler_sha256": "333d097f4ed376748cbf8ebf66c9a823bae44ada3a6683b73b373ea2bad1ffeb",
   "launcher_sha256": "579b45df67bbf7757f24c58fd694f5a451df9aa444810d87559f79298955a506",
-  "compiler_only_library_path": "/nix/store/3f383yqqck1hqdq9biscgpmv3sz7ml35-llvm-23.1.0-lib/lib:/nix/store/5ijsi20041scm3lp9y9zv7gg580vijli-mlir-23.1.0/lib:/nix/store/z5w4wq7mfcjbkpmvzi0wa32kwrw83z4k-openmp-21.1.8/lib:/nix/store/60afk5jlqmx8xh5pr76j7j8vdrhwzrmv-gcc-15.3.0-lib/lib:/nix/store/4my1cjkysivszznv4342x12r3z2pwdpl-zlib-1.3.2/lib:/nix/store/np1ym239sl7vml5k1aha3hc6lh6i2gr5-gmp-with-cxx-6.3.0/lib",
-  "reason": "Native compiler libz/libstdc++ runtime search path inside benchmark toolchain shell; benchmark executable environment unchanged."
+  "compiler_only_library_path": "/nix/store/3f383yqqck1hqdq9biscgpmv3sz7ml35-llvm-23.1.0-lib/lib:/nix/store/5ijsi20041scm3lp9y9zv7gg580vijli-mlir-23.1.0/lib:/nix/store/z5w4wq7mfcjbkpmvzi0wa32kwrw83z4k-openmp-21.1.8/lib:/nix/store/60afk5jlqmx8xh5pr76j7j8vdrhwzrmv-gcc-15.3.0-lib/lib:/nix/store/4my1cjkysivszznv4342x12r3z2pwdpl-zlib-1.3.2/lib:/nix/store/np1ym239sl7vml5k1aha3hc6lh6i2gr5-gmp-with-cxx-6.3.0/lib"
 }

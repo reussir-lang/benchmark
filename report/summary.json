@@ -1,31 +1,34 @@
 {
-  "default_cells_per_host": 279,
-  "total_cells": 558,
+  "cells_per_host": 288,
+  "reussir_cells_updated_per_host": 56,
+  "other_language_cells_preserved_per_host": 225,
+  "other_language_mltt_cells_added_per_host": 7,
+  "total_cells": 576,
   "hosts": [
     {
       "host": "workstation",
-      "expected_cells": 279,
+      "expected_cells": 288,
       "status_counts": {
-        "complete": 274,
+        "complete": 283,
         "budget_limited": 4,
         "budget_exhausted": 1
       },
-      "timing_cells": 278,
-      "footprint_cells": 278,
+      "timing_cells": 287,
+      "footprint_cells": 287,
       "budget_limited_cells": 5,
       "single_sample_cells": 2,
       "gnu_time_cells": 0
     },
     {
       "host": "spark",
-      "expected_cells": 279,
+      "expected_cells": 288,
       "status_counts": {
-        "complete": 273,
+        "complete": 282,
         "budget_limited": 5,
         "budget_exhausted": 1
       },
-      "timing_cells": 278,
-      "footprint_cells": 278,
+      "timing_cells": 287,
+      "footprint_cells": 287,
       "budget_limited_cells": 6,
       "single_sample_cells": 2,
       "gnu_time_cells": 1
@@ -35,254 +38,254 @@
     {
       "host": "workstation",
       "variant": "haskell",
-      "available_pairs": 26,
-      "timing_pairs": 26,
-      "time_vs_reussir": 2.009596326711389,
-      "memory_pairs": 26,
-      "rss_vs_reussir": 3.1577125891646634
+      "available_pairs": 27,
+      "timing_pairs": 27,
+      "time_vs_reussir": 1.9722828489046496,
+      "memory_pairs": 27,
+      "rss_vs_reussir": 2.986416214937485
     },
     {
       "host": "workstation",
       "variant": "haskell-a1g",
-      "available_pairs": 26,
-      "timing_pairs": 26,
-      "time_vs_reussir": 2.272001007513498,
-      "memory_pairs": 26,
-      "rss_vs_reussir": 35.94113138700451
+      "available_pairs": 27,
+      "timing_pairs": 27,
+      "time_vs_reussir": 2.2555706747750315,
+      "memory_pairs": 27,
+      "rss_vs_reussir": 32.53319326481977
     },
     {
       "host": "workstation",
       "variant": "haskell-st",
       "available_pairs": 3,
       "timing_pairs": 3,
-      "time_vs_reussir": 2.203242373901749,
+      "time_vs_reussir": 2.2116430619863086,
       "memory_pairs": 3,
-      "rss_vs_reussir": 1.8276846050980498
+      "rss_vs_reussir": 1.683858908883077
     },
     {
       "host": "workstation",
       "variant": "haskell-st-a1g",
       "available_pairs": 3,
       "timing_pairs": 3,
-      "time_vs_reussir": 2.4156107010696584,
+      "time_vs_reussir": 2.4248211230703363,
       "memory_pairs": 3,
-      "rss_vs_reussir": 32.090615126715804
+      "rss_vs_reussir": 29.565313414542636
     },
     {
       "host": "workstation",
       "variant": "koka",
-      "available_pairs": 27,
-      "timing_pairs": 26,
-      "time_vs_reussir": 2.064743463445126,
-      "memory_pairs": 26,
-      "rss_vs_reussir": 1.3167100609315947
+      "available_pairs": 28,
+      "timing_pairs": 27,
+      "time_vs_reussir": 2.034562129206325,
+      "memory_pairs": 27,
+      "rss_vs_reussir": 1.2627001949525702
     },
     {
       "host": "workstation",
       "variant": "lean",
-      "available_pairs": 27,
-      "timing_pairs": 26,
-      "time_vs_reussir": 2.303557208912247,
-      "memory_pairs": 26,
-      "rss_vs_reussir": 2.121729933598355
+      "available_pairs": 28,
+      "timing_pairs": 27,
+      "time_vs_reussir": 2.2565808092124207,
+      "memory_pairs": 27,
+      "rss_vs_reussir": 2.018131891493017
     },
     {
       "host": "workstation",
       "variant": "morphic",
       "available_pairs": 20,
       "timing_pairs": 19,
-      "time_vs_reussir": 2.38538809352308,
+      "time_vs_reussir": 2.401342672541669,
       "memory_pairs": 19,
-      "rss_vs_reussir": 1.101400807877055
+      "rss_vs_reussir": 1.0682392696267957
     },
     {
       "host": "workstation",
       "variant": "ocaml",
-      "available_pairs": 27,
-      "timing_pairs": 25,
-      "time_vs_reussir": 2.4358019975306897,
-      "memory_pairs": 25,
-      "rss_vs_reussir": 2.010865746796699
+      "available_pairs": 28,
+      "timing_pairs": 26,
+      "time_vs_reussir": 2.2741379186628645,
+      "memory_pairs": 26,
+      "rss_vs_reussir": 1.8966065886816494
     },
     {
       "host": "workstation",
       "variant": "reussir",
-      "available_pairs": 27,
-      "timing_pairs": 27,
+      "available_pairs": 28,
+      "timing_pairs": 28,
       "time_vs_reussir": 1.0,
-      "memory_pairs": 27,
+      "memory_pairs": 28,
       "rss_vs_reussir": 1.0
     },
     {
       "host": "workstation",
       "variant": "reussir-nrac",
-      "available_pairs": 27,
-      "timing_pairs": 27,
-      "time_vs_reussir": 1.0823243618060687,
-      "memory_pairs": 27,
-      "rss_vs_reussir": 1.0343518142579982
+      "available_pairs": 28,
+      "timing_pairs": 28,
+      "time_vs_reussir": 1.079956154210062,
+      "memory_pairs": 28,
+      "rss_vs_reussir": 1.032983519791116
     },
     {
       "host": "workstation",
       "variant": "rust",
-      "available_pairs": 27,
-      "timing_pairs": 27,
-      "time_vs_reussir": 2.2866432449406147,
-      "memory_pairs": 27,
-      "rss_vs_reussir": 1.6244594584556622
+      "available_pairs": 28,
+      "timing_pairs": 28,
+      "time_vs_reussir": 2.1928154099244113,
+      "memory_pairs": 28,
+      "rss_vs_reussir": 1.5994161913279354
     },
     {
       "host": "workstation",
       "variant": "rust-rpds",
       "available_pairs": 6,
       "timing_pairs": 6,
-      "time_vs_reussir": 2.424947655824301,
+      "time_vs_reussir": 2.438824065512461,
       "memory_pairs": 6,
-      "rss_vs_reussir": 2.152571506020656
+      "rss_vs_reussir": 2.1431779253114542
     },
     {
       "host": "workstation",
       "variant": "rust-rpds-with-mimalloc",
       "available_pairs": 6,
       "timing_pairs": 6,
-      "time_vs_reussir": 1.5920234208180142,
+      "time_vs_reussir": 1.6011335429137865,
       "memory_pairs": 6,
-      "rss_vs_reussir": 1.8195708059916178
+      "rss_vs_reussir": 1.8116304030018064
     },
     {
       "host": "workstation",
       "variant": "rust-with-mimalloc",
-      "available_pairs": 27,
-      "timing_pairs": 27,
-      "time_vs_reussir": 1.9265811811581206,
-      "memory_pairs": 27,
-      "rss_vs_reussir": 3.0606458813350623
+      "available_pairs": 28,
+      "timing_pairs": 28,
+      "time_vs_reussir": 1.8932288787744478,
+      "memory_pairs": 28,
+      "rss_vs_reussir": 2.9566783290350065
     },
     {
       "host": "spark",
       "variant": "haskell",
-      "available_pairs": 26,
-      "timing_pairs": 26,
-      "time_vs_reussir": 2.215059738130499,
-      "memory_pairs": 26,
-      "rss_vs_reussir": 2.9952397786249656
+      "available_pairs": 27,
+      "timing_pairs": 27,
+      "time_vs_reussir": 2.148793376294376,
+      "memory_pairs": 27,
+      "rss_vs_reussir": 2.903624633083523
     },
     {
       "host": "spark",
       "variant": "haskell-a1g",
-      "available_pairs": 26,
-      "timing_pairs": 26,
-      "time_vs_reussir": 2.4963163749196835,
-      "memory_pairs": 26,
-      "rss_vs_reussir": 33.79388515307143
+      "available_pairs": 27,
+      "timing_pairs": 27,
+      "time_vs_reussir": 2.5167376381546873,
+      "memory_pairs": 27,
+      "rss_vs_reussir": 31.36244437377269
     },
     {
       "host": "spark",
       "variant": "haskell-st",
       "available_pairs": 3,
       "timing_pairs": 3,
-      "time_vs_reussir": 3.271159570223451,
+      "time_vs_reussir": 3.2691348294633795,
       "memory_pairs": 3,
-      "rss_vs_reussir": 1.6523417487772072
+      "rss_vs_reussir": 1.6534131029655728
     },
     {
       "host": "spark",
       "variant": "haskell-st-a1g",
       "available_pairs": 3,
       "timing_pairs": 3,
-      "time_vs_reussir": 3.645897429630138,
+      "time_vs_reussir": 3.643640738394404,
       "memory_pairs": 3,
-      "rss_vs_reussir": 28.630160446629173
+      "rss_vs_reussir": 28.648723823322158
     },
     {
       "host": "spark",
       "variant": "koka",
-      "available_pairs": 27,
-      "timing_pairs": 26,
-      "time_vs_reussir": 2.1942603022819736,
-      "memory_pairs": 26,
-      "rss_vs_reussir": 1.3179047355234343
+      "available_pairs": 28,
+      "timing_pairs": 27,
+      "time_vs_reussir": 2.1654123321402583,
+      "memory_pairs": 27,
+      "rss_vs_reussir": 1.2987798062361355
     },
     {
       "host": "spark",
       "variant": "lean",
-      "available_pairs": 27,
-      "timing_pairs": 26,
-      "time_vs_reussir": 2.2203818222478877,
-      "memory_pairs": 26,
-      "rss_vs_reussir": 2.1417576703600285
+      "available_pairs": 28,
+      "timing_pairs": 27,
+      "time_vs_reussir": 2.19460022893259,
+      "memory_pairs": 27,
+      "rss_vs_reussir": 2.0951165317323435
     },
     {
       "host": "spark",
       "variant": "morphic",
       "available_pairs": 20,
       "timing_pairs": 19,
-      "time_vs_reussir": 2.531060642041084,
+      "time_vs_reussir": 2.5353258989182996,
       "memory_pairs": 19,
-      "rss_vs_reussir": 1.0780341289688975
+      "rss_vs_reussir": 1.0767256468124833
     },
     {
       "host": "spark",
       "variant": "ocaml",
-      "available_pairs": 27,
-      "timing_pairs": 25,
-      "time_vs_reussir": 2.7095733584732544,
-      "memory_pairs": 25,
-      "rss_vs_reussir": 1.8562483596817623
+      "available_pairs": 28,
+      "timing_pairs": 26,
+      "time_vs_reussir": 2.6129392278525976,
+      "memory_pairs": 26,
+      "rss_vs_reussir": 1.8054777205367116
     },
     {
       "host": "spark",
       "variant": "reussir",
-      "available_pairs": 27,
-      "timing_pairs": 27,
+      "available_pairs": 28,
+      "timing_pairs": 28,
       "time_vs_reussir": 1.0,
-      "memory_pairs": 27,
+      "memory_pairs": 28,
       "rss_vs_reussir": 1.0
     },
     {
       "host": "spark",
       "variant": "reussir-nrac",
-      "available_pairs": 27,
-      "timing_pairs": 27,
-      "time_vs_reussir": 1.098714098100669,
-      "memory_pairs": 27,
-      "rss_vs_reussir": 1.036702950454894
+      "available_pairs": 28,
+      "timing_pairs": 28,
+      "time_vs_reussir": 1.095543608552787,
+      "memory_pairs": 28,
+      "rss_vs_reussir": 1.0333225399063433
     },
     {
       "host": "spark",
       "variant": "rust",
-      "available_pairs": 27,
-      "timing_pairs": 26,
-      "time_vs_reussir": 2.3766436135613134,
-      "memory_pairs": 26,
-      "rss_vs_reussir": 1.6749577889245872
+      "available_pairs": 28,
+      "timing_pairs": 27,
+      "time_vs_reussir": 2.328272968674892,
+      "memory_pairs": 27,
+      "rss_vs_reussir": 1.691563807518988
     },
     {
       "host": "spark",
       "variant": "rust-rpds",
       "available_pairs": 6,
       "timing_pairs": 6,
-      "time_vs_reussir": 2.3402508814593466,
+      "time_vs_reussir": 2.339164866944441,
       "memory_pairs": 6,
-      "rss_vs_reussir": 2.141161649715202
+      "rss_vs_reussir": 2.1373109409000564
     },
     {
       "host": "spark",
       "variant": "rust-rpds-with-mimalloc",
       "available_pairs": 6,
       "timing_pairs": 6,
-      "time_vs_reussir": 1.6009572276539523,
+      "time_vs_reussir": 1.6002142890225644,
       "memory_pairs": 6,
-      "rss_vs_reussir": 1.8126372116643843
+      "rss_vs_reussir": 1.8093773279043022
     },
     {
       "host": "spark",
       "variant": "rust-with-mimalloc",
-      "available_pairs": 27,
-      "timing_pairs": 27,
-      "time_vs_reussir": 1.9021648429163873,
-      "memory_pairs": 27,
-      "rss_vs_reussir": 3.018770999048946
+      "available_pairs": 28,
+      "timing_pairs": 28,
+      "time_vs_reussir": 1.8605314435021525,
+      "memory_pairs": 28,
+      "rss_vs_reussir": 2.993953162094211
     }
   ],
   "plots": [
@@ -320,6 +323,8 @@
     "report/workstation/plots/life.png",
     "report/workstation/plots/list-membership.svg",
     "report/workstation/plots/list-membership.png",
+    "report/workstation/plots/mltt.svg",
+    "report/workstation/plots/mltt.png",
     "report/workstation/plots/nbe-closure.svg",
     "report/workstation/plots/nbe-closure.png",
     "report/workstation/plots/nbe-hoas.svg",
@@ -378,6 +383,8 @@
     "report/spark/plots/life.png",
     "report/spark/plots/list-membership.svg",
     "report/spark/plots/list-membership.png",
+    "report/spark/plots/mltt.svg",
+    "report/spark/plots/mltt.png",
     "report/spark/plots/nbe-closure.svg",
     "report/spark/plots/nbe-closure.png",
     "report/spark/plots/nbe-hoas.svg",

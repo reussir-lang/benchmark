@@ -1,26 +1,16 @@
-# Completed default benchmark suite
+# Workstation and Spark benchmark report
 
-Both hosts completed the original default suite and environment retries on November 1, 2026. Raytracer results from merged PR #9 were added on November 2 using the same compiler environments and measurement CPUs. All original measurements are retained; errors and unavailable measurements remain explicit.
+All 28 Reussir workloads were remeasured in both default and NRAC configurations on each host. Seven missing other-language MLTT configurations were measured on each host, completing all nine registered MLTT configurations. All 225 previously recorded other-language cells per host are unchanged.
 
-Category summaries and plot galleries classify `heap-functional` as functional data structures. This reporting migration preserves all measurements and benchmark source versions.
+| Host | Cells | Timing | Peak RSS | Errors |
+| --- | --- | --- | --- | --- |
+| workstation | 288 | 287 | 287 | 0 |
+| spark | 288 | 287 | 287 | 0 |
 
-| Host | Cases | Timing | Footprint | Budget limited | Single sample | Errors |
-| --- | --- | --- | --- | --- | --- | --- |
-| workstation | 279 | 278 | 278 | 5 | 2 | 0 |
-| spark | 279 | 278 | 278 | 6 | 2 | 0 |
+[Combined CSV](comparison.csv) · [Reussir before/after](reussir-change.csv) · [Paired ratios](relative-to-reussir.csv) · [Errors](errors.csv)
 
-[Combined CSV](comparison.csv) · [Paired ratios](relative-to-reussir.csv) · [Errors](errors.csv)
+[workstation: full table](workstation/comparison.md) · [CSV](workstation/comparison.csv) · [Plots](workstation/plots/index.html) · [Categories](workstation/category-summary.md)
 
-[workstation: full table](workstation/comparison.html) · [Markdown](workstation/comparison.md) · [CSV](workstation/comparison.csv)
+[spark: full table](spark/comparison.md) · [CSV](spark/comparison.csv) · [Plots](spark/plots/index.html) · [Categories](spark/category-summary.md)
 
-[workstation: all runtime and peak-memory plots](workstation/plots/index.html). X marks takes too long (no completed measurement within five minutes); * marks measurements with fewer samples due to the time budget.
-
-[workstation: categorized means and medians](workstation/category-summary.md) · [Category CSV](workstation/category-summary.csv)
-
-[spark: full table](spark/comparison.html) · [Markdown](spark/comparison.md) · [CSV](spark/comparison.csv)
-
-[spark: all runtime and peak-memory plots](spark/plots/index.html). X marks takes too long (no completed measurement within five minutes); * marks measurements with fewer samples due to the time budget.
-
-[spark: categorized means and medians](spark/category-summary.md) · [Category CSV](spark/category-summary.csv)
-
-Ratios use only complete non-budget-limited pairs against ordinary Reussir on the same host. Time and memory above 1 mean slower and more resident memory, respectively. Budget-limited measurements remain visible in the full tables.
+Ratios compare measurements on the same host. Reussir uses merged compiler revision `36f05142f3b33f442f69afa421a10b7a39ee21f9`; other languages retain their original toolchains. Only their missing MLTT cells were measured; existing results are unchanged. Before/after changes compare against the previous primary dataset, compiler `bcfff8d419169a09509b963714de0675630c7bc1`, and include all intervening compiler and library changes. Missing and failed measurements remain explicit.
