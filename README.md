@@ -246,6 +246,20 @@ Known toolchain quirks, encoded in the sources:
   the workaround, commented in `koka/life.kk`.
 - Koka emits binaries without the executable bit; `compile.py` fixes it up.
 
+## Native optimization
+
+Rust uses `-C opt-level=3 -C lto=thin -C target-cpu=native`; external crate
+archives retain LLVM bitcode for cross-crate optimization. Lean uses Clang through
+`LEAN_CC`, `-O3 -flto=thin -fuse-ld=lld`, and `-march=native` on x86_64 or
+`-mcpu=native` on AArch64. Its pinned runtime and standard-library archives are
+rebuilt with ThinLTO. CPU-specific benchmark executables are built on the host
+where they are measured; Nix dependency packages retain portable CPU targets.
+
+OCaml uses a Flambda-enabled compiler with `-O3`. Findlib and Zarith are rebuilt
+against the same compiler. Check `ocamlopt -config` for `flambda: true`; `-O3`
+alone does not enable Flambda in a compiler built without it. External native
+libraries such as GMP remain outside LLVM LTO.
+
 ## Running
 
 The checked-in flake is the one-shot bootstrap. It pins Reussir main at

@@ -37,8 +37,9 @@ Toolchain configurations
   ``-nrac`` variant disables ``--reuse-across-call``.
 - koka: ``-O3`` with clang thin-LTO and ``-march=native``
   (``--ccopts``/``--cclinkopts``).
-- lean: lean → C, then leanc ``-flto -O3``.
-- rust: ``-C opt-level=3``; the ``-with-mimalloc`` variant preloads mimalloc.
+- lean: lean → C, then clang via leanc with ThinLTO, ``-O3``, and host CPU
+  targeting; the Nix Lean runtime and libraries carry ThinLTO bitcode.
+- rust: ``-C opt-level=3 -C lto=thin -C target-cpu=native``; the ``-with-mimalloc`` variant preloads mimalloc.
   The ``rust-rpds`` variants additionally link the prebuilt ``rpds``
   persistent-collection rlibs (``extern_crates``, resolved via
   RUST_EXTERN_LIBS); big-integer benchmarks add num-bigint to every Rust
@@ -49,7 +50,7 @@ Toolchain configurations
   results by -40%..+190% depending on the benchmark's live-set size.
   The ``-st`` variants are separate sources using mutable ST arrays where
   the plain variant is purely functional.
-- ocaml: ``ocamlopt -O3``; big-integer benchmarks link Zarith through
+- ocaml: Flambda-enabled ``ocamlopt -O3``; big-integer benchmarks link Zarith through
   ocamlfind (``ocaml-packages``).
 - morphic: ``morphic build --llvm-opt-level 3`` (the backend targets the host
   CPU) in Morphic's default configuration: borrow-inferred reference

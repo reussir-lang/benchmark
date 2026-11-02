@@ -1,6 +1,7 @@
 import contextvars
 import glob
 import os
+import platform
 import shutil
 import signal
 import stat
@@ -302,6 +303,10 @@ def compile_rust(program: str, output: str, extern_crates=None) -> None:
             CONFIG["rustc"],
             "-C",
             "opt-level=3",
+            "-C",
+            "lto=thin",
+            "-C",
+            "target-cpu=native",
         ]
         + extern_flags
         + [
@@ -371,6 +376,9 @@ def compile_ocaml(program: str, output: str, packages=None) -> None:
 
 
 def compile_lean(program: str, output: str) -> None:
+    env = os.environ.copy()
+    env["LEAN_CC"] = CONFIG["cc"]
+    native_flag = "-mcpu=native" if platform.machine() in {"aarch64", "arm64"} else "-march=native"
     with tempfile.TemporaryDirectory() as tmpdir:
         # copy program to tmpdir
         shutil.copyfile(program, os.path.join(tmpdir, os.path.basename(program)))
@@ -390,12 +398,14 @@ def compile_lean(program: str, output: str) -> None:
                 "-o",
                 output,
                 f"{output}.c",
-                "-flto",
+                "-flto=thin",
+                "-fuse-ld=lld",
                 "-O3",
+                native_flag,
             ],
             cwd=tmpdir,
             step="lean linking",
-        )
+            env=env,        )
     _ensure_executable(output, "lean linking")
 
 

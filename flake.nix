@@ -356,8 +356,10 @@
 
         externCrates = pkgs.stdenv.mkDerivation {
           pname = "benchmark-rust-extern-crates";
-          version = "1";
+          version = "2";
           src = ./rust/extern-crates;
+          # The final rustc invocation performs cross-crate ThinLTO.
+          RUSTFLAGS = "-Cembed-bitcode=yes";
 
           cargoDeps = externCratesCargoDeps;
           cargoRoot = ".";
@@ -384,7 +386,27 @@
 
         # Zarith, OCaml's GMP-backed big integers, for the big-integer
         # benchmarks; compile.py links it through ocamlfind.
-        ocamlPackages = pkgs.ocamlPackages;
+        ocamlPackages = pkgs.ocamlPackages.overrideScope (final: prev: {
+          ocaml = prev.ocaml.override { flambdaSupport = true; };
+        });
+
+        # Keep the runtime and standard-library archives available to consumer
+        # ThinLTO links. Bootstrap with the same pinned Lean version.
+        lean = (pkgs.lean4.override { stdenv = llvmPkgs.stdenv; }).overrideAttrs (old: {
+          nativeBuildInputs = old.nativeBuildInputs ++ [ llvmPkgs.lld llvmPkgs.llvm ];
+          cmakeFlags = old.cmakeFlags ++ [
+            (lib.cmakeFeature "STAGE1_PREV_STAGE" "${pkgs.lean4}")
+            (lib.cmakeFeature "CMAKE_C_COMPILER" "${llvmPkgs.clang}/bin/clang")
+            (lib.cmakeFeature "CMAKE_CXX_COMPILER" "${llvmPkgs.clang}/bin/clang++")
+            (lib.cmakeFeature "CMAKE_AR" "${llvmPkgs.llvm}/bin/llvm-ar")
+            (lib.cmakeFeature "CMAKE_RANLIB" "${llvmPkgs.llvm}/bin/llvm-ranlib")
+            (lib.cmakeFeature "CMAKE_C_FLAGS" "-flto=thin")
+            (lib.cmakeFeature "CMAKE_CXX_FLAGS" "-flto=thin")
+            (lib.cmakeFeature "LEANC_OPTS" "-flto=thin")
+            (lib.cmakeFeature "LEAN_EXTRA_LINKER_FLAGS" "-flto=thin -fuse-ld=lld")
+          ];
+          dontStrip = true;
+        });
 
         ghcBase = pkgs.haskellPackages.ghc;
         # Hackage packages the benchmarks use beyond GHC's boot libraries:
@@ -466,6 +488,11 @@
         packages.reussir-rt-xlto = reussirRtXlto;
         packages.reussir-rt-rlibs = reussirRtRlibs;
         packages.ghc = ghc;
+        packages.lean = lean;
+        packages.ocaml = ocamlPackages.ocaml;
+        packages.ocaml-findlib = ocamlPackages.findlib;
+        packages.ocaml-zarith = ocamlPackages.zarith;
+        packages.rust-extern-crates = externCrates;
 
         devShells.default =
           pkgs.mkShell.override
@@ -478,7 +505,7 @@
                 reussirCompiler
                 llvmPkgs.clang
                 llvmPkgs.lld
-                pkgs.lean4
+                lean
                 pkgs.koka
                 # ocamlopt from nixpkgs is configured to invoke gcc when linking.
                 pkgs.gcc
@@ -510,8 +537,8 @@
               REUSSIR_RUSTC = "${rustToolchain}/bin/rustc";
               REUSSIR_RUSTC_DEPS = "${reussirRtRlibs}/lib:${reussirRtRlibs}/lib/deps";
               BENCHMARK_CC = "${llvmPkgs.clang}/bin/clang";
-              BENCHMARK_LEAN = "${pkgs.lean4}/bin/lean";
-              BENCHMARK_LEANC = "${pkgs.lean4}/bin/leanc";
+              BENCHMARK_LEAN = "${lean}/bin/lean";
+              BENCHMARK_LEANC = "${lean}/bin/leanc";
               BENCHMARK_KOKA = "${pkgs.koka}/bin/koka";
               BENCHMARK_RUSTC = "${pkgs.rustc}/bin/rustc";
               # Prebuilt rlibs for Rust cells that link crates beyond std.
