@@ -4,6 +4,7 @@ import os
 import sys
 
 from benches import BENCHES, SETS
+from config import CONFIG, positive_seconds
 from runner import run_benchmark
 from terminal_dashboard import LiveBenchmarkDashboard
 from tqdm import tqdm
@@ -15,6 +16,10 @@ def parse_args():
     )
 
     parser = argparse.ArgumentParser(description="Compile and run benchmark(s).")
+    parser.add_argument(
+        "--compile-timeout", type=positive_seconds,
+        help="Seconds allowed per cell for compilation and linking (default: config.json, 300).",
+    )
     parser.add_argument(
         "--bench",
         choices=sorted(BENCHES.keys()),
@@ -337,6 +342,8 @@ def run_targets(targets, tui_choice=None):
 
 def main():
     parser, args = parse_args()
+    if args.compile_timeout is not None:
+        CONFIG["compile-timeout-seconds"] = args.compile_timeout
 
     if args.input_json:
         results = _select_results(

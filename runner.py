@@ -186,7 +186,15 @@ def run_benchmark(bench_name, bench_variant):
         executable = os.path.join(tmpdir, f"{bench_name}-{bench_variant}")
         runtime_env = _runtime_env(bench_variant)
 
-        compile.compile_cell(bench, spec, bench_info, executable, resolve)
+        try:
+            compile.compile_cell(bench, spec, bench_info, executable, resolve)
+        except compile.CompilationTimeout as error:
+            return {
+                "results": [], "sample_count": 0,
+                "status": "compile_timeout",
+                "compile_timeout_seconds": error.seconds,
+                "error": str(error),
+            }
 
         try:
             return measure_executable(executable, runtime_env)

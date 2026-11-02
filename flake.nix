@@ -10,9 +10,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Reussir with backward cleanup by default (LLVM/MLIR 23.1).
+    # Reussir with guarded last-use traversal borrowing (#919).
     reussir = {
-      url = "github:reussir-lang/reussir/bcfff8d419169a09509b963714de0675630c7bc1";
+      url = "github:reussir-lang/reussir/36f05142f3b33f442f69afa421a10b7a39ee21f9";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.fenix.follows = "fenix";
       inputs.flake-utils.follows = "flake-utils";

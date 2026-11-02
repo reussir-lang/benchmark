@@ -5,8 +5,8 @@ Haskell, OCaml, and Morphic, organized as five sets:
 
 | Set | Benchmarks | What it exercises |
 |---|---|---|
-| `functional-data-structures` | rbtree, rbtree-zipper, nbe-hoas, nbe-closure, derive, fingertree, functional-queue | allocation, pattern matching, persistence, and reuse/GC of linked structures |
-| `large-aggregates` | life, qsort, heap-array, heap-functional, raytracer | flat arrays, matched array/tree heaps, and ray tracing over a sphere array |
+| `functional-data-structures` | rbtree, rbtree-zipper, nbe-hoas, nbe-closure, derive, fingertree, functional-queue, heap-functional, mltt | allocation, pattern matching, persistence, and reuse/GC of linked structures |
+| `large-aggregates` | life, qsort, heap-array, raytracer | flat arrays, array heaps, and ray tracing over a sphere array |
 | `std-collections` | ordered-map-linear, ordered-map-shared, ordered-map-heavily-shared, hash-map-linear, hash-map-shared, hash-map-heavily-shared | each language's standard ordered map and hash map under matched insert/remove/lookup workloads at three retention tiers: none, sparse, and heavy |
 | `big-integers` | bigint-fib, bigint-factorial, bigint-pidigits, bigint-binomial, bigint-rbtree, bigint-collatz | each language's arbitrary-precision integers on heap-sized values (sums, products and quotients by a word, spigot arithmetic) and on values that stay word-sized |
 | `shared-traversals` | list-membership, expr-replace, rbtree-lookup | read-only traversals of data the caller keeps: what borrowed parameters save a reference-counted runtime |
@@ -25,6 +25,12 @@ intentionally left idiomatic.
 
 Each benchmark/variant has a five-minute measurement budget (`case-time-budget-seconds`
 in `config.json`), including warmups and peak-RSS measurement; compilation is separate.
+Compilation and linking share their own five-minute deadline per cell. Set
+`--compile-timeout SECONDS` in `main.py` or `verify.py`, or change
+`compile-timeout-seconds` in `config.json`. On expiry, the compiler and its child
+processes are stopped. The benchmark runner records `status: "compile_timeout"`
+with no timing or RSS sample and continues; verification reports a failure and
+continues its sweep.
 Slow cases use fewer warmups and timing samples. Results retain completed samples,
 their sample count and standard deviation, and indicate when the budget limited
 measurement. If only the RSS run fits, its elapsed time is retained and labeled
@@ -54,6 +60,22 @@ does not supply a footprint.
   `[i64; 65536]` MINSTD-filled array. Persistent-array languages rely on
   uniqueness/COW for in-place sets; the Koka and pure Haskell variants use
   their existing list-quicksort sources — noted in those files.
+- **mltt** — a small bidirectional MLTT checker with stratified universes,
+  dependent functions and pairs, natural-number induction, and identity types
+  with based path induction. All seven ports use explicit term/value variants,
+  closures over linked environments, and signed 64-bit binder IDs and universe
+  levels. Haskell uses strict fields and bindings. Rust uses shared `Rc` nodes.
+  Every run performs ten kernel checks, then checks valid and deliberately
+  corrupted associativity, equality-chain, and dependent-pair proof bundles at
+  size 4096. Each bundle checks all six supporting definitions from scratch;
+  no lemma is trusted. The expected check total is 16. Timing includes term
+  construction, checking, and cleanup, including the invalid proofs. These are
+  generated standalone proofs, not Lean/Arena imports. This benchmark requires
+  Reussir's borrowed-callable inliner fix (#917); the pinned compiler also
+  includes guarded last-use traversal borrowing (#919).
+  The Morphic port is retained but not registered in the default suite: native
+  compilation was stopped after 18.6 CPU minutes at about 55 GiB RSS. Its OCaml
+  backend compiles and returns 16; this does not validate the native RC backend.
 - **heap-array / heap-functional** — two separately reported representations
   of one binary min-heap algorithm and workload: a mutable array/vector and a
   purely functional Braun tree. Both build by repeated insertion, contain
@@ -227,7 +249,7 @@ Known toolchain quirks, encoded in the sources:
 ## Running
 
 The checked-in flake is the one-shot bootstrap. It pins Reussir main at
-`0cf8c9afa4f66568b52c3912debc05c046afc24c` and builds only the `rrc`
+`36f05142f3b33f442f69afa421a10b7a39ee21f9` and builds only the `rrc`
 dependency closure plus `libreussir_rt.a` and `libRCGMPRuntime.a`
 (`REUSSIR_RCGMP_RUNTIME`); TPDE, tests, the REPL, and unrelated tools are
 not built. For the std-collections and big-integers sets it additionally

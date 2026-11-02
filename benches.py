@@ -3,10 +3,10 @@
 The suite is organized as five benchmark sets:
 
 - ``functional-data-structures``: constructor-based workloads (trees, terms,
-  symbolic expressions, finger trees, and real-time queues) that exercise
+  symbolic expressions, functional heaps, finger trees, and real-time queues) that exercise
   allocation, pattern matching, persistence, and reuse/GC.
-- ``large-aggregates``: flat-array workloads, the paired array and Braun
-  binary heaps, and sequential ray tracing over an array of spheres.
+- ``large-aggregates``: flat-array workloads, array heaps, and sequential ray
+  tracing over an array of spheres.
 - ``std-collections``: each language's standard ordered and hash maps.
 - ``big-integers``: each language's arbitrary-precision integers, on
   heap-sized values and on values that stay word-sized.
@@ -139,6 +139,21 @@ def _sources(base, haskell=None, haskell_st=None):
 
 
 BENCHES = {
+    # Morphic source is retained, but native compilation exceeds practical memory/time limits.
+    "mltt": {
+        "set": _FUNCTIONAL,
+        "sources": _sources(
+            {
+                "lean": "lean/mltt.lean",
+                "reussir": ("reussir/mltt.rr", "reussir/mltt.rr.c"),
+                "reussir-nrac": ("reussir/mltt.rr", "reussir/mltt.rr.c"),
+                "koka": "koka/mltt.kk",
+                "rust": "rust/mltt.rs",
+                "ocaml": "ocaml/mltt.ml",
+            },
+            haskell="haskell/mltt.hs",
+        ),
+    },
     # Morphic is blocked on missing floating-point math intrinsics.
     "raytracer": {
         "set": _AGGREGATES,
@@ -278,7 +293,7 @@ BENCHES = {
         ),
     },
     "heap-functional": {
-        "set": _AGGREGATES,
+        "set": _FUNCTIONAL,
         "sources": _sources(
             {
                 "lean": "lean/heap-functional.lean",

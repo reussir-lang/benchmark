@@ -18,6 +18,7 @@ import tempfile
 
 import compile as compilers
 from benches import BENCHES, SETS, VARIANTS
+from config import CONFIG, positive_seconds
 
 
 def _unlimit_stack():
@@ -47,7 +48,13 @@ def main():
     parser.add_argument("--bench", choices=sorted(BENCHES.keys()))
     parser.add_argument("--variant", choices=sorted(VARIANTS.keys()))
     parser.add_argument("--set", dest="bench_set", choices=sorted(SETS.keys()))
+    parser.add_argument(
+        "--compile-timeout", type=positive_seconds,
+        help="Seconds allowed per cell for compilation and linking (default: config.json, 300).",
+    )
     args = parser.parse_args()
+    if args.compile_timeout is not None:
+        CONFIG["compile-timeout-seconds"] = args.compile_timeout
 
     script_dir = os.path.dirname(os.path.abspath(__file__))
 
