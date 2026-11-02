@@ -449,11 +449,11 @@
           inherit (leanUnwrapped) version meta;
           paths = [ leanUnwrapped ];
           nativeBuildInputs = [ pkgs.makeWrapper ];
-          # The Clang-built shared runtime needs GCC's C++ runtime on NixOS.
+          # Keep the shared runtime dependencies available to the Clang build on NixOS.
           postBuild = ''
             for program in "$out"/bin/*; do
               if test -f "$program" && test -x "$program"; then
-                wrapProgram "$program" --prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath [ pkgs.stdenv.cc.cc.lib ]}
+                wrapProgram "$program" --prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath [ pkgs.stdenv.cc.cc.lib pkgs.gmp pkgs.libuv ]}
               fi
             done
           '';
