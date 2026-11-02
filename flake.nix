@@ -424,10 +424,11 @@
             ocaml = oxcamlCompiler;
             findlib = prev.findlib.overrideAttrs (old: {
               postPatch = (old.postPatch or "") + ''
-                # OxCaml's prerr_endline accepts local strings. Eta-expand the
-                # no-op branch so both callbacks admit the same argument mode.
+                # Retain Findlib's public callback type when OxCaml's
+                # prerr_endline accepts local strings.
                 substituteInPlace src/findlib/topfind.ml.in \
-                  --replace-fail 'then prerr_endline else ignore' 'then prerr_endline else (fun _ -> ())'
+                  --replace-fail 'let log = ref (if real_toploop then prerr_endline else ignore)' \
+                    'let log : (string -> unit) ref = ref (fun s -> if real_toploop then prerr_endline s)'
               '';
             });
           }

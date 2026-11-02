@@ -257,7 +257,8 @@ where they are measured; Nix dependency packages retain portable CPU targets.
 
 The `ocaml` configuration uses pinned [OxCaml](https://github.com/oxcaml/oxcaml)
 (OCaml 5.4 based, Flambda 2) with `-O3`. Findlib and Zarith are rebuilt against
-that compiler. Existing benchmark sources and result keys remain `ocaml`;
+that compiler. `ocamlopt -config` reports `flambda2: true`.
+Existing benchmark sources and result keys remain `ocaml`;
 the recorded toolchain identifies OxCaml. External native libraries such as
 GMP remain outside LLVM LTO.
 
