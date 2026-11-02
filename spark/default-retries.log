@@ -1,0 +1,6 @@
+fetching path input 'path:/tmp/reussir-final-comparison-20261101/benchmark'
+fetching github input 'github:NixOS/nixpkgs/nixpkgs-unstable'
+Reussir benchmark environment
+  Reussir: bcfff8d41916
+  Run:     python verify.py
+ENVIRONMENT RETRIES COMPLETE

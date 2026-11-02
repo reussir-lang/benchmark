@@ -1,0 +1,270 @@
+{
+  "bigint-binomial/reussir": [
+    {
+      "record": {
+        "status": "error",
+        "started": 1793577010.0165176,
+        "finished": 1793577010.017395
+      },
+      "payload": {
+        "error": "reussir core interface failed: /tmp/reussir-final-comparison-20261101/current/build/bin/rrc: error while loading shared libraries: libz.so.1: cannot open shared object file: No such file or directory",
+        "status": "error"
+      }
+    },
+    {
+      "record": {
+        "status": "complete",
+        "started": 1793584140.8051298,
+        "finished": 1793584160.07162,
+        "attempt": 2
+      },
+      "payload": {
+        "results": [
+          {
+            "command": "/tmp/nix-shell.Lu5LkC/tmp0loz_fxp/bigint-binomial-reussir",
+            "mean": 1.197080681334,
+            "stddev": 0.000476826868103469,
+            "median": 1.1969929216200001,
+            "user": 1.19544599,
+            "system": 0.000498854,
+            "min": 1.19641902906,
+            "max": 1.19789554714,
+            "times": [
+              1.19641902906,
+              1.19702688138,
+              1.1975846488600002,
+              1.1969000683600002,
+              1.19789554714,
+              1.1971459757,
+              1.1975440935600001,
+              1.1968619022,
+              1.19695896186,
+              1.19646970522
+            ],
+            "exit_codes": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        ],
+        "timing_source": "hyperfine",
+        "sample_count": 10,
+        "requested_samples": 10,
+        "warmup_runs": 5,
+        "case_time_budget_seconds": 300.0,
+        "measurement_seconds": 18.44390921399463,
+        "budget_limited": false,
+        "peak_rss_kb": 5804
+      }
+    }
+  ],
+  "bigint-binomial/reussir-nrac": [
+    {
+      "record": {
+        "status": "error",
+        "started": 1793577010.017734,
+        "finished": 1793577010.018257
+      },
+      "payload": {
+        "error": "reussir core interface failed: /tmp/reussir-final-comparison-20261101/current/build/bin/rrc: error while loading shared libraries: libz.so.1: cannot open shared object file: No such file or directory",
+        "status": "error"
+      }
+    },
+    {
+      "record": {
+        "status": "complete",
+        "started": 1793584160.074242,
+        "finished": 1793584179.3876576,
+        "attempt": 2
+      },
+      "payload": {
+        "results": [
+          {
+            "command": "/tmp/nix-shell.Lu5LkC/tmpnz5tf4xq/bigint-binomial-reussir-nrac",
+            "mean": 1.197964151726,
+            "stddev": 0.00036545268094300467,
+            "median": 1.1979337971200001,
+            "user": 1.1962720340000002,
+            "system": 0.0005678139999999999,
+            "min": 1.19749098796,
+            "max": 1.19848514722,
+            "times": [
+              1.19782577432,
+              1.19755576546,
+              1.1983932036599998,
+              1.19804181992,
+              1.1978010805400001,
+              1.1982168034199998,
+              1.19848514722,
+              1.19757234224,
+              1.19825859252,
+              1.19749098796
+            ],
+            "exit_codes": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        ],
+        "timing_source": "hyperfine",
+        "sample_count": 10,
+        "requested_samples": 10,
+        "warmup_runs": 5,
+        "case_time_budget_seconds": 300.0,
+        "measurement_seconds": 18.46372168599919,
+        "budget_limited": false,
+        "peak_rss_kb": 5804
+      }
+    }
+  ],
+  "bigint-collatz/reussir": [
+    {
+      "record": {
+        "status": "error",
+        "started": 1793577124.2739923,
+        "finished": 1793577124.274875
+      },
+      "payload": {
+        "error": "reussir core interface failed: /tmp/reussir-final-comparison-20261101/current/build/bin/rrc: error while loading shared libraries: libz.so.1: cannot open shared object file: No such file or directory",
+        "status": "error"
+      }
+    },
+    {
+      "record": {
+        "status": "complete",
+        "started": 1793584179.3902771,
+        "finished": 1793584182.8936841,
+        "attempt": 2
+      },
+      "payload": {
+        "results": [
+          {
+            "command": "/tmp/nix-shell.Lu5LkC/tmpwvm89f2q/bigint-collatz-reussir",
+            "mean": 0.15117133257,
+            "stddev": 0.0008387767485758367,
+            "median": 0.15149794195,
+            "user": 0.15086797999999998,
+            "system": 0.000253218,
+            "min": 0.14905649202000001,
+            "max": 0.15206181500000002,
+            "times": [
+              0.15155397320000003,
+              0.1510811985,
+              0.15150074056,
+              0.15206181500000002,
+              0.15159935448,
+              0.15097006086,
+              0.14905649202000001,
+              0.15071073076000002,
+              0.15168381698,
+              0.15149514334
+            ],
+            "exit_codes": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        ],
+        "timing_source": "hyperfine",
+        "sample_count": 10,
+        "requested_samples": 10,
+        "warmup_runs": 5,
+        "case_time_budget_seconds": 300.0,
+        "measurement_seconds": 2.753618283997639,
+        "budget_limited": false,
+        "peak_rss_kb": 1376
+      }
+    }
+  ],
+  "bigint-collatz/reussir-nrac": [
+    {
+      "record": {
+        "status": "error",
+        "started": 1793577124.2753377,
+        "finished": 1793577124.2758613
+      },
+      "payload": {
+        "error": "reussir core interface failed: /tmp/reussir-final-comparison-20261101/current/build/bin/rrc: error while loading shared libraries: libz.so.1: cannot open shared object file: No such file or directory",
+        "status": "error"
+      }
+    },
+    {
+      "record": {
+        "status": "complete",
+        "started": 1793584182.8963087,
+        "finished": 1793584186.4104083,
+        "attempt": 2
+      },
+      "payload": {
+        "results": [
+          {
+            "command": "/tmp/nix-shell.Lu5LkC/tmpkfdwa_v2/bigint-collatz-reussir-nrac",
+            "mean": 0.151232127554,
+            "stddev": 0.0006859527399114576,
+            "median": 0.15144424152000002,
+            "user": 0.15089789399999998,
+            "system": 0.00024148399999999998,
+            "min": 0.15008175146000002,
+            "max": 0.15192611420000002,
+            "times": [
+              0.15192611420000002,
+              0.15135634686000002,
+              0.15143412920000002,
+              0.15063108549999998,
+              0.15167678528,
+              0.15167250946000002,
+              0.15008175146000002,
+              0.15191028724000002,
+              0.1501779125,
+              0.15145435384000003
+            ],
+            "exit_codes": [
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0,
+              0
+            ]
+          }
+        ],
+        "timing_source": "hyperfine",
+        "sample_count": 10,
+        "requested_samples": 10,
+        "warmup_runs": 5,
+        "case_time_budget_seconds": 300.0,
+        "measurement_seconds": 2.7562545429973397,
+        "budget_limited": false,
+        "peak_rss_kb": 1376
+      }
+    }
+  ]
+}

@@ -1,0 +1,418 @@
+{
+  "raytracer": {
+    "haskell": {
+      "results": [
+        {
+          "command": "/tmp/nix-shell.xWCyr8/tmplonlrfkf/raytracer-haskell",
+          "mean": 0.18946912235600002,
+          "stddev": 0.00014776348490340508,
+          "median": 0.18943060742,
+          "user": 0.18840354399999998,
+          "system": 0.0010358239999999999,
+          "min": 0.18926831558,
+          "max": 0.18974549896,
+          "times": [
+            0.18958212416,
+            0.18934516322,
+            0.18938986146000003,
+            0.18958958634000003,
+            0.18926831558,
+            0.18974549896,
+            0.18942587588,
+            0.18933758852000002,
+            0.18957187048000002,
+            0.18943533896
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 3.3033715281635523,
+      "budget_limited": false,
+      "peak_rss_kb": 8096
+    },
+    "haskell-a1g": {
+      "results": [
+        {
+          "command": "/tmp/nix-shell.xWCyr8/tmp51b9lbet/raytracer-haskell-a1g",
+          "mean": 0.23912959625000002,
+          "stddev": 0.0002726611614480299,
+          "median": 0.23909125601000003,
+          "user": 0.213108256,
+          "system": 0.025848181999999997,
+          "min": 0.23875744494,
+          "max": 0.23973443122000002,
+          "times": [
+            0.23914932302000003,
+            0.23899226506000001,
+            0.23911161042,
+            0.23907090160000002,
+            0.23875744494,
+            0.2393801704,
+            0.23895167314000001,
+            0.23893063596000003,
+            0.23921750674000003,
+            0.23973443122000002
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 4.065627659671009,
+      "budget_limited": false,
+      "peak_rss_kb": 91392
+    },
+    "koka": {
+      "results": [
+        {
+          "command": "/tmp/nix-shell.xWCyr8/tmpy9d65hp7/raytracer-koka",
+          "mean": 0.341933377604,
+          "stddev": 0.0010126729454610329,
+          "median": 0.34158213691,
+          "user": 0.341559778,
+          "system": 0.000373112,
+          "min": 0.34083398756,
+          "max": 0.34359254268000006,
+          "times": [
+            0.34255562574000004,
+            0.34243155694,
+            0.34340722776,
+            0.34188944908,
+            0.34359254268000006,
+            0.34117000424000005,
+            0.34083398756,
+            0.34127482474,
+            0.3411817313,
+            0.34099682600000003
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 5.58764916472137,
+      "budget_limited": false,
+      "peak_rss_kb": 4476
+    },
+    "lean": {
+      "results": [
+        {
+          "command": "/tmp/nix-shell.xWCyr8/tmp36q24a6j/raytracer-lean",
+          "mean": 2.7098044506820003,
+          "stddev": 0.002880571786421418,
+          "median": 2.70908916397,
+          "user": 2.707501796,
+          "system": 0.0018646740000000002,
+          "min": 2.70600430658,
+          "max": 2.71691587326,
+          "times": [
+            2.70849501724,
+            2.71023897336,
+            2.70816722994,
+            2.7084917843800005,
+            2.70953407098,
+            2.70864425696,
+            2.71061853406,
+            2.71691587326,
+            2.7109344600600003,
+            2.70600430658
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 41.0995985083282,
+      "budget_limited": false,
+      "peak_rss_kb": 10108
+    },
+    "ocaml": {
+      "results": [
+        {
+          "command": "/tmp/nix-shell.xWCyr8/tmptvd8pvjq/raytracer-ocaml",
+          "mean": 0.395894890988,
+          "stddev": 0.0004172971225296204,
+          "median": 0.39578439901000007,
+          "user": 0.394706538,
+          "system": 0.00114345,
+          "min": 0.39550297402000006,
+          "max": 0.39685118406000003,
+          "times": [
+            0.39580367450000004,
+            0.39553030106,
+            0.39633538526,
+            0.39584493150000005,
+            0.3960255072,
+            0.39560968350000003,
+            0.39685118406000003,
+            0.39568014526,
+            0.39550297402000006,
+            0.39576512352000004
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 6.393106423318386,
+      "budget_limited": false,
+      "peak_rss_kb": 5868
+    },
+    "reussir": {
+      "results": [
+        {
+          "command": "/tmp/nix-shell.xWCyr8/tmpp4odv5g9/raytracer-reussir",
+          "mean": 0.07160558640600001,
+          "stddev": 0.00012851906950664296,
+          "median": 0.07164897639000001,
+          "user": 0.070988338,
+          "system": 0.00062518,
+          "min": 0.0713767369,
+          "max": 0.07179723944000001,
+          "times": [
+            0.0713767369,
+            0.07164332454000001,
+            0.07171176068000001,
+            0.07166393858,
+            0.07169050760000001,
+            0.07154318756,
+            0.07179723944000001,
+            0.07151842722,
+            0.07165462824,
+            0.07145611330000001
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 1.5271086366847157,
+      "budget_limited": false,
+      "peak_rss_kb": 4472
+    },
+    "reussir-nrac": {
+      "results": [
+        {
+          "command": "/tmp/nix-shell.xWCyr8/tmpdk9ryaf6/raytracer-reussir-nrac",
+          "mean": 0.07167431020000001,
+          "stddev": 9.266142514803163e-05,
+          "median": 0.07167534022000001,
+          "user": 0.071078924,
+          "system": 0.000633458,
+          "min": 0.07149200548,
+          "max": 0.07187036586000001,
+          "times": [
+            0.07169154114000001,
+            0.07149200548,
+            0.07171415078000001,
+            0.07162307044,
+            0.07167078760000001,
+            0.07164683265999999,
+            0.07187036586000001,
+            0.07167989284000001,
+            0.0716889988,
+            0.07166545640000001
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 1.5277938721701503,
+      "budget_limited": false,
+      "peak_rss_kb": 4472
+    },
+    "rust": {
+      "results": [
+        {
+          "command": "/tmp/nix-shell.xWCyr8/tmp4rs0ix9u/raytracer-rust",
+          "mean": 0.071683013788,
+          "stddev": 4.343976411071781e-05,
+          "median": 0.07167670501000001,
+          "user": 0.071266794,
+          "system": 0.000465494,
+          "min": 0.07163171748,
+          "max": 0.07175995396,
+          "times": [
+            0.07167956674,
+            0.0716848324,
+            0.07164876068,
+            0.07167384328000001,
+            0.07168912586,
+            0.07175995396,
+            0.07163171748,
+            0.07166501992,
+            0.07164249480000001,
+            0.07175482276
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 1.5244530029594898,
+      "budget_limited": false,
+      "peak_rss_kb": 2228
+    },
+    "rust-with-mimalloc": {
+      "results": [
+        {
+          "command": "/tmp/nix-shell.xWCyr8/tmp4nvqjns9/raytracer-rust-with-mimalloc",
+          "mean": 0.071934217944,
+          "stddev": 5.5772531958127525e-05,
+          "median": 0.07192587890999999,
+          "user": 0.071862442,
+          "system": 0.000291246,
+          "min": 0.07184156654000001,
+          "max": 0.07203296946,
+          "times": [
+            0.07184156654000001,
+            0.07190588144,
+            0.07203296946,
+            0.07201158642000001,
+            0.07192499506,
+            0.07192676276,
+            0.07191002296,
+            0.07194867796000001,
+            0.07194745074000002,
+            0.0718922661
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 1.587111915461719,
+      "budget_limited": false,
+      "peak_rss_kb": 6708
+    }
+  }
+}

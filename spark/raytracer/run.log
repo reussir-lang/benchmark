@@ -1,0 +1,24 @@
+fetching path input 'path:/tmp/reussir-final-comparison-20261101/benchmark'
+fetching github input 'github:NixOS/nixpkgs/nixpkgs-unstable'
+Reussir benchmark environment
+  Reussir: bcfff8d41916
+  Run:     python verify.py
+START raytracer/haskell
+COMPLETE raytracer/haskell: 189.469 ms
+START raytracer/haskell-a1g
+COMPLETE raytracer/haskell-a1g: 239.130 ms
+START raytracer/koka
+COMPLETE raytracer/koka: 341.933 ms
+START raytracer/lean
+COMPLETE raytracer/lean: 2709.804 ms
+START raytracer/ocaml
+COMPLETE raytracer/ocaml: 395.895 ms
+START raytracer/reussir
+COMPLETE raytracer/reussir: 71.606 ms
+START raytracer/reussir-nrac
+COMPLETE raytracer/reussir-nrac: 71.674 ms
+START raytracer/rust
+COMPLETE raytracer/rust: 71.683 ms
+START raytracer/rust-with-mimalloc
+COMPLETE raytracer/rust-with-mimalloc: 71.934 ms
+RAYTRACER COMPLETE

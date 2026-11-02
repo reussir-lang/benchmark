@@ -1,0 +1,32 @@
+{
+  "timestamp": 1793576990.262367,
+  "driver_pid": 3900893,
+  "compilation_command": "python",
+  "compile_affinity": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19
+  ],
+  "measurement_cpu": 19,
+  "changed_compile_pids": [
+    3948106
+  ],
+  "note": "Compiler affinity widened during compilation; measurement wrapper retains fixed CPU."
+}

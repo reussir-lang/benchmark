@@ -1,0 +1,1397 @@
+{
+  "bigint-binomial/haskell": {
+    "status": "complete",
+    "started": 1793576826.1887584,
+    "finished": 1793576848.9188263
+  },
+  "bigint-binomial/haskell-a1g": {
+    "status": "complete",
+    "started": 1793576848.9190502,
+    "finished": 1793576878.746992
+  },
+  "bigint-binomial/koka": {
+    "status": "complete",
+    "started": 1793576878.7472832,
+    "finished": 1793577027.4438417
+  },
+  "bigint-binomial/lean": {
+    "status": "complete",
+    "started": 1793577027.444159,
+    "finished": 1793577058.5444868
+  },
+  "bigint-binomial/ocaml": {
+    "status": "complete",
+    "started": 1793577058.5447743,
+    "finished": 1793577084.8919535
+  },
+  "bigint-binomial/reussir": {
+    "status": "complete",
+    "started": 1793577084.8922815,
+    "finished": 1793577108.3601382
+  },
+  "bigint-binomial/reussir-nrac": {
+    "status": "complete",
+    "started": 1793577108.3604367,
+    "finished": 1793577131.7993202
+  },
+  "bigint-binomial/rust": {
+    "status": "complete",
+    "started": 1793577131.7996356,
+    "finished": 1793577211.5110166
+  },
+  "bigint-binomial/rust-with-mimalloc": {
+    "status": "complete",
+    "started": 1793577211.5113351,
+    "finished": 1793577291.3045616
+  },
+  "bigint-collatz/haskell": {
+    "status": "complete",
+    "started": 1793577291.3049,
+    "finished": 1793577312.5525417
+  },
+  "bigint-collatz/haskell-a1g": {
+    "status": "complete",
+    "started": 1793577312.5528896,
+    "finished": 1793577338.2978785
+  },
+  "bigint-collatz/koka": {
+    "status": "complete",
+    "started": 1793577338.2982655,
+    "finished": 1793577351.8455172
+  },
+  "bigint-collatz/lean": {
+    "status": "complete",
+    "started": 1793577351.8458803,
+    "finished": 1793577356.1669388
+  },
+  "bigint-collatz/ocaml": {
+    "status": "complete",
+    "started": 1793577356.1673193,
+    "finished": 1793577364.8927424
+  },
+  "bigint-collatz/reussir": {
+    "status": "complete",
+    "started": 1793577364.8931277,
+    "finished": 1793577369.738752
+  },
+  "bigint-collatz/reussir-nrac": {
+    "status": "complete",
+    "started": 1793577369.7391367,
+    "finished": 1793577374.5802732
+  },
+  "bigint-collatz/rust": {
+    "status": "complete",
+    "started": 1793577374.5806632,
+    "finished": 1793577386.4261746
+  },
+  "bigint-collatz/rust-with-mimalloc": {
+    "status": "complete",
+    "started": 1793577386.4265687,
+    "finished": 1793577398.269553
+  },
+  "bigint-factorial/haskell": {
+    "status": "complete",
+    "started": 1793577398.2699902,
+    "finished": 1793577408.7078488
+  },
+  "bigint-factorial/haskell-a1g": {
+    "status": "complete",
+    "started": 1793577408.7083127,
+    "finished": 1793577426.3317707
+  },
+  "bigint-factorial/koka": {
+    "status": "complete",
+    "started": 1793577426.3322542,
+    "finished": 1793577604.1574836
+  },
+  "bigint-factorial/lean": {
+    "status": "complete",
+    "started": 1793577604.157947,
+    "finished": 1793577623.1161513
+  },
+  "bigint-factorial/ocaml": {
+    "status": "complete",
+    "started": 1793577623.116617,
+    "finished": 1793577641.9177644
+  },
+  "bigint-factorial/reussir": {
+    "status": "complete",
+    "started": 1793577641.9182398,
+    "finished": 1793577654.447753
+  },
+  "bigint-factorial/reussir-nrac": {
+    "status": "complete",
+    "started": 1793577654.4482265,
+    "finished": 1793577666.9688962
+  },
+  "bigint-factorial/rust": {
+    "status": "complete",
+    "started": 1793577666.969377,
+    "finished": 1793577684.4942057
+  },
+  "bigint-factorial/rust-with-mimalloc": {
+    "status": "complete",
+    "started": 1793577684.4946797,
+    "finished": 1793577702.110018
+  },
+  "bigint-fib/haskell": {
+    "status": "complete",
+    "started": 1793577702.1105597,
+    "finished": 1793577710.809577
+  },
+  "bigint-fib/haskell-a1g": {
+    "status": "complete",
+    "started": 1793577710.8101194,
+    "finished": 1793577729.0983212
+  },
+  "bigint-fib/koka": {
+    "status": "complete",
+    "started": 1793577729.0989184,
+    "finished": 1793577771.8525825
+  },
+  "bigint-fib/lean": {
+    "status": "complete",
+    "started": 1793577771.8531213,
+    "finished": 1793577788.3903491
+  },
+  "bigint-fib/ocaml": {
+    "status": "complete",
+    "started": 1793577788.3909152,
+    "finished": 1793577803.7712011
+  },
+  "bigint-fib/reussir": {
+    "status": "complete",
+    "started": 1793577803.7717657,
+    "finished": 1793577814.2833705
+  },
+  "bigint-fib/reussir-nrac": {
+    "status": "complete",
+    "started": 1793577814.283926,
+    "finished": 1793577824.8103206
+  },
+  "bigint-fib/rust": {
+    "status": "complete",
+    "started": 1793577824.8108838,
+    "finished": 1793577854.6951096
+  },
+  "bigint-fib/rust-with-mimalloc": {
+    "status": "complete",
+    "started": 1793577854.6956713,
+    "finished": 1793577884.6506376
+  },
+  "bigint-pidigits/haskell": {
+    "status": "complete",
+    "started": 1793577884.6512482,
+    "finished": 1793577891.4414587
+  },
+  "bigint-pidigits/haskell-a1g": {
+    "status": "complete",
+    "started": 1793577891.4420838,
+    "finished": 1793577905.3101516
+  },
+  "bigint-pidigits/koka": {
+    "status": "complete",
+    "started": 1793577905.3108535,
+    "finished": 1793578020.1800802
+  },
+  "bigint-pidigits/lean": {
+    "status": "complete",
+    "started": 1793578020.1807609,
+    "finished": 1793578032.570039
+  },
+  "bigint-pidigits/ocaml": {
+    "status": "complete",
+    "started": 1793578032.5706923,
+    "finished": 1793578042.6659799
+  },
+  "bigint-pidigits/reussir": {
+    "status": "complete",
+    "started": 1793578042.6666188,
+    "finished": 1793578051.9226804
+  },
+  "bigint-pidigits/reussir-nrac": {
+    "status": "complete",
+    "started": 1793578051.9233227,
+    "finished": 1793578061.1758919
+  },
+  "bigint-pidigits/rust": {
+    "status": "complete",
+    "started": 1793578061.1765532,
+    "finished": 1793578094.9752016
+  },
+  "bigint-pidigits/rust-with-mimalloc": {
+    "status": "complete",
+    "started": 1793578094.9758859,
+    "finished": 1793578120.2620494
+  },
+  "bigint-rbtree/haskell": {
+    "status": "complete",
+    "started": 1793578120.2627847,
+    "finished": 1793578130.0884426
+  },
+  "bigint-rbtree/haskell-a1g": {
+    "status": "complete",
+    "started": 1793578130.0892122,
+    "finished": 1793578145.7035995
+  },
+  "bigint-rbtree/koka": {
+    "status": "complete",
+    "started": 1793578145.7043736,
+    "finished": 1793578159.8863382
+  },
+  "bigint-rbtree/lean": {
+    "status": "complete",
+    "started": 1793578159.8871117,
+    "finished": 1793578173.6959574
+  },
+  "bigint-rbtree/ocaml": {
+    "status": "complete",
+    "started": 1793578173.6967375,
+    "finished": 1793578179.908057
+  },
+  "bigint-rbtree/reussir": {
+    "status": "complete",
+    "started": 1793578179.908846,
+    "finished": 1793578186.992115
+  },
+  "bigint-rbtree/reussir-nrac": {
+    "status": "complete",
+    "started": 1793578186.9929385,
+    "finished": 1793578196.4347599
+  },
+  "bigint-rbtree/rust": {
+    "status": "complete",
+    "started": 1793578196.4355607,
+    "finished": 1793578254.9416976
+  },
+  "bigint-rbtree/rust-with-mimalloc": {
+    "status": "complete",
+    "started": 1793578254.9425237,
+    "finished": 1793578283.9316864
+  },
+  "derive/haskell": {
+    "status": "complete",
+    "started": 1793578283.9325125,
+    "finished": 1793578295.2273893
+  },
+  "derive/haskell-a1g": {
+    "status": "complete",
+    "started": 1793578295.228222,
+    "finished": 1793578300.0646155
+  },
+  "derive/koka": {
+    "status": "complete",
+    "started": 1793578300.0654655,
+    "finished": 1793578315.3128107
+  },
+  "derive/lean": {
+    "status": "complete",
+    "started": 1793578315.3136597,
+    "finished": 1793578320.9407833
+  },
+  "derive/morphic": {
+    "status": "complete",
+    "started": 1793578320.9416456,
+    "finished": 1793578330.5970757
+  },
+  "derive/ocaml": {
+    "status": "complete",
+    "started": 1793578330.5979483,
+    "finished": 1793578340.304034
+  },
+  "derive/reussir": {
+    "status": "complete",
+    "started": 1793578340.3049452,
+    "finished": 1793578347.44015
+  },
+  "derive/reussir-nrac": {
+    "status": "complete",
+    "started": 1793578347.4410434,
+    "finished": 1793578354.5714402
+  },
+  "derive/rust": {
+    "status": "complete",
+    "started": 1793578354.5723686,
+    "finished": 1793578371.7014308
+  },
+  "derive/rust-with-mimalloc": {
+    "status": "complete",
+    "started": 1793578371.702371,
+    "finished": 1793578380.6127677
+  },
+  "expr-replace/haskell": {
+    "status": "complete",
+    "started": 1793578380.6137638,
+    "finished": 1793578386.6815627
+  },
+  "expr-replace/haskell-a1g": {
+    "status": "complete",
+    "started": 1793578386.6824312,
+    "finished": 1793578392.894083
+  },
+  "expr-replace/koka": {
+    "status": "complete",
+    "started": 1793578392.895073,
+    "finished": 1793578413.348077
+  },
+  "expr-replace/lean": {
+    "status": "complete",
+    "started": 1793578413.348999,
+    "finished": 1793578420.5995202
+  },
+  "expr-replace/morphic": {
+    "status": "complete",
+    "started": 1793578420.6004755,
+    "finished": 1793578425.498145
+  },
+  "expr-replace/ocaml": {
+    "status": "complete",
+    "started": 1793578425.49908,
+    "finished": 1793578430.912305
+  },
+  "expr-replace/reussir": {
+    "status": "complete",
+    "started": 1793578430.913273,
+    "finished": 1793578438.2033947
+  },
+  "expr-replace/reussir-nrac": {
+    "status": "complete",
+    "started": 1793578438.2043552,
+    "finished": 1793578445.4893627
+  },
+  "expr-replace/rust": {
+    "status": "complete",
+    "started": 1793578445.4903462,
+    "finished": 1793578451.4593778
+  },
+  "expr-replace/rust-with-mimalloc": {
+    "status": "complete",
+    "started": 1793578451.4603755,
+    "finished": 1793578457.4261644
+  },
+  "fingertree/haskell": {
+    "status": "complete",
+    "started": 1793578457.4272127,
+    "finished": 1793578459.433353
+  },
+  "fingertree/haskell-a1g": {
+    "status": "complete",
+    "started": 1793578459.4344249,
+    "finished": 1793578464.0862179
+  },
+  "fingertree/koka": {
+    "status": "complete",
+    "started": 1793578464.0873322,
+    "finished": 1793578476.6854024
+  },
+  "fingertree/lean": {
+    "status": "complete",
+    "started": 1793578476.6864417,
+    "finished": 1793578479.2410045
+  },
+  "fingertree/morphic": {
+    "status": "complete",
+    "started": 1793578479.2420664,
+    "finished": 1793578481.559035
+  },
+  "fingertree/ocaml": {
+    "status": "complete",
+    "started": 1793578481.5600834,
+    "finished": 1793578482.8531718
+  },
+  "fingertree/reussir": {
+    "status": "complete",
+    "started": 1793578482.8543005,
+    "finished": 1793578486.5549395
+  },
+  "fingertree/reussir-nrac": {
+    "status": "complete",
+    "started": 1793578486.5559976,
+    "finished": 1793578490.3044515
+  },
+  "fingertree/rust": {
+    "status": "complete",
+    "started": 1793578490.305535,
+    "finished": 1793578491.7911067
+  },
+  "fingertree/rust-with-mimalloc": {
+    "status": "complete",
+    "started": 1793578491.7921996,
+    "finished": 1793578493.332313
+  },
+  "functional-queue/haskell": {
+    "status": "complete",
+    "started": 1793578493.3334403,
+    "finished": 1793578494.722449
+  },
+  "functional-queue/haskell-a1g": {
+    "status": "complete",
+    "started": 1793578494.7235851,
+    "finished": 1793578496.8396719
+  },
+  "functional-queue/koka": {
+    "status": "complete",
+    "started": 1793578496.8408623,
+    "finished": 1793578509.666898
+  },
+  "functional-queue/lean": {
+    "status": "complete",
+    "started": 1793578509.6680343,
+    "finished": 1793578512.1168673
+  },
+  "functional-queue/morphic": {
+    "status": "complete",
+    "started": 1793578512.1180255,
+    "finished": 1793578513.8247113
+  },
+  "functional-queue/ocaml": {
+    "status": "complete",
+    "started": 1793578513.8258595,
+    "finished": 1793578515.6213253
+  },
+  "functional-queue/reussir": {
+    "status": "complete",
+    "started": 1793578515.6225355,
+    "finished": 1793578519.3316472
+  },
+  "functional-queue/reussir-nrac": {
+    "status": "complete",
+    "started": 1793578519.332811,
+    "finished": 1793578523.039434
+  },
+  "functional-queue/rust": {
+    "status": "complete",
+    "started": 1793578523.04069,
+    "finished": 1793578524.6923895
+  },
+  "functional-queue/rust-with-mimalloc": {
+    "status": "complete",
+    "started": 1793578524.6935868,
+    "finished": 1793578526.288324
+  },
+  "hash-map-heavily-shared/haskell": {
+    "status": "complete",
+    "started": 1793578526.2896442,
+    "finished": 1793578586.33267
+  },
+  "hash-map-heavily-shared/haskell-a1g": {
+    "status": "complete",
+    "started": 1793578586.3340511,
+    "finished": 1793578632.3467698
+  },
+  "hash-map-heavily-shared/koka": {
+    "status": "budget_limited",
+    "started": 1793578632.348157,
+    "finished": 1793578885.911235
+  },
+  "hash-map-heavily-shared/lean": {
+    "status": "budget_limited",
+    "started": 1793578885.9126613,
+    "finished": 1793579131.94642
+  },
+  "hash-map-heavily-shared/morphic": {
+    "status": "budget_limited",
+    "started": 1793579131.9478502,
+    "finished": 1793579285.255882
+  },
+  "hash-map-heavily-shared/ocaml": {
+    "status": "budget_exhausted",
+    "started": 1793579285.2572982,
+    "finished": 1793579585.5244954
+  },
+  "hash-map-heavily-shared/reussir": {
+    "status": "complete",
+    "started": 1793579585.5259619,
+    "finished": 1793579646.218789
+  },
+  "hash-map-heavily-shared/reussir-nrac": {
+    "status": "complete",
+    "started": 1793579646.220247,
+    "finished": 1793579707.2419307
+  },
+  "hash-map-heavily-shared/rust": {
+    "status": "budget_limited",
+    "started": 1793579707.2433734,
+    "finished": 1793579989.0480466
+  },
+  "hash-map-heavily-shared/rust-rpds": {
+    "status": "complete",
+    "started": 1793579989.0494666,
+    "finished": 1793580099.8136787
+  },
+  "hash-map-heavily-shared/rust-rpds-with-mimalloc": {
+    "status": "complete",
+    "started": 1793580099.8153155,
+    "finished": 1793580177.6436713
+  },
+  "hash-map-heavily-shared/rust-with-mimalloc": {
+    "status": "complete",
+    "started": 1793580177.645161,
+    "finished": 1793580303.5775988
+  },
+  "hash-map-linear/haskell": {
+    "status": "complete",
+    "started": 1793580303.5790389,
+    "finished": 1793580345.6850495
+  },
+  "hash-map-linear/haskell-a1g": {
+    "status": "complete",
+    "started": 1793580345.6864893,
+    "finished": 1793580388.3517504
+  },
+  "hash-map-linear/koka": {
+    "status": "complete",
+    "started": 1793580388.3531985,
+    "finished": 1793580422.443707
+  },
+  "hash-map-linear/lean": {
+    "status": "complete",
+    "started": 1793580422.4452314,
+    "finished": 1793580440.120742
+  },
+  "hash-map-linear/morphic": {
+    "status": "complete",
+    "started": 1793580440.1220915,
+    "finished": 1793580453.3249629
+  },
+  "hash-map-linear/ocaml": {
+    "status": "complete",
+    "started": 1793580453.3263326,
+    "finished": 1793580483.6039155
+  },
+  "hash-map-linear/reussir": {
+    "status": "complete",
+    "started": 1793580483.6052854,
+    "finished": 1793580502.9986744
+  },
+  "hash-map-linear/reussir-nrac": {
+    "status": "complete",
+    "started": 1793580503.0000129,
+    "finished": 1793580522.4477687
+  },
+  "hash-map-linear/rust": {
+    "status": "complete",
+    "started": 1793580522.4491448,
+    "finished": 1793580526.483983
+  },
+  "hash-map-linear/rust-rpds": {
+    "status": "complete",
+    "started": 1793580526.485312,
+    "finished": 1793580551.0476482
+  },
+  "hash-map-linear/rust-rpds-with-mimalloc": {
+    "status": "complete",
+    "started": 1793580551.049025,
+    "finished": 1793580572.8080149
+  },
+  "hash-map-linear/rust-with-mimalloc": {
+    "status": "complete",
+    "started": 1793580572.8094354,
+    "finished": 1793580576.5206108
+  },
+  "hash-map-shared/haskell": {
+    "status": "complete",
+    "started": 1793580576.5219882,
+    "finished": 1793580628.3517852
+  },
+  "hash-map-shared/haskell-a1g": {
+    "status": "complete",
+    "started": 1793580628.3531675,
+    "finished": 1793580677.4807808
+  },
+  "hash-map-shared/koka": {
+    "status": "complete",
+    "started": 1793580677.4821818,
+    "finished": 1793580776.1510208
+  },
+  "hash-map-shared/lean": {
+    "status": "complete",
+    "started": 1793580776.152489,
+    "finished": 1793580883.2439399
+  },
+  "hash-map-shared/morphic": {
+    "status": "complete",
+    "started": 1793580883.245382,
+    "finished": 1793581074.7959838
+  },
+  "hash-map-shared/ocaml": {
+    "status": "budget_limited",
+    "started": 1793581074.797473,
+    "finished": 1793581353.2675762
+  },
+  "hash-map-shared/reussir": {
+    "status": "complete",
+    "started": 1793581353.2690215,
+    "finished": 1793581409.0699363
+  },
+  "hash-map-shared/reussir-nrac": {
+    "status": "complete",
+    "started": 1793581409.0714207,
+    "finished": 1793581465.4486198
+  },
+  "hash-map-shared/rust": {
+    "status": "complete",
+    "started": 1793581465.4501255,
+    "finished": 1793581507.6457646
+  },
+  "hash-map-shared/rust-rpds": {
+    "status": "complete",
+    "started": 1793581507.6472785,
+    "finished": 1793581611.639312
+  },
+  "hash-map-shared/rust-rpds-with-mimalloc": {
+    "status": "complete",
+    "started": 1793581611.6408038,
+    "finished": 1793581675.8156796
+  },
+  "hash-map-shared/rust-with-mimalloc": {
+    "status": "complete",
+    "started": 1793581675.8171728,
+    "finished": 1793581687.9549618
+  },
+  "heap-array/haskell-st": {
+    "status": "complete",
+    "started": 1793581687.9564228,
+    "finished": 1793581702.7595603
+  },
+  "heap-array/haskell-st-a1g": {
+    "status": "complete",
+    "started": 1793581702.761,
+    "finished": 1793581722.07528
+  },
+  "heap-array/koka": {
+    "status": "complete",
+    "started": 1793581722.0767925,
+    "finished": 1793581772.8709574
+  },
+  "heap-array/lean": {
+    "status": "complete",
+    "started": 1793581772.8724265,
+    "finished": 1793581796.442643
+  },
+  "heap-array/morphic": {
+    "status": "complete",
+    "started": 1793581796.4441245,
+    "finished": 1793581808.8668041
+  },
+  "heap-array/ocaml": {
+    "status": "complete",
+    "started": 1793581808.8682227,
+    "finished": 1793581852.3418584
+  },
+  "heap-array/reussir": {
+    "status": "complete",
+    "started": 1793581852.3433492,
+    "finished": 1793581860.4898045
+  },
+  "heap-array/reussir-nrac": {
+    "status": "complete",
+    "started": 1793581860.4912477,
+    "finished": 1793581868.6340227
+  },
+  "heap-array/rust": {
+    "status": "complete",
+    "started": 1793581868.6354935,
+    "finished": 1793581872.7355695
+  },
+  "heap-array/rust-with-mimalloc": {
+    "status": "complete",
+    "started": 1793581872.737046,
+    "finished": 1793581876.8793037
+  },
+  "heap-functional/haskell": {
+    "status": "complete",
+    "started": 1793581876.8808272,
+    "finished": 1793581905.9346082
+  },
+  "heap-functional/haskell-a1g": {
+    "status": "complete",
+    "started": 1793581905.9361634,
+    "finished": 1793581935.0484107
+  },
+  "heap-functional/koka": {
+    "status": "complete",
+    "started": 1793581935.0499942,
+    "finished": 1793581955.3157115
+  },
+  "heap-functional/lean": {
+    "status": "complete",
+    "started": 1793581955.3172436,
+    "finished": 1793581974.6274474
+  },
+  "heap-functional/morphic": {
+    "status": "complete",
+    "started": 1793581974.6289814,
+    "finished": 1793582012.1907122
+  },
+  "heap-functional/ocaml": {
+    "status": "complete",
+    "started": 1793582012.1923108,
+    "finished": 1793582051.6643455
+  },
+  "heap-functional/reussir": {
+    "status": "complete",
+    "started": 1793582051.6659517,
+    "finished": 1793582063.2948225
+  },
+  "heap-functional/reussir-nrac": {
+    "status": "complete",
+    "started": 1793582063.296384,
+    "finished": 1793582080.8981762
+  },
+  "heap-functional/rust": {
+    "status": "complete",
+    "started": 1793582080.899766,
+    "finished": 1793582117.1894448
+  },
+  "heap-functional/rust-with-mimalloc": {
+    "status": "complete",
+    "started": 1793582117.1910155,
+    "finished": 1793582157.710042
+  },
+  "life/haskell": {
+    "status": "complete",
+    "started": 1793582157.711648,
+    "finished": 1793582185.521096
+  },
+  "life/haskell-a1g": {
+    "status": "complete",
+    "started": 1793582185.5227015,
+    "finished": 1793582217.8537955
+  },
+  "life/haskell-st": {
+    "status": "complete",
+    "started": 1793582217.8554614,
+    "finished": 1793582240.2697437
+  },
+  "life/haskell-st-a1g": {
+    "status": "complete",
+    "started": 1793582240.2713284,
+    "finished": 1793582262.809834
+  },
+  "life/koka": {
+    "status": "complete",
+    "started": 1793582262.81152,
+    "finished": 1793582343.78534
+  },
+  "life/lean": {
+    "status": "complete",
+    "started": 1793582343.7869813,
+    "finished": 1793582394.0416625
+  },
+  "life/morphic": {
+    "status": "complete",
+    "started": 1793582394.0433035,
+    "finished": 1793582406.2896948
+  },
+  "life/ocaml": {
+    "status": "complete",
+    "started": 1793582406.2913363,
+    "finished": 1793582431.3953075
+  },
+  "life/reussir": {
+    "status": "complete",
+    "started": 1793582431.3969653,
+    "finished": 1793582437.656031
+  },
+  "life/reussir-nrac": {
+    "status": "complete",
+    "started": 1793582437.6576765,
+    "finished": 1793582443.9155777
+  },
+  "life/rust": {
+    "status": "complete",
+    "started": 1793582443.917229,
+    "finished": 1793582447.6219044
+  },
+  "life/rust-with-mimalloc": {
+    "status": "complete",
+    "started": 1793582447.6235685,
+    "finished": 1793582451.3920834
+  },
+  "list-membership/haskell": {
+    "status": "complete",
+    "started": 1793582451.393802,
+    "finished": 1793582462.5413756
+  },
+  "list-membership/haskell-a1g": {
+    "status": "complete",
+    "started": 1793582462.5430748,
+    "finished": 1793582473.8082144
+  },
+  "list-membership/koka": {
+    "status": "complete",
+    "started": 1793582473.8099968,
+    "finished": 1793582490.4853144
+  },
+  "list-membership/lean": {
+    "status": "complete",
+    "started": 1793582490.487004,
+    "finished": 1793582496.9402921
+  },
+  "list-membership/morphic": {
+    "status": "complete",
+    "started": 1793582496.9420245,
+    "finished": 1793582502.5084562
+  },
+  "list-membership/ocaml": {
+    "status": "complete",
+    "started": 1793582502.5101836,
+    "finished": 1793582508.111091
+  },
+  "list-membership/reussir": {
+    "status": "complete",
+    "started": 1793582508.1128175,
+    "finished": 1793582515.9708967
+  },
+  "list-membership/reussir-nrac": {
+    "status": "complete",
+    "started": 1793582515.9726317,
+    "finished": 1793582523.83146
+  },
+  "list-membership/rust": {
+    "status": "complete",
+    "started": 1793582523.8332114,
+    "finished": 1793582529.513615
+  },
+  "list-membership/rust-with-mimalloc": {
+    "status": "complete",
+    "started": 1793582529.5153384,
+    "finished": 1793582535.0152044
+  },
+  "nbe-closure/haskell": {
+    "status": "complete",
+    "started": 1793582535.0170035,
+    "finished": 1793582537.4072468
+  },
+  "nbe-closure/haskell-a1g": {
+    "status": "complete",
+    "started": 1793582537.4091294,
+    "finished": 1793582539.092098
+  },
+  "nbe-closure/koka": {
+    "status": "complete",
+    "started": 1793582539.0939698,
+    "finished": 1793582553.4199634
+  },
+  "nbe-closure/lean": {
+    "status": "complete",
+    "started": 1793582553.4219244,
+    "finished": 1793582555.8981018
+  },
+  "nbe-closure/morphic": {
+    "status": "complete",
+    "started": 1793582555.899997,
+    "finished": 1793582562.7686691
+  },
+  "nbe-closure/ocaml": {
+    "status": "complete",
+    "started": 1793582562.7706163,
+    "finished": 1793582577.5228722
+  },
+  "nbe-closure/reussir": {
+    "status": "complete",
+    "started": 1793582577.5248008,
+    "finished": 1793582583.1914759
+  },
+  "nbe-closure/reussir-nrac": {
+    "status": "complete",
+    "started": 1793582583.193468,
+    "finished": 1793582589.1008737
+  },
+  "nbe-closure/rust": {
+    "status": "complete",
+    "started": 1793582589.1028466,
+    "finished": 1793582602.4849632
+  },
+  "nbe-closure/rust-with-mimalloc": {
+    "status": "complete",
+    "started": 1793582602.4869516,
+    "finished": 1793582610.4525807
+  },
+  "nbe-hoas/haskell": {
+    "status": "complete",
+    "started": 1793582610.454615,
+    "finished": 1793582612.8438857
+  },
+  "nbe-hoas/haskell-a1g": {
+    "status": "complete",
+    "started": 1793582612.8459032,
+    "finished": 1793582614.784397
+  },
+  "nbe-hoas/koka": {
+    "status": "complete",
+    "started": 1793582614.7863927,
+    "finished": 1793582628.8174095
+  },
+  "nbe-hoas/lean": {
+    "status": "complete",
+    "started": 1793582628.8194864,
+    "finished": 1793582631.3237865
+  },
+  "nbe-hoas/morphic": {
+    "status": "complete",
+    "started": 1793582631.3257933,
+    "finished": 1793582637.5636313
+  },
+  "nbe-hoas/ocaml": {
+    "status": "complete",
+    "started": 1793582637.565711,
+    "finished": 1793582650.4376352
+  },
+  "nbe-hoas/reussir": {
+    "status": "complete",
+    "started": 1793582650.4397335,
+    "finished": 1793582656.435614
+  },
+  "nbe-hoas/reussir-nrac": {
+    "status": "complete",
+    "started": 1793582656.4376876,
+    "finished": 1793582662.6091743
+  },
+  "nbe-hoas/rust": {
+    "status": "complete",
+    "started": 1793582662.6112618,
+    "finished": 1793582674.447933
+  },
+  "nbe-hoas/rust-with-mimalloc": {
+    "status": "complete",
+    "started": 1793582674.450014,
+    "finished": 1793582682.0261905
+  },
+  "ordered-map-heavily-shared/haskell": {
+    "status": "complete",
+    "started": 1793582682.0283666,
+    "finished": 1793582789.3367977
+  },
+  "ordered-map-heavily-shared/haskell-a1g": {
+    "status": "complete",
+    "started": 1793582789.3393085,
+    "finished": 1793582852.876828
+  },
+  "ordered-map-heavily-shared/koka": {
+    "status": "complete",
+    "started": 1793582852.8789423,
+    "finished": 1793582897.9053988
+  },
+  "ordered-map-heavily-shared/lean": {
+    "status": "complete",
+    "started": 1793582897.9075997,
+    "finished": 1793582944.049977
+  },
+  "ordered-map-heavily-shared/morphic": {
+    "status": "complete",
+    "started": 1793582944.052174,
+    "finished": 1793583000.356982
+  },
+  "ordered-map-heavily-shared/ocaml": {
+    "status": "complete",
+    "started": 1793583000.3592603,
+    "finished": 1793583045.325744
+  },
+  "ordered-map-heavily-shared/reussir": {
+    "status": "complete",
+    "started": 1793583045.3279493,
+    "finished": 1793583069.762038
+  },
+  "ordered-map-heavily-shared/reussir-nrac": {
+    "status": "complete",
+    "started": 1793583069.7642457,
+    "finished": 1793583094.2895155
+  },
+  "ordered-map-heavily-shared/rust": {
+    "status": "complete",
+    "started": 1793583094.291708,
+    "finished": 1793583252.7499032
+  },
+  "ordered-map-heavily-shared/rust-rpds": {
+    "status": "complete",
+    "started": 1793583252.7519968,
+    "finished": 1793583318.0970762
+  },
+  "ordered-map-heavily-shared/rust-rpds-with-mimalloc": {
+    "status": "complete",
+    "started": 1793583318.0992076,
+    "finished": 1793583358.2743626
+  },
+  "ordered-map-heavily-shared/rust-with-mimalloc": {
+    "status": "complete",
+    "started": 1793583358.276508,
+    "finished": 1793583496.3094552
+  },
+  "ordered-map-linear/haskell": {
+    "status": "complete",
+    "started": 1793583496.3115807,
+    "finished": 1793583533.0221758
+  },
+  "ordered-map-linear/haskell-a1g": {
+    "status": "complete",
+    "started": 1793583533.0244126,
+    "finished": 1793583568.3143322
+  },
+  "ordered-map-linear/koka": {
+    "status": "complete",
+    "started": 1793583568.3166416,
+    "finished": 1793583599.3654892
+  },
+  "ordered-map-linear/lean": {
+    "status": "complete",
+    "started": 1793583599.3677301,
+    "finished": 1793583626.3164852
+  },
+  "ordered-map-linear/morphic": {
+    "status": "complete",
+    "started": 1793583626.3185945,
+    "finished": 1793583655.3001397
+  },
+  "ordered-map-linear/ocaml": {
+    "status": "complete",
+    "started": 1793583655.3024733,
+    "finished": 1793583694.1570742
+  },
+  "ordered-map-linear/reussir": {
+    "status": "complete",
+    "started": 1793583694.1593726,
+    "finished": 1793583707.2542245
+  },
+  "ordered-map-linear/reussir-nrac": {
+    "status": "complete",
+    "started": 1793583707.2563732,
+    "finished": 1793583720.531761
+  },
+  "ordered-map-linear/rust": {
+    "status": "complete",
+    "started": 1793583720.5340068,
+    "finished": 1793583725.4441888
+  },
+  "ordered-map-linear/rust-rpds": {
+    "status": "complete",
+    "started": 1793583725.4464452,
+    "finished": 1793583756.5481713
+  },
+  "ordered-map-linear/rust-rpds-with-mimalloc": {
+    "status": "complete",
+    "started": 1793583756.55042,
+    "finished": 1793583778.6444786
+  },
+  "ordered-map-linear/rust-with-mimalloc": {
+    "status": "complete",
+    "started": 1793583778.64669,
+    "finished": 1793583783.1770186
+  },
+  "ordered-map-shared/haskell": {
+    "status": "complete",
+    "started": 1793583783.1792004,
+    "finished": 1793583890.6043236
+  },
+  "ordered-map-shared/haskell-a1g": {
+    "status": "complete",
+    "started": 1793583890.606606,
+    "finished": 1793583954.2504194
+  },
+  "ordered-map-shared/koka": {
+    "status": "complete",
+    "started": 1793583954.2529814,
+    "finished": 1793584002.8385026
+  },
+  "ordered-map-shared/lean": {
+    "status": "complete",
+    "started": 1793584002.840911,
+    "finished": 1793584049.2196712
+  },
+  "ordered-map-shared/morphic": {
+    "status": "complete",
+    "started": 1793584049.2220771,
+    "finished": 1793584111.6118088
+  },
+  "ordered-map-shared/ocaml": {
+    "status": "complete",
+    "started": 1793584111.6141274,
+    "finished": 1793584156.9325836
+  },
+  "ordered-map-shared/reussir": {
+    "status": "complete",
+    "started": 1793584156.9348636,
+    "finished": 1793584183.9501
+  },
+  "ordered-map-shared/reussir-nrac": {
+    "status": "complete",
+    "started": 1793584183.9524553,
+    "finished": 1793584211.1029696
+  },
+  "ordered-map-shared/rust": {
+    "status": "complete",
+    "started": 1793584211.1053286,
+    "finished": 1793584227.464692
+  },
+  "ordered-map-shared/rust-rpds": {
+    "status": "complete",
+    "started": 1793584227.4669824,
+    "finished": 1793584290.0433028
+  },
+  "ordered-map-shared/rust-rpds-with-mimalloc": {
+    "status": "complete",
+    "started": 1793584290.0456312,
+    "finished": 1793584329.8879235
+  },
+  "ordered-map-shared/rust-with-mimalloc": {
+    "status": "complete",
+    "started": 1793584329.8902755,
+    "finished": 1793584342.9267576
+  },
+  "qsort/haskell": {
+    "status": "complete",
+    "started": 1793584342.9291174,
+    "finished": 1793584385.761486
+  },
+  "qsort/haskell-a1g": {
+    "status": "complete",
+    "started": 1793584385.763795,
+    "finished": 1793584420.4975984
+  },
+  "qsort/haskell-st": {
+    "status": "complete",
+    "started": 1793584420.5000803,
+    "finished": 1793584428.198327
+  },
+  "qsort/haskell-st-a1g": {
+    "status": "complete",
+    "started": 1793584428.2005942,
+    "finished": 1793584436.215226
+  },
+  "qsort/koka": {
+    "status": "complete",
+    "started": 1793584436.2175157,
+    "finished": 1793584461.8337297
+  },
+  "qsort/lean": {
+    "status": "complete",
+    "started": 1793584461.8360207,
+    "finished": 1793584478.696266
+  },
+  "qsort/morphic": {
+    "status": "complete",
+    "started": 1793584478.698526,
+    "finished": 1793584487.0839705
+  },
+  "qsort/ocaml": {
+    "status": "complete",
+    "started": 1793584487.0861924,
+    "finished": 1793584505.9164715
+  },
+  "qsort/reussir": {
+    "status": "complete",
+    "started": 1793584505.9187186,
+    "finished": 1793584512.5490754
+  },
+  "qsort/reussir-nrac": {
+    "status": "complete",
+    "started": 1793584512.5513372,
+    "finished": 1793584519.1760936
+  },
+  "qsort/rust": {
+    "status": "complete",
+    "started": 1793584519.1783729,
+    "finished": 1793584522.9374235
+  },
+  "qsort/rust-with-mimalloc": {
+    "status": "complete",
+    "started": 1793584522.939711,
+    "finished": 1793584526.757212
+  },
+  "rbtree/haskell": {
+    "status": "complete",
+    "started": 1793584526.759495,
+    "finished": 1793584534.1277661
+  },
+  "rbtree/haskell-a1g": {
+    "status": "complete",
+    "started": 1793584534.1300864,
+    "finished": 1793584546.9039135
+  },
+  "rbtree/koka": {
+    "status": "complete",
+    "started": 1793584546.9063323,
+    "finished": 1793584564.4880323
+  },
+  "rbtree/lean": {
+    "status": "complete",
+    "started": 1793584564.4903755,
+    "finished": 1793584578.02004
+  },
+  "rbtree/morphic": {
+    "status": "complete",
+    "started": 1793584578.0224326,
+    "finished": 1793584599.2917938
+  },
+  "rbtree/ocaml": {
+    "status": "complete",
+    "started": 1793584599.2942476,
+    "finished": 1793584606.115496
+  },
+  "rbtree/reussir": {
+    "status": "complete",
+    "started": 1793584606.117937,
+    "finished": 1793584612.9541936
+  },
+  "rbtree/reussir-nrac": {
+    "status": "complete",
+    "started": 1793584612.956592,
+    "finished": 1793584622.2642298
+  },
+  "rbtree/rust": {
+    "status": "complete",
+    "started": 1793584622.2666292,
+    "finished": 1793584665.6287308
+  },
+  "rbtree/rust-with-mimalloc": {
+    "status": "complete",
+    "started": 1793584665.631176,
+    "finished": 1793584687.1031766
+  },
+  "rbtree-lookup/haskell": {
+    "status": "complete",
+    "started": 1793584687.1056502,
+    "finished": 1793584709.863566
+  },
+  "rbtree-lookup/haskell-a1g": {
+    "status": "complete",
+    "started": 1793584709.8660207,
+    "finished": 1793584729.746201
+  },
+  "rbtree-lookup/koka": {
+    "status": "complete",
+    "started": 1793584729.7486696,
+    "finished": 1793584749.538663
+  },
+  "rbtree-lookup/lean": {
+    "status": "complete",
+    "started": 1793584749.541118,
+    "finished": 1793584768.5729542
+  },
+  "rbtree-lookup/morphic": {
+    "status": "complete",
+    "started": 1793584768.57539,
+    "finished": 1793584793.7093568
+  },
+  "rbtree-lookup/ocaml": {
+    "status": "complete",
+    "started": 1793584793.7118402,
+    "finished": 1793584821.6912727
+  },
+  "rbtree-lookup/reussir": {
+    "status": "complete",
+    "started": 1793584821.6937823,
+    "finished": 1793584831.78465
+  },
+  "rbtree-lookup/reussir-nrac": {
+    "status": "complete",
+    "started": 1793584831.787122,
+    "finished": 1793584848.5614336
+  },
+  "rbtree-lookup/rust": {
+    "status": "complete",
+    "started": 1793584848.5639172,
+    "finished": 1793584874.7251313
+  },
+  "rbtree-lookup/rust-with-mimalloc": {
+    "status": "complete",
+    "started": 1793584874.7276957,
+    "finished": 1793584903.9253728
+  },
+  "rbtree-zipper/haskell": {
+    "status": "complete",
+    "started": 1793584903.927945,
+    "finished": 1793584912.8010151
+  },
+  "rbtree-zipper/haskell-a1g": {
+    "status": "complete",
+    "started": 1793584912.803575,
+    "finished": 1793584928.7486594
+  },
+  "rbtree-zipper/koka": {
+    "status": "complete",
+    "started": 1793584928.7513685,
+    "finished": 1793584947.0992527
+  },
+  "rbtree-zipper/lean": {
+    "status": "complete",
+    "started": 1793584947.1017852,
+    "finished": 1793584954.7675736
+  },
+  "rbtree-zipper/morphic": {
+    "status": "complete",
+    "started": 1793584954.770154,
+    "finished": 1793584980.1219187
+  },
+  "rbtree-zipper/ocaml": {
+    "status": "complete",
+    "started": 1793584980.1245515,
+    "finished": 1793584987.7360415
+  },
+  "rbtree-zipper/reussir": {
+    "status": "complete",
+    "started": 1793584987.7386081,
+    "finished": 1793584993.7749565
+  },
+  "rbtree-zipper/reussir-nrac": {
+    "status": "complete",
+    "started": 1793584993.7775078,
+    "finished": 1793584999.8081555
+  },
+  "rbtree-zipper/rust": {
+    "status": "complete",
+    "started": 1793584999.8107233,
+    "finished": 1793585058.1381712
+  },
+  "rbtree-zipper/rust-with-mimalloc": {
+    "status": "complete",
+    "started": 1793585058.141432,
+    "finished": 1793585091.8432794
+  },
+  "raytracer/haskell": {
+    "status": "complete",
+    "started": 1793629986.2558105,
+    "finished": 1793629990.2522976
+  },
+  "raytracer/haskell-a1g": {
+    "status": "complete",
+    "started": 1793629990.252491,
+    "finished": 1793629994.9330633
+  },
+  "raytracer/koka": {
+    "status": "complete",
+    "started": 1793629994.9333363,
+    "finished": 1793630005.8819423
+  },
+  "raytracer/lean": {
+    "status": "complete",
+    "started": 1793630005.8821852,
+    "finished": 1793630049.0896893
+  },
+  "raytracer/ocaml": {
+    "status": "complete",
+    "started": 1793630049.0899692,
+    "finished": 1793630055.6562254
+  },
+  "raytracer/reussir": {
+    "status": "complete",
+    "started": 1793630055.6565008,
+    "finished": 1793630058.1448586
+  },
+  "raytracer/reussir-nrac": {
+    "status": "complete",
+    "started": 1793630058.1451454,
+    "finished": 1793630060.5881336
+  },
+  "raytracer/rust": {
+    "status": "complete",
+    "started": 1793630060.5884306,
+    "finished": 1793630062.3930373
+  },
+  "raytracer/rust-with-mimalloc": {
+    "status": "complete",
+    "started": 1793630062.393336,
+    "finished": 1793630064.2699761
+  }
+}

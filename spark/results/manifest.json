@@ -1,0 +1,1808 @@
+{
+  "host": "promaxgb10-edf0",
+  "architecture": "aarch64",
+  "started": 1793576825.2928216,
+  "flake_inputs": {
+    "fenix": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "rust-analyzer-src": "rust-analyzer-src"
+      },
+      "locked": {
+        "lastModified": 1788261902,
+        "narHash": "sha256-N7UHRZbJzgWaad+SOgl9QlWKiBulHan2/ezZhLfnjlo=",
+        "owner": "nix-community",
+        "repo": "fenix",
+        "rev": "af85de9d317b402448a8ebb06bc16c7fd82f0375",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "fenix",
+        "type": "github"
+      }
+    },
+    "flake-utils": {
+      "inputs": {
+        "systems": "systems"
+      },
+      "locked": {
+        "lastModified": 1731533236,
+        "narHash": "sha256-l0KFg5HjrsfsO/JpG+r7fRrqm12kzFHyUHqHCVpMMbI=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "11707dc2f618dd54ca8739b309ec4fc024de578b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "immer": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1764710710,
+        "narHash": "sha256-jP0DXOu21jMkPunXv4CIBb4wVusT21GAWaGcVDnxzzE=",
+        "owner": "arximboldi",
+        "repo": "immer",
+        "rev": "06d94ce48a02b11d3b225083a820f82c3d3ef462",
+        "type": "github"
+      },
+      "original": {
+        "owner": "arximboldi",
+        "repo": "immer",
+        "rev": "06d94ce48a02b11d3b225083a820f82c3d3ef462",
+        "type": "github"
+      }
+    },
+    "mlir-rcgmp": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1792974520,
+        "narHash": "sha256-UAIAewjuJkBxNq5RUEoy6eLk7FqcidmrNUsgTFuNTyU=",
+        "owner": "reussir-lang",
+        "repo": "mlir-rcgmp",
+        "rev": "cc73b218f6ce90b005744c4e94b2b32a0e30c725",
+        "type": "github"
+      },
+      "original": {
+        "owner": "reussir-lang",
+        "repo": "mlir-rcgmp",
+        "rev": "cc73b218f6ce90b005744c4e94b2b32a0e30c725",
+        "type": "github"
+      }
+    },
+    "mlir-sync": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1792348835,
+        "narHash": "sha256-cKYDN3HhQ/YhAPQO11KoLqN7HdPNTONCrqFyZ9LEW+E=",
+        "owner": "reussir-lang",
+        "repo": "mlir-sync",
+        "rev": "018206f4df254fe205f0b63068cd133e5e94ba42",
+        "type": "github"
+      },
+      "original": {
+        "owner": "reussir-lang",
+        "repo": "mlir-sync",
+        "rev": "018206f4df254fe205f0b63068cd133e5e94ba42",
+        "type": "github"
+      }
+    },
+    "morphic": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1793252028,
+        "narHash": "sha256-wHaDcyQ1iKQdb/S5nhiizIQ1xf8zwnEHKGFKDmgAUiY=",
+        "owner": "morphic-lang",
+        "repo": "morphic",
+        "rev": "da679c49a33655f2562c58d7d8314659b81dea0c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "morphic-lang",
+        "repo": "morphic",
+        "rev": "da679c49a33655f2562c58d7d8314659b81dea0c",
+        "type": "github"
+      }
+    },
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1788179007,
+        "narHash": "sha256-hn1oU2rue2SYK8dAr8+WNZWtbsz1S2W5mnHlSEuh3bo=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "34ab99075ac4f7e40cf037eef32cb1c360bb85e9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs-llvm16": {
+      "locked": {
+        "lastModified": 1767313136,
+        "narHash": "sha256-16KkgfdYqjaeRGBaYsNrhPRRENs0qzkQVUooNHtoy2w=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "ac62194c3917d5f474c1a844b6fd6da2db95077d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-25.05",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "reussir": {
+      "inputs": {
+        "fenix": [
+          "fenix"
+        ],
+        "flake-utils": [
+          "flake-utils"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1793575798,
+        "narHash": "sha256-ZGe3c3AYwKfBbo9WpHxHUGLeBeBflQjvkAMv+w7jGkE=",
+        "owner": "reussir-lang",
+        "repo": "reussir",
+        "rev": "bcfff8d419169a09509b963714de0675630c7bc1",
+        "type": "github"
+      },
+      "original": {
+        "owner": "reussir-lang",
+        "repo": "reussir",
+        "rev": "bcfff8d419169a09509b963714de0675630c7bc1",
+        "type": "github"
+      }
+    },
+    "root": {
+      "inputs": {
+        "fenix": "fenix",
+        "flake-utils": "flake-utils",
+        "immer": "immer",
+        "mlir-rcgmp": "mlir-rcgmp",
+        "mlir-sync": "mlir-sync",
+        "morphic": "morphic",
+        "nixpkgs": "nixpkgs",
+        "nixpkgs-llvm16": "nixpkgs-llvm16",
+        "reussir": "reussir"
+      }
+    },
+    "rust-analyzer-src": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1788194240,
+        "narHash": "sha256-dehprdAEnE6veOVeKq1wbOKmwPPoNbVHwwBj3l8rOFY=",
+        "owner": "rust-lang",
+        "repo": "rust-analyzer",
+        "rev": "ce43a12d9fe4a24e5d6a86d29a57234efcc902b7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rust-lang",
+        "ref": "nightly",
+        "repo": "rust-analyzer",
+        "type": "github"
+      }
+    },
+    "systems": {
+      "locked": {
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-systems",
+        "repo": "default",
+        "type": "github"
+      }
+    }
+  },
+  "benchmark_revision": {
+    "argv": [
+      "git",
+      "-C",
+      "/tmp/reussir-final-comparison-20261101/benchmark",
+      "rev-parse",
+      "HEAD"
+    ],
+    "returncode": 0,
+    "output": "959c9ac4e1e956c8b7acff44f6298b6d52d46c15\n"
+  },
+  "reussir_revision": {
+    "argv": [
+      "git",
+      "-C",
+      "/tmp/reussir-final-comparison-20261101/current",
+      "rev-parse",
+      "HEAD"
+    ],
+    "returncode": 0,
+    "output": "bcfff8d419169a09509b963714de0675630c7bc1\n"
+  },
+  "reussir_compiler_sha256": "a1c59c5f5efd5be5ae77fae0d3d9aa747b1918a3d75da5ebcf1f2dde2b5c3259",
+  "compiler_elf": {
+    "argv": [
+      "readelf",
+      "-h",
+      "/tmp/reussir-final-comparison-20261101/current/build/bin/rrc"
+    ],
+    "returncode": 0,
+    "output": "ELF Header:\n  Magic:   7f 45 4c 46 02 01 01 03 00 00 00 00 00 00 00 00 \n  Class:                             ELF64\n  Data:                              2's complement, little endian\n  Version:                           1 (current)\n  OS/ABI:                            UNIX - GNU\n  ABI Version:                       0\n  Type:                              DYN (Position-Independent Executable file)\n  Machine:                           AArch64\n  Version:                           0x1\n  Entry point address:               0x58e680\n  Start of program headers:          64 (bytes into file)\n  Start of section headers:          237624056 (bytes into file)\n  Flags:                             0x0\n  Size of this header:               64 (bytes)\n  Size of program headers:           56 (bytes)\n  Number of program headers:         10\n  Size of section headers:           64 (bytes)\n  Number of section headers:         32\n  Section header string table index: 31\n"
+  },
+  "lscpu": {
+    "argv": [
+      "lscpu",
+      "-J"
+    ],
+    "returncode": 0,
+    "output": "{\n   \"lscpu\": [\n      {\n         \"field\": \"Architecture:\",\n         \"data\": \"aarch64\"\n      },{\n         \"field\": \"CPU op-mode(s):\",\n         \"data\": \"64-bit\"\n      },{\n         \"field\": \"Byte Order:\",\n         \"data\": \"Little Endian\"\n      },{\n         \"field\": \"CPU(s):\",\n         \"data\": \"20\"\n      },{\n         \"field\": \"On-line CPU(s) list:\",\n         \"data\": \"0-19\"\n      },{\n         \"field\": \"Vendor ID:\",\n         \"data\": \"ARM\"\n      },{\n         \"field\": \"Model name:\",\n         \"data\": \"Cortex-X925\"\n      },{\n         \"field\": \"Model:\",\n         \"data\": \"1\"\n      },{\n         \"field\": \"Thread(s) per core:\",\n         \"data\": \"1\"\n      },{\n         \"field\": \"Core(s) per socket:\",\n         \"data\": \"10\"\n      },{\n         \"field\": \"Socket(s):\",\n         \"data\": \"1\"\n      },{\n         \"field\": \"Stepping:\",\n         \"data\": \"r0p1\"\n      },{\n         \"field\": \"Frequency boost:\",\n         \"data\": \"disabled\"\n      },{\n         \"field\": \"CPU(s) scaling MHz:\",\n         \"data\": \"100%\"\n      },{\n         \"field\": \"CPU max MHz:\",\n         \"data\": \"3900.0000\"\n      },{\n         \"field\": \"CPU min MHz:\",\n         \"data\": \"1378.0000\"\n      },{\n         \"field\": \"BogoMIPS:\",\n         \"data\": \"2000.00\"\n      },{\n         \"field\": \"Flags:\",\n         \"data\": \"fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics fphp asimdhp cpuid asimdrdm jscvt fcma lrcpc dcpop sha3 sm3 sm4 asimddp sha512 sve asimdfhm dit uscat ilrcpc flagm sb paca pacg dcpodp sve2 sveaes svepmull svebitperm svesha3 svesm4 flagm2 frint svei8mm svebf16 i8mm bf16 dgh bti ecv afp wfxt\"\n      },{\n         \"field\": \"Model name:\",\n         \"data\": \"Cortex-A725\"\n      },{\n         \"field\": \"Model:\",\n         \"data\": \"1\"\n      },{\n         \"field\": \"Thread(s) per core:\",\n         \"data\": \"1\"\n      },{\n         \"field\": \"Core(s) per socket:\",\n         \"data\": \"10\"\n      },{\n         \"field\": \"Socket(s):\",\n         \"data\": \"1\"\n      },{\n         \"field\": \"Stepping:\",\n         \"data\": \"r0p1\"\n      },{\n         \"field\": \"CPU(s) scaling MHz:\",\n         \"data\": \"100%\"\n      },{\n         \"field\": \"CPU max MHz:\",\n         \"data\": \"2808.0000\"\n      },{\n         \"field\": \"CPU min MHz:\",\n         \"data\": \"338.0000\"\n      },{\n         \"field\": \"BogoMIPS:\",\n         \"data\": \"2000.00\"\n      },{\n         \"field\": \"Flags:\",\n         \"data\": \"fp asimd evtstrm aes pmull sha1 sha2 crc32 atomics fphp asimdhp cpuid asimdrdm jscvt fcma lrcpc dcpop sha3 sm3 sm4 asimddp sha512 sve asimdfhm dit uscat ilrcpc flagm sb paca pacg dcpodp sve2 sveaes svepmull svebitperm svesha3 svesm4 flagm2 frint svei8mm svebf16 i8mm bf16 dgh bti ecv afp wfxt\"\n      },{\n         \"field\": \"L1d cache:\",\n         \"data\": \"1.3 MiB (20 instances)\"\n      },{\n         \"field\": \"L1i cache:\",\n         \"data\": \"1.3 MiB (20 instances)\"\n      },{\n         \"field\": \"L2 cache:\",\n         \"data\": \"25 MiB (20 instances)\"\n      },{\n         \"field\": \"L3 cache:\",\n         \"data\": \"24 MiB (2 instances)\"\n      },{\n         \"field\": \"NUMA node(s):\",\n         \"data\": \"1\"\n      },{\n         \"field\": \"NUMA node0 CPU(s):\",\n         \"data\": \"0-19\"\n      },{\n         \"field\": \"Vulnerability Gather data sampling:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Ghostwrite:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Indirect target selection:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Itlb multihit:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability L1tf:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Mds:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Meltdown:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Mmio stale data:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Old microcode:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Reg file data sampling:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Retbleed:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Spec rstack overflow:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Spec store bypass:\",\n         \"data\": \"Mitigation; Speculative Store Bypass disabled via prctl\"\n      },{\n         \"field\": \"Vulnerability Spectre v1:\",\n         \"data\": \"Mitigation; __user pointer sanitization\"\n      },{\n         \"field\": \"Vulnerability Spectre v2:\",\n         \"data\": \"Mitigation; CSV2, BHB\"\n      },{\n         \"field\": \"Vulnerability Srbds:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Tsa:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Tsx async abort:\",\n         \"data\": \"Not affected\"\n      },{\n         \"field\": \"Vulnerability Vmscape:\",\n         \"data\": \"Not affected\"\n      }\n   ]\n}\n"
+  },
+  "original_affinity": [
+    0,
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    7,
+    8,
+    9,
+    10,
+    11,
+    12,
+    13,
+    14,
+    15,
+    16,
+    17,
+    18,
+    19
+  ],
+  "compile_affinity": [
+    19
+  ],
+  "measurement_cpu": 19,
+  "cpu_capacity": {
+    "0": 718,
+    "1": 718,
+    "2": 718,
+    "3": 718,
+    "4": 718,
+    "5": 997,
+    "6": 997,
+    "7": 997,
+    "8": 997,
+    "9": 997,
+    "10": 731,
+    "11": 731,
+    "12": 731,
+    "13": 731,
+    "14": 731,
+    "15": 1017,
+    "16": 1017,
+    "17": 1017,
+    "18": 1017,
+    "19": 1024
+  },
+  "starting_load": [
+    0.57861328125,
+    2.3837890625,
+    1.50048828125
+  ],
+  "config": {
+    "reussir-compiler": "/tmp/reussir-final-comparison-20261101/current/build/bin/rrc",
+    "cc": "/nix/store/55nmzskx8ai6w4a60cpyf67zxj5lg8wz-clang-wrapper-23.1.0/bin/clang",
+    "reussir-libs": "/nix/store/zjdk9vdxcxyvz8fhsijx248mfm85c1va-reussir-rt-xlto-0.1.0-git-bcfff8d41916/lib",
+    "reussir-src": "/tmp/reussir-final-comparison-20261101/current",
+    "reussir-rcgmp-runtime": "/tmp/reussir-final-comparison-20261101/current/build/lib/libRCGMPRuntime.a",
+    "koka-compiler": "/nix/store/v9p3l36r96dqsn13ifm79i7qsizbh832-koka-3.2.3/bin/koka",
+    "lean-compiler": "/nix/store/zpwg9w370cwv1mdgn6s3k2s8gs8i6wz2-lean4-4.30.0/bin/lean",
+    "leanc": "/nix/store/zpwg9w370cwv1mdgn6s3k2s8gs8i6wz2-lean4-4.30.0/bin/leanc",
+    "rustc": "/nix/store/d6bnbpk6jr95frzmmksda4r7l3v8d3m6-rustc-wrapper-1.97.1/bin/rustc",
+    "rust-extern-libs": "/nix/store/yj7ycx45lp575481gqcra6798nskq717-benchmark-rust-extern-crates-1/lib",
+    "ghc": "/nix/store/kz4l78kg9df4hzcidf42xji95qsrw2ay-ghc/bin/ghc",
+    "ocamlopt": "/nix/store/bzr9ynac081gk2qizv585fbl3cnnd20q-ocaml-5.4.1/bin/ocamlopt",
+    "ocamlfind": "/nix/store/vgxdyb71hdys16ayfmxyv10kbm2km7d4-ocaml5.4.1-findlib-1.9.8/bin/ocamlfind",
+    "morphic-compiler": "/nix/store/wxk174dm79z05phih371ygzn9rb3n9km-morphic-0-git-da679c49a336/bin/morphic",
+    "morphic-clang": "/nix/store/qz4h8k3r84di9k5pmqqi9jjz1fxg5dih-clang-wrapper-16.0.6/bin/clang",
+    "hyperfine": "/nix/store/xrvjcvdwlikj6fpkpi5fwxam3zfxqy1z-hyperfine-1.20.0/bin/hyperfine",
+    "time": "/nix/store/hmrflw7085axj7jyh65fyrmgyz4zmkvz-time-1.10/bin/time",
+    "case-time-budget-seconds": 300,
+    "warmup-runs": 5,
+    "runs": 10,
+    "rust-runtime-env": [
+      "LD_PRELOAD=/nix/store/qhhf9h7pqbqyfn9yd9gb69rbgbx8jrqb-mimalloc-3.4.5/lib/libmimalloc.so"
+    ]
+  },
+  "targets": [
+    [
+      "bigint-binomial",
+      "haskell"
+    ],
+    [
+      "bigint-binomial",
+      "haskell-a1g"
+    ],
+    [
+      "bigint-binomial",
+      "koka"
+    ],
+    [
+      "bigint-binomial",
+      "lean"
+    ],
+    [
+      "bigint-binomial",
+      "ocaml"
+    ],
+    [
+      "bigint-binomial",
+      "reussir"
+    ],
+    [
+      "bigint-binomial",
+      "reussir-nrac"
+    ],
+    [
+      "bigint-binomial",
+      "rust"
+    ],
+    [
+      "bigint-binomial",
+      "rust-with-mimalloc"
+    ],
+    [
+      "bigint-collatz",
+      "haskell"
+    ],
+    [
+      "bigint-collatz",
+      "haskell-a1g"
+    ],
+    [
+      "bigint-collatz",
+      "koka"
+    ],
+    [
+      "bigint-collatz",
+      "lean"
+    ],
+    [
+      "bigint-collatz",
+      "ocaml"
+    ],
+    [
+      "bigint-collatz",
+      "reussir"
+    ],
+    [
+      "bigint-collatz",
+      "reussir-nrac"
+    ],
+    [
+      "bigint-collatz",
+      "rust"
+    ],
+    [
+      "bigint-collatz",
+      "rust-with-mimalloc"
+    ],
+    [
+      "bigint-factorial",
+      "haskell"
+    ],
+    [
+      "bigint-factorial",
+      "haskell-a1g"
+    ],
+    [
+      "bigint-factorial",
+      "koka"
+    ],
+    [
+      "bigint-factorial",
+      "lean"
+    ],
+    [
+      "bigint-factorial",
+      "ocaml"
+    ],
+    [
+      "bigint-factorial",
+      "reussir"
+    ],
+    [
+      "bigint-factorial",
+      "reussir-nrac"
+    ],
+    [
+      "bigint-factorial",
+      "rust"
+    ],
+    [
+      "bigint-factorial",
+      "rust-with-mimalloc"
+    ],
+    [
+      "bigint-fib",
+      "haskell"
+    ],
+    [
+      "bigint-fib",
+      "haskell-a1g"
+    ],
+    [
+      "bigint-fib",
+      "koka"
+    ],
+    [
+      "bigint-fib",
+      "lean"
+    ],
+    [
+      "bigint-fib",
+      "ocaml"
+    ],
+    [
+      "bigint-fib",
+      "reussir"
+    ],
+    [
+      "bigint-fib",
+      "reussir-nrac"
+    ],
+    [
+      "bigint-fib",
+      "rust"
+    ],
+    [
+      "bigint-fib",
+      "rust-with-mimalloc"
+    ],
+    [
+      "bigint-pidigits",
+      "haskell"
+    ],
+    [
+      "bigint-pidigits",
+      "haskell-a1g"
+    ],
+    [
+      "bigint-pidigits",
+      "koka"
+    ],
+    [
+      "bigint-pidigits",
+      "lean"
+    ],
+    [
+      "bigint-pidigits",
+      "ocaml"
+    ],
+    [
+      "bigint-pidigits",
+      "reussir"
+    ],
+    [
+      "bigint-pidigits",
+      "reussir-nrac"
+    ],
+    [
+      "bigint-pidigits",
+      "rust"
+    ],
+    [
+      "bigint-pidigits",
+      "rust-with-mimalloc"
+    ],
+    [
+      "bigint-rbtree",
+      "haskell"
+    ],
+    [
+      "bigint-rbtree",
+      "haskell-a1g"
+    ],
+    [
+      "bigint-rbtree",
+      "koka"
+    ],
+    [
+      "bigint-rbtree",
+      "lean"
+    ],
+    [
+      "bigint-rbtree",
+      "ocaml"
+    ],
+    [
+      "bigint-rbtree",
+      "reussir"
+    ],
+    [
+      "bigint-rbtree",
+      "reussir-nrac"
+    ],
+    [
+      "bigint-rbtree",
+      "rust"
+    ],
+    [
+      "bigint-rbtree",
+      "rust-with-mimalloc"
+    ],
+    [
+      "derive",
+      "haskell"
+    ],
+    [
+      "derive",
+      "haskell-a1g"
+    ],
+    [
+      "derive",
+      "koka"
+    ],
+    [
+      "derive",
+      "lean"
+    ],
+    [
+      "derive",
+      "morphic"
+    ],
+    [
+      "derive",
+      "ocaml"
+    ],
+    [
+      "derive",
+      "reussir"
+    ],
+    [
+      "derive",
+      "reussir-nrac"
+    ],
+    [
+      "derive",
+      "rust"
+    ],
+    [
+      "derive",
+      "rust-with-mimalloc"
+    ],
+    [
+      "expr-replace",
+      "haskell"
+    ],
+    [
+      "expr-replace",
+      "haskell-a1g"
+    ],
+    [
+      "expr-replace",
+      "koka"
+    ],
+    [
+      "expr-replace",
+      "lean"
+    ],
+    [
+      "expr-replace",
+      "morphic"
+    ],
+    [
+      "expr-replace",
+      "ocaml"
+    ],
+    [
+      "expr-replace",
+      "reussir"
+    ],
+    [
+      "expr-replace",
+      "reussir-nrac"
+    ],
+    [
+      "expr-replace",
+      "rust"
+    ],
+    [
+      "expr-replace",
+      "rust-with-mimalloc"
+    ],
+    [
+      "fingertree",
+      "haskell"
+    ],
+    [
+      "fingertree",
+      "haskell-a1g"
+    ],
+    [
+      "fingertree",
+      "koka"
+    ],
+    [
+      "fingertree",
+      "lean"
+    ],
+    [
+      "fingertree",
+      "morphic"
+    ],
+    [
+      "fingertree",
+      "ocaml"
+    ],
+    [
+      "fingertree",
+      "reussir"
+    ],
+    [
+      "fingertree",
+      "reussir-nrac"
+    ],
+    [
+      "fingertree",
+      "rust"
+    ],
+    [
+      "fingertree",
+      "rust-with-mimalloc"
+    ],
+    [
+      "functional-queue",
+      "haskell"
+    ],
+    [
+      "functional-queue",
+      "haskell-a1g"
+    ],
+    [
+      "functional-queue",
+      "koka"
+    ],
+    [
+      "functional-queue",
+      "lean"
+    ],
+    [
+      "functional-queue",
+      "morphic"
+    ],
+    [
+      "functional-queue",
+      "ocaml"
+    ],
+    [
+      "functional-queue",
+      "reussir"
+    ],
+    [
+      "functional-queue",
+      "reussir-nrac"
+    ],
+    [
+      "functional-queue",
+      "rust"
+    ],
+    [
+      "functional-queue",
+      "rust-with-mimalloc"
+    ],
+    [
+      "hash-map-heavily-shared",
+      "haskell"
+    ],
+    [
+      "hash-map-heavily-shared",
+      "haskell-a1g"
+    ],
+    [
+      "hash-map-heavily-shared",
+      "koka"
+    ],
+    [
+      "hash-map-heavily-shared",
+      "lean"
+    ],
+    [
+      "hash-map-heavily-shared",
+      "morphic"
+    ],
+    [
+      "hash-map-heavily-shared",
+      "ocaml"
+    ],
+    [
+      "hash-map-heavily-shared",
+      "reussir"
+    ],
+    [
+      "hash-map-heavily-shared",
+      "reussir-nrac"
+    ],
+    [
+      "hash-map-heavily-shared",
+      "rust"
+    ],
+    [
+      "hash-map-heavily-shared",
+      "rust-rpds"
+    ],
+    [
+      "hash-map-heavily-shared",
+      "rust-rpds-with-mimalloc"
+    ],
+    [
+      "hash-map-heavily-shared",
+      "rust-with-mimalloc"
+    ],
+    [
+      "hash-map-linear",
+      "haskell"
+    ],
+    [
+      "hash-map-linear",
+      "haskell-a1g"
+    ],
+    [
+      "hash-map-linear",
+      "koka"
+    ],
+    [
+      "hash-map-linear",
+      "lean"
+    ],
+    [
+      "hash-map-linear",
+      "morphic"
+    ],
+    [
+      "hash-map-linear",
+      "ocaml"
+    ],
+    [
+      "hash-map-linear",
+      "reussir"
+    ],
+    [
+      "hash-map-linear",
+      "reussir-nrac"
+    ],
+    [
+      "hash-map-linear",
+      "rust"
+    ],
+    [
+      "hash-map-linear",
+      "rust-rpds"
+    ],
+    [
+      "hash-map-linear",
+      "rust-rpds-with-mimalloc"
+    ],
+    [
+      "hash-map-linear",
+      "rust-with-mimalloc"
+    ],
+    [
+      "hash-map-shared",
+      "haskell"
+    ],
+    [
+      "hash-map-shared",
+      "haskell-a1g"
+    ],
+    [
+      "hash-map-shared",
+      "koka"
+    ],
+    [
+      "hash-map-shared",
+      "lean"
+    ],
+    [
+      "hash-map-shared",
+      "morphic"
+    ],
+    [
+      "hash-map-shared",
+      "ocaml"
+    ],
+    [
+      "hash-map-shared",
+      "reussir"
+    ],
+    [
+      "hash-map-shared",
+      "reussir-nrac"
+    ],
+    [
+      "hash-map-shared",
+      "rust"
+    ],
+    [
+      "hash-map-shared",
+      "rust-rpds"
+    ],
+    [
+      "hash-map-shared",
+      "rust-rpds-with-mimalloc"
+    ],
+    [
+      "hash-map-shared",
+      "rust-with-mimalloc"
+    ],
+    [
+      "heap-array",
+      "haskell-st"
+    ],
+    [
+      "heap-array",
+      "haskell-st-a1g"
+    ],
+    [
+      "heap-array",
+      "koka"
+    ],
+    [
+      "heap-array",
+      "lean"
+    ],
+    [
+      "heap-array",
+      "morphic"
+    ],
+    [
+      "heap-array",
+      "ocaml"
+    ],
+    [
+      "heap-array",
+      "reussir"
+    ],
+    [
+      "heap-array",
+      "reussir-nrac"
+    ],
+    [
+      "heap-array",
+      "rust"
+    ],
+    [
+      "heap-array",
+      "rust-with-mimalloc"
+    ],
+    [
+      "heap-functional",
+      "haskell"
+    ],
+    [
+      "heap-functional",
+      "haskell-a1g"
+    ],
+    [
+      "heap-functional",
+      "koka"
+    ],
+    [
+      "heap-functional",
+      "lean"
+    ],
+    [
+      "heap-functional",
+      "morphic"
+    ],
+    [
+      "heap-functional",
+      "ocaml"
+    ],
+    [
+      "heap-functional",
+      "reussir"
+    ],
+    [
+      "heap-functional",
+      "reussir-nrac"
+    ],
+    [
+      "heap-functional",
+      "rust"
+    ],
+    [
+      "heap-functional",
+      "rust-with-mimalloc"
+    ],
+    [
+      "life",
+      "haskell"
+    ],
+    [
+      "life",
+      "haskell-a1g"
+    ],
+    [
+      "life",
+      "haskell-st"
+    ],
+    [
+      "life",
+      "haskell-st-a1g"
+    ],
+    [
+      "life",
+      "koka"
+    ],
+    [
+      "life",
+      "lean"
+    ],
+    [
+      "life",
+      "morphic"
+    ],
+    [
+      "life",
+      "ocaml"
+    ],
+    [
+      "life",
+      "reussir"
+    ],
+    [
+      "life",
+      "reussir-nrac"
+    ],
+    [
+      "life",
+      "rust"
+    ],
+    [
+      "life",
+      "rust-with-mimalloc"
+    ],
+    [
+      "list-membership",
+      "haskell"
+    ],
+    [
+      "list-membership",
+      "haskell-a1g"
+    ],
+    [
+      "list-membership",
+      "koka"
+    ],
+    [
+      "list-membership",
+      "lean"
+    ],
+    [
+      "list-membership",
+      "morphic"
+    ],
+    [
+      "list-membership",
+      "ocaml"
+    ],
+    [
+      "list-membership",
+      "reussir"
+    ],
+    [
+      "list-membership",
+      "reussir-nrac"
+    ],
+    [
+      "list-membership",
+      "rust"
+    ],
+    [
+      "list-membership",
+      "rust-with-mimalloc"
+    ],
+    [
+      "nbe-closure",
+      "haskell"
+    ],
+    [
+      "nbe-closure",
+      "haskell-a1g"
+    ],
+    [
+      "nbe-closure",
+      "koka"
+    ],
+    [
+      "nbe-closure",
+      "lean"
+    ],
+    [
+      "nbe-closure",
+      "morphic"
+    ],
+    [
+      "nbe-closure",
+      "ocaml"
+    ],
+    [
+      "nbe-closure",
+      "reussir"
+    ],
+    [
+      "nbe-closure",
+      "reussir-nrac"
+    ],
+    [
+      "nbe-closure",
+      "rust"
+    ],
+    [
+      "nbe-closure",
+      "rust-with-mimalloc"
+    ],
+    [
+      "nbe-hoas",
+      "haskell"
+    ],
+    [
+      "nbe-hoas",
+      "haskell-a1g"
+    ],
+    [
+      "nbe-hoas",
+      "koka"
+    ],
+    [
+      "nbe-hoas",
+      "lean"
+    ],
+    [
+      "nbe-hoas",
+      "morphic"
+    ],
+    [
+      "nbe-hoas",
+      "ocaml"
+    ],
+    [
+      "nbe-hoas",
+      "reussir"
+    ],
+    [
+      "nbe-hoas",
+      "reussir-nrac"
+    ],
+    [
+      "nbe-hoas",
+      "rust"
+    ],
+    [
+      "nbe-hoas",
+      "rust-with-mimalloc"
+    ],
+    [
+      "ordered-map-heavily-shared",
+      "haskell"
+    ],
+    [
+      "ordered-map-heavily-shared",
+      "haskell-a1g"
+    ],
+    [
+      "ordered-map-heavily-shared",
+      "koka"
+    ],
+    [
+      "ordered-map-heavily-shared",
+      "lean"
+    ],
+    [
+      "ordered-map-heavily-shared",
+      "morphic"
+    ],
+    [
+      "ordered-map-heavily-shared",
+      "ocaml"
+    ],
+    [
+      "ordered-map-heavily-shared",
+      "reussir"
+    ],
+    [
+      "ordered-map-heavily-shared",
+      "reussir-nrac"
+    ],
+    [
+      "ordered-map-heavily-shared",
+      "rust"
+    ],
+    [
+      "ordered-map-heavily-shared",
+      "rust-rpds"
+    ],
+    [
+      "ordered-map-heavily-shared",
+      "rust-rpds-with-mimalloc"
+    ],
+    [
+      "ordered-map-heavily-shared",
+      "rust-with-mimalloc"
+    ],
+    [
+      "ordered-map-linear",
+      "haskell"
+    ],
+    [
+      "ordered-map-linear",
+      "haskell-a1g"
+    ],
+    [
+      "ordered-map-linear",
+      "koka"
+    ],
+    [
+      "ordered-map-linear",
+      "lean"
+    ],
+    [
+      "ordered-map-linear",
+      "morphic"
+    ],
+    [
+      "ordered-map-linear",
+      "ocaml"
+    ],
+    [
+      "ordered-map-linear",
+      "reussir"
+    ],
+    [
+      "ordered-map-linear",
+      "reussir-nrac"
+    ],
+    [
+      "ordered-map-linear",
+      "rust"
+    ],
+    [
+      "ordered-map-linear",
+      "rust-rpds"
+    ],
+    [
+      "ordered-map-linear",
+      "rust-rpds-with-mimalloc"
+    ],
+    [
+      "ordered-map-linear",
+      "rust-with-mimalloc"
+    ],
+    [
+      "ordered-map-shared",
+      "haskell"
+    ],
+    [
+      "ordered-map-shared",
+      "haskell-a1g"
+    ],
+    [
+      "ordered-map-shared",
+      "koka"
+    ],
+    [
+      "ordered-map-shared",
+      "lean"
+    ],
+    [
+      "ordered-map-shared",
+      "morphic"
+    ],
+    [
+      "ordered-map-shared",
+      "ocaml"
+    ],
+    [
+      "ordered-map-shared",
+      "reussir"
+    ],
+    [
+      "ordered-map-shared",
+      "reussir-nrac"
+    ],
+    [
+      "ordered-map-shared",
+      "rust"
+    ],
+    [
+      "ordered-map-shared",
+      "rust-rpds"
+    ],
+    [
+      "ordered-map-shared",
+      "rust-rpds-with-mimalloc"
+    ],
+    [
+      "ordered-map-shared",
+      "rust-with-mimalloc"
+    ],
+    [
+      "qsort",
+      "haskell"
+    ],
+    [
+      "qsort",
+      "haskell-a1g"
+    ],
+    [
+      "qsort",
+      "haskell-st"
+    ],
+    [
+      "qsort",
+      "haskell-st-a1g"
+    ],
+    [
+      "qsort",
+      "koka"
+    ],
+    [
+      "qsort",
+      "lean"
+    ],
+    [
+      "qsort",
+      "morphic"
+    ],
+    [
+      "qsort",
+      "ocaml"
+    ],
+    [
+      "qsort",
+      "reussir"
+    ],
+    [
+      "qsort",
+      "reussir-nrac"
+    ],
+    [
+      "qsort",
+      "rust"
+    ],
+    [
+      "qsort",
+      "rust-with-mimalloc"
+    ],
+    [
+      "rbtree",
+      "haskell"
+    ],
+    [
+      "rbtree",
+      "haskell-a1g"
+    ],
+    [
+      "rbtree",
+      "koka"
+    ],
+    [
+      "rbtree",
+      "lean"
+    ],
+    [
+      "rbtree",
+      "morphic"
+    ],
+    [
+      "rbtree",
+      "ocaml"
+    ],
+    [
+      "rbtree",
+      "reussir"
+    ],
+    [
+      "rbtree",
+      "reussir-nrac"
+    ],
+    [
+      "rbtree",
+      "rust"
+    ],
+    [
+      "rbtree",
+      "rust-with-mimalloc"
+    ],
+    [
+      "rbtree-lookup",
+      "haskell"
+    ],
+    [
+      "rbtree-lookup",
+      "haskell-a1g"
+    ],
+    [
+      "rbtree-lookup",
+      "koka"
+    ],
+    [
+      "rbtree-lookup",
+      "lean"
+    ],
+    [
+      "rbtree-lookup",
+      "morphic"
+    ],
+    [
+      "rbtree-lookup",
+      "ocaml"
+    ],
+    [
+      "rbtree-lookup",
+      "reussir"
+    ],
+    [
+      "rbtree-lookup",
+      "reussir-nrac"
+    ],
+    [
+      "rbtree-lookup",
+      "rust"
+    ],
+    [
+      "rbtree-lookup",
+      "rust-with-mimalloc"
+    ],
+    [
+      "rbtree-zipper",
+      "haskell"
+    ],
+    [
+      "rbtree-zipper",
+      "haskell-a1g"
+    ],
+    [
+      "rbtree-zipper",
+      "koka"
+    ],
+    [
+      "rbtree-zipper",
+      "lean"
+    ],
+    [
+      "rbtree-zipper",
+      "morphic"
+    ],
+    [
+      "rbtree-zipper",
+      "ocaml"
+    ],
+    [
+      "rbtree-zipper",
+      "reussir"
+    ],
+    [
+      "rbtree-zipper",
+      "reussir-nrac"
+    ],
+    [
+      "rbtree-zipper",
+      "rust"
+    ],
+    [
+      "rbtree-zipper",
+      "rust-with-mimalloc"
+    ],
+    [
+      "raytracer",
+      "haskell"
+    ],
+    [
+      "raytracer",
+      "haskell-a1g"
+    ],
+    [
+      "raytracer",
+      "koka"
+    ],
+    [
+      "raytracer",
+      "lean"
+    ],
+    [
+      "raytracer",
+      "ocaml"
+    ],
+    [
+      "raytracer",
+      "reussir"
+    ],
+    [
+      "raytracer",
+      "reussir-nrac"
+    ],
+    [
+      "raytracer",
+      "rust"
+    ],
+    [
+      "raytracer",
+      "rust-with-mimalloc"
+    ]
+  ],
+  "target_count": 279,
+  "reussir_flags": [
+    "-Oaggressive",
+    "--reuse-across-call (ordinary reussir only)",
+    "--relocation-mode",
+    "pic"
+  ],
+  "reussir_drop_order": "compiler default: backward; no override",
+  "runtime_archive": "/nix/store/zjdk9vdxcxyvz8fhsijx248mfm85c1va-reussir-rt-xlto-0.1.0-git-bcfff8d41916/lib/libreussir_rt.a",
+  "runtime_archive_sha256": "628e257031f7189529ad89e68b582ff33f3d20ffd3ea17e303a0f7d4a06c0719",
+  "rcgmp_runtime": "/tmp/reussir-final-comparison-20261101/current/build/lib/libRCGMPRuntime.a",
+  "rcgmp_runtime_sha256": "50d03cb7cc963b6fc0458a04baaf02c73fe124fc381f68361af407c62447763d",
+  "source_sha256": {
+    "lean/rbtree.lean": "fe3b0d98fe6da4e7dcdad4e6c7b24866ef7e59f6f5e428ce4ac99a9d0efcc78a",
+    "reussir/rbtree.rr": "8eb71601e44f8b75ed357cf375ac9053eab2562fbf282c765b06b6b5942e5c0d",
+    "reussir/rbtree.rr.c": "4906308715d85f12d22e158539275adb0355754af52f982e99cb5d6518e0584e",
+    "koka/rbtree.kk": "2781c59879b2c8923679e74159734af21b80d6a4b4b50fcf1f32fafcf2993d1d",
+    "rust/rbtree.rs": "05e6393728bfe151e56a557562e466950953c671aaaf5f4288570ae610fe2ace",
+    "ocaml/rbtree.ml": "ff834f1bcff4894790e8e5fb5559bcd6709f367a62fb00c94bdba733f50cc8df",
+    "morphic/rbtree.mor": "725f562fc710ba1b5bbe7460324ba463327a52f13eb3a880e8739ba164a9b620",
+    "haskell/rbtree.hs": "4c68e4825d946092c286049f04481f465326e4f16df4cc2f6198e377b4474bfd",
+    "lean/rbtree-zipper.lean": "9e791defcc3be785137b8e9dc2308728c9a50096816dfed3c1670b5b72494e67",
+    "reussir/rbtree-zipper.rr": "1e63ed39524f0e464197773e76b85fc70c4d5221fe5bff7065d1d75f1836cbd5",
+    "koka/rbtree-zipper.kk": "f73941a4766b7f87ba970e20df8ee9f645cfa98c69f7d4b7675bc1a244463503",
+    "rust/rbtree-zipper.rs": "76963324fab7db4680869865fdb07c7eefa4702d900d2f30b3c697bb1b0c4c3a",
+    "ocaml/rbtree-zipper.ml": "ebd329c3d21e27b4f6ec727c4a65285c52c203c6b66408f1b8bd73f7ad7e24b9",
+    "morphic/rbtree-zipper.mor": "2b87ecbfe499ae3e01fc4c511d161e21371105ff3cd6d2224ce1243460db829e",
+    "haskell/rbtree-zipper.hs": "b4fa655321b512fa904e071a3a5c0bb63169569ada0975f821d5e68771096f60",
+    "lean/nbe-hoas.lean": "883bddf32aaf43f1a5672138322756d0e0a4f72ee221683aaf82e15153ecdef9",
+    "reussir/nbe-hoas.rr": "186ca987c6575790674f3d099f10237d02c7d8c29c6ab16faf94440cd02a9529",
+    "reussir/nbe-hoas.rr.c": "08480a43496cadae978cc5bf2c5e7d774ce9eed76a80831ee25ccb0e235c355a",
+    "koka/nbe-hoas.kk": "76c09f6ce883743b95fa4aea3f0626c4f22813e56a9604d3e16db0e328664bb7",
+    "rust/nbe-hoas.rs": "0d6b0276f3779526cfb6a6cc9747cfcbd1e7c91efe14ab5086daa2253637f9cf",
+    "ocaml/nbe-hoas.ml": "f10132ee008239cea3fc1774892323f1daf785eb65170e83646206922c28256f",
+    "morphic/nbe-hoas.mor": "822bb3e6f6588ea80f89baea6b6900ee8746a595716442f376da698fc39f4d57",
+    "haskell/nbe-hoas.hs": "77dbd80628d4b0037fdf68397e6745bab4070df2cd6150865cb14c1fd2a2f382",
+    "lean/nbe-closure.lean": "3834e40a0017ea8627cbf2281430a4269a0ef684ad6a2904a69266335aae8594",
+    "reussir/nbe-closure.rr": "5cc36f5932f58e884ac5938585d3c04f39d676f73725d77a34ee6cbcfb848189",
+    "reussir/nbe-closure.rr.c": "0a8ff720bbfc69e767f00c284dedceb3b52481a4dbce4ab9d49c96c7ae62a44c",
+    "koka/nbe-closure.kk": "ed3e5890890ad20b6401bbdfa9483f8b2185431169914f70ce0ef6d835e98c8c",
+    "rust/nbe-closure.rs": "180de59c8fb78f0f08060aeb8b6ecf9df7dcdde0600cbedd87fa5e33584e37ab",
+    "ocaml/nbe-closure.ml": "00f41164df5663e338e62bdaa9a138c06858b0365509d224054c5f687fe0048a",
+    "morphic/nbe-closure.mor": "86540151453b07e1dd752c8b3c87bbc7c67f307b3744491c18376e41ab82249d",
+    "haskell/nbe-closure.hs": "b01f766795317ed06ad3164e7ae6b010ea5ff9d7dd80c51977f460bcde58a2ec",
+    "lean/derive.lean": "94a43e9062e50da9517053d3f26bb5b390bbe126f7ad978ae76db6625af25880",
+    "reussir/derive.rr": "ed7d0d2bf01a7ccc21c3bb1cc48cc64698ebd9eb04e0de408ec4e61e463440c7",
+    "reussir/derive.rr.c": "6129b7ef2af3dbf1c905a40f594fd3c4096b51c8bc31c19f9c66109099663d0e",
+    "koka/derive.kk": "d6aabd059970cb21fc7f9e85e6596c2cc329f9abddc1f5d0b476d261583e9930",
+    "rust/derive.rs": "464f453a7b5346b12f40fa03045644ab52f5fabfa7414ec55fa168aa51d1d717",
+    "ocaml/derive.ml": "3847d44a3566ec212912600e6b2dd0a705cb4748f1f91303dcd3a51fc44a7d92",
+    "morphic/derive.mor": "dfd66fe1017e73c53e0e81494bbf3bbb2d20962e32e47c63f1c0b54dd9c6f226",
+    "haskell/derive.hs": "64c5f2dba43b5e9197e448a26124a8f674f63189af6f980c222bcbf15d57f31f",
+    "lean/life.lean": "9492bf79096c8e4b174a778c3ecf0391060e8fd785862484e81f67cc191be438",
+    "reussir/life.rr": "b729d288857eb71cffe2d5c9716118b5572e38117acda0012c50bd31e50930c8",
+    "reussir/life.rr.c": "533f612f6c7eb47aa291918b62fac170f199f4b6f8d5f803e94b1f5d4cb3e609",
+    "koka/life.kk": "80ff9e7bba74f45c47e3ea16d3855d44a8eaccace886c09fe8e74460ecb18e31",
+    "rust/life.rs": "8e840d4d5d19e3b7530b55df3eee23494b95f80b30f07d153972f9306c497fae",
+    "ocaml/life.ml": "90daa2c99a507eadacd6b73528d13da945ab65ba112cbfa90ee5a89c06a5848f",
+    "morphic/life.mor": "b13b4fed8c076a6acac32e85219f4360b94bcc0ffaa58c9516bd936a45d3e637",
+    "haskell/life.hs": "f244a5c3b0894df4b39ca147c8333eeeed3e85567d9d3a554d08d79a39949028",
+    "haskell/life_st.hs": "a049f9e71a4364bc1a1b478a6c295fce03758deee06c31994ca86f8b9cc04769",
+    "lean/qsort.lean": "4cb4e1c46fc57932552a63b0f7ae89c3db11d9a630eb109598d94b5ea521f2c8",
+    "reussir/qsort.rr": "5be0490162fa66cef2f7063e8083ff654fdedcfe056258bf2feb1b52b470642f",
+    "reussir/qsort.rr.c": "1fc38c9035ad66cd61ac852db388402b6d8973827e45ff391c8cf86c11256d41",
+    "koka/qsort.kk": "a4adbb43ff406443b913ba97b70b67bf5c2cdf5a1163e69320d409f2db9bd2d3",
+    "rust/qsort.rs": "cd97832900ff9c1e0f1406f34b7b70e49bec3de8bcc4be12a3c198ea10db5ea3",
+    "ocaml/qsort.ml": "626ff74c134d6c1f31315068e1fd6860e74366b7fca901d6b31faa0c0f8b7328",
+    "morphic/qsort.mor": "50de438096f6a4a128ac7785a336666fe3a54641f242106ec8db58e6b094f74c",
+    "haskell/qsort.hs": "ee12e3c761e4577223807fd2bf529fc41a21c0966abd47fbd41f62568dd0a94c",
+    "haskell/qsort_st.hs": "81d0ea2e95640e20280e16825bc0c7c778e6cdf8c45386117b83e22abd7990de",
+    "lean/heap.lean": "8399f70d844920cc5bfc1aef043deed7f6ad2117af9ec1da74a718397b89691f",
+    "reussir/heap.rr": "b4fbe8732f712f3da66c462bed9d9cd7078d621e87085d7266ded12db28f6404",
+    "reussir/heap.rr.c": "48ea4b2f315223b0bf13ed4afeb28da08726d5b8dd29c5a150b4b98bba2ea619",
+    "koka/heap-array.kk": "46512f40e0f0fb2f0714876634c1ab2ffb041d88649222bcf8773c63afc95960",
+    "rust/heap.rs": "df24bdc0f2111afc2ae101f50af57b26a7ac60ba6fd8836412fe5c55b6c8af39",
+    "ocaml/heap-array.ml": "79b97c3f296f06821c18be036e8be2d172e08e261f82ced56e2e9f0fa1e9aed6",
+    "morphic/heap-array.mor": "262c8db719b6f734338d53efed3fd1194f4c4309677cf0312b4bc5480323899a",
+    "haskell/heap_st.hs": "897a752cc33b72aec3b4e6499beff7bb8ee775968f2404181cdcb1a21369f194",
+    "lean/heap-functional.lean": "3611716ff6d40f7e9fb94ec2cf669ec8fe728aada08de27f590a785e7d0df8f2",
+    "reussir/heap-functional.rr": "3d7d3d3ea31d8bd233deec4514c96d024bd05124974ef61c132f41d9fa0ca394",
+    "koka/heap.kk": "fd6ffe7c60cbfa9df54d380d33fa05c365f905c9574844cc6d175b14779312f8",
+    "rust/heap-functional.rs": "efc975532ee6fa8597780cc23b0e4a46b693402f260534270731e45b6225de79",
+    "ocaml/heap-functional.ml": "5cd3d93646a9a023233f666c1d94ba1e156a7e622c390eada1fd49679a594801",
+    "morphic/heap-functional.mor": "49557e65729e9068bb265b175caf4f5a3ff51d67c59b2eb808f0948cb4823e8c",
+    "haskell/heap.hs": "b56798fddbeaa2847940fdbc7ece12a3c076ae52d4fae0f3a984cf38a385b8a9",
+    "lean/fingertree.lean": "fdf30f0aca758d31e90955c3c925cade27ad2e57fad5ac2881a250746f5098f8",
+    "reussir/fingertree.rr": "be6f80a4eae2761c2efa94510ae0807db8eac9af5579c73536eab0f7ccd8d83a",
+    "reussir/fingertree.rr.c": "6593b15f313e4ede9f5322c31f3f915546c9baf983366f446593fc8b92a2327b",
+    "koka/fingertree.kk": "9744b490abff938536ba69760dd3c4d9b80c07a6c0f3f67e3343ef4f667b4cba",
+    "rust/fingertree.rs": "51cc3c6db6411aed7cf86ee3df9c5301b1baff321b0a1702c9d9b2d03cee5163",
+    "ocaml/fingertree.ml": "aced61e80bc4a59bd63a41b5fe7ca456356f8a7bfadd8b6ca6167ea0bbda885f",
+    "morphic/fingertree.mor": "3a45fe1e7598cced4b314f400f95751946d43f9d0d02660410031b71a184c604",
+    "haskell/fingertree.hs": "3c4c2b1474158e58785b2e3749cf34db1a8ebd8a95f89623807b12738fe51d9b",
+    "lean/ordered-map-linear.lean": "c43d6abd4661ec2eb002bed81713470298ef815cabf1b53a964cb733147ebe25",
+    "reussir/ordered-map-linear.rr": "b5a8a72d985c55170d3a745e96350d259b8fbb949632ce643d444a8c9ba0fef6",
+    "reussir/ordered-map-linear.rr.c": "4a9c2c031f1ad1e8208d4402fc948d9d36dd8e94fa393545a63e4d6ba6cd3d33",
+    "koka/ordered-map-linear.kk": "f1396037cdc55a64d5127f921c85acf5be223b79aa92095df793427b89126203",
+    "rust/ordered-map-linear.rs": "95131e9b8a4177c54654f6b2f6b3e010c2a39df26f4d8053db4076222b08f4f0",
+    "rust/ordered-map-linear-rpds.rs": "fa4e59707a7230337f573bcf2ee759dc9e1b45a95cf2bc3abaecb8dad325b66b",
+    "ocaml/ordered-map-linear.ml": "875d448932d68640fb087aeef2dae72fb020c6e212c280d91239f90c9b5eddb6",
+    "morphic/ordered-map-linear.mor": "5b415ae45b20199fa7dd565e43530e22764103634cdb507cc3b710c63529d441",
+    "haskell/ordered-map-linear.hs": "fae58470538bc07bfd2fdf117059d3e5db575ba5b21a821ada680f35c2968a93",
+    "lean/ordered-map-shared.lean": "a583c43acd51703b5c36af43e52218b99079b50c72df19396e5d8ee156cf32e6",
+    "reussir/ordered-map-shared.rr": "059ca4f144c238484a70c9a44851c5d72723d9bfc828ba4503235ab9c667504b",
+    "reussir/ordered-map-shared.rr.c": "db3e922af9aed3265f3ceff0a75d40fc004b4ba1e8435b61dfde77345cc0ddf5",
+    "koka/ordered-map-shared.kk": "1b7b44c85b689c4ab86c23e849e33d47dc2673d2c5b1800cc8ccd5fceb73eec9",
+    "rust/ordered-map-shared.rs": "378ae8e6b47185f138b4d055883f19b353819a483d32fbd9c650ba639114407c",
+    "rust/ordered-map-shared-rpds.rs": "a3e205a5f591290feb3defb77dde5e38dc06c209a6dc24cc89ad1c629455fa5c",
+    "ocaml/ordered-map-shared.ml": "4434bea23e119be7c2060ddc612756ef5fbf8a52b5637198acd82aaa59cdd4a7",
+    "morphic/ordered-map-shared.mor": "5471e03a98ee4a74a62220a485ddaae7981fb1dbefb214e4b640469afbae26e1",
+    "haskell/ordered-map-shared.hs": "d5a9f26a10e942aa8efe203e2bcfddb0c0a89589ab9444c6972f9a0240958f2b",
+    "lean/ordered-map-heavily-shared.lean": "474232b764533603636d6936843525383fecc80ae2f39688e7336eabab92a6ca",
+    "reussir/ordered-map-heavily-shared.rr": "a9a0f9d71d06608c115cbc8087864c287aebeb9585a44fcad965947cc251072b",
+    "reussir/ordered-map-heavily-shared.rr.c": "d608324fdb38baef194b083443465632775ef8282c771539dc5305d5afba491d",
+    "koka/ordered-map-heavily-shared.kk": "f2b0b51acba9d98ad404c50970443f7501cc77b67a8712a66673500de9e446a8",
+    "rust/ordered-map-heavily-shared.rs": "825c693a251096c4a592b85c26706c40c2a9a31878dd2b208a1c362f38b57dc8",
+    "rust/ordered-map-heavily-shared-rpds.rs": "a01be21ea23eb2749588335b554ef65f18277abb9adbfe9e3fbf80713ea8c70f",
+    "ocaml/ordered-map-heavily-shared.ml": "bfc909134b95728d2104a0dbe54e65573da77a8833d2e86777869c2f70e836a8",
+    "morphic/ordered-map-heavily-shared.mor": "84c59175b549792ee6173ca16f4f5bdb9fcbe8bddff9295177468508cb18cd1e",
+    "haskell/ordered-map-heavily-shared.hs": "dff62deb10bb27ddc16f491da571959525c2d689a02e3e24767770aaa40ef449",
+    "lean/hash-map-linear.lean": "2c4c6dfa2d3722066bd4658e5db813dea99c57fbc8a5e11114d988c0d15da52e",
+    "reussir/hash-map-linear.rr": "4b94262a8a6b7a85a98e6aa8410617ee6f5f44b5314f1435bac9038af8dd6edf",
+    "reussir/hash-map-linear.rr.c": "9d325974c15d02cdb0da3afef0c608a095bd6b4c792e9e50f71943d9a4e2be35",
+    "koka/hash-map-linear.kk": "8ed8e19e8af2f24386b08ca411915a20a2b528c8a9d61a0034c11089b89ff8cc",
+    "rust/hash-map-linear.rs": "eae5da9456895a5a532e956fdecda29b754621f7e592829231ae462b3e899f35",
+    "rust/hash-map-linear-rpds.rs": "e86fb9be18c563f106f4386e928d6e82f9750c9d00011859418ac408aefdc445",
+    "ocaml/hash-map-linear.ml": "e7e351578409aaa03f74a6e3cddc05ff58ecbd233a0198866edf8af84c6aab5a",
+    "morphic/hash-map-linear.mor": "4ffce7fe056c8e57d197e097fc653ffef3b0b5530385b1dbf9e62615c05fa308",
+    "haskell/hash-map-linear.hs": "167187084fc0fc6de01f3759e8344f5e2a4c0a0b30202f26e30c3a0ab7f25977",
+    "lean/hash-map-shared.lean": "584345b0b13464ac19ec4d64b133efb97f7fa5d818c3c264776546c5d151963a",
+    "reussir/hash-map-shared.rr": "02ce230a67282b821009019df26add126bcd48dcde001c30abf2ffa86239c8d7",
+    "reussir/hash-map-shared.rr.c": "346ef9e6110bc1afa90dbb1877d5a84d90eab1af6010032c6c9c7d9b5c512a7e",
+    "koka/hash-map-shared.kk": "3cbc35b9808d22c119a2ad456c97901b20897c524d2478270ed2c8b3a252201f",
+    "rust/hash-map-shared.rs": "44a979d330af7a92a1d16e225a2d20431ec9999d1de2035826b2fe2d970aa8cd",
+    "rust/hash-map-shared-rpds.rs": "2b70367aebf3a13d308194baae3f69ff0a85bf9f857bb2598e43e5c863e6da6f",
+    "ocaml/hash-map-shared.ml": "8fbceef9dcb192387b9827540fbbd4809e9c5ceb8df8e020f30c4fbbde1fdd7e",
+    "morphic/hash-map-shared.mor": "7ab3b6f4ee43d37d8294eec03d49d020338e189928ac2ef554526463298b3163",
+    "haskell/hash-map-shared.hs": "ec3407e6c75de26c183b1b6c9948a84cbb72b3e398c73c6d0dea4eb153895f97",
+    "lean/hash-map-heavily-shared.lean": "90a7e522138ff10e2a76df4975fde9cca1fc9894474a661124e37eda208097ea",
+    "reussir/hash-map-heavily-shared.rr": "e18ad33849a74e5a6096ab3b8384f384d9ecd47914704f510643f6373fd1ba9d",
+    "reussir/hash-map-heavily-shared.rr.c": "b8770e5193469a164f3edd9807f1a4da9665b9bd7bd5097ae95fcb43f912e385",
+    "koka/hash-map-heavily-shared.kk": "d9a6f732314210df84e52928d4de13c75b4414b6b7797e42836606698867f1a4",
+    "rust/hash-map-heavily-shared.rs": "b6a126c1e0d826ffd03f302c78530dec3727a09ee08d63ffaf7ffba52cae76f9",
+    "rust/hash-map-heavily-shared-rpds.rs": "06d90f1cbb3617d6f67cd86002ed600ea002b3a656efd31349e4758d35fe8fa5",
+    "ocaml/hash-map-heavily-shared.ml": "513c3e914e34db32d3d14e326f2e2aafe1c81ae2c4578b44f3555aa35ee11b95",
+    "morphic/hash-map-heavily-shared.mor": "b2515af8d81ff246cc4f93b1c336c87ad31686936d8bee9bb53d548ff5911d2e",
+    "haskell/hash-map-heavily-shared.hs": "05d8ef62cdd071d8ede35586571171328d52c8be5d2ac09332cac24a51dce08e",
+    "lean/functional-queue.lean": "0c16929e2cd066cba67026db203c36b640f0408eee805a16697d0ac8a938aeb1",
+    "reussir/functional-queue.rr": "28d586492e04bfd8ab9d033a6725e1e45ab3e6b7aed94f6f4cbfb331970309f2",
+    "reussir/functional-queue.rr.c": "adf86053b3f6c7cc08730b49e9ee7fd501aa131fa91fa310532488cd49c8f8ff",
+    "koka/functional-queue.kk": "9a03e4b2adc58e6c34b3e374b4c1d78f68a16a751c2cb7b6f499af869a9671fe",
+    "rust/functional-queue.rs": "1cc3b56d908df047fe45566303748897ed8850459626ee7c7ff02e5643910bc7",
+    "ocaml/functional-queue.ml": "a0f572f6cae733f245fc62d649956c7a0e0c82e7551ced8f7b1bfb41d014f2b9",
+    "morphic/functional-queue.mor": "cdd585108539423c6196c1b64c65101cf11a11349bdc27b85a2e9b28a87b787f",
+    "haskell/functional-queue.hs": "72959d92d3446a410189f4d22452cf8cc607bc81f4b16d7deb2317e96ff904a3",
+    "lean/list-membership.lean": "f28d09907add9b9c1570ce0c7128251020a38017f2ab6bd5eb0cfc174dbb8c06",
+    "reussir/list-membership.rr": "cceb514b70fc952253cc3dba6c75d022bdc306521737fc20dcb186f74070ed89",
+    "reussir/list-membership.rr.c": "77aa3e54d8f0bbd5a8457c7a53babc41a3ba0785bc154262045753657e34acf6",
+    "koka/list-membership.kk": "ed907d2d1256f7137000b188cc0987495855172cfa29e3d009eab96d5e5ac143",
+    "rust/list-membership.rs": "fb3b0559b9ebdbd4f4330a533dfada1d19076f1f5ce8a74fca2b12d3529ea056",
+    "ocaml/list-membership.ml": "d1d9b7999647a62c950e6b3bd49dbd04be82e7e36a691ab3d994f223970c78bb",
+    "morphic/list-membership.mor": "72f6ed4d7cbe8e137c4e0006d629883ef8af3b3d22adb4b03f675b5eb96220ee",
+    "haskell/list-membership.hs": "f16b3e16c757714bdadc120ab74c521dc6b7cf25998e9d1ea45bb032dec86b97",
+    "lean/expr-replace.lean": "80103c5c7f917ce2f1d51b0fb80fdb46edbda4863a236d4f1b6de8e3bbdf8da1",
+    "reussir/expr-replace.rr": "b75a5aa2c95889a7b7be9fa0b4df1ec9e5ff7e480cc0f1e82c2d1e8e1670863f",
+    "reussir/expr-replace.rr.c": "4a4eb1bc819152d47d87537922ff9578cca78eae8176940e07cefbb1a0842664",
+    "koka/expr-replace.kk": "e9a909e37cea1da949872706d0247323406e4b3843b0fb10a0d53a5aff00ca49",
+    "rust/expr-replace.rs": "a33df8248c1e26e77cb91f8937994434348686017b3046b24565e4c085fb0482",
+    "ocaml/expr-replace.ml": "8823bd94155bb154ad3a1fb08bbfce438f3af0d382204cd32aadc35690212381",
+    "morphic/expr-replace.mor": "37926a40ebb0e43c1691fae8b72c06676858b7966e28b970012f658ab22be81b",
+    "haskell/expr-replace.hs": "7a0946392eaf1f41bd7af115bbdbab4a3f1c42ba657e6a9bed7e407081d245ac",
+    "lean/rbtree-lookup.lean": "200f0a3ece302759fd8bc601a018915ce771b11469661ff7857e59f14fbdc0c8",
+    "reussir/rbtree-lookup.rr": "e6d636ef4520426bcf8f48b156bb345e4215b5b63a49475e856c7dfea55e305a",
+    "reussir/rbtree-lookup.rr.c": "fbbe542c3644bf4d224af16afdfa563791e2ff5cb48865fa0e4e5d0eddcc95ba",
+    "koka/rbtree-lookup.kk": "0bb43e74bfcde4513d2651195bb7b1dcd27d6077b4f06971977f244a0a0b3578",
+    "rust/rbtree-lookup.rs": "ce05b065e77c17f30df1ce6684c09ac74b0d271059c57c9f44a7879b7ef94c00",
+    "ocaml/rbtree-lookup.ml": "8d1f2a5393e3f651b00a998df048f855a0f291ae44a638c5ea83a1ca29d39f0c",
+    "morphic/rbtree-lookup.mor": "65c17f2c8e4c5c7e52bb4b919c5517ce3a1c4b4f2362f9170c1833ae614a0b58",
+    "haskell/rbtree-lookup.hs": "059d81e9cfbcc6aed2f23458e36d1251b9ea2cd148e558ccc987710747633859",
+    "lean/bigint-fib.lean": "a28f127bec0fa00a5c85f089dc60da14ec97ee7dc20fd7155b2193254f03e00c",
+    "reussir/bigint-fib.rr": "d3303052e1b79d68cc1598cdba7bbc8dabd72bca0c2dc5e686016ad38aec5b42",
+    "reussir/bigint-fib.rr.c": "657ab465529b29a71b30e8ec8d82c3a526f5eba9256af31a40611a8a5ebb095f",
+    "koka/bigint-fib.kk": "862f5f64d8e9887bdede694ac377ca096cd1d7c57162dbc6499be5b0bdcd9887",
+    "rust/bigint-fib.rs": "307f5626d752562d4db1abd9589276afc096f15405ccafd20531899ba42e6423",
+    "ocaml/bigint-fib.ml": "3918c2ac0f960025f62e0a7a60d4ca184008cc7228c372b4abcc62bd1b0ecea3",
+    "haskell/bigint-fib.hs": "10d7f0010ce9ef490dc2b760f0db4d0d8e8ae877fb59ebb73c32ccac9951fc50",
+    "lean/bigint-factorial.lean": "9cd098822793862ed36bbaf7079d2c1bc2af0757483649a81d4b297bb525c2ac",
+    "reussir/bigint-factorial.rr": "6fade9d19068e5a5dd0bac1d10dacca14664149935edd437b7db1777854de7dc",
+    "reussir/bigint-factorial.rr.c": "2bf147389b7256970c670fd44c128ca787fce64ef0d1fa4d6a912fd3f975ee3f",
+    "koka/bigint-factorial.kk": "5b10d908e53cdde4dbb53df3c984f107b2eaa4a81683650500d94ff8fd023014",
+    "rust/bigint-factorial.rs": "f70b129f3db362118d7cec6b159ecff24919542766c2600b60f175d2bcafbe8a",
+    "ocaml/bigint-factorial.ml": "fec9ec72abd541daf99296a3effa6c0c68941e100063cbfef7aaa13393548fa4",
+    "haskell/bigint-factorial.hs": "20fa3f1275644fddf56b0f8bec106d1de544e79ddd08619c0e997b9ce11d065c",
+    "lean/bigint-pidigits.lean": "87c5115e6458480e59b5fb04cf3bbfd3e7e65f38fd1d45e9f897391a36bfef41",
+    "reussir/bigint-pidigits.rr": "9ab7251053784f0606ebd831551270d583e9eeb0c4b2f692bd8126b079f5a904",
+    "reussir/bigint-pidigits.rr.c": "6a2559276a2780da315c5394e550553884ec83dae6b99b6cb33a20c8b5c0ffd2",
+    "koka/bigint-pidigits.kk": "a969a05a67c1915e579dcede472337b5a44a5290ac56deb10736b512172d132f",
+    "rust/bigint-pidigits.rs": "5a419ef783be3249046ee6119620f256d50d77b9aa710ee10e61ee426b7ab259",
+    "ocaml/bigint-pidigits.ml": "f87da745e13ea8ad544f8ce6668b8cc6410f2371eda61228122ae80829223e5d",
+    "haskell/bigint-pidigits.hs": "2e01d20687d1ea700d13c59ded844c37ee5298430a8eb3eda850dc6ddbf49271",
+    "lean/bigint-rbtree.lean": "73a2db6da2a9c5cf2528e662dcfd9d93e1264644d2c6d068631e2e8eb1c4f9fd",
+    "reussir/bigint-rbtree.rr": "2edaaf516d45b153a9b19ff1218f63d326ca3fe853dbf62a6fb871795a61c12b",
+    "reussir/bigint-rbtree.rr.c": "d8b1af2a2306f7f9d3882d37ff8fe5cd6f2bc068df39341df915ec3bdd5cd748",
+    "koka/bigint-rbtree.kk": "a989924c73300ba42ecd0b350913179dfbd40ab7e5cb588be51bbde990a9aaf1",
+    "rust/bigint-rbtree.rs": "2b78d6393cf0776fdde0db545206096eaf960b895e9db85d554a2e8f68ba6dc8",
+    "ocaml/bigint-rbtree.ml": "14691879ee5fe97f0b14c40713c4092b1e9defb947a8b0559d42dc7979cda4ad",
+    "haskell/bigint-rbtree.hs": "ddd0778d9ea17dc8a69bd36e2ee2279c8d39a436d487d07b5c8bffecab2f3526",
+    "lean/bigint-collatz.lean": "3a3ad598f1430a463df8cff4d4fdafdfd0f7caf59c01b177e85cee385cd86a05",
+    "reussir/bigint-collatz.rr": "4e5485bccf6da80890461fe84763657d699efd1109fb684e8cbdaa08fadb2bb2",
+    "reussir/bigint-collatz.rr.c": "07f850627b638ed4c07ae95c2d2ff8dba1c88d564fd0b88848f375326c093cee",
+    "koka/bigint-collatz.kk": "abddc142122dade7f0adc452b625542347686626fe5f8f71eea40d580ad57d9f",
+    "rust/bigint-collatz.rs": "eccd55dca203304d75f8bc09dbdc9058b79cabb395d673b5ef4097253c676f33",
+    "ocaml/bigint-collatz.ml": "cf29ece4f962e6fdbabd551e81ded07671f762dad29c283779b511f7ee46974d",
+    "haskell/bigint-collatz.hs": "b0b090eff0bbb646cb0ceb78ac9559fa845a9d2b4088b18f4e7031e75b5dd98b",
+    "lean/bigint-binomial.lean": "53e4f9289edca9eddbb8c8b22c6215edbb32b3ae2e236563cbb32dbd4ec21c25",
+    "reussir/bigint-binomial.rr": "b81000d0161e31d031a76c9cba8449b2ae1781ef0589a12de0c1974af5a3b1cc",
+    "reussir/bigint-binomial.rr.c": "769f796e07b1bfc317df8b30f3fc519f52eca04d06d8b92fa17419993e19e6c2",
+    "koka/bigint-binomial.kk": "9aaf3b56785598a086c0db2103a639850384cc69dff6958888766add1e798f12",
+    "rust/bigint-binomial.rs": "53054c99e4f64362617f3e6a00c1902a0a8749b1895c130b66fa97913a12c5a5",
+    "ocaml/bigint-binomial.ml": "63ae49eb04038cc0e198e6e450c9377b53420aec02e3698e6a8e18211202395a",
+    "haskell/bigint-binomial.hs": "be1250c8ae0534cebfdaca3a17d18b77c82c9bf331f7e321eea24ee8aeffe332",
+    "licenses/raytracer-NOTICE": "61a2eae7e3108ac7599664eb36b3dae101f4115be167bc7382fcf602f3179dbb",
+    "licenses/raytracer.md": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+    "lean/raytracer.lean": "f1932f5eeffa2ca1da4d3e24bc2046a19193f20018d60af88d7b6d2d5be151c0",
+    "rust/raytracer.rs": "6710686fc79039065cf5771e46b79cea31ddad0ec45bee5e7ee302e0b6eff8ff",
+    "reussir/raytracer.rr": "6d1f428236914e3c541cccd23283e0f39096aedd8ea2f80a04acd480445e981e",
+    "reussir/raytracer.rr.c": "fe85dc9191d0c84a2aca7750d3e7ac9391e8d038d523067559ebf297595f8219",
+    "ocaml/raytracer.ml": "5306d0b10fa3f8d9d849694db3d08403522fa27ab10af34b96d900b2851baf2d",
+    "haskell/raytracer.hs": "d816a1429b366465f5ae5259d24e9dd0d14125e0c8c8c641c98262c9372a498a",
+    "koka/raytracer.kk": "db2175937e8da9185248560571a17185db72595495f23137b9a686b86150c1e8"
+  },
+  "toolchains": {
+    "reussir-compiler": {
+      "argv": [
+        "/tmp/reussir-final-comparison-20261101/current/build/bin/rrc",
+        "--version"
+      ],
+      "returncode": 2,
+      "output": "unexpected argument '--version'\n"
+    },
+    "cc": {
+      "argv": [
+        "/nix/store/55nmzskx8ai6w4a60cpyf67zxj5lg8wz-clang-wrapper-23.1.0/bin/clang",
+        "--version"
+      ],
+      "returncode": 0,
+      "output": "clang version 23.1.0\nTarget: aarch64-unknown-linux-gnu\nThread model: posix\nInstalledDir: /nix/store/g6qkgp3xr663bn0gms3ywv29fjn2xpx4-clang-23.1.0/bin\n"
+    },
+    "koka-compiler": {
+      "argv": [
+        "/nix/store/v9p3l36r96dqsn13ifm79i7qsizbh832-koka-3.2.3/bin/koka",
+        "--version"
+      ],
+      "returncode": 0,
+      "output": "Koka 3.2.3, 00:00:00 Jan  1 1980 (ghc release version)\nversion: 3.2.3\nbin    : /nix/store/v9p3l36r96dqsn13ifm79i7qsizbh832-koka-3.2.3/bin\nlib    : /nix/store/v9p3l36r96dqsn13ifm79i7qsizbh832-koka-3.2.3/lib/koka/v3.2.3\nshare  : /nix/store/v9p3l36r96dqsn13ifm79i7qsizbh832-koka-3.2.3/share/koka/v3.2.3\noutput : .koka/v3.2.3/cc-debug-2efd68\ncc     : /nix/store/bv4iz5h4bsy9ivn45c71j78m8rq233ss-gcc-wrapper-15.3.0/bin/cc\nflags  : 2efd68\nCopyright 2019-2024, Microsoft Research, Daan Leijen, and others.\nThis program is free software; see the source for copying conditions.\nThis program is distributed in the hope that it will be useful,\nbut without any warranty; without even the implied warranty\nof merchantability or fitness for a particular purpose.\n"
+    },
+    "lean-compiler": {
+      "argv": [
+        "/nix/store/zpwg9w370cwv1mdgn6s3k2s8gs8i6wz2-lean4-4.30.0/bin/lean",
+        "--version"
+      ],
+      "returncode": 0,
+      "output": "Lean (version 4.30.0, commit v4.30.0, Release)\n"
+    },
+    "leanc": {
+      "argv": [
+        "/nix/store/zpwg9w370cwv1mdgn6s3k2s8gs8i6wz2-lean4-4.30.0/bin/leanc",
+        "--version"
+      ],
+      "returncode": 0,
+      "output": "gcc (GCC) 15.3.0\nCopyright (C) 2025 Free Software Foundation, Inc.\nThis is free software; see the source for copying conditions.  There is NO\nwarranty; not even for MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.\n\n"
+    },
+    "rustc": {
+      "argv": [
+        "/nix/store/d6bnbpk6jr95frzmmksda4r7l3v8d3m6-rustc-wrapper-1.97.1/bin/rustc",
+        "--version"
+      ],
+      "returncode": 0,
+      "output": "rustc 1.97.1 (8bab26f4f 2026-07-14) (built from a source tarball)\n"
+    },
+    "ghc": {
+      "argv": [
+        "/nix/store/kz4l78kg9df4hzcidf42xji95qsrw2ay-ghc/bin/ghc",
+        "--version"
+      ],
+      "returncode": 0,
+      "output": "The Glorious Glasgow Haskell Compilation System, version 9.10.3\n"
+    },
+    "ocamlopt": {
+      "argv": [
+        "/nix/store/bzr9ynac081gk2qizv585fbl3cnnd20q-ocaml-5.4.1/bin/ocamlopt",
+        "--version"
+      ],
+      "returncode": 0,
+      "output": "5.4.1\n"
+    },
+    "ocamlfind": {
+      "argv": [
+        "/nix/store/vgxdyb71hdys16ayfmxyv10kbm2km7d4-ocaml5.4.1-findlib-1.9.8/bin/ocamlfind",
+        "--version"
+      ],
+      "returncode": 2,
+      "output": "Usage: ocamlfind query        [-help | other options] <package_name> ...\n   or: ocamlfind ocamlc       [-help | other options] <file> ...\n   or: ocamlfind ocamlcp      [-help | other options] <file> ...\n   or: ocamlfind ocamlmklib   [-help | other options] <file> ...\n   or: ocamlfind ocamlmktop   [-help | other options] <file> ...\n   or: ocamlfind ocamlopt     [-help | other options] <file> ...\n   or: ocamlfind ocamloptp    [-help | other options] <file> ...\n   or: ocamlfind ocamldep     [-help | other options] <file> ...\n   or: ocamlfind ocamlbrowser [-help | other options]\n   or: ocamlfind ocamldoc     [-help | other options] <file> ...\n   or: ocamlfind install      [-help | other options] <package_name> <file> ...\n   or: ocamlfind remove       [-help | other options] <package_name>\n   or: ocamlfind printppx     [-help | other options] <package_name> ...\n   or: ocamlfind printconf    [-help] [variable]\n   or: ocamlfind lint         [-help] <file>\n   or: ocamlfind list\n   or: ocamlfind pkg/cmd arg ...\nSelect toolchain with:\n  ocamlfind -toolchain <t> <command>\nAbbreviations:\n  e.g. ocamlfind opt instead of ocamlfind ocamlopt\n"
+    },
+    "morphic-compiler": {
+      "argv": [
+        "/nix/store/wxk174dm79z05phih371ygzn9rb3n9km-morphic-0-git-da679c49a336/bin/morphic",
+        "--version"
+      ],
+      "returncode": 0,
+      "output": "morphic_compiler 0.1.0\n"
+    },
+    "morphic-clang": {
+      "argv": [
+        "/nix/store/qz4h8k3r84di9k5pmqqi9jjz1fxg5dih-clang-wrapper-16.0.6/bin/clang",
+        "--version"
+      ],
+      "returncode": 0,
+      "output": "clang version 16.0.6\nTarget: aarch64-unknown-linux-gnu\nThread model: posix\nInstalledDir: /nix/store/ba87j334cr04db547c0j6mf6bxwvfwxv-clang-16.0.6/bin\n"
+    },
+    "hyperfine": {
+      "argv": [
+        "/nix/store/xrvjcvdwlikj6fpkpi5fwxam3zfxqy1z-hyperfine-1.20.0/bin/hyperfine",
+        "--version"
+      ],
+      "returncode": 0,
+      "output": "hyperfine 1.20.0\n"
+    },
+    "time": {
+      "argv": [
+        "/nix/store/hmrflw7085axj7jyh65fyrmgyz4zmkvz-time-1.10/bin/time",
+        "--version"
+      ],
+      "returncode": 0,
+      "output": "time (GNU Time) 1.10\nCopyright (C) 2026 Free Software Foundation, Inc.\nLicense GPLv3+: GNU GPL version 3 or later <https://gnu.org/licenses/gpl.html>.\nThis is free software: you are free to change and redistribute it.\nThere is NO WARRANTY, to the extent permitted by law.\n\nWritten by David Keppel, David MacKenzie, and Assaf Gordon.\n"
+    }
+  },
+  "finished": 1793585091.846008,
+  "ending_load": [
+    0.919921875,
+    1.24169921875,
+    1.2666015625
+  ],
+  "retry_finished": 1793585103.496739,
+  "incremental_runs": [
+    {
+      "benchmark": "raytracer",
+      "benchmark_revision": "2e1ec4fe82558112529c872733d3162a6e887e05",
+      "manifest": "raytracer-manifest.json",
+      "started": 1793629986.0873368,
+      "finished": 1793630064.270305
+    }
+  ],
+  "dataset_note": "Original 270 cells retain the baseline revision and provenance. The nine raytracer cells use the incremental revision in raytracer-manifest.json with the same compiler, runtime, toolchains and measurement CPU."
+}

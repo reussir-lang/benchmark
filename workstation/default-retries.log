@@ -1,0 +1,12 @@
+Reussir benchmark environment
+  Reussir: bcfff8d41916
+  Run:     python verify.py
+RETRY START bigint-binomial/reussir
+RETRY complete bigint-binomial/reussir
+RETRY START bigint-binomial/reussir-nrac
+RETRY complete bigint-binomial/reussir-nrac
+RETRY START bigint-collatz/reussir
+RETRY complete bigint-collatz/reussir
+RETRY START bigint-collatz/reussir-nrac
+RETRY complete bigint-collatz/reussir-nrac
+ENVIRONMENT RETRIES COMPLETE
