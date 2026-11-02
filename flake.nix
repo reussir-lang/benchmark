@@ -280,7 +280,8 @@
           # the gcc `cc` cargoSetupHook configures (which cannot, so the
           # build failed on aarch64-linux).
           RUSTFLAGS = "-Clinker-plugin-lto -Clink-arg=-fuse-ld=lld";
-          "CARGO_TARGET_${pkgs.stdenv.hostPlatform.rust.cargoEnvVarTarget}_LINKER" = "${llvmPkgs.clang}/bin/clang";
+          "CARGO_TARGET_${pkgs.stdenv.hostPlatform.rust.cargoEnvVarTarget}_LINKER" =
+            "${llvmPkgs.clang}/bin/clang";
 
           buildPhase = ''
             runHook preBuild
@@ -393,37 +394,52 @@
 
         # Zarith, OCaml's GMP-backed big integers, for the big-integer
         # benchmarks; compile.py links it through ocamlfind.
-        oxcamlCompiler = (import "${oxcaml}/default.nix" {
-          inherit pkgs;
-          src = oxcaml;
-          gitRev = oxcaml.rev;
-          withMerlin = false;
-          withAstDependentLibs = false;
-          withJsoo = false;
-        }).overrideAttrs (old: {
-          # Benchmark correctness checks validate the programs we measure;
-          # building the compiler does not need its full upstream CI suite.
-          doCheck = false;
-          # Expose the compiler interface expected by nixpkgs' OCaml packages.
-          passthru = old.passthru // { nativeCompilers = true; };
-          meta = old.meta // { platforms = [ "x86_64-linux" "aarch64-linux" "aarch64-darwin" ]; };
-        });
-        ocamlPackages = pkgs.ocamlPackages.overrideScope (final: prev: {
-          ocaml = oxcamlCompiler;
-          findlib = prev.findlib.overrideAttrs (old: {
-            postPatch = (old.postPatch or "") + ''
-              # OxCaml's prerr_endline accepts local strings. Eta-expand the
-              # no-op branch so both callbacks admit the same argument mode.
-              substituteInPlace src/findlib/topfind.ml \
-                --replace-fail 'then prerr_endline else ignore' 'then prerr_endline else (fun _ -> ())'
-            '';
-          });
-        });
+        oxcamlCompiler =
+          (import "${oxcaml}/default.nix" {
+            inherit pkgs;
+            src = oxcaml;
+            gitRev = oxcaml.rev;
+            withMerlin = false;
+            withAstDependentLibs = false;
+            withJsoo = false;
+          }).overrideAttrs
+            (old: {
+              # Benchmark correctness checks validate the programs we measure;
+              # building the compiler does not need its full upstream CI suite.
+              doCheck = false;
+              # Expose the compiler interface expected by nixpkgs' OCaml packages.
+              passthru = old.passthru // {
+                nativeCompilers = true;
+              };
+              meta = old.meta // {
+                platforms = [
+                  "x86_64-linux"
+                  "aarch64-linux"
+                  "aarch64-darwin"
+                ];
+              };
+            });
+        ocamlPackages = pkgs.ocamlPackages.overrideScope (
+          final: prev: {
+            ocaml = oxcamlCompiler;
+            findlib = prev.findlib.overrideAttrs (old: {
+              postPatch = (old.postPatch or "") + ''
+                # OxCaml's prerr_endline accepts local strings. Eta-expand the
+                # no-op branch so both callbacks admit the same argument mode.
+                substituteInPlace src/findlib/topfind.ml.in \
+                  --replace-fail 'then prerr_endline else ignore' 'then prerr_endline else (fun _ -> ())'
+              '';
+            });
+          }
+        );
 
         # Keep the runtime and standard-library archives available to consumer
         # ThinLTO links. Bootstrap with the same pinned Lean version.
         leanUnwrapped = (pkgs.lean4.override { stdenv = llvmPkgs.stdenv; }).overrideAttrs (old: {
-          nativeBuildInputs = old.nativeBuildInputs ++ [ llvmPkgs.lld llvmPkgs.llvm ];
+          nativeBuildInputs = old.nativeBuildInputs ++ [
+            llvmPkgs.lld
+            llvmPkgs.llvm
+          ];
           cmakeFlags = old.cmakeFlags ++ [
             (lib.cmakeFeature "STAGE1_PREV_STAGE" "${pkgs.lean4}")
             (lib.cmakeFeature "CMAKE_C_COMPILER" "${llvmPkgs.clang}/bin/clang")
@@ -444,7 +460,11 @@
           dontStrip = true;
         });
 
-        leanRuntimeLibraries = lib.makeLibraryPath [ pkgs.stdenv.cc.cc.lib pkgs.gmp pkgs.libuv ];
+        leanRuntimeLibraries = lib.makeLibraryPath [
+          pkgs.stdenv.cc.cc.lib
+          pkgs.gmp
+          pkgs.libuv
+        ];
         lean = pkgs.symlinkJoin {
           name = "lean4-${leanUnwrapped.version}-thinlto";
           inherit (leanUnwrapped) version meta;
@@ -508,7 +528,10 @@
               "inkwell-0.6.0" = "sha256-qtXfrGD9Bt5+hvob5DYsBPcjbUAtGzQD0NcLqsjg5Is=";
             };
           };
-          cargoBuildFlags = [ "-p" "morphic_compiler" ];
+          cargoBuildFlags = [
+            "-p"
+            "morphic_compiler"
+          ];
           doCheck = false;
           nativeBuildInputs = [
             llvm16Pkgs.llvm.dev
