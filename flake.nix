@@ -10,9 +10,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Reussir with the borrowed-callable inliner fix required by MLTT (#917).
+    # Reussir with guarded last-use traversal borrowing (#919).
     reussir = {
-      url = "github:reussir-lang/reussir/1f3d237bcf2dc77c92e7bd352ddc7219f2041eed";
+      url = "github:reussir-lang/reussir/36f05142f3b33f442f69afa421a10b7a39ee21f9";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.fenix.follows = "fenix";
       inputs.flake-utils.follows = "flake-utils";

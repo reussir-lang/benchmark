@@ -71,7 +71,8 @@ does not supply a footprint.
   no lemma is trusted. The expected check total is 16. Timing includes term
   construction, checking, and cleanup, including the invalid proofs. These are
   generated standalone proofs, not Lean/Arena imports. This benchmark requires
-  Reussir's borrowed-callable inliner fix (#917), included in the pinned compiler.
+  Reussir's borrowed-callable inliner fix (#917); the pinned compiler also
+  includes guarded last-use traversal borrowing (#919).
   The Morphic port is retained but not registered in the default suite: native
   compilation was stopped after 18.6 CPU minutes at about 55 GiB RSS. Its OCaml
   backend compiles and returns 16; this does not validate the native RC backend.
@@ -248,7 +249,7 @@ Known toolchain quirks, encoded in the sources:
 ## Running
 
 The checked-in flake is the one-shot bootstrap. It pins Reussir main at
-`1f3d237bcf2dc77c92e7bd352ddc7219f2041eed` and builds only the `rrc`
+`36f05142f3b33f442f69afa421a10b7a39ee21f9` and builds only the `rrc`
 dependency closure plus `libreussir_rt.a` and `libRCGMPRuntime.a`
 (`REUSSIR_RCGMP_RUNTIME`); TPDE, tests, the REPL, and unrelated tools are
 not built. For the std-collections and big-integers sets it additionally
