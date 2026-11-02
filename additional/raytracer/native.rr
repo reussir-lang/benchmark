@@ -7,7 +7,7 @@ import core::intrinsic::array;
 struct [value] Vec3 { x: f64, y: f64, z: f64 }
 struct [value] Ray { origin: Vec3, dir: Vec3 }
 enum [value] Material { Lambertian(Vec3), Metal(Vec3, f64), Dielectric(f64), Sky }
-struct [value] Sphere { center: Vec3, radius: f64, material: Material }
+struct Sphere { center: Vec3, radius: f64, material: Material }
 struct [value] Hit { p: Vec3, t: f64, material: Material, normal: Vec3, front: bool }
 struct [value] Camera {
     origin: Vec3, lower_left: Vec3, horizontal: Vec3, vertical: Vec3,
@@ -171,13 +171,12 @@ fn ray_color(world: World, ray: Ray, depth: i64, acc: Vec3, rng: Rng) -> ColorSa
                 let r0p = (1.0 - ratio) / (1.0 + ratio);
                 let r0 = r0p * r0p;
                 let reflectance = r0 + (1.0 - r0) * math::powf(1.0 - cosine, 5.0, 0);
-                if ratio * sine > 1.0 {
-                    ray_color(world, Ray { origin: hit.p, dir: reflect(unit, hit.normal) }, depth - 1, mul(white(), acc), rng)
-                } else {
-                    let sample = random(rng, 0.0, 1.0);
-                    let dir = if reflectance > sample.value { reflect(unit, hit.normal) } else { refract(unit, hit.normal, ratio) };
-                    ray_color(world, Ray { origin: hit.p, dir: dir }, depth - 1, mul(white(), acc), sample.rng)
-                }
+                // Lean evaluates this IO sample before the short-circuit test.
+                let sample = random(rng, 0.0, 1.0);
+                let dir = if ratio * sine > 1.0 || reflectance > sample.value {
+                    reflect(unit, hit.normal)
+                } else { refract(unit, hit.normal, ratio) };
+                ray_color(world, Ray { origin: hit.p, dir: dir }, depth - 1, mul(white(), acc), sample.rng)
             }
         }
     }
@@ -187,9 +186,9 @@ fn push(world: World, center: Vec3, radius: f64, material: Material) -> World {
 }
 fn scene_loop(world: World, i: i64, rng: Rng) -> Scene {
     if i == 484 {
-        let world = push(world, vec(0.0, 1.0, 0.0), 1.0, Material::Dielectric(1.5));
-        let world = push(world, vec(-4.0, 1.0, 0.0), 1.0, Material::Lambertian(vec(0.4, 0.2, 0.1)));
-        let world = push(world, vec(4.0, 1.0, 0.0), 1.0, Material::Metal(vec(0.7, 0.6, 0.5), 0.0));
+        let world = push(world, vec(0.0, 1.0, 0.0), 1.0, Material::Dielectric{1.5});
+        let world = push(world, vec(-4.0, 1.0, 0.0), 1.0, Material::Lambertian{vec(0.4, 0.2, 0.1)});
+        let world = push(world, vec(4.0, 1.0, 0.0), 1.0, Material::Metal{vec(0.7, 0.6, 0.5), 0.0});
         Scene { world: world, rng: rng }
     } else {
         let a = (i / 22) as f64 - 11.0;
@@ -202,21 +201,21 @@ fn scene_loop(world: World, i: i64, rng: Rng) -> Scene {
             if material.value < 0.9 {
                 let first = random_vec(material.rng, 0.0, 1.0);
                 let second = random_vec(first.rng, 0.0, 1.0);
-                scene_loop(push(world, center, 0.2, Material::Lambertian(mul(first.value, second.value))), i + 1, second.rng)
+                scene_loop(push(world, center, 0.2, Material::Lambertian{mul(first.value, second.value)}), i + 1, second.rng)
             } else {
                 if material.value < 0.95 {
                     let albedo = random_vec(material.rng, 0.5, 1.0);
                     let fuzz = random(albedo.rng, 0.0, 0.5);
-                    scene_loop(push(world, center, 0.2, Material::Metal(albedo.value, fuzz.value)), i + 1, fuzz.rng)
+                    scene_loop(push(world, center, 0.2, Material::Metal{albedo.value, fuzz.value}), i + 1, fuzz.rng)
                 } else {
-                    scene_loop(push(world, center, 0.2, Material::Dielectric(1.5)), i + 1, material.rng)
+                    scene_loop(push(world, center, 0.2, Material::Dielectric{1.5}), i + 1, material.rng)
                 }
             }
         } else { scene_loop(world, i + 1, z.rng) }
     }
 }
 fn random_scene() -> Scene {
-    let ground = Sphere { center: vec(0.0, -1000.0, 0.0), radius: 1000.0, material: Material::Lambertian(vec(0.5, 0.5, 0.5)) };
+    let ground = Sphere { center: vec(0.0, -1000.0, 0.0), radius: 1000.0, material: Material::Lambertian{vec(0.5, 0.5, 0.5)} };
     scene_loop(World { spheres: array::splat<[Sphere; 488]>(ground), size: 1 }, 0, seed(0))
 }
 
@@ -244,20 +243,14 @@ fn row_pixels(world: World, cam: Camera, line: i64, x: i64, rng: Rng, checksum: 
         row_pixels(world, cam, line, x + 1, sample.rng, checksum + sum)
     }
 }
-fn image_rows(world: World, cam: Camera, line: i64, end: i64, rng: Rng, reset_rng: bool, checksum: u64) -> u64 {
-    if line == end { checksum } else {
-        let row = row_pixels(world, cam, line, 0, if reset_rng { seed(line + 1) } else { rng }, 0);
-        image_rows(world, cam, line + 1, end, row.rng, reset_rng, checksum + row.checksum)
+fn image_rows(world: World, cam: Camera, line: i64, rng: Rng, checksum: u64) -> u64 {
+    if line == 85 { checksum } else {
+        let row = row_pixels(world, cam, line, 0, rng, 0);
+        image_rows(world, cam, line + 1, row.rng, checksum + row.checksum)
     }
 }
 fn original() -> u64 {
     let scene = random_scene();
-    image_rows(scene.world, camera(128, 85), 0, 85, scene.rng, false, 0)
-}
-// Eight fixed row chunks give the same work partition at every worker count.
-fn chunk(job: i64) -> u64 {
-    let scene = random_scene();
-    image_rows(scene.world, camera(128, 85), job * 85 / 8, (job + 1) * 85 / 8, scene.rng, true, 0)
+    image_rows(scene.world, camera(128, 85), 0, scene.rng, 0)
 }
 extern "C" trampoline "raytracer_original" = original;
-extern "C" trampoline "raytracer_chunk" = chunk;

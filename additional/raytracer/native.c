@@ -5,6 +5,11 @@
 extern uint64_t raytracer_original(void);
 
 int main(void) {
-  printf("%" PRIu64 "\n", raytracer_original());
+  uint64_t checksum = raytracer_original();
+  if (checksum != UINT64_C(64158141444)) {
+    fprintf(stderr, "unexpected raytracer checksum: %" PRIu64 "\n", checksum);
+    return 1;
+  }
+  printf("%" PRIu64 "\n", checksum);
   return 0;
 }
