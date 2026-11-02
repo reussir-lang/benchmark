@@ -219,19 +219,19 @@ does not supply a footprint.
 | `reussir-nrac` | same without `--reuse-across-call` |
 | `reussir-dia` | same with `--disable-invariant-analysis` (not in the default matrix) |
 | `koka` | `-O3`, clang thin-LTO + `-march=native` via `--ccopts`/`--cclinkopts` |
-| `lean` | `lean -c` → `leanc -flto -O3` |
-| `rust` | `rustc -C opt-level=3` |
+| `lean` | `lean -c` → Clang `-O3 -flto=thin -fuse-ld=lld`, host CPU; ThinLTO runtime/stdlib |
+| `rust` | `rustc -C opt-level=3 -C lto=thin -C target-cpu=native` |
 | `rust-with-mimalloc` | same binary, `LD_PRELOAD` mimalloc |
 | `rust-rpds` / `rust-rpds-with-mimalloc` | same flags, linking the prebuilt `rpds` persistent-collection rlibs (std-collections set only) |
+| `haskell` | `ghc -O2 -rtsopts`, default RTS (purely functional sources) |
+| `haskell-a1g` | same sources, `-with-rtsopts=-A1G` (1 GiB nursery) |
+| `haskell-st` / `haskell-st-a1g` | mutable `Data.Array.ST` sources, both RTS configs (large-aggregates set only) |
+| `ocaml` | OxCaml (Flambda 2), `ocamlopt -O3` |
+| `morphic` | `morphic build --llvm-opt-level 3` (host CPU), default borrow-inferred RC and copy-on-write arrays |
 
 The big-integer cells of `rust` and `rust-with-mimalloc` also link the
 prebuilt num-bigint rlibs, and those of `ocaml` link Zarith through
 `ocamlfind`.
-| `haskell` | `ghc -O2 -rtsopts`, default RTS (purely functional sources) |
-| `haskell-a1g` | same sources, `-with-rtsopts=-A1G` (1 GiB nursery) |
-| `haskell-st` / `haskell-st-a1g` | mutable `Data.Array.ST` sources, both RTS configs (large-aggregates set only) |
-| `ocaml` | `ocamlopt -O3` |
-| `morphic` | `morphic build --llvm-opt-level 3` (host CPU), default borrow-inferred RC and copy-on-write arrays |
 
 Both Haskell RTS configurations are first-class variants because the
 default-vs-1 GiB-nursery choice swings results dramatically in both
@@ -245,6 +245,24 @@ Known toolchain quirks, encoded in the sources:
   builds a closure (`vector-init` in life) — `noinline` on the offender is
   the workaround, commented in `koka/life.kk`.
 - Koka emits binaries without the executable bit; `compile.py` fixes it up.
+
+## Native optimization
+
+Rust uses `-C opt-level=3 -C lto=thin -C target-cpu=native`; external crate
+archives retain LLVM bitcode for cross-crate optimization. Lean uses Clang through
+`LEAN_CC`, `-O3 -flto=thin -fuse-ld=lld`, and `-march=native` on x86_64 or
+`-mcpu=native` on AArch64. Its pinned runtime and standard-library archives are
+rebuilt with ThinLTO. CPU-specific benchmark executables are built on the host
+where they are measured; Rust and Lean dependency packages retain portable
+CPU targets.
+
+The `ocaml` configuration uses pinned [OxCaml](https://github.com/oxcaml/oxcaml)
+(OCaml 5.4 based, Flambda 2) with `-O3` and its native backend defaults.
+Findlib and Zarith are rebuilt against
+that compiler. `ocamlopt -config` reports `flambda2: true`.
+Existing benchmark sources and result keys remain `ocaml`;
+the recorded toolchain identifies OxCaml. External native libraries such as
+GMP remain outside LLVM LTO.
 
 ## Running
 

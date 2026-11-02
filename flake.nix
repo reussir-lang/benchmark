@@ -35,6 +35,12 @@
       flake = false;
     };
 
+    # OxCaml's Flambda 2 compiler, shared by the OCaml benchmark cells.
+    oxcaml = {
+      url = "github:oxcaml/oxcaml/dc1bd3914b0bae35f9cb227d113db620722a5d41";
+      flake = false;
+    };
+
     # Morphic at the revision morphic/lib was vendored from (the library must
     # match the compiler). Its compiler builds against LLVM 16, which
     # nixos-unstable has dropped and nixos-25.05 still carries.
@@ -56,6 +62,7 @@
       mlir-sync,
       mlir-rcgmp,
       morphic,
+      oxcaml,
       nixpkgs-llvm16,
       ...
     }:
@@ -273,7 +280,8 @@
           # the gcc `cc` cargoSetupHook configures (which cannot, so the
           # build failed on aarch64-linux).
           RUSTFLAGS = "-Clinker-plugin-lto -Clink-arg=-fuse-ld=lld";
-          "CARGO_TARGET_${pkgs.stdenv.hostPlatform.rust.cargoEnvVarTarget}_LINKER" = "${llvmPkgs.clang}/bin/clang";
+          "CARGO_TARGET_${pkgs.stdenv.hostPlatform.rust.cargoEnvVarTarget}_LINKER" =
+            "${llvmPkgs.clang}/bin/clang";
 
           buildPhase = ''
             runHook preBuild
@@ -356,8 +364,10 @@
 
         externCrates = pkgs.stdenv.mkDerivation {
           pname = "benchmark-rust-extern-crates";
-          version = "1";
+          version = "2";
           src = ./rust/extern-crates;
+          # The final rustc invocation performs cross-crate ThinLTO.
+          RUSTFLAGS = "-Cembed-bitcode=yes";
 
           cargoDeps = externCratesCargoDeps;
           cargoRoot = ".";
@@ -384,7 +394,100 @@
 
         # Zarith, OCaml's GMP-backed big integers, for the big-integer
         # benchmarks; compile.py links it through ocamlfind.
-        ocamlPackages = pkgs.ocamlPackages;
+        oxcamlCompiler =
+          (import "${oxcaml}/default.nix" {
+            inherit pkgs;
+            src = oxcaml;
+            gitRev = oxcaml.rev;
+            withMerlin = false;
+            withAstDependentLibs = false;
+            withJsoo = false;
+          }).overrideAttrs
+            (old: {
+              # Benchmark correctness checks validate the programs we measure;
+              # building the compiler does not need its full upstream CI suite.
+              doCheck = false;
+              # Expose the compiler interface expected by nixpkgs' OCaml packages.
+              passthru = old.passthru // {
+                nativeCompilers = true;
+              };
+              meta = old.meta // {
+                platforms = [
+                  "x86_64-linux"
+                  "aarch64-linux"
+                  "aarch64-darwin"
+                ];
+              };
+            });
+        ocamlPackages = pkgs.ocamlPackages.overrideScope (
+          final: prev: {
+            ocaml = oxcamlCompiler;
+            findlib = prev.findlib.overrideAttrs (old: {
+              postPatch = (old.postPatch or "") + ''
+                # Retain Findlib's public callback type when OxCaml's
+                # prerr_endline accepts local strings.
+                substituteInPlace src/findlib/topfind.ml.in \
+                  --replace-fail 'let log = ref (if real_toploop then prerr_endline else ignore)' \
+                    'let log : (string -> unit) ref = ref (fun s -> if real_toploop then prerr_endline s)'
+              '';
+            });
+          }
+        );
+
+        # Keep the runtime and standard-library archives available to consumer
+        # ThinLTO links. Bootstrap with the same pinned Lean version.
+        leanUnwrapped = (pkgs.lean4.override { stdenv = llvmPkgs.stdenv; }).overrideAttrs (old: {
+          nativeBuildInputs = old.nativeBuildInputs ++ [
+            llvmPkgs.lld
+            llvmPkgs.llvm
+          ];
+          cmakeFlags = old.cmakeFlags ++ [
+            (lib.cmakeFeature "STAGE1_PREV_STAGE" "${pkgs.lean4}")
+            (lib.cmakeFeature "CMAKE_C_COMPILER" "${llvmPkgs.clang}/bin/clang")
+            (lib.cmakeFeature "CMAKE_CXX_COMPILER" "${llvmPkgs.clang}/bin/clang++")
+            (lib.cmakeFeature "CMAKE_AR" "${llvmPkgs.llvm}/bin/llvm-ar")
+            (lib.cmakeFeature "CMAKE_RANLIB" "${llvmPkgs.llvm}/bin/llvm-ranlib")
+            (lib.cmakeFeature "CMAKE_C_FLAGS" "-flto=thin")
+            (lib.cmakeFeature "CMAKE_CXX_FLAGS" "-flto=thin")
+            (lib.cmakeFeature "LEANC_OPTS" "-flto=thin")
+          ];
+          # Lake compiles the generated stdlib C separately from CMake's
+          # C/C++ targets; LEANC_OPTS covers the make-based link steps.
+          LEAN_AR = "${llvmPkgs.llvm}/bin/llvm-ar";
+          preConfigure = (old.preConfigure or "") + ''
+            cmakeFlagsArray+=("-DLEAN_EXTRA_LINKER_FLAGS=-flto=thin -fuse-ld=lld")
+            cmakeFlagsArray+=('-DLEAN_EXTRA_LAKEFILE_TOML=moreLeancArgs = ["-flto=thin"]')
+          '';
+          dontStrip = true;
+        });
+
+        leanRuntimeLibraries = lib.makeLibraryPath [
+          pkgs.stdenv.cc.cc.lib
+          pkgs.gmp
+          pkgs.libuv
+        ];
+        lean = pkgs.symlinkJoin {
+          name = "lean4-${leanUnwrapped.version}-thinlto";
+          inherit (leanUnwrapped) version meta;
+          paths = [ leanUnwrapped ];
+          nativeBuildInputs = [ pkgs.makeWrapper ];
+          # Keep the shared runtime dependencies available to the Clang build on NixOS.
+          postBuild = ''
+            for program in "$out"/bin/*; do
+              if test -f "$program" && test -x "$program"; then
+                if test "$(basename "$program")" = leanc; then
+                  # Consumer executables also need these libraries after the
+                  # compiler wrapper's environment has gone away.
+                  wrapProgram "$program" --prefix LD_LIBRARY_PATH : ${leanRuntimeLibraries} \
+                    --add-flags "-Wl,-rpath,${leanRuntimeLibraries}"
+                else
+                  wrapProgram "$program" --prefix LD_LIBRARY_PATH : ${leanRuntimeLibraries}
+                fi
+              fi
+            done
+          '';
+          passthru = { inherit (leanUnwrapped) LEAN_AR; };
+        };
 
         ghcBase = pkgs.haskellPackages.ghc;
         # Hackage packages the benchmarks use beyond GHC's boot libraries:
@@ -426,7 +529,10 @@
               "inkwell-0.6.0" = "sha256-qtXfrGD9Bt5+hvob5DYsBPcjbUAtGzQD0NcLqsjg5Is=";
             };
           };
-          cargoBuildFlags = [ "-p" "morphic_compiler" ];
+          cargoBuildFlags = [
+            "-p"
+            "morphic_compiler"
+          ];
           doCheck = false;
           nativeBuildInputs = [
             llvm16Pkgs.llvm.dev
@@ -466,6 +572,11 @@
         packages.reussir-rt-xlto = reussirRtXlto;
         packages.reussir-rt-rlibs = reussirRtRlibs;
         packages.ghc = ghc;
+        packages.lean = lean;
+        packages.ocaml = ocamlPackages.ocaml;
+        packages.ocaml-findlib = ocamlPackages.findlib;
+        packages.ocaml-zarith = ocamlPackages.zarith;
+        packages.rust-extern-crates = externCrates;
 
         devShells.default =
           pkgs.mkShell.override
@@ -478,9 +589,9 @@
                 reussirCompiler
                 llvmPkgs.clang
                 llvmPkgs.lld
-                pkgs.lean4
+                lean
                 pkgs.koka
-                # ocamlopt from nixpkgs is configured to invoke gcc when linking.
+                # OxCaml is configured to invoke GCC when linking.
                 pkgs.gcc
                 pkgs.rustc
                 pkgs.cargo
@@ -510,8 +621,8 @@
               REUSSIR_RUSTC = "${rustToolchain}/bin/rustc";
               REUSSIR_RUSTC_DEPS = "${reussirRtRlibs}/lib:${reussirRtRlibs}/lib/deps";
               BENCHMARK_CC = "${llvmPkgs.clang}/bin/clang";
-              BENCHMARK_LEAN = "${pkgs.lean4}/bin/lean";
-              BENCHMARK_LEANC = "${pkgs.lean4}/bin/leanc";
+              BENCHMARK_LEAN = "${lean}/bin/lean";
+              BENCHMARK_LEANC = "${lean}/bin/leanc";
               BENCHMARK_KOKA = "${pkgs.koka}/bin/koka";
               BENCHMARK_RUSTC = "${pkgs.rustc}/bin/rustc";
               # Prebuilt rlibs for Rust cells that link crates beyond std.

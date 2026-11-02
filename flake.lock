@@ -139,6 +139,23 @@
         "type": "github"
       }
     },
+    "oxcaml": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1793625117,
+        "narHash": "sha256-YMpRchucspVkIhz/drZ1zh0FbPNwFAJdJ5cM14Fagd4=",
+        "owner": "oxcaml",
+        "repo": "oxcaml",
+        "rev": "dc1bd3914b0bae35f9cb227d113db620722a5d41",
+        "type": "github"
+      },
+      "original": {
+        "owner": "oxcaml",
+        "repo": "oxcaml",
+        "rev": "dc1bd3914b0bae35f9cb227d113db620722a5d41",
+        "type": "github"
+      }
+    },
     "reussir": {
       "inputs": {
         "fenix": [
@@ -176,6 +193,7 @@
         "morphic": "morphic",
         "nixpkgs": "nixpkgs",
         "nixpkgs-llvm16": "nixpkgs-llvm16",
+        "oxcaml": "oxcaml",
         "reussir": "reussir"
       }
     },
