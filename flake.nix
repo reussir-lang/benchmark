@@ -10,9 +10,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # Reussir with backward cleanup by default (LLVM/MLIR 23.1).
+    # Reussir with the borrowed-callable inliner fix required by MLTT (#917).
     reussir = {
-      url = "github:reussir-lang/reussir/bcfff8d419169a09509b963714de0675630c7bc1";
+      url = "github:reussir-lang/reussir/1f3d237bcf2dc77c92e7bd352ddc7219f2041eed";
       inputs.nixpkgs.follows = "nixpkgs";
       inputs.fenix.follows = "fenix";
       inputs.flake-utils.follows = "flake-utils";

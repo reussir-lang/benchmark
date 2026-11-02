@@ -5,7 +5,7 @@ Haskell, OCaml, and Morphic, organized as five sets:
 
 | Set | Benchmarks | What it exercises |
 |---|---|---|
-| `functional-data-structures` | rbtree, rbtree-zipper, nbe-hoas, nbe-closure, derive, fingertree, functional-queue | allocation, pattern matching, persistence, and reuse/GC of linked structures |
+| `functional-data-structures` | rbtree, rbtree-zipper, nbe-hoas, nbe-closure, derive, fingertree, functional-queue, heap-functional, mltt | allocation, pattern matching, persistence, and reuse/GC of linked structures |
 | `large-aggregates` | life, qsort, heap-array, raytracer | flat arrays, array heaps, and ray tracing over a sphere array |
 | `std-collections` | ordered-map-linear, ordered-map-shared, ordered-map-heavily-shared, hash-map-linear, hash-map-shared, hash-map-heavily-shared | each language's standard ordered map and hash map under matched insert/remove/lookup workloads at three retention tiers: none, sparse, and heavy |
 | `big-integers` | bigint-fib, bigint-factorial, bigint-pidigits, bigint-binomial, bigint-rbtree, bigint-collatz | each language's arbitrary-precision integers on heap-sized values (sums, products and quotients by a word, spigot arithmetic) and on values that stay word-sized |
@@ -54,6 +54,19 @@ does not supply a footprint.
   `[i64; 65536]` MINSTD-filled array. Persistent-array languages rely on
   uniqueness/COW for in-place sets; the Koka and pure Haskell variants use
   their existing list-quicksort sources — noted in those files.
+- **mltt** — a small bidirectional MLTT checker with stratified universes,
+  dependent functions and pairs, natural-number induction, and identity types
+  with based path induction. All seven ports use explicit term/value variants,
+  closures over linked environments, and signed 64-bit binder IDs and universe
+  levels. Haskell uses strict fields and bindings. Rust uses shared `Rc` nodes.
+  Every run performs ten kernel checks, then checks valid and deliberately
+  corrupted associativity, equality-chain, and dependent-pair proof bundles at
+  size 4096. Each bundle checks all six supporting definitions from scratch;
+  no lemma is trusted. The expected check total is 16. Timing includes term
+  construction, checking, and cleanup, including the invalid proofs. These are
+  generated standalone proofs, not Lean/Arena imports. This benchmark requires
+  Reussir's borrowed-callable inliner fix (#917), included in the pinned compiler.
+
 - **heap-array / heap-functional** — two separately reported representations
   of one binary min-heap algorithm and workload: a mutable array/vector and a
   purely functional Braun tree. Both build by repeated insertion, contain

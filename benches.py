@@ -139,6 +139,21 @@ def _sources(base, haskell=None, haskell_st=None):
 
 
 BENCHES = {
+    "mltt": {
+        "set": _FUNCTIONAL,
+        "sources": _sources(
+            {
+                "lean": "lean/mltt.lean",
+                "reussir": ("reussir/mltt.rr", "reussir/mltt.rr.c"),
+                "reussir-nrac": ("reussir/mltt.rr", "reussir/mltt.rr.c"),
+                "koka": "koka/mltt.kk",
+                "rust": "rust/mltt.rs",
+                "ocaml": "ocaml/mltt.ml",
+                "morphic": "morphic/mltt.mor",
+            },
+            haskell="haskell/mltt.hs",
+        ),
+    },
     # Morphic is blocked on missing floating-point math intrinsics.
     "raytracer": {
         "set": _AGGREGATES,
