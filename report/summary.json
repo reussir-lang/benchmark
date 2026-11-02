@@ -1,51 +1,5 @@
 {
-  "toolchain_change": [
-    {
-      "host": "workstation",
-      "language": "ocaml",
-      "complete_pairs": 26,
-      "geomean_speedup": 1.0826316579373974,
-      "runtime_change_percent": -7.6324812166332805
-    },
-    {
-      "host": "workstation",
-      "language": "lean",
-      "complete_pairs": 27,
-      "geomean_speedup": 1.1119933416441647,
-      "runtime_change_percent": -10.071403977884819
-    },
-    {
-      "host": "workstation",
-      "language": "rust",
-      "complete_pairs": 68,
-      "geomean_speedup": 1.0217704866581432,
-      "runtime_change_percent": -2.130663093367169
-    },
-    {
-      "host": "spark",
-      "language": "ocaml",
-      "complete_pairs": 26,
-      "geomean_speedup": 1.0040636775950027,
-      "runtime_change_percent": -0.4047230953256098
-    },
-    {
-      "host": "spark",
-      "language": "lean",
-      "complete_pairs": 27,
-      "geomean_speedup": 1.0564287040719809,
-      "runtime_change_percent": -5.341458808765576
-    },
-    {
-      "host": "spark",
-      "language": "rust",
-      "complete_pairs": 67,
-      "geomean_speedup": 1.0019271415618343,
-      "runtime_change_percent": -0.19234348306307325
-    }
-  ],
   "cells_per_host": 288,
-  "toolchain_cells_updated_per_host": 124,
-  "other_cells_preserved_per_host": 164,
   "total_cells": 576,
   "hosts": [
     {

@@ -1533,7 +1533,7 @@
     1.23828125,
     0.8623046875
   ],
-  "dataset_note": "OxCaml replaces OCaml; Lean and Rust use native ThinLTO. All 124 affected cells per host refreshed. The other 164 result and status records are unchanged. Consult cell_provenance for the toolchain and configuration of each measurement.",
+  "dataset_note": "Combined benchmark dataset. Consult cell_provenance for the compiler, sources, configuration, and measurement parameters of each cell.",
   "cell_provenance": {
     "bigint-binomial/haskell": "baseline-manifest.json",
     "bigint-binomial/haskell-a1g": "baseline-manifest.json",
@@ -1823,7 +1823,5 @@
     "rbtree-zipper/reussir-nrac": "reussir-manifest.json",
     "rbtree-zipper/rust": "native-toolchains-manifest.json",
     "rbtree-zipper/rust-with-mimalloc": "native-toolchains-manifest.json"
-  },
-  "toolchain_refresh_manifest": "native-toolchains-manifest.json",
-  "refreshed": 1793652818.488646
+  }
 }
