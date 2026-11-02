@@ -139,6 +139,7 @@ def _sources(base, haskell=None, haskell_st=None):
 
 
 BENCHES = {
+    # Morphic source is retained, but native compilation exceeds practical memory/time limits.
     "mltt": {
         "set": _FUNCTIONAL,
         "sources": _sources(
@@ -149,7 +150,6 @@ BENCHES = {
                 "koka": "koka/mltt.kk",
                 "rust": "rust/mltt.rs",
                 "ocaml": "ocaml/mltt.ml",
-                "morphic": "morphic/mltt.mor",
             },
             haskell="haskell/mltt.hs",
         ),

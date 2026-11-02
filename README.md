@@ -66,7 +66,9 @@ does not supply a footprint.
   construction, checking, and cleanup, including the invalid proofs. These are
   generated standalone proofs, not Lean/Arena imports. This benchmark requires
   Reussir's borrowed-callable inliner fix (#917), included in the pinned compiler.
-
+  The Morphic port is retained but not registered in the default suite: native
+  compilation was stopped after 18.6 CPU minutes at about 55 GiB RSS. Its OCaml
+  backend compiles and returns 16; this does not validate the native RC backend.
 - **heap-array / heap-functional** — two separately reported representations
   of one binary min-heap algorithm and workload: a mutable array/vector and a
   purely functional Braun tree. Both build by repeated insertion, contain
