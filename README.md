@@ -240,7 +240,7 @@ Known toolchain quirks, encoded in the sources:
 ## Running
 
 The checked-in flake is the one-shot bootstrap. It pins Reussir main at
-`0cf8c9afa4f66568b52c3912debc05c046afc24c` and builds only the `rrc`
+`1f3d237bcf2dc77c92e7bd352ddc7219f2041eed` and builds only the `rrc`
 dependency closure plus `libreussir_rt.a` and `libRCGMPRuntime.a`
 (`REUSSIR_RCGMP_RUNTIME`); TPDE, tests, the REPL, and unrelated tools are
 not built. For the std-collections and big-integers sets it additionally

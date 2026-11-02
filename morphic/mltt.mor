@@ -30,6 +30,7 @@ get_proof_ty(v: Proof): Term = match v { MkProof(x0, _) -> x0 }
 
 get_proof_body(v: Proof): Term = match v { MkProof(_, x1) -> x1 }
 
+// Linked environments and explicit semantic closures.
 ml_empty(): Env =
   ENil
 
@@ -37,7 +38,12 @@ ml_bind(name1: I64, value2: Value, env3: Env): Env =
   EBind(name1, value2, env3)
 
 ml_lookup(env1: Env, name2: I64): Value =
-  (match env1 { ENil -> VError, EBind(key3, value4, rest5) -> (if (key3 = name2) { value4 } else { ml_lookup(rest5, name2) }) })
+  (match env1 {
+    ENil ->
+      VError,
+    EBind(key3, value4, rest5) ->
+      (if (key3 = name2) { value4 } else { ml_lookup(rest5, name2) })
+  })
 
 ml_extend(ctx1: Context, name2: I64, ty3: Value, value4: Value, level5: I64): Context =
   MkContext(ml_bind(name2, value4, get_context_env(ctx1)), ml_bind(name2, ty3, get_context_types(ctx1)), level5)
@@ -49,13 +55,21 @@ ml_closure(name1: I64, body2: Term, env3: Env): Closure =
   MkClosure(name1, body2, env3)
 
 ml_instantiate(c1: Closure, arg2: Value): Value =
-  ml_eval(ml_bind(get_closure_name(c1), arg2, get_closure_env(c1)), get_closure_body(c1))
+  // Evaluation; eliminators reduce on constructors and stay neutral otherwise.
+ml_eval(ml_bind(get_closure_name(c1), arg2, get_closure_env(c1)), get_closure_body(c1))
 
 ml_apply(fun1: Value, arg2: Value): Value =
   (match fun1 { VLam(c3) -> ml_instantiate(c3, arg2), _ -> VApp(fun1, arg2) })
 
 ml_nat_elim(m1: Value, z2: Value, s3: Value, n4: Value): Value =
-  (match n4 { VZero -> z2, VSuc(k5) -> ml_apply(ml_apply(s3, k5), ml_nat_elim(m1, z2, s3, k5)), _ -> VNatElim(m1, z2, s3, n4) })
+  (match n4 {
+    VZero ->
+      z2,
+    VSuc(k5) ->
+      ml_apply(ml_apply(s3, k5), ml_nat_elim(m1, z2, s3, k5)),
+    _ ->
+      VNatElim(m1, z2, s3, n4)
+  })
 
 ml_id_elim(a1: Value, x2: Value, m3: Value, d4: Value, y5: Value, p6: Value): Value =
   (match p6 { VRefl(_) -> d4, _ -> VJ(a1, x2, m3, d4, y5, p6) })
@@ -67,34 +81,343 @@ ml_second(p1: Value): Value =
   (match p1 { VPair(_, b3) -> b3, _ -> VSnd(p1) })
 
 ml_eval(env1: Env, term2: Term): Value =
-  (match term2 { TVar(i3) -> ml_lookup(env1, i3), TU(i4) -> VU(i4), TPi(i5, a6, b7) -> VPi(ml_eval(env1, a6), ml_closure(i5, b7, env1)), TLam(i8, b9) -> VLam(ml_closure(i8, b9, env1)), TApp(f10, a11) -> ml_apply(ml_eval(env1, f10), ml_eval(env1, a11)), TLet(i12, _, a14, b15) -> ml_eval(ml_bind(i12, ml_eval(env1, a14), env1), b15), TAnn(a16, _) -> ml_eval(env1, a16), TNat -> VNat, TZero -> VZero, TSuc(n18) -> VSuc(ml_eval(env1, n18)), TNatElim(m19, z20, s21, n22) -> ml_nat_elim(ml_eval(env1, m19), ml_eval(env1, z20), ml_eval(env1, s21), ml_eval(env1, n22)), TId(a23, x24, y25) -> VId(ml_eval(env1, a23), ml_eval(env1, x24), ml_eval(env1, y25)), TRefl(x26) -> VRefl(ml_eval(env1, x26)), TJ(a27, x28, m29, d30, y31, p32) -> ml_id_elim(ml_eval(env1, a27), ml_eval(env1, x28), ml_eval(env1, m29), ml_eval(env1, d30), ml_eval(env1, y31), ml_eval(env1, p32)), TSigma(i33, a34, b35) -> VSigma(ml_eval(env1, a34), ml_closure(i33, b35, env1)), TPair(a36, b37) -> VPair(ml_eval(env1, a36), ml_eval(env1, b37)), TFst(p38) -> ml_first(ml_eval(env1, p38)), TSnd(p39) -> ml_second(ml_eval(env1, p39)) })
+  (match term2 {
+    TVar(i3) ->
+      ml_lookup(env1, i3),
+    TU(i4) ->
+      VU(i4),
+    TPi(i5, a6, b7) ->
+      VPi(ml_eval(env1, a6), ml_closure(i5, b7, env1)),
+    TLam(i8, b9) ->
+      VLam(ml_closure(i8, b9, env1)),
+    TApp(f10, a11) ->
+      ml_apply(ml_eval(env1, f10), ml_eval(env1, a11)),
+    TLet(i12, _, a14, b15) ->
+      ml_eval(ml_bind(i12, ml_eval(env1, a14), env1), b15),
+    TAnn(a16, _) ->
+      ml_eval(env1, a16),
+    TNat ->
+      VNat,
+    TZero ->
+      VZero,
+    TSuc(n18) ->
+      VSuc(ml_eval(env1, n18)),
+    TNatElim(m19, z20, s21, n22) ->
+      ml_nat_elim(ml_eval(env1, m19), ml_eval(env1, z20), ml_eval(env1, s21), ml_eval(env1, n22)),
+    TId(a23, x24, y25) ->
+      VId(ml_eval(env1, a23), ml_eval(env1, x24), ml_eval(env1, y25)),
+    TRefl(x26) ->
+      VRefl(ml_eval(env1, x26)),
+    TJ(a27, x28, m29, d30, y31, p32) ->
+      ml_id_elim(ml_eval(env1, a27), ml_eval(env1, x28), ml_eval(env1, m29), ml_eval(env1, d30), ml_eval(env1, y31), ml_eval(env1, p32)),
+    TSigma(i33, a34, b35) ->
+      VSigma(ml_eval(env1, a34), ml_closure(i33, b35, env1)),
+    TPair(a36, b37) ->
+      VPair(ml_eval(env1, a36), ml_eval(env1, b37)),
+    TFst(p38) ->
+      ml_first(ml_eval(env1, p38)),
+    TSnd(p39) ->
+      ml_second(ml_eval(env1, p39))
+  })
 
+// Conversion compares semantic values using fresh neutral variables.
 ml_conv(level1: I64, a2: Value, b3: Value): Bool =
-  (match a2 { VU(i4) -> (match b3 { VU(j5) -> (i4 = j5), _ -> False }), VVar(i7) -> (match b3 { VVar(j8) -> (i7 = j8), _ -> False }), VNat -> (match b3 { VNat -> True, _ -> False }), VZero -> (match b3 { VZero -> True, _ -> False }), VPi(a12, c13) -> (match b3 { VPi(b14, d15) -> (if ml_conv(level1, a12, b14) { ml_conv((level1 + 1), ml_instantiate(c13, ml_fresh(level1)), ml_instantiate(d15, ml_fresh(level1))) } else { False }), _ -> False }), VSigma(a17, c18) -> (match b3 { VSigma(b19, d20) -> (if ml_conv(level1, a17, b19) { ml_conv((level1 + 1), ml_instantiate(c18, ml_fresh(level1)), ml_instantiate(d20, ml_fresh(level1))) } else { False }), _ -> False }), VLam(c22) -> (match b3 { VLam(d23) -> ml_conv((level1 + 1), ml_instantiate(c22, ml_fresh(level1)), ml_instantiate(d23, ml_fresh(level1))), _ -> False }), VSuc(a25) -> (match b3 { VSuc(b26) -> ml_conv(level1, a25, b26), _ -> False }), VRefl(a28) -> (match b3 { VRefl(b29) -> ml_conv(level1, a28, b29), _ -> False }), VFst(a31) -> (match b3 { VFst(b32) -> ml_conv(level1, a31, b32), _ -> False }), VSnd(a34) -> (match b3 { VSnd(b35) -> ml_conv(level1, a34, b35), _ -> False }), VApp(a37, x38) -> (match b3 { VApp(b39, y40) -> (if ml_conv(level1, a37, b39) { ml_conv(level1, x38, y40) } else { False }), _ -> False }), VPair(a42, x43) -> (match b3 { VPair(b44, y45) -> (if ml_conv(level1, a42, b44) { ml_conv(level1, x43, y45) } else { False }), _ -> False }), VId(a47, x48, y49) -> (match b3 { VId(b50, u51, v52) -> (if (if ml_conv(level1, a47, b50) { ml_conv(level1, x48, u51) } else { False }) { ml_conv(level1, y49, v52) } else { False }), _ -> False }), VNatElim(m54, z55, s56, n57) -> (match b3 { VNatElim(m258, z259, s260, n261) -> (if (if (if ml_conv(level1, m54, m258) { ml_conv(level1, z55, z259) } else { False }) { ml_conv(level1, s56, s260) } else { False }) { ml_conv(level1, n57, n261) } else { False }), _ -> False }), VJ(a63, x64, m65, d66, y67, p68) -> (match b3 { VJ(a269, x270, m271, d272, y273, p274) -> (if (if (if (if (if ml_conv(level1, a63, a269) { ml_conv(level1, x64, x270) } else { False }) { ml_conv(level1, m65, m271) } else { False }) { ml_conv(level1, d66, d272) } else { False }) { ml_conv(level1, y67, y273) } else { False }) { ml_conv(level1, p68, p274) } else { False }), _ -> False }), VError -> False })
+  (match a2 {
+    VU(i4) ->
+      (match b3 { VU(j5) -> (i4 = j5), _ -> False }),
+    VVar(i7) ->
+      (match b3 { VVar(j8) -> (i7 = j8), _ -> False }),
+    VNat ->
+      (match b3 { VNat -> True, _ -> False }),
+    VZero ->
+      (match b3 { VZero -> True, _ -> False }),
+    VPi(a12, c13) ->
+      (match b3 {
+        VPi(b14, d15) ->
+          (if ml_conv(level1, a12, b14) { ml_conv((level1 + 1), ml_instantiate(c13, ml_fresh(level1)), ml_instantiate(d15, ml_fresh(level1))) } else { False }),
+        _ ->
+          False
+      }),
+    VSigma(a17, c18) ->
+      (match b3 {
+        VSigma(b19, d20) ->
+          (if ml_conv(level1, a17, b19) { ml_conv((level1 + 1), ml_instantiate(c18, ml_fresh(level1)), ml_instantiate(d20, ml_fresh(level1))) } else { False }),
+        _ ->
+          False
+      }),
+    VLam(c22) ->
+      (match b3 {
+        VLam(d23) ->
+          ml_conv((level1 + 1), ml_instantiate(c22, ml_fresh(level1)), ml_instantiate(d23, ml_fresh(level1))),
+        _ ->
+          False
+      }),
+    VSuc(a25) ->
+      (match b3 { VSuc(b26) -> ml_conv(level1, a25, b26), _ -> False }),
+    VRefl(a28) ->
+      (match b3 { VRefl(b29) -> ml_conv(level1, a28, b29), _ -> False }),
+    VFst(a31) ->
+      (match b3 { VFst(b32) -> ml_conv(level1, a31, b32), _ -> False }),
+    VSnd(a34) ->
+      (match b3 { VSnd(b35) -> ml_conv(level1, a34, b35), _ -> False }),
+    VApp(a37, x38) ->
+      (match b3 {
+        VApp(b39, y40) ->
+          (if ml_conv(level1, a37, b39) { ml_conv(level1, x38, y40) } else { False }),
+        _ ->
+          False
+      }),
+    VPair(a42, x43) ->
+      (match b3 {
+        VPair(b44, y45) ->
+          (if ml_conv(level1, a42, b44) { ml_conv(level1, x43, y45) } else { False }),
+        _ ->
+          False
+      }),
+    VId(a47, x48, y49) ->
+      (match b3 {
+        VId(b50, u51, v52) ->
+          (if (if ml_conv(level1, a47, b50) { ml_conv(level1, x48, u51) } else { False }) { ml_conv(level1, y49, v52) } else { False }),
+        _ ->
+          False
+      }),
+    VNatElim(m54, z55, s56, n57) ->
+      (match b3 {
+        VNatElim(m258, z259, s260, n261) ->
+          (if (if (if ml_conv(level1, m54, m258) { ml_conv(level1, z55, z259) } else { False }) { ml_conv(level1, s56, s260) } else { False }) { ml_conv(level1, n57, n261) } else { False }),
+        _ ->
+          False
+      }),
+    VJ(a63, x64, m65, d66, y67, p68) ->
+      (match b3 {
+        VJ(a269, x270, m271, d272, y273, p274) ->
+          (if (if (if (if (if ml_conv(level1, a63, a269) { ml_conv(level1, x64, x270) } else { False }) { ml_conv(level1, m65, m271) } else { False }) { ml_conv(level1, d66, d272) } else { False }) { ml_conv(level1, y67, y273) } else { False }) { ml_conv(level1, p68, p274) } else { False }),
+        _ ->
+          False
+      }),
+    VError ->
+      False
+  })
 
+// Bidirectional type checking with exact universe levels.
 ml_sort(ctx1: Context, term2: Term): I64 =
   (match ml_infer(ctx1, term2) { VU(i3) -> i3, _ -> (-1) })
 
 ml_check(ctx1: Context, term2: Term, ty3: Value): Bool =
-  (match term2 { TLam(name4, body5) -> (match ty3 { VPi(a6, c7) -> (let variable8 = ml_fresh(get_context_level(ctx1)) in ml_check(ml_extend(ctx1, name4, a6, variable8, (get_context_level(ctx1) + 1)), body5, ml_instantiate(c7, variable8))), _ -> False }), TPair(a10, b11) -> (match ty3 { VSigma(domain12, c13) -> (if ml_check(ctx1, a10, domain12) { ml_check(ctx1, b11, ml_instantiate(c13, ml_eval(get_context_env(ctx1), a10))) } else { False }), _ -> False }), _ -> ml_conv(get_context_level(ctx1), ml_infer(ctx1, term2), ty3) })
+  (match term2 {
+    TLam(name4, body5) ->
+      (match ty3 {
+        VPi(a6, c7) ->
+          (let variable8 =
+            ml_fresh(get_context_level(ctx1))
+          in
+            ml_check(ml_extend(ctx1, name4, a6, variable8, (get_context_level(ctx1) + 1)), body5, ml_instantiate(c7, variable8))),
+        _ ->
+          False
+      }),
+    TPair(a10, b11) ->
+      (match ty3 {
+        VSigma(domain12, c13) ->
+          (if ml_check(ctx1, a10, domain12) { ml_check(ctx1, b11, ml_instantiate(c13, ml_eval(get_context_env(ctx1), a10))) } else { False }),
+        _ ->
+          False
+      }),
+    _ ->
+      ml_conv(get_context_level(ctx1), ml_infer(ctx1, term2), ty3)
+  })
 
 ml_nat_step_type(motive1: Value): Value =
-  (let body2 = ml_pi((-2), ml_app(ml_v((-3)), ml_v((-1))), ml_app(ml_v((-3)), ml_suc(ml_v((-1))))) in VPi(VNat, ml_closure((-1), body2, ml_bind((-3), motive1, ml_empty()))))
+  (let body2 =
+    ml_pi((-2), ml_app(// Syntax helpers used to construct the standalone proofs.
+ml_v((-3)), ml_v((-1))), ml_app(ml_v((-3)), ml_suc(ml_v((-1)))))
+  in
+    VPi(VNat, ml_closure((-1), body2, ml_bind((-3), motive1, ml_empty()))))
 
 ml_is_universe(ty1: Value): Bool =
   (match ty1 { VU(_) -> True, _ -> False })
 
 ml_nat_motive_ok(ctx1: Context, ty2: Value): Bool =
-  (match ty2 { VPi(a3, c4) -> (match a3 { VNat -> ml_is_universe(ml_instantiate(c4, ml_fresh(get_context_level(ctx1)))), _ -> False }), _ -> False })
+  (match ty2 {
+    VPi(a3, c4) ->
+      (match a3 {
+        VNat ->
+          ml_is_universe(ml_instantiate(c4, ml_fresh(get_context_level(ctx1)))),
+        _ ->
+          False
+      }),
+    _ ->
+      False
+  })
 
 ml_id_motive_ok(ctx1: Context, a2: Value, x3: Value, ty4: Value): Bool =
-  (match ty4 { VPi(b5, c6) -> (if ml_conv(get_context_level(ctx1), a2, b5) { (let y7 = ml_fresh(get_context_level(ctx1)) in (match ml_instantiate(c6, y7) { VPi(p8, d9) -> (if ml_conv((get_context_level(ctx1) + 1), p8, VId(a2, x3, y7)) { ml_is_universe(ml_instantiate(d9, ml_fresh((get_context_level(ctx1) + 1)))) } else { False }), _ -> False })) } else { False }), _ -> False })
+  (match ty4 {
+    VPi(b5, c6) ->
+      (if ml_conv(get_context_level(ctx1), a2, b5) {
+        (let y7 =
+          ml_fresh(get_context_level(ctx1))
+        in
+          (match ml_instantiate(c6, y7) {
+            VPi(p8, d9) ->
+              (if ml_conv((get_context_level(ctx1) + 1), p8, VId(a2, x3, y7)) { ml_is_universe(ml_instantiate(d9, ml_fresh((get_context_level(ctx1) + 1)))) } else { False }),
+            _ ->
+              False
+          }))
+      } else {
+        False
+      }),
+    _ ->
+      False
+  })
 
 ml_infer_binder(ctx1: Context, name2: I64, a3: Term, b4: Term): Value =
-  (let i5 = ml_sort(ctx1, a3) in (if (i5 < 0) { VError } else { (let next6 = ml_extend(ctx1, name2, ml_eval(get_context_env(ctx1), a3), ml_fresh(get_context_level(ctx1)), (get_context_level(ctx1) + 1)) in (let j7 = ml_sort(next6, b4) in (if (j7 < 0) { VError } else { VU((if (i5 > j7) { i5 } else { j7 })) }))) }))
+  (let i5 =
+    ml_sort(ctx1, a3)
+  in
+    (if (i5 < 0) {
+      VError
+    } else {
+      (let next6 =
+        ml_extend(ctx1, name2, ml_eval(get_context_env(ctx1), a3), ml_fresh(get_context_level(ctx1)), (get_context_level(ctx1) + 1))
+      in
+        (let j7 =
+          ml_sort(next6, b4)
+        in
+          (if (j7 < 0) { VError } else { VU((if (i5 > j7) { i5 } else { j7 })) })))
+    }))
 
 ml_infer(ctx1: Context, term2: Term): Value =
-  (match term2 { TVar(i3) -> ml_lookup(get_context_types(ctx1), i3), TU(i4) -> (if (if (i4 >= 0) { (i4 < 9223372036854775807) } else { False }) { VU((i4 + 1)) } else { VError }), TPi(name5, a6, b7) -> ml_infer_binder(ctx1, name5, a6, b7), TSigma(name8, a9, b10) -> ml_infer_binder(ctx1, name8, a9, b10), TApp(f11, x12) -> (match ml_infer(ctx1, f11) { VPi(a13, c14) -> (if ml_check(ctx1, x12, a13) { ml_instantiate(c14, ml_eval(get_context_env(ctx1), x12)) } else { VError }), _ -> VError }), TLet(name16, ty17, rhs18, body19) -> (if (ml_sort(ctx1, ty17) < 0) { VError } else { (let ty20 = ml_eval(get_context_env(ctx1), ty17) in (if ml_check(ctx1, rhs18, ty20) { ml_infer(ml_extend(ctx1, name16, ty20, ml_eval(get_context_env(ctx1), rhs18), get_context_level(ctx1)), body19) } else { VError })) }), TAnn(body21, ty22) -> (if (ml_sort(ctx1, ty22) < 0) { VError } else { (let ty23 = ml_eval(get_context_env(ctx1), ty22) in (if ml_check(ctx1, body21, ty23) { ty23 } else { VError })) }), TNat -> VU(0), TZero -> VNat, TSuc(n24) -> (if ml_check(ctx1, n24, VNat) { VNat } else { VError }), TNatElim(m25, z26, s27, n28) -> (if (if (if ml_nat_motive_ok(ctx1, ml_infer(ctx1, m25)) { False } else { True }) { True } else { (if ml_check(ctx1, n28, VNat) { False } else { True }) }) { VError } else { (let m29 = ml_eval(get_context_env(ctx1), m25) in (if (if ml_check(ctx1, z26, ml_apply(m29, VZero)) { ml_check(ctx1, s27, ml_nat_step_type(m29)) } else { False }) { ml_apply(m29, ml_eval(get_context_env(ctx1), n28)) } else { VError })) }), TId(a30, x31, y32) -> (let level33 = ml_sort(ctx1, a30) in (if (level33 < 0) { VError } else { (let a34 = ml_eval(get_context_env(ctx1), a30) in (if (if ml_check(ctx1, x31, a34) { ml_check(ctx1, y32, a34) } else { False }) { VU(level33) } else { VError })) })), TRefl(x35) -> (let a36 = ml_infer(ctx1, x35) in (if ml_is_error(a36) { VError } else { (let x37 = ml_eval(get_context_env(ctx1), x35) in VId(a36, x37, x37)) })), TJ(a38, x39, m40, d41, y42, p43) -> (if (ml_sort(ctx1, a38) < 0) { VError } else { (let a44 = ml_eval(get_context_env(ctx1), a38) in (if (if (if ml_check(ctx1, x39, a44) { False } else { True }) { True } else { (if ml_check(ctx1, y42, a44) { False } else { True }) }) { VError } else { (let x45 = ml_eval(get_context_env(ctx1), x39) in (let y46 = ml_eval(get_context_env(ctx1), y42) in (if (if (if ml_check(ctx1, p43, VId(a44, x45, y46)) { False } else { True }) { True } else { (if ml_id_motive_ok(ctx1, a44, x45, ml_infer(ctx1, m40)) { False } else { True }) }) { VError } else { (let m47 = ml_eval(get_context_env(ctx1), m40) in (if ml_check(ctx1, d41, ml_apply(ml_apply(m47, x45), VRefl(x45))) { ml_apply(ml_apply(m47, y46), ml_eval(get_context_env(ctx1), p43)) } else { VError })) }))) })) }), TFst(p48) -> (match ml_infer(ctx1, p48) { VSigma(a49, _) -> a49, _ -> VError }), TSnd(p52) -> (match ml_infer(ctx1, p52) { VSigma(_, c54) -> ml_instantiate(c54, ml_first(ml_eval(get_context_env(ctx1), p52))), _ -> VError }), _ -> VError })
+  (match term2 {
+    TVar(i3) ->
+      ml_lookup(get_context_types(ctx1), i3),
+    TU(i4) ->
+      (if (if (i4 >= 0) { (i4 < 9223372036854775807) } else { False }) {
+        VU((i4 + 1))
+      } else {
+        VError
+      }),
+    TPi(name5, a6, b7) ->
+      ml_infer_binder(ctx1, name5, a6, b7),
+    TSigma(name8, a9, b10) ->
+      ml_infer_binder(ctx1, name8, a9, b10),
+    TApp(f11, x12) ->
+      (match ml_infer(ctx1, f11) {
+        VPi(a13, c14) ->
+          (if ml_check(ctx1, x12, a13) {
+            ml_instantiate(c14, ml_eval(get_context_env(ctx1), x12))
+          } else {
+            VError
+          }),
+        _ ->
+          VError
+      }),
+    TLet(name16, ty17, rhs18, body19) ->
+      (if (ml_sort(ctx1, ty17) < 0) {
+        VError
+      } else {
+        (let ty20 =
+          ml_eval(get_context_env(ctx1), ty17)
+        in
+          (if ml_check(ctx1, rhs18, ty20) {
+            ml_infer(ml_extend(ctx1, name16, ty20, ml_eval(get_context_env(ctx1), rhs18), get_context_level(ctx1)), body19)
+          } else {
+            VError
+          }))
+      }),
+    TAnn(body21, ty22) ->
+      (if (ml_sort(ctx1, ty22) < 0) {
+        VError
+      } else {
+        (let ty23 =
+          ml_eval(get_context_env(ctx1), ty22)
+        in
+          (if ml_check(ctx1, body21, ty23) { ty23 } else { VError }))
+      }),
+    TNat ->
+      VU(0),
+    TZero ->
+      VNat,
+    TSuc(n24) ->
+      (if ml_check(ctx1, n24, VNat) { VNat } else { VError }),
+    TNatElim(m25, z26, s27, n28) ->
+      (if (if (if ml_nat_motive_ok(ctx1, ml_infer(ctx1, m25)) { False } else { True }) { True } else { (if ml_check(ctx1, n28, VNat) { False } else { True }) }) {
+        VError
+      } else {
+        (let m29 =
+          ml_eval(get_context_env(ctx1), m25)
+        in
+          (if (if ml_check(ctx1, z26, ml_apply(m29, VZero)) { ml_check(ctx1, s27, ml_nat_step_type(m29)) } else { False }) {
+            ml_apply(m29, ml_eval(get_context_env(ctx1), n28))
+          } else {
+            VError
+          }))
+      }),
+    TId(a30, x31, y32) ->
+      (let level33 =
+        ml_sort(ctx1, a30)
+      in
+        (if (level33 < 0) {
+          VError
+        } else {
+          (let a34 =
+            ml_eval(get_context_env(ctx1), a30)
+          in
+            (if (if ml_check(ctx1, x31, a34) { ml_check(ctx1, y32, a34) } else { False }) {
+              VU(level33)
+            } else {
+              VError
+            }))
+        })),
+    TRefl(x35) ->
+      (let a36 =
+        ml_infer(ctx1, x35)
+      in
+        (if ml_is_error(a36) {
+          VError
+        } else {
+          (let x37 = ml_eval(get_context_env(ctx1), x35) in VId(a36, x37, x37))
+        })),
+    TJ(a38, x39, m40, d41, y42, p43) ->
+      (if (ml_sort(ctx1, a38) < 0) {
+        VError
+      } else {
+        (let a44 =
+          ml_eval(get_context_env(ctx1), a38)
+        in
+          (if (if (if ml_check(ctx1, x39, a44) { False } else { True }) { True } else { (if ml_check(ctx1, y42, a44) { False } else { True }) }) {
+            VError
+          } else {
+            (let x45 =
+              ml_eval(get_context_env(ctx1), x39)
+            in
+              (let y46 =
+                ml_eval(get_context_env(ctx1), y42)
+              in
+                (if (if (if ml_check(ctx1, p43, VId(a44, x45, y46)) { False } else { True }) { True } else { (if ml_id_motive_ok(ctx1, a44, x45, ml_infer(ctx1, m40)) { False } else { True }) }) {
+                  VError
+                } else {
+                  (let m47 =
+                    ml_eval(get_context_env(ctx1), m40)
+                  in
+                    (if ml_check(ctx1, d41, ml_apply(ml_apply(m47, x45), VRefl(x45))) {
+                      ml_apply(ml_apply(m47, y46), ml_eval(get_context_env(ctx1), p43))
+                    } else {
+                      VError
+                    }))
+                })))
+          }))
+      }),
+    TFst(p48) ->
+      (match ml_infer(ctx1, p48) { VSigma(a49, _) -> a49, _ -> VError }),
+    TSnd(p52) ->
+      (match ml_infer(ctx1, p52) {
+        VSigma(_, c54) ->
+          ml_instantiate(c54, ml_first(ml_eval(get_context_env(ctx1), p52))),
+        _ ->
+          VError
+      }),
+    _ ->
+      VError
+  })
 
 ml_v(i1: I64): Term =
   TVar(i1)
@@ -162,6 +485,7 @@ ml_is_error(value1: Value): Bool =
 ml_infer_top(ctx1: Context, term2: Term): Value =
   ml_infer(ctx1, term2)
 
+// Proof library: addition, congruence, right identity, associativity, symmetry, transitivity.
 ml_numeral(n1: I64): Term =
   (if (n1 = 0) { ml_zero() } else { ml_suc(ml_numeral((n1 - 1))) })
 
@@ -210,6 +534,7 @@ ml_trans_type(): Term =
 ml_trans_body(): Term =
   ml_lam(0, ml_lam(1, ml_lam(2, ml_lam(3, ml_lam(4, ml_lam(5, ml_j(ml_v(0), ml_v(2), ml_ann(ml_lam(6, ml_lam(7, ml_eq(ml_v(0), ml_v(1), ml_v(6)))), ml_pi(6, ml_v(0), ml_pi(7, ml_eq(ml_v(0), ml_v(2), ml_v(6)), ml_u(0)))), ml_v(4), ml_v(3), ml_v(5))))))))
 
+// Every proof bundle checks all six supporting definitions from scratch.
 ml_bundle(body1: Term): Term =
   ml_let(100, ml_add_type(), ml_add_body(), ml_let(101, ml_cong_type(), ml_cong_body(), ml_let(102, ml_right_type(), ml_right_body(), ml_let(103, ml_assoc_type(), ml_assoc_body(), ml_let(104, ml_sym_type(), ml_sym_body(), ml_let(105, ml_trans_type(), ml_trans_body(), body1))))))
 
@@ -217,19 +542,104 @@ ml_chain_end(i1: I64): Term =
   (if ((i1 - 2 * (i1 / 2)) = 0) { ml_v(1000) } else { ml_add(ml_v(1000), ml_zero()) })
 
 ml_chain_lets(i1: I64, rest2: Term, bad3: Bool): Term =
-  (if (i1 = 0) { ml_let(2000, ml_eq(ml_nat(), ml_add(ml_v(1000), ml_zero()), ml_v(1000)), ml_app(ml_v(102), ml_v(1000)), rest2) } else { (let evidence4 = (if (if bad3 { (i1 = 1) } else { False }) { ml_refl(ml_zero()) } else { (if ((i1 - 2 * (i1 / 2)) = 1) { ml_app(ml_v(104), ml_nat()) } else { ml_v(102) }) }) in (let q5 = (if (if bad3 { (i1 = 1) } else { False }) { evidence4 } else { (if ((i1 - 2 * (i1 / 2)) = 1) { ml_app3(evidence4, ml_add(ml_v(1000), ml_zero()), ml_v(1000), ml_v(2000)) } else { ml_app(evidence4, ml_v(1000)) }) }) in ml_chain_lets((i1 - 1), ml_let((2000 + i1), ml_eq(ml_nat(), ml_add(ml_v(1000), ml_zero()), ml_chain_end(i1)), ml_trans(ml_add(ml_v(1000), ml_zero()), ml_chain_end((i1 - 1)), ml_chain_end(i1), ml_v((1999 + i1)), q5), rest2), bad3))) })
+  (if (i1 = 0) {
+    ml_let(2000, ml_eq(ml_nat(), ml_add(ml_v(1000), ml_zero()), ml_v(1000)), ml_app(ml_v(102), ml_v(1000)), rest2)
+  } else {
+    (let evidence4 =
+      (if (if bad3 { (i1 = 1) } else { False }) {
+        ml_refl(ml_zero())
+      } else {
+        (if ((i1 - 2 * (i1 / 2)) = 1) { ml_app(ml_v(104), ml_nat()) } else { ml_v(102) })
+      })
+    in
+      (let q5 =
+        (if (if bad3 { (i1 = 1) } else { False }) {
+          evidence4
+        } else {
+          (if ((i1 - 2 * (i1 / 2)) = 1) {
+            ml_app3(evidence4, ml_add(ml_v(1000), ml_zero()), ml_v(1000), ml_v(2000))
+          } else {
+            ml_app(evidence4, ml_v(1000))
+          })
+        })
+      in
+        ml_chain_lets((i1 - 1), ml_let((2000 + i1), ml_eq(ml_nat(), ml_add(ml_v(1000), ml_zero()), ml_chain_end(i1)), ml_trans(ml_add(ml_v(1000), ml_zero()), ml_chain_end((i1 - 1)), ml_chain_end(i1), ml_v((1999 + i1)), q5), rest2), bad3)))
+  })
 
+// Three proof families; bad deliberately corrupts the proposition or a proof step.
 ml_workload(case_id1: I64, size2: I64, bad3: Bool): Proof =
-  (if (case_id1 = 0) { (let result4 = ml_eq(ml_nat(), ml_add(ml_add(ml_numeral(size2), ml_v(1000)), ml_v(1001)), ml_add(ml_numeral(size2), ml_add(ml_v(1000), ml_v(1001)))) in MkProof(ml_pi(1000, ml_nat(), ml_pi(1001, ml_nat(), result4)), ml_lam(1000, ml_lam(1001, ml_app3(ml_v(103), ml_numeral(size2), ml_v(1000), (if bad3 { ml_suc(ml_v(1001)) } else { ml_v(1001) })))))) } else { (if (case_id1 = 1) { MkProof(ml_pi(1000, ml_nat(), ml_eq(ml_nat(), ml_add(ml_v(1000), ml_zero()), ml_chain_end(size2))), ml_lam(1000, ml_chain_lets(size2, ml_v((2000 + size2)), bad3))) } else { (let witness5 = ml_add(ml_numeral(size2), ml_numeral(size2)) in MkProof(ml_sigma(1000, ml_nat(), ml_eq(ml_nat(), ml_v(1000), ml_numeral((size2 * 2)))), ml_pair(witness5, ml_refl(ml_numeral(((size2 * 2) + (if bad3 { 1 } else { 0 }))))))) }) })
+  (if (case_id1 = 0) {
+    (let result4 =
+      ml_eq(ml_nat(), ml_add(ml_add(ml_numeral(size2), ml_v(1000)), ml_v(1001)), ml_add(ml_numeral(size2), ml_add(ml_v(1000), ml_v(1001))))
+    in
+      MkProof(ml_pi(1000, ml_nat(), ml_pi(1001, ml_nat(), result4)), ml_lam(1000, ml_lam(1001, ml_app3(ml_v(103), ml_numeral(size2), ml_v(1000), (if bad3 { ml_suc(ml_v(1001)) } else { ml_v(1001) }))))))
+  } else {
+    (if (case_id1 = 1) {
+      MkProof(ml_pi(1000, ml_nat(), ml_eq(ml_nat(), ml_add(ml_v(1000), ml_zero()), ml_chain_end(size2))), ml_lam(1000, ml_chain_lets(size2, ml_v((2000 + size2)), bad3)))
+    } else {
+      (let witness5 =
+        ml_add(ml_numeral(size2), ml_numeral(size2))
+      in
+        MkProof(ml_sigma(1000, ml_nat(), ml_eq(ml_nat(), ml_v(1000), ml_numeral((size2 * 2)))), ml_pair(witness5, ml_refl(ml_numeral(((size2 * 2) + (if bad3 { 1 } else { 0 })))))))
+    })
+  })
 
 ml_checked(term1: Term): Bool =
-  (let ctx2 = MkContext(ml_empty(), ml_empty(), 0) in (if ml_is_error(ml_infer_top(ctx2, term1)) { False } else { True }))
+  (let ctx2 =
+    MkContext(ml_empty(), ml_empty(), 0)
+  in
+    (if ml_is_error(ml_infer_top(ctx2, term1)) { False } else { True }))
 
 ml_check_case(case_id1: I64, size2: I64, bad3: Bool): I64 =
-  (let proof4 = ml_workload(case_id1, size2, bad3) in (if ml_checked(ml_bundle(ml_ann(get_proof_body(proof4), get_proof_ty(proof4)))) { 1 } else { 0 }))
+  (let proof4 =
+    ml_workload(case_id1, size2, bad3)
+  in
+    (if ml_checked(ml_bundle(ml_ann(get_proof_body(proof4), get_proof_ty(proof4)))) {
+      1
+    } else {
+      0
+    }))
 
+// Ten small acceptance/rejection checks, including invalid eliminators.
 ml_regressions(): I64 =
-  (let good_pair1 = ml_ann(ml_pair(ml_zero(), ml_refl(ml_zero())), ml_sigma(0, ml_nat(), ml_eq(ml_nat(), ml_v(0), ml_v(0)))) in (let a2 = ml_checked(ml_ann(ml_u(0), ml_u(1))) in (let b3 = (if ml_checked(ml_ann(ml_u(0), ml_u(0))) { False } else { True }) in (let c4 = (if ml_checked(ml_ann(ml_v(7), ml_nat())) { False } else { True }) in (let d5 = (if ml_checked(ml_let(0, ml_nat(), ml_u(0), ml_zero())) { False } else { True }) in (let e6 = (if ml_checked(ml_ann(ml_app(ml_ann(ml_lam(0, ml_zero()), ml_pi(0, ml_nat(), ml_nat())), ml_u(0)), ml_nat())) { False } else { True }) in (let f7 = ml_checked(ml_ann(ml_fst(good_pair1), ml_nat())) in (let g8 = ml_checked(ml_ann(ml_snd(good_pair1), ml_eq(ml_nat(), ml_zero(), ml_zero()))) in (let h9 = (if ml_checked(ml_ann(ml_refl(ml_zero()), ml_eq(ml_nat(), ml_zero(), ml_suc(ml_zero())))) { False } else { True }) in (let i10 = (if ml_checked(ml_natelim(ml_ann(ml_lam(0, ml_nat()), ml_pi(0, ml_nat(), ml_u(0))), ml_zero(), ml_lam(0, ml_lam(1, ml_u(0))), ml_zero())) { False } else { True }) in (let k11 = (if ml_checked(ml_j(ml_nat(), ml_zero(), ml_ann(ml_lam(0, ml_lam(1, ml_nat())), ml_pi(0, ml_nat(), ml_pi(1, ml_eq(ml_nat(), ml_zero(), ml_v(0)), ml_u(0)))), ml_zero(), ml_suc(ml_zero()), ml_refl(ml_zero()))) { False } else { True }) in (if (if (if (if (if (if (if (if (if (if a2 { b3 } else { False }) { c4 } else { False }) { d5 } else { False }) { e6 } else { False }) { f7 } else { False }) { g8 } else { False }) { h9 } else { False }) { i10 } else { False }) { k11 } else { False }) { 10 } else { 0 }))))))))))))
+  (let good_pair1 =
+    ml_ann(ml_pair(ml_zero(), ml_refl(ml_zero())), ml_sigma(0, ml_nat(), ml_eq(ml_nat(), ml_v(0), ml_v(0))))
+  in
+    (let a2 =
+      ml_checked(ml_ann(ml_u(0), ml_u(1)))
+    in
+      (let b3 =
+        (if ml_checked(ml_ann(ml_u(0), ml_u(0))) { False } else { True })
+      in
+        (let c4 =
+          (if ml_checked(ml_ann(ml_v(7), ml_nat())) { False } else { True })
+        in
+          (let d5 =
+            (if ml_checked(ml_let(0, ml_nat(), ml_u(0), ml_zero())) { False } else { True })
+          in
+            (let e6 =
+              (if ml_checked(ml_ann(ml_app(ml_ann(ml_lam(0, ml_zero()), ml_pi(0, ml_nat(), ml_nat())), ml_u(0)), ml_nat())) { False } else { True })
+            in
+              (let f7 =
+                ml_checked(ml_ann(ml_fst(good_pair1), ml_nat()))
+              in
+                (let g8 =
+                  ml_checked(ml_ann(ml_snd(good_pair1), ml_eq(ml_nat(), ml_zero(), ml_zero())))
+                in
+                  (let h9 =
+                    (if ml_checked(ml_ann(ml_refl(ml_zero()), ml_eq(ml_nat(), ml_zero(), ml_suc(ml_zero())))) { False } else { True })
+                  in
+                    (let i10 =
+                      (if ml_checked(ml_natelim(ml_ann(ml_lam(0, ml_nat()), ml_pi(0, ml_nat(), ml_u(0))), ml_zero(), ml_lam(0, ml_lam(1, ml_u(0))), ml_zero())) { False } else { True })
+                    in
+                      (let k11 =
+                        (if ml_checked(ml_j(ml_nat(), ml_zero(), ml_ann(ml_lam(0, ml_lam(1, ml_nat())), ml_pi(0, ml_nat(), ml_pi(1, ml_eq(ml_nat(), ml_zero(), ml_v(0)), ml_u(0)))), ml_zero(), ml_suc(ml_zero()), ml_refl(ml_zero()))) { False } else { True })
+                      in
+                        (if (if (if (if (if (if (if (if (if (if a2 { b3 } else { False }) { c4 } else { False }) { d5 } else { False }) { e6 } else { False }) { f7 } else { False }) { g8 } else { False }) { h9 } else { False }) { i10 } else { False }) { k11 } else { False }) {
+                          10
+                        } else {
+                          0
+                        }))))))))))))
 
 proc main(): () =
   let result = ((((((ml_regressions() + ml_check_case(0, 4096, False)) + ml_check_case(1, 4096, False)) + ml_check_case(2, 4096, False)) + (1 - ml_check_case(0, 4096, True))) + (1 - ml_check_case(1, 4096, True))) + (1 - ml_check_case(2, 4096, True))) in

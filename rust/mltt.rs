@@ -310,7 +310,11 @@ fn infer(ctx: &Context, term: &T) -> V {
                 return error();
             }
             let ty = eval(&ctx.env, ty);
-            if check(ctx, body, &ty) { ty } else { error() }
+            if check(ctx, body, &ty) {
+                ty
+            } else {
+                error()
+            }
         }
         Term::Nat => Rc::new(Value::U(0)),
         Term::Zero => Rc::new(Value::Nat),
@@ -456,7 +460,11 @@ struct Proof {
 }
 
 fn numeral(n: i64) -> T {
-    if n == 0 { zero() } else { suc(numeral(n - 1)) }
+    if n == 0 {
+        zero()
+    } else {
+        suc(numeral(n - 1))
+    }
 }
 fn add(x: T, y: T) -> T {
     app2(v(100), x, y)
