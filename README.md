@@ -66,8 +66,8 @@ does not supply a footprint.
   hard saturation. Signed division truncates toward zero; all intermediate
   products fit in signed 32 bits. Every port checks energy
   `124776496343097`.
-  Both workloads use 32-bit element types where available; OCaml uses
-  native integers and Morphic uses `I64`. Haskell uses mutable unboxed ST
+  Both workloads use 32-bit element types in Reussir, Lean, Koka, Rust,
+  and Haskell; OCaml uses native integers and Morphic uses `I64`. Haskell uses mutable unboxed ST
   arrays. Independent scalar C references are in `tests/reference/`.
 - **qsort** — 100 rounds of in-place Lomuto quicksort over a fresh
   `[i64; 65536]` MINSTD-filled array. Persistent-array languages rely on
