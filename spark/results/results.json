@@ -13182,5 +13182,825 @@
       "budget_limited": false,
       "peak_rss_kb": 32716
     }
+  },
+  "rgba-composite": {
+    "lean": {
+      "results": [
+        {
+          "command": "/home/schrodingerzy/Documents/experiments/regular-arrays-cross-language-20261104/rgba-composite/lean/executable",
+          "mean": 3.212514968354,
+          "stddev": 0.00494848517972232,
+          "median": 3.21082732499,
+          "user": 3.20863388,
+          "system": 0.0032743019999999998,
+          "min": 3.20648348248,
+          "max": 3.22259977404,
+          "times": [
+            3.21024697574,
+            3.20648348248,
+            3.22259977404,
+            3.21129794696,
+            3.2136860806,
+            3.21962270148,
+            3.21035670302,
+            3.2091473174,
+            3.20978790022,
+            3.2119208016
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 48.66524639260024,
+      "budget_limited": false,
+      "peak_rss_kb": 17896
+    },
+    "reussir": {
+      "results": [
+        {
+          "command": "/home/schrodingerzy/Documents/experiments/regular-arrays-cross-language-20261104/rgba-composite/reussir/executable",
+          "mean": 0.600335422982,
+          "stddev": 0.00036212910709074197,
+          "median": 0.60038794249,
+          "user": 0.5997790239999999,
+          "system": 0.00048646599999999996,
+          "min": 0.59974470408,
+          "max": 0.6007305301,
+          "times": [
+            0.6004076055400001,
+            0.60036827944,
+            0.60069625004,
+            0.60063589386,
+            0.6005944724200001,
+            0.59975943012,
+            0.60030162668,
+            0.59974470408,
+            0.6001154375400001,
+            0.6007305301
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 9.437306827865541,
+      "budget_limited": false,
+      "peak_rss_kb": 6148
+    },
+    "koka": {
+      "results": [
+        {
+          "command": "/home/schrodingerzy/Documents/experiments/regular-arrays-cross-language-20261104/rgba-composite/koka/executable",
+          "mean": 14.753252872514,
+          "stddev": 0.10871787302751629,
+          "median": 14.74531617405,
+          "user": 14.751044622,
+          "system": 0.000430366,
+          "min": 14.640921369660001,
+          "max": 14.9736570999,
+          "times": [
+            14.8789641384,
+            14.68423100524,
+            14.9736570999,
+            14.75034208854,
+            14.65144533158,
+            14.740290259559998,
+            14.640921369660001,
+            14.6487330135,
+            14.809332525419999,
+            14.75461189334
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 222.1557266851887,
+      "budget_limited": false,
+      "peak_rss_kb": 8492
+    },
+    "rust": {
+      "results": [
+        {
+          "command": "/home/schrodingerzy/Documents/experiments/regular-arrays-cross-language-20261104/rgba-composite/rust/executable",
+          "mean": 0.5397786295320001,
+          "stddev": 0.0006473602038062607,
+          "median": 0.53992673109,
+          "user": 0.538566852,
+          "system": 0.0010857559999999998,
+          "min": 0.5389918870400001,
+          "max": 0.5407517844,
+          "times": [
+            0.53937628504,
+            0.53992838342,
+            0.54006301348,
+            0.5407517844,
+            0.5399250787600001,
+            0.5407003968799999,
+            0.5399357555400001,
+            0.5389918870400001,
+            0.53901947522,
+            0.53909423554
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 8.527594008482993,
+      "budget_limited": false,
+      "peak_rss_kb": 3584
+    },
+    "ocaml": {
+      "results": [
+        {
+          "command": "/home/schrodingerzy/Documents/experiments/regular-arrays-cross-language-20261104/rgba-composite/ocaml/executable",
+          "mean": 6.500736049948,
+          "stddev": 0.015252064630226932,
+          "median": 6.49457146602,
+          "user": 6.49790101,
+          "system": 0.00187867,
+          "min": 6.4908995658199995,
+          "max": 6.52966125288,
+          "times": [
+            6.529232911579999,
+            6.49552731726,
+            6.4908995658199995,
+            6.4925143296200005,
+            6.49593116682,
+            6.49172853376,
+            6.49177230614,
+            6.49647750082,
+            6.49361561478,
+            6.52966125288
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 97.93830485083163,
+      "budget_limited": false,
+      "peak_rss_kb": 7148
+    },
+    "morphic": {
+      "results": [
+        {
+          "command": "/home/schrodingerzy/Documents/experiments/regular-arrays-cross-language-20261104/rgba-composite/morphic/executable",
+          "mean": 5.5519569422899995,
+          "stddev": 0.0029271945611708864,
+          "median": 5.55284633672,
+          "user": 5.549874096,
+          "system": 0.001339244,
+          "min": 5.544443274780001,
+          "max": 5.55406513346,
+          "times": [
+            5.55220642748,
+            5.5496161205200005,
+            5.55406513346,
+            5.5532337722,
+            5.55268567726,
+            5.5538658384,
+            5.55376050536,
+            5.55271455124,
+            5.5529781222,
+            5.544443274780001
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 83.71410918049514,
+      "budget_limited": false,
+      "peak_rss_kb": 4720
+    },
+    "rust-with-mimalloc": {
+      "results": [
+        {
+          "command": "/home/schrodingerzy/Documents/experiments/regular-arrays-cross-language-20261104/rgba-composite/rust-with-mimalloc/executable",
+          "mean": 0.540411893132,
+          "stddev": 0.0006572707961383114,
+          "median": 0.54022669631,
+          "user": 0.5400576420000001,
+          "system": 0.00040389599999999994,
+          "min": 0.5396607638400001,
+          "max": 0.54213161136,
+          "times": [
+            0.5401466953,
+            0.54065060096,
+            0.5401197500600001,
+            0.54041760388,
+            0.54019802496,
+            0.5401229753400001,
+            0.54041553796,
+            0.54213161136,
+            0.54025536766,
+            0.5396607638400001
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 8.594829493202269,
+      "budget_limited": false,
+      "peak_rss_kb": 8372
+    },
+    "haskell-st": {
+      "results": [
+        {
+          "command": "/home/schrodingerzy/Documents/experiments/regular-arrays-cross-language-20261104/rgba-composite/haskell-st/executable",
+          "mean": 7.578715583068001,
+          "stddev": 0.0014916843147289762,
+          "median": 7.57844069358,
+          "user": 7.5762353419999995,
+          "system": 0.001485456,
+          "min": 7.57684614336,
+          "max": 7.58153205044,
+          "times": [
+            7.57909756292,
+            7.57904360564,
+            7.58153205044,
+            7.5780951909,
+            7.57878619626,
+            7.577345230240001,
+            7.5777606099599994,
+            7.5808118548,
+            7.57684614336,
+            7.577837386160001
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 114.14579857513309,
+      "budget_limited": false,
+      "peak_rss_kb": 6524
+    },
+    "haskell-st-a1g": {
+      "results": [
+        {
+          "command": "/home/schrodingerzy/Documents/experiments/regular-arrays-cross-language-20261104/rgba-composite/haskell-st-a1g/executable",
+          "mean": 7.587286182848,
+          "stddev": 0.004119412638692974,
+          "median": 7.58563058995,
+          "user": 7.57817436,
+          "system": 0.007983492,
+          "min": 7.5847179163,
+          "max": 7.598653541519999,
+          "times": [
+            7.587558756839999,
+            7.58553986794,
+            7.5857213119599995,
+            7.58545636618,
+            7.58553441942,
+            7.588000588340001,
+            7.5847179163,
+            7.598653541519999,
+            7.5861768626,
+            7.585502197379999
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 114.26320864725858,
+      "budget_limited": false,
+      "peak_rss_kb": 23164
+    }
+  },
+  "pcm-mix-limit": {
+    "lean": {
+      "results": [
+        {
+          "command": "/home/schrodingerzy/Documents/experiments/regular-arrays-cross-language-20261104/pcm-mix-limit/lean/executable",
+          "mean": 8.780614603728,
+          "stddev": 0.004685323293544862,
+          "median": 8.781282823649999,
+          "user": 8.776487836,
+          "system": 0.002880756,
+          "min": 8.77322765586,
+          "max": 8.78776530856,
+          "times": [
+            8.775257577560001,
+            8.780674160419998,
+            8.77322765586,
+            8.781891486880001,
+            8.777908249040001,
+            8.785044770239999,
+            8.776986110400001,
+            8.78479994076,
+            8.78259077756,
+            8.78776530856
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 132.15979158785194,
+      "budget_limited": false,
+      "peak_rss_kb": 18028
+    },
+    "reussir": {
+      "results": [
+        {
+          "command": "/home/schrodingerzy/Documents/experiments/regular-arrays-cross-language-20261104/pcm-mix-limit/reussir/executable",
+          "mean": 0.828391682358,
+          "stddev": 0.0013128126709750852,
+          "median": 0.827789251,
+          "user": 0.82791479,
+          "system": 0.000426202,
+          "min": 0.8269306192600001,
+          "max": 0.8300344328600001,
+          "times": [
+            0.8296870466000001,
+            0.8300344328600001,
+            0.82994429432,
+            0.82797755436,
+            0.8298551522200001,
+            0.82760094764,
+            0.8273591678000001,
+            0.8274062388400001,
+            0.8269306192600001,
+            0.82712136968
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 12.861264451406896,
+      "budget_limited": false,
+      "peak_rss_kb": 6148
+    },
+    "koka": {
+      "results": [
+        {
+          "command": "/home/schrodingerzy/Documents/experiments/regular-arrays-cross-language-20261104/pcm-mix-limit/koka/executable",
+          "mean": 31.316779521705,
+          "stddev": 0.9874456466884418,
+          "median": 31.61298326352,
+          "user": 31.312314399999998,
+          "system": 0.000594895,
+          "min": 29.899908877639998,
+          "max": 32.141242682139996,
+          "times": [
+            29.899908877639998,
+            32.141242682139996,
+            31.43633180268,
+            31.789634724360003
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 4,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 282.76243613194674,
+      "budget_limited": true,
+      "peak_rss_kb": 8508
+    },
+    "rust": {
+      "results": [
+        {
+          "command": "/home/schrodingerzy/Documents/experiments/regular-arrays-cross-language-20261104/pcm-mix-limit/rust/executable",
+          "mean": 0.816568953582,
+          "stddev": 0.003830974421207979,
+          "median": 0.8151695974500001,
+          "user": 0.815666558,
+          "system": 0.000734674,
+          "min": 0.81457476092,
+          "max": 0.8272825904600001,
+          "times": [
+            0.8169565869800001,
+            0.81598923558,
+            0.8272825904600001,
+            0.8148080815600001,
+            0.8150881065600001,
+            0.81585084838,
+            0.8148548633,
+            0.81457476092,
+            0.81525108834,
+            0.8150333737400001
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 12.675981977023184,
+      "budget_limited": false,
+      "peak_rss_kb": 3584
+    },
+    "ocaml": {
+      "results": [
+        {
+          "command": "/home/schrodingerzy/Documents/experiments/regular-arrays-cross-language-20261104/pcm-mix-limit/ocaml/executable",
+          "mean": 6.562189673692001,
+          "stddev": 0.0006243943805764228,
+          "median": 6.562137454449999,
+          "user": 6.560431754,
+          "system": 0.000884352,
+          "min": 6.56119904898,
+          "max": 6.563156585,
+          "times": [
+            6.561412198539999,
+            6.562586152240001,
+            6.563156585,
+            6.5622342669,
+            6.56119904898,
+            6.5620406419999995,
+            6.56290742352,
+            6.562549869260001,
+            6.5619015461200005,
+            6.56190900436
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 98.87758344504982,
+      "budget_limited": false,
+      "peak_rss_kb": 7148
+    },
+    "morphic": {
+      "results": [
+        {
+          "command": "/home/schrodingerzy/Documents/experiments/regular-arrays-cross-language-20261104/pcm-mix-limit/morphic/executable",
+          "mean": 3.84346749063,
+          "stddev": 0.0036185138850959218,
+          "median": 3.84164271628,
+          "user": 3.84186821,
+          "system": 0.001051166,
+          "min": 3.84035257376,
+          "max": 3.85098376424,
+          "times": [
+            3.84170689958,
+            3.84094694886,
+            3.84035257376,
+            3.84341485812,
+            3.84133306988,
+            3.84100331822,
+            3.84157853298,
+            3.85098376424,
+            3.84859920506,
+            3.8447557356
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 58.101474209688604,
+      "budget_limited": false,
+      "peak_rss_kb": 4724
+    },
+    "rust-with-mimalloc": {
+      "results": [
+        {
+          "command": "/home/schrodingerzy/Documents/experiments/regular-arrays-cross-language-20261104/pcm-mix-limit/rust-with-mimalloc/executable",
+          "mean": 0.8160154096320001,
+          "stddev": 0.00016944772798035593,
+          "median": 0.8160527237100001,
+          "user": 0.8154921719999999,
+          "system": 0.000430748,
+          "min": 0.8157273892600001,
+          "max": 0.8162230204,
+          "times": [
+            0.8157273892600001,
+            0.8162230204,
+            0.81609706526,
+            0.8159614310800001,
+            0.81587733616,
+            0.8160083821600002,
+            0.8161346927,
+            0.81614225888,
+            0.8158012940800001,
+            0.8161812263400001
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 12.730338335968554,
+      "budget_limited": false,
+      "peak_rss_kb": 8372
+    },
+    "haskell-st": {
+      "results": [
+        {
+          "command": "/home/schrodingerzy/Documents/experiments/regular-arrays-cross-language-20261104/pcm-mix-limit/haskell-st/executable",
+          "mean": 6.5030116030139995,
+          "stddev": 0.020559510159625347,
+          "median": 6.4943176565,
+          "user": 6.5011661919999995,
+          "system": 0.00084306,
+          "min": 6.491077607759999,
+          "max": 6.54305248568,
+          "times": [
+            6.49436503718,
+            6.54079261592,
+            6.4944811932999995,
+            6.49427027582,
+            6.491077607759999,
+            6.49540020148,
+            6.49182708992,
+            6.54305248568,
+            6.49234515168,
+            6.4925043714
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 97.98783664312214,
+      "budget_limited": false,
+      "peak_rss_kb": 6964
+    },
+    "haskell-st-a1g": {
+      "results": [
+        {
+          "command": "/home/schrodingerzy/Documents/experiments/regular-arrays-cross-language-20261104/pcm-mix-limit/haskell-st-a1g/executable",
+          "mean": 6.5074192690979995,
+          "stddev": 0.017375402784337638,
+          "median": 6.50222219093,
+          "user": 6.498144861999999,
+          "system": 0.008100713999999998,
+          "min": 6.4970220163,
+          "max": 6.5550255847,
+          "times": [
+            6.4995931745,
+            6.49943898156,
+            6.50484446292,
+            6.5015619012000005,
+            6.4970220163,
+            6.5550255847,
+            6.5030546812,
+            6.49735677374,
+            6.50288248066,
+            6.5134126342
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 98.0687308665365,
+      "budget_limited": false,
+      "peak_rss_kb": 23444
+    }
   }
 }

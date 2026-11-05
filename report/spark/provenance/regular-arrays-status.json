@@ -1,0 +1,236 @@
+{
+  "rgba-composite/lean": {
+    "compiled": true,
+    "compile_started": 1793840108.0872488,
+    "compile_finished": 1793840109.7360523,
+    "executable_sha256": "6d3f1282caa9d673205a00711563fc5f2775f4fe14391a4d0b6a251acbd6d939",
+    "pilot": {
+      "seconds": 3.2069544792175293,
+      "exit_code": 0
+    },
+    "status": "complete",
+    "started": 1793841390.131493,
+    "finished": 1793841438.7969983
+  },
+  "rgba-composite/reussir": {
+    "compiled": true,
+    "compile_started": 1793840109.7389407,
+    "compile_finished": 1793840110.3722508,
+    "executable_sha256": "5074630836990bc6ec609e6959de46a701cb14900ca2f0cd0035d8e14d3548cd",
+    "pilot": {
+      "seconds": 0.6015479564666748,
+      "exit_code": 0
+    },
+    "status": "complete",
+    "started": 1793841438.7973857,
+    "finished": 1793841448.2348928
+  },
+  "rgba-composite/ocaml": {
+    "compiled": true,
+    "compile_started": 1793840114.652696,
+    "compile_finished": 1793840114.86423,
+    "executable_sha256": "f8a529e6b6acf29e90104a722cb054b407d966be1749d036d1260c7f28e8b88d",
+    "pilot": {
+      "seconds": 6.474005222320557,
+      "exit_code": 0
+    },
+    "status": "complete",
+    "started": 1793841678.9201396,
+    "finished": 1793841776.8586478
+  },
+  "rgba-composite/morphic": {
+    "compiled": true,
+    "compile_started": 1793840114.8675044,
+    "compile_finished": 1793840114.9989681,
+    "executable_sha256": "6ae4cbb27c505ab8e5bab87632e073b2fa7c96a11eec11f5a7f7a52ba755c5a1",
+    "pilot": {
+      "seconds": 5.555097341537476,
+      "exit_code": 0
+    },
+    "status": "complete",
+    "started": 1793841776.8590512,
+    "finished": 1793841860.5733643
+  },
+  "rgba-composite/haskell-st": {
+    "compiled": true,
+    "compile_started": 1793840115.6004229,
+    "compile_finished": 1793840116.036957,
+    "executable_sha256": "c086529920b77a4d45cd089545641bff82c94ed09ac9b5602f67a3de30fc60aa",
+    "pilot": {
+      "seconds": 7.586025714874268,
+      "exit_code": 0
+    },
+    "status": "complete",
+    "started": 1793841869.1692128,
+    "finished": 1793841983.315204
+  },
+  "rgba-composite/haskell-st-a1g": {
+    "compiled": true,
+    "compile_started": 1793840116.0388722,
+    "compile_finished": 1793840116.5033896,
+    "executable_sha256": "977f56319f79908cd147ea821bdecdfb98e4bb9b90e0a44da4575e77b58c5148",
+    "pilot": {
+      "seconds": 7.602231025695801,
+      "exit_code": 0
+    },
+    "status": "complete",
+    "started": 1793841983.315629,
+    "finished": 1793842097.5790575
+  },
+  "pcm-mix-limit/lean": {
+    "compiled": true,
+    "compile_started": 1793840116.505352,
+    "compile_finished": 1793840118.145354,
+    "executable_sha256": "b056c83907233f63f7e261ff8d5177337b01087fdc6b308cb710e86f40a13fa0",
+    "pilot": {
+      "seconds": 8.787489414215088,
+      "exit_code": 0
+    },
+    "status": "complete",
+    "started": 1793842097.579511,
+    "finished": 1793842229.7395127
+  },
+  "pcm-mix-limit/reussir": {
+    "compiled": true,
+    "compile_started": 1793840118.148459,
+    "compile_finished": 1793840118.8589997,
+    "executable_sha256": "6185b4ffad84d891fc5def2e26b0333283c604f258c74a81609d9705a2e34bb9",
+    "pilot": {
+      "seconds": 0.8296375274658203,
+      "exit_code": 0
+    },
+    "status": "complete",
+    "started": 1793842229.7400038,
+    "finished": 1793842242.6014705
+  },
+  "pcm-mix-limit/ocaml": {
+    "compiled": true,
+    "compile_started": 1793840123.2720928,
+    "compile_finished": 1793840123.4827716,
+    "executable_sha256": "b71439113acf6c4c7ca2e2f998bb58c9901019b7e8942ec6309de184ed5b8c00",
+    "pilot": {
+      "seconds": 6.570849895477295,
+      "exit_code": 0
+    },
+    "status": "complete",
+    "started": 1793842538.0416253,
+    "finished": 1793842636.9194014
+  },
+  "pcm-mix-limit/morphic": {
+    "compiled": true,
+    "compile_started": 1793840123.4856749,
+    "compile_finished": 1793840123.6082633,
+    "executable_sha256": "575673ca43fba2ae8610defa4a2fb335fe9d3063df3eb2e08b76d180d31b8d4a",
+    "pilot": {
+      "seconds": 3.8483901023864746,
+      "exit_code": 0
+    },
+    "status": "complete",
+    "started": 1793842636.9198713,
+    "finished": 1793842695.0215635
+  },
+  "pcm-mix-limit/haskell-st": {
+    "compiled": true,
+    "compile_started": 1793840124.265245,
+    "compile_finished": 1793840124.6770458,
+    "executable_sha256": "c1978945a2079f49dc0c42d3302d00a2cbf27f419072ee0eb5b749f767de3664",
+    "pilot": {
+      "seconds": 6.52906608581543,
+      "exit_code": 0
+    },
+    "status": "complete",
+    "started": 1793842707.7531376,
+    "finished": 1793842805.7411728
+  },
+  "pcm-mix-limit/haskell-st-a1g": {
+    "compiled": true,
+    "compile_started": 1793840124.6788785,
+    "compile_finished": 1793840125.133944,
+    "executable_sha256": "7fc1255815bd7a1692e90bc50a9d12fb4757b51661d1aee6c9c4062cb53bf181",
+    "pilot": {
+      "seconds": 6.530078649520874,
+      "exit_code": 0
+    },
+    "status": "complete",
+    "started": 1793842805.7416584,
+    "finished": 1793842903.810605
+  },
+  "rgba-composite/koka": {
+    "compiled": true,
+    "compile_started": 1793841164.8006706,
+    "compile_finished": 1793841168.5201044,
+    "executable_sha256": "9a6b7507eb65143f6cd03ac17e7a004f3da859c33d7a0351ce704443278c8ff8",
+    "pilot": {
+      "seconds": 14.698582410812378,
+      "exit_code": 0
+    },
+    "status": "complete",
+    "started": 1793841448.2352386,
+    "finished": 1793841670.3911624
+  },
+  "rgba-composite/rust": {
+    "compiled": true,
+    "compile_started": 1793841168.5222573,
+    "compile_finished": 1793841169.7469559,
+    "executable_sha256": "572b442a1f89e07af14faf5b1f0388b0bdd86ce3eb1f9a39bbe214a6e6fea924",
+    "pilot": {
+      "seconds": 0.5438675880432129,
+      "exit_code": 0
+    },
+    "status": "complete",
+    "started": 1793841670.3920002,
+    "finished": 1793841678.9197803
+  },
+  "rgba-composite/rust-with-mimalloc": {
+    "compiled": true,
+    "compile_started": 1793841169.7482917,
+    "compile_finished": 1793841170.376743,
+    "executable_sha256": "572b442a1f89e07af14faf5b1f0388b0bdd86ce3eb1f9a39bbe214a6e6fea924",
+    "pilot": {
+      "seconds": 0.5415034294128418,
+      "exit_code": 0
+    },
+    "status": "complete",
+    "started": 1793841860.573755,
+    "finished": 1793841869.1687903
+  },
+  "pcm-mix-limit/koka": {
+    "compiled": true,
+    "compile_started": 1793841170.3779504,
+    "compile_finished": 1793841174.0395215,
+    "executable_sha256": "b6a8757a520a877d0e72c6a6aa4aff84c34cfbedb79a51f54b35d3c2dafe32a8",
+    "pilot": {
+      "seconds": 29.88577151298523,
+      "exit_code": 0
+    },
+    "status": "budget_limited",
+    "started": 1793842242.6018972,
+    "finished": 1793842525.3645294
+  },
+  "pcm-mix-limit/rust": {
+    "compiled": true,
+    "compile_started": 1793841174.0417547,
+    "compile_finished": 1793841174.7004147,
+    "executable_sha256": "012737b9822e5b0c40fa8b774ea625afdedce75bf01caf783b525d5b0f6febb8",
+    "pilot": {
+      "seconds": 0.8178272247314453,
+      "exit_code": 0
+    },
+    "status": "complete",
+    "started": 1793842525.3650053,
+    "finished": 1793842538.041174
+  },
+  "pcm-mix-limit/rust-with-mimalloc": {
+    "compiled": true,
+    "compile_started": 1793841174.7015903,
+    "compile_finished": 1793841175.2853274,
+    "executable_sha256": "012737b9822e5b0c40fa8b774ea625afdedce75bf01caf783b525d5b0f6febb8",
+    "pilot": {
+      "seconds": 0.8170468807220459,
+      "exit_code": 0
+    },
+    "status": "complete",
+    "started": 1793842695.0220754,
+    "finished": 1793842707.752633
+  }
+}

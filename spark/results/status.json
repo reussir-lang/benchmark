@@ -1438,5 +1438,95 @@
     "status": "complete",
     "started": 1793650990.6085732,
     "finished": 1793651000.5198953
+  },
+  "rgba-composite/lean": {
+    "status": "complete",
+    "started": 1793841390.131493,
+    "finished": 1793841438.7969983
+  },
+  "rgba-composite/reussir": {
+    "status": "complete",
+    "started": 1793841438.7973857,
+    "finished": 1793841448.2348928
+  },
+  "rgba-composite/koka": {
+    "status": "complete",
+    "started": 1793841448.2352386,
+    "finished": 1793841670.3911624
+  },
+  "rgba-composite/rust": {
+    "status": "complete",
+    "started": 1793841670.3920002,
+    "finished": 1793841678.9197803
+  },
+  "rgba-composite/ocaml": {
+    "status": "complete",
+    "started": 1793841678.9201396,
+    "finished": 1793841776.8586478
+  },
+  "rgba-composite/morphic": {
+    "status": "complete",
+    "started": 1793841776.8590512,
+    "finished": 1793841860.5733643
+  },
+  "rgba-composite/rust-with-mimalloc": {
+    "status": "complete",
+    "started": 1793841860.573755,
+    "finished": 1793841869.1687903
+  },
+  "rgba-composite/haskell-st": {
+    "status": "complete",
+    "started": 1793841869.1692128,
+    "finished": 1793841983.315204
+  },
+  "rgba-composite/haskell-st-a1g": {
+    "status": "complete",
+    "started": 1793841983.315629,
+    "finished": 1793842097.5790575
+  },
+  "pcm-mix-limit/lean": {
+    "status": "complete",
+    "started": 1793842097.579511,
+    "finished": 1793842229.7395127
+  },
+  "pcm-mix-limit/reussir": {
+    "status": "complete",
+    "started": 1793842229.7400038,
+    "finished": 1793842242.6014705
+  },
+  "pcm-mix-limit/koka": {
+    "status": "budget_limited",
+    "started": 1793842242.6018972,
+    "finished": 1793842525.3645294
+  },
+  "pcm-mix-limit/rust": {
+    "status": "complete",
+    "started": 1793842525.3650053,
+    "finished": 1793842538.041174
+  },
+  "pcm-mix-limit/ocaml": {
+    "status": "complete",
+    "started": 1793842538.0416253,
+    "finished": 1793842636.9194014
+  },
+  "pcm-mix-limit/morphic": {
+    "status": "complete",
+    "started": 1793842636.9198713,
+    "finished": 1793842695.0215635
+  },
+  "pcm-mix-limit/rust-with-mimalloc": {
+    "status": "complete",
+    "started": 1793842695.0220754,
+    "finished": 1793842707.752633
+  },
+  "pcm-mix-limit/haskell-st": {
+    "status": "complete",
+    "started": 1793842707.7531376,
+    "finished": 1793842805.7411728
+  },
+  "pcm-mix-limit/haskell-st-a1g": {
+    "status": "complete",
+    "started": 1793842805.7416584,
+    "finished": 1793842903.810605
   }
 }

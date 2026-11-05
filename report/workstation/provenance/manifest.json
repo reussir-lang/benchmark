@@ -1217,9 +1217,81 @@
     [
       "rbtree-zipper",
       "rust-with-mimalloc"
+    ],
+    [
+      "rgba-composite",
+      "lean"
+    ],
+    [
+      "rgba-composite",
+      "reussir"
+    ],
+    [
+      "rgba-composite",
+      "koka"
+    ],
+    [
+      "rgba-composite",
+      "rust"
+    ],
+    [
+      "rgba-composite",
+      "ocaml"
+    ],
+    [
+      "rgba-composite",
+      "morphic"
+    ],
+    [
+      "rgba-composite",
+      "rust-with-mimalloc"
+    ],
+    [
+      "rgba-composite",
+      "haskell-st"
+    ],
+    [
+      "rgba-composite",
+      "haskell-st-a1g"
+    ],
+    [
+      "pcm-mix-limit",
+      "lean"
+    ],
+    [
+      "pcm-mix-limit",
+      "reussir"
+    ],
+    [
+      "pcm-mix-limit",
+      "koka"
+    ],
+    [
+      "pcm-mix-limit",
+      "rust"
+    ],
+    [
+      "pcm-mix-limit",
+      "ocaml"
+    ],
+    [
+      "pcm-mix-limit",
+      "morphic"
+    ],
+    [
+      "pcm-mix-limit",
+      "rust-with-mimalloc"
+    ],
+    [
+      "pcm-mix-limit",
+      "haskell-st"
+    ],
+    [
+      "pcm-mix-limit",
+      "haskell-st-a1g"
     ]
   ],
-  "target_count": 288,
+  "target_count": 306,
   "reussir_compiler_sha256": "fedc658ace8b914e0b9715852420293ecfb28abf288f7d954236b9ac78289ddc",
   "compiler_launch_environment": {
     "native_compiler": "/tmp/reussir-primary-refresh-20261102/rrc.native",
@@ -1460,7 +1532,23 @@
     "rust/rbtree-zipper-lambda.rs": "d214327dc8530b2c8022ff9b5a01b105bec412ac312fef4cd2580435c6ae4b78",
     "rust/extern-crates/Cargo.toml": "a6422fd755ae4caa210df898dfbddafee0d410ac7e2da53c72af26b0302ae514",
     "rust/extern-crates/lib.rs": "c39917bb8de077924cd9c1aa738a24fa3c32bebe54eefe4e06ab645505aea393",
-    "rust/extern-crates/Cargo.lock": "64bb7c72dfefe1a0cf9593b8b39807697248dafad3f003be9d516e8b6e53dbef"
+    "rust/extern-crates/Cargo.lock": "64bb7c72dfefe1a0cf9593b8b39807697248dafad3f003be9d516e8b6e53dbef",
+    "lean/rgba-composite.lean": "a7a12feee94e5ea46ba4ce06547dbf98a66e7247a32af552f5c7e3591500f06c",
+    "reussir/rgba-composite.rr": "3bf287fe109c42db9a7586afaa1a14beccbbbd8db38a1b704a4f006f043d46fb",
+    "reussir/rgba-composite.rr.c": "7732cca4033ee20daa6d38479a15c19d7b5a39b631e38cb470e6b3e58e3f4cee",
+    "koka/rgba-composite.kk": "1de94efa8099b9b3c25db071f818f46eea36a4f4bd9f61716f3772643d43c037",
+    "rust/rgba-composite.rs": "ff0c05dacf6250844f1fe8d372bb051bf0677642fa34dc0fbb160d08b9961591",
+    "ocaml/rgba-composite.ml": "f8c3749fbeb885e11b51cb8f61bda1482101a593da34dfdba187559f9654a383",
+    "morphic/rgba-composite.mor": "46d56cd77abb8b3ba4564b7105790f6c7b15dfa3397fd25c8a9f1191f6371af3",
+    "haskell/rgba-composite_st.hs": "17bc319e0634f933bd96bf5870af75178b20fe62dced63a711fa29b8b3f60166",
+    "lean/pcm-mix-limit.lean": "fea125d71ad1f3a995e1dbde729a8af2fc28383ac7d6e7d02911a58ffd22c605",
+    "reussir/pcm-mix-limit.rr": "0825d7943c330b49451fc2dfb18f9e5bd132c9f773fa1afbf57c573c9775b714",
+    "reussir/pcm-mix-limit.rr.c": "352fd72ab884f4ffcf591fc0fc9762d0f475fd2965a4e5724186a475d8dd61ac",
+    "koka/pcm-mix-limit.kk": "3b75d820690b46ebfefb5ee4b7d8bd235d67b44d4c0327f691dd84cd2af9c436",
+    "rust/pcm-mix-limit.rs": "59625b212e7c011eeedd75150a1ab4011798c5d2e840ce49948845984ed49cbf",
+    "ocaml/pcm-mix-limit.ml": "35d9c3e7897591fbc5d5784e51b61ae34c21cc6357cf4aa8f4989ef6036776bb",
+    "morphic/pcm-mix-limit.mor": "8ce2613241803d4f90ab8bab1e27980e157a823185efd2a0e2844f3ee17a1087",
+    "haskell/pcm-mix-limit_st.hs": "0a7465b59bf10605cc98e0962f2297f871a9409b37673808c37ba0b4a6235f7d"
   },
   "library_source_sha256": {
     "library/std/.gitignore": "501d674e27e50b1b2e3e9148eb2fa854fdea34fd26f923620aab8ca023cb5451",
@@ -1822,6 +1910,24 @@
     "rbtree-zipper/reussir": "reussir-manifest.json",
     "rbtree-zipper/reussir-nrac": "reussir-manifest.json",
     "rbtree-zipper/rust": "native-toolchains-manifest.json",
-    "rbtree-zipper/rust-with-mimalloc": "native-toolchains-manifest.json"
+    "rbtree-zipper/rust-with-mimalloc": "native-toolchains-manifest.json",
+    "rgba-composite/lean": "regular-arrays-manifest.json",
+    "rgba-composite/reussir": "regular-arrays-manifest.json",
+    "rgba-composite/koka": "regular-arrays-manifest.json",
+    "rgba-composite/rust": "regular-arrays-manifest.json",
+    "rgba-composite/ocaml": "regular-arrays-manifest.json",
+    "rgba-composite/morphic": "regular-arrays-manifest.json",
+    "rgba-composite/rust-with-mimalloc": "regular-arrays-manifest.json",
+    "rgba-composite/haskell-st": "regular-arrays-manifest.json",
+    "rgba-composite/haskell-st-a1g": "regular-arrays-manifest.json",
+    "pcm-mix-limit/lean": "regular-arrays-manifest.json",
+    "pcm-mix-limit/reussir": "regular-arrays-manifest.json",
+    "pcm-mix-limit/koka": "regular-arrays-manifest.json",
+    "pcm-mix-limit/rust": "regular-arrays-manifest.json",
+    "pcm-mix-limit/ocaml": "regular-arrays-manifest.json",
+    "pcm-mix-limit/morphic": "regular-arrays-manifest.json",
+    "pcm-mix-limit/rust-with-mimalloc": "regular-arrays-manifest.json",
+    "pcm-mix-limit/haskell-st": "regular-arrays-manifest.json",
+    "pcm-mix-limit/haskell-st-a1g": "regular-arrays-manifest.json"
   }
 }

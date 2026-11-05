@@ -1,12 +1,14 @@
 # workstation benchmark comparison
 
-workstation: 288 recorded cells accounted for; timing 287/288, footprint 287/288. Statuses: budget_exhausted=1, budget_limited=4, complete=283.
+workstation: 306 recorded cells accounted for; timing 305/306, footprint 305/306. Statuses: budget_exhausted=1, budget_limited=5, complete=300.
 
 The ocaml configuration uses OxCaml (Flambda 2). Time and RSS ratios are variant / default Reussir: above 1 means slower or more memory. Geometric means use only complete, non-budget-limited pairs with positive measurements. Timing and memory coverage can differ. X means takes too long (no completed measurement within 5 minutes). Blank CSV cells and — mean unavailable for other reasons; a single timing sample has no standard deviation.
 
-Reussir: `36f05142f3b33f442f69afa421a10b7a39ee21f9`. Benchmark: `19efdd9334de1d1fb64bb32ff59e0a47aea7d039`. Architecture: x86_64; measurement CPU: 1.
+Baseline Reussir: `36f05142f3b33f442f69afa421a10b7a39ee21f9`. Baseline benchmark: `19efdd9334de1d1fb64bb32ff59e0a47aea7d039`. Architecture: x86_64; measurement CPU: 1.
 
-Compiler and runtime hashes are recorded in `provenance/manifest.json`. The compiler hash identifies the native ELF; the compiler launcher environment is recorded separately in `provenance/compiler-launch-environment.json`.
+Source revisions and toolchains for each cell are identified in [the combined manifest](provenance/manifest.json); the added array cells use [the regular-array manifest](provenance/regular-arrays-manifest.json).
+
+Baseline compiler and runtime hashes are recorded in `provenance/manifest.json`. The compiler hash identifies the native ELF; the compiler launcher environment is recorded separately in `provenance/compiler-launch-environment.json`.
 
 ## Complete paired comparisons
 
@@ -14,18 +16,18 @@ Compiler and runtime hashes are recorded in `provenance/manifest.json`. The comp
 | --- | --- | --- | --- | --- | --- |
 | haskell | 27 | 27 | 1.96719 | 27 | 2.98376 |
 | haskell-a1g | 27 | 27 | 2.24975 | 27 | 32.5043 |
-| haskell-st | 3 | 3 | 2.76126 | 3 | 1.72545 |
-| haskell-st-a1g | 3 | 3 | 3.04662 | 3 | 29.789 |
-| koka | 28 | 27 | 2.0642 | 27 | 1.2666 |
-| lean | 28 | 27 | 2.09329 | 27 | 2.04248 |
-| morphic | 20 | 19 | 2.48196 | 19 | 1.06884 |
-| ocaml | 28 | 26 | 2.14425 | 26 | 4.14563 |
-| reussir | 28 | 28 | 1 | 28 | 1 |
+| haskell-st | 5 | 5 | 6.19389 | 5 | 1.40768 |
+| haskell-st-a1g | 5 | 5 | 6.57267 | 5 | 13.8327 |
+| koka | 30 | 28 | 2.34592 | 28 | 1.2694 |
+| lean | 30 | 29 | 2.53339 | 29 | 2.09236 |
+| morphic | 22 | 21 | 2.99537 | 21 | 1.03604 |
+| ocaml | 30 | 28 | 2.53112 | 28 | 3.90928 |
+| reussir | 30 | 30 | 1 | 30 | 1 |
 | reussir-nrac | 28 | 28 | 1.102 | 28 | 1.03292 |
-| rust | 28 | 28 | 2.14813 | 28 | 1.60234 |
+| rust | 30 | 30 | 2.04162 | 30 | 1.4923 |
 | rust-rpds | 6 | 6 | 2.34716 | 6 | 2.14405 |
 | rust-rpds-with-mimalloc | 6 | 6 | 1.53059 | 6 | 1.81259 |
-| rust-with-mimalloc | 28 | 28 | 1.86774 | 28 | 2.97071 |
+| rust-with-mimalloc | 30 | 30 | 1.78995 | 30 | 2.81859 |
 
 ## Functional data structures
 
@@ -147,6 +149,15 @@ Compiler and runtime hashes are recorded in `provenance/manifest.json`. The comp
 | life | reussir-nrac | 298.525 | 0.206639 | 10 | 3.91406 | complete | false | hyperfine |
 | life | rust | 180.08 | 3.2885 | 10 | 1.07031 | complete | false | hyperfine |
 | life | rust-with-mimalloc | 180.278 | 3.19877 | 10 | 5.57812 | complete | false | hyperfine |
+| pcm-mix-limit | haskell-st | 4380.14 | 1.27409 | 10 | 5.96875 | complete | false | hyperfine |
+| pcm-mix-limit | haskell-st-a1g | 4383.57 | 3.1931 | 10 | 22.2812 | complete | false | hyperfine |
+| pcm-mix-limit | koka | 26411 | 280.896 | 6 | 7.52734 | budget_limited | true | hyperfine |
+| pcm-mix-limit | lean | 11791.5 | 40.8774 | 10 | 16.2266 | complete | false | hyperfine |
+| pcm-mix-limit | morphic | 2937.56 | 3.95065 | 10 | 4.30859 | complete | false | hyperfine |
+| pcm-mix-limit | ocaml | 4816.92 | 3.5834 | 10 | 10.168 | complete | false | hyperfine |
+| pcm-mix-limit | reussir | 232.523 | 0.189096 | 10 | 5.59375 | complete | false | hyperfine |
+| pcm-mix-limit | rust | 255.958 | 0.606425 | 10 | 3.07812 | complete | false | hyperfine |
+| pcm-mix-limit | rust-with-mimalloc | 250.284 | 0.185378 | 10 | 7.54688 | complete | false | hyperfine |
 | qsort | haskell | 2714.06 | 33.2654 | 10 | 29.1406 | complete | false | hyperfine |
 | qsort | haskell-a1g | 2352.61 | 45.0201 | 10 | 1052.41 | complete | false | hyperfine |
 | qsort | haskell-st | 421.149 | 0.419614 | 10 | 9.21484 | complete | false | hyperfine |
@@ -168,6 +179,15 @@ Compiler and runtime hashes are recorded in `provenance/manifest.json`. The comp
 | raytracer | reussir-nrac | 73.9435 | 0.0697648 | 10 | 3.87109 | complete | false | hyperfine |
 | raytracer | rust | 64.957 | 0.0872523 | 10 | 1.62109 | complete | false | hyperfine |
 | raytracer | rust-with-mimalloc | 65.1583 | 0.0667311 | 10 | 6.07812 | complete | false | hyperfine |
+| rgba-composite | haskell-st | 5150.4 | 1.50199 | 10 | 5.63672 | complete | false | hyperfine |
+| rgba-composite | haskell-st-a1g | 5155.39 | 1.81466 | 10 | 26.8867 | complete | false | hyperfine |
+| rgba-composite | koka | 16627.1 | 34.1124 | 10 | 7.53125 | complete | false | hyperfine |
+| rgba-composite | lean | 4900.65 | 3.92274 | 10 | 16.1836 | complete | false | hyperfine |
+| rgba-composite | morphic | 5665.25 | 2.60824 | 10 | 4.30859 | complete | false | hyperfine |
+| rgba-composite | ocaml | 5172.34 | 3.80021 | 10 | 10.2148 | complete | false | hyperfine |
+| rgba-composite | reussir | 224.061 | 0.311647 | 10 | 5.58984 | complete | false | hyperfine |
+| rgba-composite | rust | 204.257 | 0.273973 | 10 | 3.08594 | complete | false | hyperfine |
+| rgba-composite | rust-with-mimalloc | 202.646 | 0.186404 | 10 | 7.55469 | complete | false | hyperfine |
 
 ## Standard-library collections
 
