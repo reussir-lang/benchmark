@@ -1,0 +1,49 @@
+// Source-over compositing of packed RGBA8 layers onto an opaque RGB canvas.
+// Each recursive step consumes and returns the destination array; the source
+// image remains read-only. Pixel traversal is contiguous within each layer.
+import core::intrinsic::array;
+
+fn channel(s: u32, d: u32, alpha: u32) -> u32 {
+    (s * alpha + d * (255 - alpha) + 127) / 255
+}
+
+fn blend(dst: u32, src: u32, opacity: u32) -> u32 {
+    let alpha = ((src >> 24) * opacity + 127) / 255;
+    let r = channel(src & 255, dst & 255, alpha);
+    let g = channel((src >> 8) & 255, (dst >> 8) & 255, alpha);
+    let b = channel((src >> 16) & 255, (dst >> 16) & 255, alpha);
+    r | (g << 8) | (b << 16) | 4278190080
+}
+
+fn composite(dst: [u32; 262144], src: [u32; 262144], opacity: u32, i: i64) -> [u32; 262144] {
+    if i == 262144 { dst } else {
+        let d = array::get(dst, i);
+        let s = array::get(src, i);
+        composite(array::set(dst, i, blend(d, s, opacity)), src, opacity, i + 1)
+    }
+}
+
+fn layers(dst: [u32; 262144], src: [u32; 262144], n: i64) -> [u32; 262144] {
+    if n == 0 { dst } else {
+        layers(composite(dst, src, (96 + n % 160) as u32, 0), src, n - 1)
+    }
+}
+
+fn rgba_composite_test(rounds: i64) -> i64 {
+    let src = array::tabulate<[u32; 262144]>(|i| {
+        let r = ((i * 17 + 23) % 256) as u32;
+        let g = ((i * 43 + 7) % 256) as u32;
+        let b = ((i * 97 + 61) % 256) as u32;
+        let a = ((i * 31 + 13) % 256) as u32;
+        r | (g << 8) | (b << 16) | (a << 24)
+    });
+    let dst = array::tabulate<[u32; 262144]>(|i| {
+        let r = ((i * 29 + 5) % 256) as u32;
+        let g = ((i * 11 + 101) % 256) as u32;
+        let b = ((i * 67 + 19) % 256) as u32;
+        r | (g << 8) | (b << 16) | 4278190080
+    });
+    array::fold(layers(dst, src, rounds), 0, |acc: i64, pixel: u32| acc + pixel as i64)
+}
+
+extern "C" trampoline "rgba_composite_test_ffi" = rgba_composite_test;

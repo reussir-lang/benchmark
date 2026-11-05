@@ -1,0 +1,58 @@
+// Signed PCM mixing with a Q15 gain, linear fade, soft knee, and saturation.
+// I64 arithmetic has the same results as the reference's I32 arithmetic:
+// all intermediate products fit in signed 32 bits, and division truncates.
+module Core = file "lib/core/core.mor"
+  expose {
+    module Io expose { writeln },
+    module String expose { i64_to_string, concat },
+    module Array,
+  }
+
+rem(a: I64, b: I64): I64 = a - b * (a / b)
+
+limit(sample: I64): I64 =
+  let knee = if sample > 16384 { 16384 + (sample - 16384) / 2 } else {
+    if sample < -16384 { -16384 + (sample + 16384) / 2 } else { sample }
+  } in
+  if knee > 32767 { 32767 } else {
+    if knee < -32768 { -32768 } else { knee }
+  }
+
+mix(dst: Array I64, src: Array I64, gain: I64, i: I64): Array I64 =
+  if i = 262144 { dst } else {
+    let source = Array.get(src, i) in
+    let previous = Array.get(dst, i) in
+    let envelope = i / 8 in
+    let scaled = (source * gain) / 32768 in
+    let faded = (scaled * envelope) / 32768 in
+    mix(Array.set(dst, i, limit(previous + faded)), src, gain, i + 1)
+  }
+
+tracks(dst: Array I64, src: Array I64, n: I64): Array I64 =
+  if n = 0 { dst } else {
+    let gain = rem(n * 1103, 98304) - 49152 in
+    tracks(mix(dst, src, gain, 0), src, n - 1)
+  }
+
+tabulate_rec(out: Array a, i: I64, n: I64, f: I64 -> a): Array a =
+  if i = n { out } else { tabulate_rec(push(out, f(i)), i + 1, n, f) }
+
+tabulate(n: I64, f: I64 -> a): Array a = tabulate_rec(reserve([], n), 0, n, f)
+
+source_sample(i: I64): I64 =
+  let fundamental = rem(i * 97, 65536) - 32768 in
+  let harmonic = rem(i * 271, 65536) - 32768 in
+  let noise = rem(i * 8191 + 37, 1024) - 512 in
+  fundamental / 2 + harmonic / 4 + noise
+
+pcm_mix_limit_test(): I64 =
+  let src = tabulate(262144, source_sample) in
+  let dst = Array.fill(262144, 0) in
+  Array.foldl(tracks(dst, src, 8192), 0, \(energy, sample) -> energy + sample * sample)
+
+proc main(): () =
+  let result = pcm_mix_limit_test() in
+  if result = 124776496343097 { () } else {
+    do writeln(concat("FAIL: expected 124776496343097, got ", i64_to_string(result))) then
+    panic("wrong result\n")
+  }

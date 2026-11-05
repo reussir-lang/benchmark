@@ -37,11 +37,12 @@ fn sift_down(a : [i64; 65535], i : i64) -> [i64; 65535] {
     } else {
         let r = l + 1;
         let vl = core::intrinsic::array::get(a, l);
-        let c = if r < 65535 {
-            if core::intrinsic::array::get(a, r) < vl { r } else { l }
+        let right_offset = if r < 65535 {
+            if core::intrinsic::array::get(a, r) < vl { 1 } else { 0 }
         } else {
-            l
+            0
         };
+        let c = l + right_offset;
         let vc = core::intrinsic::array::get(a, c);
         let vi = core::intrinsic::array::get(a, i);
         if vc < vi {

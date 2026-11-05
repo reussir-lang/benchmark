@@ -6,7 +6,7 @@ Haskell, OCaml, and Morphic, organized as five sets:
 | Set | Benchmarks | What it exercises |
 |---|---|---|
 | `functional-data-structures` | rbtree, rbtree-zipper, nbe-hoas, nbe-closure, derive, fingertree, functional-queue, heap-functional, mltt | allocation, pattern matching, persistence, and reuse/GC of linked structures |
-| `large-aggregates` | life, qsort, heap-array, raytracer | flat arrays, array heaps, and ray tracing over a sphere array |
+| `large-aggregates` | life, qsort, heap-array, raytracer, rgba-composite, pcm-mix-limit | flat arrays, array heaps, rendering, image compositing, and audio processing |
 | `std-collections` | ordered-map-linear, ordered-map-shared, ordered-map-heavily-shared, hash-map-linear, hash-map-shared, hash-map-heavily-shared | each language's standard ordered map and hash map under matched insert/remove/lookup workloads at three retention tiers: none, sparse, and heavy |
 | `big-integers` | bigint-fib, bigint-factorial, bigint-pidigits, bigint-binomial, bigint-rbtree, bigint-collatz | each language's arbitrary-precision integers on heap-sized values (sums, products and quotients by a word, spigot arithmetic) and on values that stay word-sized |
 | `shared-traversals` | list-membership, expr-replace, rbtree-lookup | read-only traversals of data the caller keeps: what borrowed parameters save a reference-counted runtime |
@@ -56,6 +56,19 @@ does not supply a footprint.
 - **life** — Conway's Game of Life, toroidal 64×64, 50k generations.
   Functional per-generation rebuild (tabulate / `vector-init` / `ofFn` /
   `listArray`), mutation double-buffer for the baselines.
+- **rgba-composite** — 4096 source-over passes over 262144 packed RGBA8
+  pixels, with per-pass opacity and an opaque destination. Each pass reads
+  one source image and updates the destination in contiguous order; setup
+  and the checksum are outside the pass loop. Every port checks
+  `1123699998887936`.
+- **pcm-mix-limit** — 8192 mixing passes over 262144 signed PCM samples.
+  Each pass applies a Q15 gain, a linear fade, a symmetric soft knee, and
+  hard saturation. Signed division truncates toward zero; all intermediate
+  products fit in signed 32 bits. Every port checks energy
+  `124776496343097`.
+  Both workloads use 32-bit element types in Reussir, Lean, Koka, Rust,
+  and Haskell; OCaml uses native integers and Morphic uses `I64`. Haskell uses mutable unboxed ST
+  arrays. Independent scalar C references are in `tests/reference/`.
 - **qsort** — 100 rounds of in-place Lomuto quicksort over a fresh
   `[i64; 65536]` MINSTD-filled array. Persistent-array languages rely on
   uniqueness/COW for in-place sets; the Koka and pure Haskell variants use

@@ -39,7 +39,7 @@ fn sift_down(a: &mut [i64], mut i: usize) {
             break;
         }
         let r = l + 1;
-        let c = if r < N && a[r] < a[l] { r } else { l };
+        let c = l + usize::from(r < N && a[r] < a[l]);
         if a[c] < a[i] {
             a.swap(i, c);
             i = c;

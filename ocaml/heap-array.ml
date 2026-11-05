@@ -34,7 +34,7 @@ let sift_down values index =
     else
       let right = left + 1 in
       let child =
-        if right < size && Int64.compare values.(right) values.(left) < 0 then right else left
+        left + (if right < size && Int64.compare values.(right) values.(left) < 0 then 1 else 0)
       in
       if Int64.compare values.(child) values.(!index) < 0 then (
         swap values child !index;
