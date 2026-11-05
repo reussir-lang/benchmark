@@ -1549,7 +1549,7 @@
     "bigint-collatz/koka": "baseline-manifest.json",
     "bigint-collatz/lean": "native-toolchains-manifest.json",
     "bigint-collatz/ocaml": "native-toolchains-manifest.json",
-    "bigint-collatz/reussir": "reussir-manifest.json",
+    "bigint-collatz/reussir": "select-optimize-collatz-manifest.json",
     "bigint-collatz/reussir-nrac": "reussir-manifest.json",
     "bigint-collatz/rust": "native-toolchains-manifest.json",
     "bigint-collatz/rust-with-mimalloc": "native-toolchains-manifest.json",

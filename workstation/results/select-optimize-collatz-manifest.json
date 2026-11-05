@@ -1,0 +1,50 @@
+{
+  "started": 1793838987.5451202,
+  "finished": 1793838998.4122288,
+  "cpu": 1,
+  "config": {
+    "reussir-compiler": "/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/select-optimize-screen/rrc",
+    "cc": "/nix/store/b04h3phsrakl7sinx6zx931n4l5lc29v-clang-wrapper-23.1.0/bin/clang",
+    "reussir-libs": "/nix/store/79835jspl8gplpjfi28qa22vcsxi7k86-reussir-rt-xlto-0.1.0-git-bcfff8d41916/lib",
+    "reussir-src": "/tmp/reussir-final-comparison-20261101/current",
+    "reussir-rcgmp-runtime": "/tmp/reussir-final-comparison-20261101/current/build/lib/libRCGMPRuntime.a",
+    "koka-compiler": "/nix/store/kfrnbc6mr3wa1nh6i5m2ib1ajf7y1qxz-koka-3.2.3/bin/koka",
+    "lean-compiler": "/nix/store/1c3cpd3yrk44z39pxq1if26w5x0pwfgr-lean4-4.30.0-thinlto/bin/lean",
+    "leanc": "/nix/store/1c3cpd3yrk44z39pxq1if26w5x0pwfgr-lean4-4.30.0-thinlto/bin/leanc",
+    "rustc": "/nix/store/yaa1sq5g4jar7rvlspy7kk2wd98nj6qh-rustc-wrapper-1.97.1/bin/rustc",
+    "rust-extern-libs": "/nix/store/s43qj0la8h0rbzz5ydfmn39k5d455qzj-benchmark-rust-extern-crates-2/lib",
+    "ghc": "/nix/store/8mcxdpmjysczky71y8bbkn5qqzfqh2qi-ghc/bin/ghc",
+    "ocamlopt": "/nix/store/igjbws5i0yp23r296cbx91wfinnjw8z9-oxcaml-5.4.0+ox/bin/ocamlopt",
+    "ocamlfind": "/nix/store/5sbiy33wpf7wjiwz9m32k6rxffy7lznp-ocaml5.4.0+ox-findlib-1.9.8/bin/ocamlfind",
+    "morphic-compiler": "/nix/store/kbyfqykxfmq2kad618cqqinav9gmzhdr-morphic-0-git-da679c49a336/bin/morphic",
+    "morphic-clang": "/nix/store/rr8q0dspcaa1wxf3mmbqyrkqvqckbr0r-clang-wrapper-16.0.6/bin/clang",
+    "hyperfine": "/nix/store/appgcalc3hd37546nzjgynr3j33513lc-hyperfine-1.20.0/bin/hyperfine",
+    "time": "/nix/store/0b6n1yq24vs9xwlxzbla0jvidaghwabz-time-1.10/bin/time",
+    "compile-timeout-seconds": 60,
+    "case-time-budget-seconds": 300,
+    "warmup-runs": 5,
+    "runs": 10,
+    "rust-runtime-env": [
+      "LD_PRELOAD=/nix/store/65nm2qiksk60hmj21qvinnvknrpp21i2-mimalloc-3.4.5/lib/libmimalloc.so"
+    ]
+  },
+  "compiler_revision": "1a72e8c9fa870014291b997e23e2b2c0301fc8c7",
+  "compiler_sha256": "3e792cdc3aa83a1a7d81f69b7d6cd3b97be7cc43bd287f2435ef923f816c37b9",
+  "baseline_revision": "83bd7a58881edd2563878fe098d54bbec8c97804",
+  "benchmarks": [
+    "bigint-collatz"
+  ],
+  "source_sha256": {
+    "reussir/bigint-collatz.rr": "4e5485bccf6da80890461fe84763657d699efd1109fb684e8cbdaa08fadb2bb2",
+    "reussir/bigint-collatz.rr.c": "07f850627b638ed4c07ae95c2d2ff8dba1c88d564fd0b88848f375326c093cee"
+  },
+  "runtime_and_library_provenance": "reussir-manifest.json",
+  "backend_linker_flags": [
+    "-Wl,-plugin-opt=-disable-select-optimize=false"
+  ],
+  "build_commands": "select-optimize-collatz-commands.json",
+  "comparison_to_published_baseline": {
+    "baseline_mean": 0.15026159859600002,
+    "change_percent": 7.227434334169969
+  }
+}

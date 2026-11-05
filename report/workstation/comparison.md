@@ -12,20 +12,20 @@ Compiler and runtime hashes are recorded in `provenance/manifest.json`. The comp
 
 | Variant | Available pairs | Timing pairs | Time / Reussir | Memory pairs | RSS / Reussir |
 | --- | --- | --- | --- | --- | --- |
-| haskell | 27 | 27 | 1.97228 | 27 | 2.98642 |
-| haskell-a1g | 27 | 27 | 2.25557 | 27 | 32.5332 |
+| haskell | 27 | 27 | 1.96719 | 27 | 2.98376 |
+| haskell-a1g | 27 | 27 | 2.24975 | 27 | 32.5043 |
 | haskell-st | 3 | 3 | 2.76126 | 3 | 1.72545 |
 | haskell-st-a1g | 3 | 3 | 3.04662 | 3 | 29.789 |
-| koka | 28 | 27 | 2.06954 | 27 | 1.26773 |
-| lean | 28 | 27 | 2.0987 | 27 | 2.0443 |
+| koka | 28 | 27 | 2.0642 | 27 | 1.2666 |
+| lean | 28 | 27 | 2.09329 | 27 | 2.04248 |
 | morphic | 20 | 19 | 2.48196 | 19 | 1.06884 |
-| ocaml | 28 | 26 | 2.15001 | 26 | 4.14945 |
+| ocaml | 28 | 26 | 2.14425 | 26 | 4.14563 |
 | reussir | 28 | 28 | 1 | 28 | 1 |
-| reussir-nrac | 28 | 28 | 1.10475 | 28 | 1.0338 |
-| rust | 28 | 28 | 2.15349 | 28 | 1.60372 |
+| reussir-nrac | 28 | 28 | 1.102 | 28 | 1.03292 |
+| rust | 28 | 28 | 2.14813 | 28 | 1.60234 |
 | rust-rpds | 6 | 6 | 2.34716 | 6 | 2.14405 |
 | rust-rpds-with-mimalloc | 6 | 6 | 1.53059 | 6 | 1.81259 |
-| rust-with-mimalloc | 28 | 28 | 1.8724 | 28 | 2.97326 |
+| rust-with-mimalloc | 28 | 28 | 1.86774 | 28 | 2.97071 |
 
 ## Functional data structures
 
@@ -264,7 +264,7 @@ Compiler and runtime hashes are recorded in `provenance/manifest.json`. The comp
 | bigint-collatz | koka | 176.558 | 0.300063 | 10 | 3.48047 | complete | false | hyperfine |
 | bigint-collatz | lean | 218.414 | 0.186727 | 10 | 8.94531 | complete | false | hyperfine |
 | bigint-collatz | ocaml | 726.571 | 7.88149 | 10 | 6.60547 | complete | false | hyperfine |
-| bigint-collatz | reussir | 150.262 | 1.44927 | 10 | 1.60938 | complete | false | hyperfine |
+| bigint-collatz | reussir | 161.122 | 0.13066 | 10 | 1.64844 | complete | false | hyperfine |
 | bigint-collatz | reussir-nrac | 150.202 | 1.28156 | 10 | 1.60938 | complete | false | hyperfine |
 | bigint-collatz | rust | 418.212 | 1.11087 | 10 | 1.06641 | complete | false | hyperfine |
 | bigint-collatz | rust-with-mimalloc | 421.523 | 2.59393 | 10 | 5.57422 | complete | false | hyperfine |

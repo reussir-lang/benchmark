@@ -1,0 +1,86 @@
+[
+  {
+    "benchmark": "bigint-fib",
+    "step": "reussir core interface",
+    "cmd": [
+      "/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/select-optimize-screen/rrc",
+      "--package-root",
+      "/tmp/reussir-final-comparison-20261101/current/library/core/src",
+      "--package-name",
+      "core",
+      "--builtin",
+      "-t",
+      "rri",
+      "-o",
+      "core.rri"
+    ],
+    "cwd": "/tmp/nix-shell.T2NgCt/reussir-core-bq_x6oyn"
+  },
+  {
+    "benchmark": "bigint-fib",
+    "step": "reussir core compilation",
+    "cmd": [
+      "/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/select-optimize-screen/rrc",
+      "--package-root",
+      "/tmp/reussir-final-comparison-20261101/current/library/core/src",
+      "--package-name",
+      "core",
+      "--builtin",
+      "-t",
+      "llvm-ir",
+      "-o",
+      "core.ll",
+      "-Oaggressive",
+      "--reuse-across-call",
+      "--relocation-mode",
+      "pic"
+    ],
+    "cwd": "/tmp/nix-shell.T2NgCt/reussir-core-bq_x6oyn"
+  },
+  {
+    "benchmark": "bigint-collatz",
+    "step": "reussir compilation",
+    "cmd": [
+      "/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/select-optimize-screen/rrc",
+      "-o",
+      "reussir.ll",
+      "--package-name",
+      "bench",
+      "--extern",
+      "core=/tmp/nix-shell.T2NgCt/reussir-core-bq_x6oyn/core.rri",
+      "--extern-src",
+      "core=/tmp/reussir-final-comparison-20261101/current/library/core/src",
+      "-Oaggressive",
+      "--reuse-across-call",
+      "--relocation-mode",
+      "pic",
+      "-t",
+      "llvm-ir",
+      "/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/benchmark-heap/reussir/bigint-collatz.rr"
+    ],
+    "cwd": "/tmp/nix-shell.T2NgCt/tmp_a3kk7z5"
+  },
+  {
+    "benchmark": "bigint-collatz",
+    "step": "reussir linking",
+    "cmd": [
+      "/nix/store/b04h3phsrakl7sinx6zx931n4l5lc29v-clang-wrapper-23.1.0/bin/clang",
+      "-o",
+      "/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/select-optimize-screen/bigint-collatz/executable",
+      "reussir.ll",
+      "/tmp/nix-shell.T2NgCt/reussir-core-bq_x6oyn/core.ll",
+      "/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/benchmark-heap/reussir/bigint-collatz.rr.c",
+      "-flto=thin",
+      "-fuse-ld=lld",
+      "-O3",
+      "-march=native",
+      "/tmp/reussir-final-comparison-20261101/current/build/lib/libRCGMPRuntime.a",
+      "-Wl,-rpath,/nix/store/jwyskbj2mc7izs67ib2msydsh0vbnwl9-gmp-with-cxx-6.3.0/lib",
+      "-lgmp",
+      "/nix/store/79835jspl8gplpjfi28qa22vcsxi7k86-reussir-rt-xlto-0.1.0-git-bcfff8d41916/lib/libreussir_rt.a",
+      "-lm",
+      "-Wl,-plugin-opt=-disable-select-optimize=false"
+    ],
+    "cwd": "/tmp/nix-shell.T2NgCt/tmp_a3kk7z5"
+  }
+]

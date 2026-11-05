@@ -649,25 +649,25 @@
     "reussir": {
       "results": [
         {
-          "command": "/tmp/nix-shell.Y1W84r/tmp8u8v4z62/bigint-collatz-reussir",
-          "mean": 0.15026159859600002,
-          "stddev": 0.001449272997406234,
-          "median": 0.15072895964,
-          "user": 0.149635878,
-          "system": 0.0004938599999999999,
-          "min": 0.14655571648,
-          "max": 0.15140192388,
+          "command": "/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/select-optimize-screen/bigint-collatz/executable",
+          "mean": 0.161121656964,
+          "stddev": 0.00013065979572232197,
+          "median": 0.16114357480000002,
+          "user": 0.16072282799999998,
+          "system": 0.000328412,
+          "min": 0.16084321924000003,
+          "max": 0.16124810308,
           "times": [
-            0.15078606408,
-            0.15110027864,
-            0.1506718552,
-            0.15122690740000003,
-            0.14919997266,
-            0.15006897512,
-            0.14655571648,
-            0.15065635670000002,
-            0.15140192388,
-            0.15094793580000002
+            0.16111972800000002,
+            0.1610495169,
+            0.16124554742,
+            0.16101114534000002,
+            0.16120753146000003,
+            0.1611674216,
+            0.16124810308,
+            0.16107671108,
+            0.16084321924000003,
+            0.16124764552
           ],
           "exit_codes": [
             0,
@@ -688,9 +688,9 @@
       "requested_samples": 10,
       "warmup_runs": 5,
       "case_time_budget_seconds": 300.0,
-      "measurement_seconds": 2.741097271995386,
+      "measurement_seconds": 2.904572987987194,
       "budget_limited": false,
-      "peak_rss_kb": 1648
+      "peak_rss_kb": 1688
     },
     "reussir-nrac": {
       "results": [
