@@ -13,7 +13,7 @@ workstation,bigint-collatz,haskell-a1g,complete,1265.8242340220002,2.79162248512
 workstation,bigint-collatz,koka,complete,176.55760957600003,0.3000633294138449,10,3.48046875,False,hyperfine
 workstation,bigint-collatz,lean,complete,218.414097492,0.1867269140832105,10,8.9453125,False,hyperfine
 workstation,bigint-collatz,ocaml,complete,726.570522458,7.881492194505941,10,6.60546875,False,hyperfine
-workstation,bigint-collatz,reussir,complete,150.26159859600003,1.449272997406234,10,1.609375,False,hyperfine
+workstation,bigint-collatz,reussir,complete,161.12165696399998,0.13065979572232198,10,1.6484375,False,hyperfine
 workstation,bigint-collatz,reussir-nrac,complete,150.201556176,1.2815581822450557,10,1.609375,False,hyperfine
 workstation,bigint-collatz,rust,complete,418.212496792,1.1108731318616185,10,1.06640625,False,hyperfine
 workstation,bigint-collatz,rust-with-mimalloc,complete,421.52330521400006,2.5939272728148044,10,5.57421875,False,hyperfine
