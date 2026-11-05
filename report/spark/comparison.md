@@ -14,18 +14,18 @@ Compiler and runtime hashes are recorded in `provenance/manifest.json`. The comp
 | --- | --- | --- | --- | --- | --- |
 | haskell | 27 | 27 | 2.14879 | 27 | 2.90362 |
 | haskell-a1g | 27 | 27 | 2.51674 | 27 | 31.3624 |
-| haskell-st | 3 | 3 | 3.26913 | 3 | 1.65341 |
-| haskell-st-a1g | 3 | 3 | 3.64364 | 3 | 28.6487 |
-| koka | 28 | 27 | 2.16541 | 27 | 1.29878 |
-| lean | 28 | 27 | 2.07738 | 27 | 2.10146 |
-| morphic | 20 | 19 | 2.53533 | 19 | 1.07673 |
-| ocaml | 28 | 26 | 2.60236 | 26 | 3.58686 |
+| haskell-st | 3 | 3 | 3.32699 | 3 | 1.65184 |
+| haskell-st-a1g | 3 | 3 | 3.70204 | 3 | 28.6584 |
+| koka | 28 | 27 | 2.16247 | 27 | 1.29878 |
+| lean | 28 | 27 | 2.08192 | 27 | 2.10172 |
+| morphic | 20 | 19 | 2.54676 | 19 | 1.07678 |
+| ocaml | 28 | 26 | 2.60744 | 26 | 3.58699 |
 | reussir | 28 | 28 | 1 | 28 | 1 |
-| reussir-nrac | 28 | 28 | 1.09554 | 28 | 1.03332 |
-| rust | 28 | 27 | 2.33605 | 27 | 1.71905 |
+| reussir-nrac | 28 | 28 | 1.09784 | 28 | 1.03336 |
+| rust | 28 | 27 | 2.34963 | 27 | 1.71911 |
 | rust-rpds | 6 | 6 | 2.29976 | 6 | 2.13717 |
 | rust-rpds-with-mimalloc | 6 | 6 | 1.56538 | 6 | 1.80948 |
-| rust-with-mimalloc | 28 | 28 | 1.86152 | 28 | 2.99976 |
+| rust-with-mimalloc | 28 | 28 | 1.87305 | 28 | 2.99987 |
 
 ## Functional data structures
 
@@ -125,16 +125,16 @@ Compiler and runtime hashes are recorded in `provenance/manifest.json`. The comp
 
 | Benchmark | Variant | Mean ms | SD ms | n | Peak RSS MiB | Status | Budget limited | Timing source |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| heap-array | haskell-st | 930.581 | 0.575726 | 10 | 8.14844 | complete | false | hyperfine |
-| heap-array | haskell-st-a1g | 1229.91 | 4.60482 | 10 | 1044.24 | complete | false | hyperfine |
-| heap-array | koka | 2568.45 | 5.02091 | 10 | 4.12109 | complete | false | hyperfine |
-| heap-array | lean | 1462.21 | 6.9298 | 10 | 14.7578 | complete | false | hyperfine |
-| heap-array | morphic | 789.255 | 0.749001 | 10 | 1.14844 | complete | false | hyperfine |
-| heap-array | ocaml | 1701.84 | 3.22498 | 10 | 15.7305 | complete | false | hyperfine |
-| heap-array | reussir | 338.974 | 0.196098 | 10 | 3.99609 | complete | false | hyperfine |
+| heap-array | haskell-st | 924.929 | 2.11404 | 10 | 8.11719 | complete | false | hyperfine |
+| heap-array | haskell-st-a1g | 1216.43 | 2.88931 | 10 | 1044.27 | complete | false | hyperfine |
+| heap-array | koka | 2334.76 | 46.9499 | 10 | 4.11719 | complete | false | hyperfine |
+| heap-array | lean | 1462.69 | 4.70251 | 10 | 14.793 | complete | false | hyperfine |
+| heap-array | morphic | 810.671 | 2.97354 | 10 | 1.14844 | complete | false | hyperfine |
+| heap-array | ocaml | 1688.11 | 6.20813 | 10 | 15.7305 | complete | false | hyperfine |
+| heap-array | reussir | 319.642 | 0.187935 | 10 | 3.99219 | complete | false | hyperfine |
 | heap-array | reussir-nrac | 338.783 | 0.184287 | 10 | 3.99609 | complete | false | hyperfine |
-| heap-array | rust | 332.381 | 0.21494 | 10 | 2.05469 | complete | false | hyperfine |
-| heap-array | rust-with-mimalloc | 332.032 | 0.193875 | 10 | 6.16797 | complete | false | hyperfine |
+| heap-array | rust | 366.494 | 6.7757 | 10 | 2.05469 | complete | false | hyperfine |
+| heap-array | rust-with-mimalloc | 372.198 | 3.83805 | 10 | 6.16797 | complete | false | hyperfine |
 | life | haskell | 1798.62 | 0.51113 | 10 | 9.36328 | complete | false | hyperfine |
 | life | haskell-a1g | 2099.69 | 3.66032 | 10 | 1015.81 | complete | false | hyperfine |
 | life | haskell-st | 1439.42 | 0.434221 | 10 | 3.77734 | complete | false | hyperfine |

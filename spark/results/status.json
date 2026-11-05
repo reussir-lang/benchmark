@@ -651,38 +651,38 @@
   },
   "heap-array/haskell-st": {
     "status": "complete",
-    "started": 1793581687.9564228,
-    "finished": 1793581702.7595603
+    "started": 1793837486.1043518,
+    "finished": 1793837632.5009394
   },
   "heap-array/haskell-st-a1g": {
     "status": "complete",
-    "started": 1793581702.761,
-    "finished": 1793581722.07528
+    "started": 1793837486.1043518,
+    "finished": 1793837632.5009394
   },
   "heap-array/koka": {
     "status": "complete",
-    "started": 1793581722.0767925,
-    "finished": 1793581772.8709574
+    "started": 1793837486.1043518,
+    "finished": 1793837632.5009394
   },
   "heap-array/lean": {
     "status": "complete",
-    "started": 1793650250.6887631,
-    "finished": 1793650274.7496471
+    "started": 1793837486.1043518,
+    "finished": 1793837632.5009394
   },
   "heap-array/morphic": {
     "status": "complete",
-    "started": 1793581796.4441245,
-    "finished": 1793581808.8668041
+    "started": 1793837486.1043518,
+    "finished": 1793837632.5009394
   },
   "heap-array/ocaml": {
     "status": "complete",
-    "started": 1793648986.7830482,
-    "finished": 1793649013.0420303
+    "started": 1793837486.1043518,
+    "finished": 1793837632.5009394
   },
   "heap-array/reussir": {
     "status": "complete",
-    "started": 1793644887.02907,
-    "finished": 1793644893.2222269
+    "started": 1793837486.1043518,
+    "finished": 1793837632.5009394
   },
   "heap-array/reussir-nrac": {
     "status": "complete",
@@ -691,13 +691,13 @@
   },
   "heap-array/rust": {
     "status": "complete",
-    "started": 1793651245.972599,
-    "finished": 1793651252.0207918
+    "started": 1793837486.1043518,
+    "finished": 1793837632.5009394
   },
   "heap-array/rust-with-mimalloc": {
     "status": "complete",
-    "started": 1793651252.021711,
-    "finished": 1793651258.111186
+    "started": 1793837486.1043518,
+    "finished": 1793837632.5009394
   },
   "heap-functional/haskell": {
     "status": "complete",

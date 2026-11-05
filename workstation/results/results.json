@@ -5905,25 +5905,25 @@
     "haskell-st": {
       "results": [
         {
-          "command": "/tmp/nix-shell.QMCLW7/tmp8_d2p3jk/heap-array-haskell-st",
-          "mean": 0.7019886493680001,
-          "stddev": 0.003687568002418571,
-          "median": 0.7017174689600001,
-          "user": 0.700006002,
-          "system": 0.0011240719999999998,
-          "min": 0.6969689906200001,
-          "max": 0.7073950813400001,
+          "command": "/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/heap-recollection/updated-results/haskell-st/executable",
+          "mean": 0.723541177318,
+          "stddev": 0.0032581211469155497,
+          "median": 0.7231023412600001,
+          "user": 0.72139417,
+          "system": 0.0012868559999999999,
+          "min": 0.7188233521,
+          "max": 0.7299771901000001,
           "times": [
-            0.7021229810000001,
-            0.7073950813400001,
-            0.7069776616800001,
-            0.704293169,
-            0.7005853969,
-            0.70131195692,
-            0.6987978417,
-            0.6969689906200001,
-            0.70402532348,
-            0.69740809104
+            0.7230347258800001,
+            0.7231699566400001,
+            0.72548685838,
+            0.72140213692,
+            0.7202805913600001,
+            0.7188233521,
+            0.7223278886400001,
+            0.7299771901000001,
+            0.72409858648,
+            0.72681048668
           ],
           "exit_codes": [
             0,
@@ -5944,32 +5944,32 @@
       "requested_samples": 10,
       "warmup_runs": 5,
       "case_time_budget_seconds": 300.0,
-      "measurement_seconds": 11.02790526598983,
+      "measurement_seconds": 11.349487384024542,
       "budget_limited": false,
-      "peak_rss_kb": 8188
+      "peak_rss_kb": 8616
     },
     "haskell-st-a1g": {
       "results": [
         {
-          "command": "/tmp/nix-shell.QMCLW7/tmphr5dq_k1/heap-array-haskell-st-a1g",
-          "mean": 0.898381945346,
-          "stddev": 0.00187519796686469,
-          "median": 0.8985005996700001,
-          "user": 0.704770506,
-          "system": 0.192033846,
-          "min": 0.8952232092000001,
-          "max": 0.9007213554400001,
+          "command": "/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/heap-recollection/updated-results/haskell-st-a1g/executable",
+          "mean": 0.943695940572,
+          "stddev": 0.0020350657581838043,
+          "median": 0.94401602127,
+          "user": 0.7241491959999999,
+          "system": 0.21800086999999996,
+          "min": 0.9410843788600001,
+          "max": 0.9461025388600001,
           "times": [
-            0.8974794285800001,
-            0.8952232092000001,
-            0.9000341786600001,
-            0.90001029532,
-            0.8961132421,
-            0.8971786003200001,
-            0.8990338601600001,
-            0.9000579445000001,
-            0.89796733918,
-            0.9007213554400001
+            0.94603421996,
+            0.9412101537,
+            0.94460629382,
+            0.9461025388600001,
+            0.9411915741000001,
+            0.9428585741600001,
+            0.94356176718,
+            0.94583962972,
+            0.9444702753600001,
+            0.9410843788600001
           ],
           "exit_codes": [
             0,
@@ -5990,32 +5990,32 @@
       "requested_samples": 10,
       "warmup_runs": 5,
       "case_time_budget_seconds": 300.0,
-      "measurement_seconds": 13.976689771996462,
+      "measurement_seconds": 14.68283240601886,
       "budget_limited": false,
-      "peak_rss_kb": 1069308
+      "peak_rss_kb": 1069696
     },
     "koka": {
       "results": [
         {
-          "command": "/tmp/nix-shell.QMCLW7/tmp6ddnwhh1/heap-array-koka",
-          "mean": 2.382184057204,
-          "stddev": 0.025554864726540304,
-          "median": 2.36940675119,
-          "user": 2.378756966,
-          "system": 0.001022098,
-          "min": 2.36240065414,
-          "max": 2.4420310156399996,
+          "command": "/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/heap-recollection/updated-results/koka/executable",
+          "mean": 1.9990703066599997,
+          "stddev": 0.025808490633566456,
+          "median": 1.98729297148,
+          "user": 1.996641996,
+          "system": 0.000569592,
+          "min": 1.97894466834,
+          "max": 2.05720068244,
           "times": [
-            2.3960811937199997,
-            2.4420310156399996,
-            2.3808004824199998,
-            2.36893590824,
-            2.3647935015200003,
-            2.40536890952,
-            2.3643665214799996,
-            2.36240065414,
-            2.36987759414,
-            2.3671847912199997
+            2.00176805728,
+            1.97916269118,
+            2.008132989,
+            1.9925363460199998,
+            1.9817026986800002,
+            1.98204959694,
+            1.98191397614,
+            2.0272913605799996,
+            1.97894466834,
+            2.05720068244
           ],
           "exit_codes": [
             0,
@@ -6036,32 +6036,32 @@
       "requested_samples": 10,
       "warmup_runs": 5,
       "case_time_budget_seconds": 300.0,
-      "measurement_seconds": 36.23132301399892,
+      "measurement_seconds": 30.45001404697541,
       "budget_limited": false,
-      "peak_rss_kb": 3560
+      "peak_rss_kb": 3876
     },
     "lean": {
       "results": [
         {
-          "command": "/tmp/nix-shell.XyV0P2/tmp18lh6s02/heap-array-lean",
-          "mean": 1.08567403401,
-          "stddev": 0.00041439861433633995,
-          "median": 1.08570218289,
-          "user": 1.0835886599999998,
-          "system": 0.000749376,
-          "min": 1.08494539784,
-          "max": 1.0864162513,
+          "command": "/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/heap-recollection/updated-results/lean/executable",
+          "mean": 1.425344639986,
+          "stddev": 0.0028889163361438728,
+          "median": 1.4253255011200001,
+          "user": 1.422467148,
+          "system": 0.001079556,
+          "min": 1.41951133096,
+          "max": 1.4295770010200002,
           "times": [
-            1.08598823676,
-            1.0853386018,
-            1.0864162513,
-            1.0859239512999999,
-            1.08588154604,
-            1.0856099197,
-            1.0854335075,
-            1.08494539784,
-            1.08579444608,
-            1.08540848178
+            1.4295770010200002,
+            1.42544472388,
+            1.41951133096,
+            1.42709158062,
+            1.42519222708,
+            1.4234443343,
+            1.4235478105800001,
+            1.42520627836,
+            1.42545096632,
+            1.42898014674
           ],
           "exit_codes": [
             0,
@@ -6082,32 +6082,32 @@
       "requested_samples": 10,
       "warmup_runs": 5,
       "case_time_budget_seconds": 300.0,
-      "measurement_seconds": 16.777730542002246,
+      "measurement_seconds": 21.871595392003655,
       "budget_limited": false,
-      "peak_rss_kb": 14240
+      "peak_rss_kb": 14348
     },
     "morphic": {
       "results": [
         {
-          "command": "/tmp/nix-shell.QMCLW7/tmp9bn43b2n/heap-array-morphic",
-          "mean": 0.742695255886,
-          "stddev": 0.0016046934584412191,
-          "median": 0.7423463931800001,
-          "user": 0.741464226,
-          "system": 0.000507278,
-          "min": 0.7415557121599999,
-          "max": 0.7471107556800001,
+          "command": "/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/heap-recollection/updated-results/morphic/executable",
+          "mean": 0.736613070806,
+          "stddev": 0.003519568986200878,
+          "median": 0.73629977153,
+          "user": 0.73526337,
+          "system": 0.0006468219999999999,
+          "min": 0.73233995448,
+          "max": 0.7418229256600001,
           "times": [
-            0.7425770258600001,
-            0.7416574194000001,
-            0.7471107556800001,
-            0.74244101914,
-            0.74183398428,
-            0.7415557121599999,
-            0.74225176722,
-            0.7428023601400001,
-            0.7425215699000001,
-            0.74220094508
+            0.73387682576,
+            0.73332815898,
+            0.73536196958,
+            0.73233995448,
+            0.7372375734800001,
+            0.7401217357200001,
+            0.74052571538,
+            0.73286230938,
+            0.7418229256600001,
+            0.73865353964
           ],
           "exit_codes": [
             0,
@@ -6128,32 +6128,32 @@
       "requested_samples": 10,
       "warmup_runs": 5,
       "case_time_budget_seconds": 300.0,
-      "measurement_seconds": 11.621391057997243,
+      "measurement_seconds": 11.56320831499761,
       "budget_limited": false,
-      "peak_rss_kb": 1036
+      "peak_rss_kb": 1024
     },
     "ocaml": {
       "results": [
         {
-          "command": "/tmp/nix-shell.rWGMT5/tmp8rm2mbjj/heap-array-ocaml",
-          "mean": 1.309059664812,
-          "stddev": 0.0046173194669907065,
-          "median": 1.30839558594,
-          "user": 1.306484754,
-          "system": 0.000978628,
-          "min": 1.30452851618,
-          "max": 1.31778986596,
+          "command": "/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/heap-recollection/updated-results/ocaml/executable",
+          "mean": 1.269464673068,
+          "stddev": 0.002252172138554035,
+          "median": 1.26929767433,
+          "user": 1.2665513279999998,
+          "system": 0.0013156539999999999,
+          "min": 1.2655868446,
+          "max": 1.27345953152,
           "times": [
-            1.30919258694,
-            1.30571018654,
-            1.30452851618,
-            1.30516591784,
-            1.31640364604,
-            1.31778986596,
-            1.30871504302,
-            1.3096159014600002,
-            1.30539885528,
-            1.30807612886
+            1.26865621612,
+            1.2721997355,
+            1.2655868446,
+            1.27345953152,
+            1.267507945,
+            1.26949962624,
+            1.26943963294,
+            1.2684368746599999,
+            1.26915571572,
+            1.27070460838
           ],
           "exit_codes": [
             0,
@@ -6174,32 +6174,32 @@
       "requested_samples": 10,
       "warmup_runs": 5,
       "case_time_budget_seconds": 300.0,
-      "measurement_seconds": 20.14698424600647,
+      "measurement_seconds": 19.53977114497684,
       "budget_limited": false,
-      "peak_rss_kb": 16080
+      "peak_rss_kb": 16404
     },
     "reussir": {
       "results": [
         {
-          "command": "/tmp/nix-shell.Y1W84r/tmp876o2q9l/heap-array-reussir",
-          "mean": 0.375501639092,
-          "stddev": 0.0008880465767037716,
-          "median": 0.37585797311,
-          "user": 0.37487033,
-          "system": 0.00023371399999999996,
-          "min": 0.37316176262000006,
-          "max": 0.37609890572000004,
+          "command": "/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/heap-recollection/updated-results/reussir/executable",
+          "mean": 0.198869836258,
+          "stddev": 6.087653896074384e-05,
+          "median": 0.1988448001,
+          "user": 0.198359564,
+          "system": 0.0003952519999999999,
+          "min": 0.19880112480000003,
+          "max": 0.19895619972,
           "times": [
-            0.37488745954,
-            0.3755810981800001,
-            0.37316176262000006,
-            0.37584886672,
-            0.37590129708000003,
-            0.37597984454,
-            0.37580035122000005,
-            0.3758897258,
-            0.37609890572000004,
-            0.37586707950000003
+            0.19894548130000003,
+            0.19895619972,
+            0.19881134966000003,
+            0.19883539122000002,
+            0.19885021336,
+            0.19893057748,
+            0.19881055224,
+            0.19880112480000003,
+            0.19883938684000002,
+            0.19891808596000002
           ],
           "exit_codes": [
             0,
@@ -6220,9 +6220,9 @@
       "requested_samples": 10,
       "warmup_runs": 5,
       "case_time_budget_seconds": 300.0,
-      "measurement_seconds": 6.126616194000235,
+      "measurement_seconds": 3.486052707012277,
       "budget_limited": false,
-      "peak_rss_kb": 4000
+      "peak_rss_kb": 3912
     },
     "reussir-nrac": {
       "results": [
@@ -6273,25 +6273,25 @@
     "rust": {
       "results": [
         {
-          "command": "/tmp/nix-shell.XyV0P2/tmpihoafv71/heap-array-rust",
-          "mean": 0.382941050426,
-          "stddev": 0.0008163226017290684,
-          "median": 0.38275810756,
-          "user": 0.38201272399999997,
-          "system": 0.0005194619999999999,
-          "min": 0.38165758002000005,
-          "max": 0.38436140172,
+          "command": "/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/heap-recollection/updated-results/rust/executable",
+          "mean": 0.217836966528,
+          "stddev": 0.00021853338341091565,
+          "median": 0.21778334800000002,
+          "user": 0.217103404,
+          "system": 0.0005996339999999999,
+          "min": 0.21769601198000002,
+          "max": 0.21843601706000002,
           "times": [
-            0.38210392198000004,
-            0.38334485892000003,
-            0.38275074452,
-            0.3827654706,
-            0.38246916008000004,
-            0.38165758002000005,
-            0.38436140172,
-            0.38392619532,
-            0.38270129480000004,
-            0.38332987630000004
+            0.21772335134000004,
+            0.21781666264000002,
+            0.21781804788000003,
+            0.21773444692000002,
+            0.21769601198000002,
+            0.21784727674,
+            0.21775003336,
+            0.21784899772000002,
+            0.21769881964,
+            0.21843601706000002
           ],
           "exit_codes": [
             0,
@@ -6312,32 +6312,32 @@
       "requested_samples": 10,
       "warmup_runs": 5,
       "case_time_budget_seconds": 300.0,
-      "measurement_seconds": 6.223728035023669,
+      "measurement_seconds": 3.7713187530171126,
       "budget_limited": false,
-      "peak_rss_kb": 1608
+      "peak_rss_kb": 1604
     },
     "rust-with-mimalloc": {
       "results": [
         {
-          "command": "/tmp/nix-shell.XyV0P2/tmp87x8srv3/heap-array-rust-with-mimalloc",
-          "mean": 0.37995366344,
-          "stddev": 0.0016302623561235993,
-          "median": 0.37934330022,
-          "user": 0.37919669,
-          "system": 0.00040628999999999996,
-          "min": 0.37832702708,
-          "max": 0.38270488588,
+          "command": "/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/heap-recollection/updated-results/rust-with-mimalloc/executable",
+          "mean": 0.217217742944,
+          "stddev": 7.951434431573956e-05,
+          "median": 0.21721780322,
+          "user": 0.21678231,
+          "system": 0.000384556,
+          "min": 0.21709854384000002,
+          "max": 0.21732981806,
           "times": [
-            0.38050516834000003,
-            0.38185864574,
-            0.37832702708,
-            0.37944378018,
-            0.37842064774,
-            0.37841103716,
-            0.38270488588,
-            0.38172915738,
-            0.37889346464,
-            0.37924282026
+            0.21709854384000002,
+            0.21716090716,
+            0.21724746616,
+            0.21714018994,
+            0.21715448428,
+            0.21732981806,
+            0.21730987316000003,
+            0.21719963436000003,
+            0.21723597208,
+            0.21730054040000002
           ],
           "exit_codes": [
             0,
@@ -6358,9 +6358,9 @@
       "requested_samples": 10,
       "warmup_runs": 5,
       "case_time_budget_seconds": 300.0,
-      "measurement_seconds": 6.2229782240174245,
+      "measurement_seconds": 3.796350534015801,
       "budget_limited": false,
-      "peak_rss_kb": 5712
+      "peak_rss_kb": 5972
     }
   },
   "heap-functional": {

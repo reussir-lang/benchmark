@@ -1,0 +1,106 @@
+diff --git a/haskell/heap_st.hs b/haskell/heap_st.hs
+index 4b1f0bb..2277469 100644
+--- a/haskell/heap_st.hs
++++ b/haskell/heap_st.hs
+@@ -48,12 +48,13 @@ siftDown a = go
+         else do
+           let r = l + 1
+           vl <- readArray a l
+-          c <-
++          rightOffset <-
+             if r < n
+               then do
+                 vr <- readArray a r
+-                pure (if vr < vl then r else l)
+-              else pure l
++                pure (if vr < vl then 1 else 0)
++              else pure 0
++          let c = l + rightOffset
+           vc <- readArray a c
+           vi <- readArray a i
+           if vc < vi
+diff --git a/koka/heap-array.kk b/koka/heap-array.kk
+index bb7fcd5..367fd99 100644
+--- a/koka/heap-array.kk
++++ b/koka/heap-array.kk
+@@ -43,7 +43,7 @@ fun sift-down( values : vector<int64>, index : int ) : <exn,div> vector<int64>
+   val left = 2 * index + 1
+   if left >= heap-size then values else
+     val right = left + 1
+-    val child = if right < heap-size && values[right] < values[left] then right else left
++    val child = left + (if right < heap-size && values[right] < values[left] then 1 else 0)
+     if values[child] < values[index] then
+       sift-down(swap(values, index, child), child)
+     else values
+diff --git a/lean/heap.lean b/lean/heap.lean
+index ba88c99..21a7702 100644
+--- a/lean/heap.lean
++++ b/lean/heap.lean
+@@ -41,7 +41,7 @@ partial def siftDown (a : Array Int64) (i : Nat) : Array Int64 :=
+   else
+     let r := l + 1
+     let vl := a[l]!
+-    let c := if r < 65535 && a[r]! < vl then r else l
++    let c := l + (if r < 65535 && a[r]! < vl then 1 else 0)
+     let vc := a[c]!
+     let vi := a[i]!
+     if vc < vi then siftDown ((a.set! i vc).set! c vi) c else a
+diff --git a/morphic/heap-array.mor b/morphic/heap-array.mor
+index ad9bc5b..53a9693 100644
+--- a/morphic/heap-array.mor
++++ b/morphic/heap-array.mor
+@@ -34,7 +34,7 @@ sift_down(a: Array I64, i: I64): Array I64 =
+   if l >= 65535 { a } else {
+     let r = l + 1 in
+     let vl = Array.get(a, l) in
+-    let c = if r < 65535 && Array.get(a, r) < vl { r } else { l } in
++    let c = l + (if r < 65535 && Array.get(a, r) < vl { 1 } else { 0 }) in
+     let vc = Array.get(a, c) in
+     let vi = Array.get(a, i) in
+     if vc < vi { sift_down(Array.set(Array.set(a, i, vc), c, vi), c) } else { a }
+diff --git a/ocaml/heap-array.ml b/ocaml/heap-array.ml
+index c8a13d3..8880f2a 100644
+--- a/ocaml/heap-array.ml
++++ b/ocaml/heap-array.ml
+@@ -34,7 +34,7 @@ let sift_down values index =
+     else
+       let right = left + 1 in
+       let child =
+-        if right < size && Int64.compare values.(right) values.(left) < 0 then right else left
++        left + (if right < size && Int64.compare values.(right) values.(left) < 0 then 1 else 0)
+       in
+       if Int64.compare values.(child) values.(!index) < 0 then (
+         swap values child !index;
+diff --git a/reussir/heap.rr b/reussir/heap.rr
+index 0313a48..96aa64d 100644
+--- a/reussir/heap.rr
++++ b/reussir/heap.rr
+@@ -37,11 +37,12 @@ fn sift_down(a : [i64; 65535], i : i64) -> [i64; 65535] {
+     } else {
+         let r = l + 1;
+         let vl = core::intrinsic::array::get(a, l);
+-        let c = if r < 65535 {
+-            if core::intrinsic::array::get(a, r) < vl { r } else { l }
++        let right_offset = if r < 65535 {
++            if core::intrinsic::array::get(a, r) < vl { 1 } else { 0 }
+         } else {
+-            l
++            0
+         };
++        let c = l + right_offset;
+         let vc = core::intrinsic::array::get(a, c);
+         let vi = core::intrinsic::array::get(a, i);
+         if vc < vi {
+diff --git a/rust/heap.rs b/rust/heap.rs
+index 9013410..66a1a5a 100644
+--- a/rust/heap.rs
++++ b/rust/heap.rs
+@@ -39,7 +39,7 @@ fn sift_down(a: &mut [i64], mut i: usize) {
+             break;
+         }
+         let r = l + 1;
+-        let c = if r < N && a[r] < a[l] { r } else { l };
++        let c = l + usize::from(r < N && a[r] < a[l]);
+         if a[c] < a[i] {
+             a.swap(i, c);
+             i = c;
