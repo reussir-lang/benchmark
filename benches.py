@@ -140,6 +140,34 @@ def _sources(base, haskell=None, haskell_st=None):
 
 
 BENCHES = {
+    "rgba-composite": {
+        "set": _AGGREGATES,
+        "sources": _sources(
+            {
+                "lean": "lean/rgba-composite.lean",
+                "reussir": ("reussir/rgba-composite.rr", "reussir/rgba-composite.rr.c"),
+                "koka": "koka/rgba-composite.kk",
+                "rust": "rust/rgba-composite.rs",
+                "ocaml": "ocaml/rgba-composite.ml",
+                "morphic": "morphic/rgba-composite.mor",
+            },
+            haskell_st="haskell/rgba-composite_st.hs",
+        ),
+    },
+    "pcm-mix-limit": {
+        "set": _AGGREGATES,
+        "sources": _sources(
+            {
+                "lean": "lean/pcm-mix-limit.lean",
+                "reussir": ("reussir/pcm-mix-limit.rr", "reussir/pcm-mix-limit.rr.c"),
+                "koka": "koka/pcm-mix-limit.kk",
+                "rust": "rust/pcm-mix-limit.rs",
+                "ocaml": "ocaml/pcm-mix-limit.ml",
+                "morphic": "morphic/pcm-mix-limit.mor",
+            },
+            haskell_st="haskell/pcm-mix-limit_st.hs",
+        ),
+    },
     # Morphic source is retained, but native compilation exceeds practical memory/time limits.
     "mltt": {
         "set": _FUNCTIONAL,

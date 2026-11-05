@@ -34,7 +34,7 @@ sift_down(a: Array I64, i: I64): Array I64 =
   if l >= 65535 { a } else {
     let r = l + 1 in
     let vl = Array.get(a, l) in
-    let c = if r < 65535 && Array.get(a, r) < vl { r } else { l } in
+    let c = l + (if r < 65535 && Array.get(a, r) < vl { 1 } else { 0 }) in
     let vc = Array.get(a, c) in
     let vi = Array.get(a, i) in
     if vc < vi { sift_down(Array.set(Array.set(a, i, vc), c, vi), c) } else { a }

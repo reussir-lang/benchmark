@@ -48,12 +48,13 @@ siftDown a = go
         else do
           let r = l + 1
           vl <- readArray a l
-          c <-
+          rightOffset <-
             if r < n
               then do
                 vr <- readArray a r
-                pure (if vr < vl then r else l)
-              else pure l
+                pure (if vr < vl then 1 else 0)
+              else pure 0
+          let c = l + rightOffset
           vc <- readArray a c
           vi <- readArray a i
           if vc < vi

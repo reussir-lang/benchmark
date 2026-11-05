@@ -226,6 +226,8 @@ def compile_reussir(
                 "-fuse-ld=lld",
                 "-O3",
                 "-march=native",
+                # Match the default policy of rrc-owned backend pipelines.
+                "-Wl,-plugin-opt=-disable-select-optimize=false",
             ]
             + rcgmp_link_inputs
             + [CONFIG["reussir-libs"] + "/libreussir_rt.a", "-lm"],

@@ -43,7 +43,7 @@ fun sift-down( values : vector<int64>, index : int ) : <exn,div> vector<int64>
   val left = 2 * index + 1
   if left >= heap-size then values else
     val right = left + 1
-    val child = if right < heap-size && values[right] < values[left] then right else left
+    val child = left + (if right < heap-size && values[right] < values[left] then 1 else 0)
     if values[child] < values[index] then
       sift-down(swap(values, index, child), child)
     else values

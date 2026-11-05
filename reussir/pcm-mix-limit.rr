@@ -1,0 +1,48 @@
+// Mix a signed PCM track with a linear fade into a mutable destination,
+// then apply a symmetric soft knee and hard saturation. Samples use the
+// signed 16-bit range in i32 slots; Q15 products remain within signed i32.
+// Signed division truncates toward zero, including the negative knee.
+import core::intrinsic::array;
+
+fn limit(sample: i32) -> i32 {
+    let knee = if sample > 16384 {
+        16384 + (sample - 16384) / 2
+    } else {
+        if sample < -16384 { -16384 + (sample + 16384) / 2 } else { sample }
+    };
+    if knee > 32767 { 32767 } else { if knee < -32768 { -32768 } else { knee } }
+}
+
+fn mix(dst: [i32; 262144], src: [i32; 262144], gain: i32, i: i64) -> [i32; 262144] {
+    if i == 262144 { dst } else {
+        let source = core::intrinsic::array::get(src, i);
+        let previous = core::intrinsic::array::get(dst, i);
+        let envelope = (i / 8) as i32;
+        let scaled = (source * gain) / 32768;
+        let faded = (scaled * envelope) / 32768;
+        mix(core::intrinsic::array::set(dst, i, limit(previous + faded)), src, gain, i + 1)
+    }
+}
+
+fn tracks(dst: [i32; 262144], src: [i32; 262144], n: i64) -> [i32; 262144] {
+    if n == 0 { dst } else {
+        let gain = ((n * 1103) % 98304 - 49152) as i32;
+        tracks(mix(dst, src, gain, 0), src, n - 1)
+    }
+}
+
+fn pcm_mix_limit_test(rounds: i64) -> i64 {
+    let src = array::tabulate<[i32; 262144]>(|i| {
+        let fundamental = (((i * 97) % 65536) - 32768) as i32;
+        let harmonic = (((i * 271) % 65536) - 32768) as i32;
+        let noise = (((i * 8191 + 37) % 1024) - 512) as i32;
+        fundamental / 2 + harmonic / 4 + noise
+    });
+    let dst = array::splat<[i32; 262144]>(0);
+    array::fold(tracks(dst, src, rounds), 0, |energy: i64, sample: i32| {
+        let value = sample as i64;
+        energy + value * value
+    })
+}
+
+extern "C" trampoline "pcm_mix_limit_test_ffi" = pcm_mix_limit_test;

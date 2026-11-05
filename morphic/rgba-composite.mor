@@ -1,0 +1,58 @@
+// Packed RGBA8 source-over compositing, with the destination threaded linearly.
+// I64 represents unsigned 32-bit pixels; arithmetic channel extraction and
+// packing are exact because all pixel values are nonnegative and fit in I64.
+module Core = file "lib/core/core.mor"
+  expose {
+    module Io expose { writeln },
+    module String expose { i64_to_string, concat },
+    module Array,
+  }
+
+rem(a: I64, b: I64): I64 = a - b * (a / b)
+
+channel(s: I64, d: I64, alpha: I64): I64 =
+  (s * alpha + d * (255 - alpha) + 127) / 255
+
+blend(dst: I64, src: I64, opacity: I64): I64 =
+  let alpha = ((src / 16777216) * opacity + 127) / 255 in
+  let r = channel(rem(src, 256), rem(dst, 256), alpha) in
+  let g = channel(rem(src / 256, 256), rem(dst / 256, 256), alpha) in
+  let b = channel(rem(src / 65536, 256), rem(dst / 65536, 256), alpha) in
+  r + g * 256 + b * 65536 + 4278190080
+
+composite(dst: Array I64, src: Array I64, opacity: I64, i: I64): Array I64 =
+  if i = 262144 { dst } else {
+    let d = Array.get(dst, i) in
+    let s = Array.get(src, i) in
+    composite(Array.set(dst, i, blend(d, s, opacity)), src, opacity, i + 1)
+  }
+
+layers(dst: Array I64, src: Array I64, n: I64): Array I64 =
+  if n = 0 { dst } else {
+    layers(composite(dst, src, 96 + rem(n, 160), 0), src, n - 1)
+  }
+
+tabulate_rec(out: Array a, i: I64, n: I64, f: I64 -> a): Array a =
+  if i = n { out } else { tabulate_rec(push(out, f(i)), i + 1, n, f) }
+
+tabulate(n: I64, f: I64 -> a): Array a = tabulate_rec(reserve([], n), 0, n, f)
+
+source_pixel(i: I64): I64 =
+  rem(i * 17 + 23, 256) + rem(i * 43 + 7, 256) * 256
+    + rem(i * 97 + 61, 256) * 65536 + rem(i * 31 + 13, 256) * 16777216
+
+destination_pixel(i: I64): I64 =
+  rem(i * 29 + 5, 256) + rem(i * 11 + 101, 256) * 256
+    + rem(i * 67 + 19, 256) * 65536 + 4278190080
+
+rgba_composite_test(): I64 =
+  let src = tabulate(262144, source_pixel) in
+  let dst = tabulate(262144, destination_pixel) in
+  Array.foldl(layers(dst, src, 4096), 0, \(acc, pixel) -> acc + pixel)
+
+proc main(): () =
+  let result = rgba_composite_test() in
+  if result = 1123699998887936 { () } else {
+    do writeln(concat("FAIL: expected 1123699998887936, got ", i64_to_string(result))) then
+    panic("wrong result\n")
+  }

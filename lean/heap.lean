@@ -41,7 +41,7 @@ partial def siftDown (a : Array Int64) (i : Nat) : Array Int64 :=
   else
     let r := l + 1
     let vl := a[l]!
-    let c := if r < 65535 && a[r]! < vl then r else l
+    let c := l + (if r < 65535 && a[r]! < vl then 1 else 0)
     let vc := a[c]!
     let vi := a[i]!
     if vc < vi then siftDown ((a.set! i vc).set! c vi) c else a
