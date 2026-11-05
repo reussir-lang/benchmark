@@ -13198,5 +13198,829 @@
       "budget_limited": false,
       "peak_rss_kb": 31836
     }
+  },
+  "rgba-composite": {
+    "lean": {
+      "results": [
+        {
+          "command": "/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/array-collection/rgba-composite/lean/executable",
+          "mean": 4.900645331082,
+          "stddev": 0.003922735953966869,
+          "median": 4.90029536182,
+          "user": 4.892339359999999,
+          "system": 0.0036030619999999998,
+          "min": 4.89277254282,
+          "max": 4.9074893059799995,
+          "times": [
+            4.89277254282,
+            4.8985304439799995,
+            4.9074893059799995,
+            4.898977310699999,
+            4.89964167666,
+            4.90094904698,
+            4.89892888632,
+            4.9025147009,
+            4.90281647536,
+            4.90383292112
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 73.93876899196766,
+      "budget_limited": false,
+      "peak_rss_kb": 16572
+    },
+    "reussir": {
+      "results": [
+        {
+          "command": "/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/array-collection/rgba-composite/reussir/executable",
+          "mean": 0.22406066723,
+          "stddev": 0.00031164659337625146,
+          "median": 0.22408374313,
+          "user": 0.223708874,
+          "system": 0.000169738,
+          "min": 0.22357475986000003,
+          "max": 0.22477131230000003,
+          "times": [
+            0.22390377160000002,
+            0.22357475986000003,
+            0.22412889738,
+            0.22386059460000002,
+            0.22416404816000002,
+            0.22404846416000002,
+            0.22411902210000004,
+            0.22386659072,
+            0.22416921142000001,
+            0.22477131230000003
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 3.84217970300233,
+      "budget_limited": false,
+      "peak_rss_kb": 5724
+    },
+    "koka": {
+      "results": [
+        {
+          "command": "/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/array-collection/rgba-composite/koka/executable",
+          "mean": 16.627094828134,
+          "stddev": 0.034112380304295226,
+          "median": 16.64194540538,
+          "user": 16.610378494,
+          "system": 0.0017249799999999999,
+          "min": 16.56200231592,
+          "max": 16.647463267120003,
+          "times": [
+            16.6352210737,
+            16.64723383402,
+            16.563906300739998,
+            16.64690640068,
+            16.56200231592,
+            16.6466959474,
+            16.637628331,
+            16.64567637596,
+            16.6382144348,
+            16.647463267120003
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 250.70989597804146,
+      "budget_limited": false,
+      "peak_rss_kb": 7712
+    },
+    "rust": {
+      "results": [
+        {
+          "command": "/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/array-collection/rgba-composite/rust/executable",
+          "mean": 0.20425738032600002,
+          "stddev": 0.00027397314640088057,
+          "median": 0.20410228435,
+          "user": 0.203536432,
+          "system": 0.000499812,
+          "min": 0.20400337448,
+          "max": 0.20475543640000002,
+          "times": [
+            0.20475543640000002,
+            0.20410206726,
+            0.20400337448,
+            0.20408115892000003,
+            0.20457095914,
+            0.20406920052000002,
+            0.20405906236000002,
+            0.20424032962,
+            0.20410250144,
+            0.20458971312000002
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 3.5456293580355123,
+      "budget_limited": false,
+      "peak_rss_kb": 3160
+    },
+    "ocaml": {
+      "results": [
+        {
+          "command": "/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/array-collection/rgba-composite/ocaml/executable",
+          "mean": 5.172341622674,
+          "stddev": 0.003800212448384262,
+          "median": 5.17214275216,
+          "user": 5.165069116,
+          "system": 0.002017396,
+          "min": 5.16692372372,
+          "max": 5.17924074138,
+          "times": [
+            5.17040065696,
+            5.1711671078400006,
+            5.17183606724,
+            5.16692372372,
+            5.17244943708,
+            5.16732864254,
+            5.17598649462,
+            5.17534812042,
+            5.17273523494,
+            5.17924074138
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 78.06219119002344,
+      "budget_limited": false,
+      "peak_rss_kb": 10460
+    },
+    "morphic": {
+      "results": [
+        {
+          "command": "/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/array-collection/rgba-composite/morphic/executable",
+          "mean": 5.665254137764,
+          "stddev": 0.002608243096858966,
+          "median": 5.66530824274,
+          "user": 5.658334092,
+          "system": 0.001257916,
+          "min": 5.66089526692,
+          "max": 5.66861169932,
+          "times": [
+            5.6675264711999995,
+            5.66364534772,
+            5.66663648144,
+            5.66543414316,
+            5.66518234232,
+            5.66861169932,
+            5.6634922648399995,
+            5.662561716060001,
+            5.66855564466,
+            5.66089526692
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 85.4722944299574,
+      "budget_limited": false,
+      "peak_rss_kb": 4412
+    },
+    "rust-with-mimalloc": {
+      "results": [
+        {
+          "command": "/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/array-collection/rgba-composite/rust-with-mimalloc/executable",
+          "mean": 0.20264579124200002,
+          "stddev": 0.00018640404761714424,
+          "median": 0.20265081353000003,
+          "user": 0.202115266,
+          "system": 0.000398618,
+          "min": 0.20239686568,
+          "max": 0.20288889118,
+          "times": [
+            0.20245212958,
+            0.20288889118,
+            0.20245332130000002,
+            0.20258580264,
+            0.20239686568,
+            0.20252899118,
+            0.20287973192000003,
+            0.20271582442000002,
+            0.20282907568,
+            0.20272727884
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 3.5704304450191557,
+      "budget_limited": false,
+      "peak_rss_kb": 7736
+    },
+    "haskell-st": {
+      "results": [
+        {
+          "command": "/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/array-collection/rgba-composite/haskell-st/executable",
+          "mean": 5.150404812706,
+          "stddev": 0.0015019856175228208,
+          "median": 5.15038049055,
+          "user": 5.14375839,
+          "system": 0.00144375,
+          "min": 5.1485732331200005,
+          "max": 5.15279859466,
+          "times": [
+            5.14931827514,
+            5.14995430026,
+            5.15126759882,
+            5.1521779273,
+            5.1489794265199995,
+            5.15141842306,
+            5.15080668084,
+            5.15279859466,
+            5.14875366734,
+            5.1485732331200005
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 77.76966037997045,
+      "budget_limited": false,
+      "peak_rss_kb": 5772
+    },
+    "haskell-st-a1g": {
+      "results": [
+        {
+          "command": "/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/array-collection/rgba-composite/haskell-st-a1g/executable",
+          "mean": 5.155385051724,
+          "stddev": 0.0018146624730474925,
+          "median": 5.155417824200001,
+          "user": 5.14322515,
+          "system": 0.006577967999999999,
+          "min": 5.153033623300001,
+          "max": 5.15797791838,
+          "times": [
+            5.15764385776,
+            5.15642753308,
+            5.15690290554,
+            5.15797791838,
+            5.1552946207,
+            5.1555410277,
+            5.1535497327,
+            5.15393506068,
+            5.1535442374,
+            5.153033623300001
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 77.84365315601462,
+      "budget_limited": false,
+      "peak_rss_kb": 27532
+    }
+  },
+  "pcm-mix-limit": {
+    "lean": {
+      "results": [
+        {
+          "command": "/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/array-collection/pcm-mix-limit/lean/executable",
+          "mean": 11.791488593196,
+          "stddev": 0.040877398409707284,
+          "median": 11.79224952308,
+          "user": 11.775646144,
+          "system": 0.004192102,
+          "min": 11.74916018882,
+          "max": 11.835856187460001,
+          "times": [
+            11.7531799156,
+            11.82907410606,
+            11.757986522960001,
+            11.835856187460001,
+            11.74958293142,
+            11.82980688572,
+            11.754283212719999,
+            11.829443458,
+            11.74916018882,
+            11.8265125232
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 177.29708499100525,
+      "budget_limited": false,
+      "peak_rss_kb": 16616
+    },
+    "reussir": {
+      "results": [
+        {
+          "command": "/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/array-collection/pcm-mix-limit/reussir/executable",
+          "mean": 0.23252339152,
+          "stddev": 0.00018909557062799865,
+          "median": 0.23252612200000003,
+          "user": 0.232153792,
+          "system": 0.00015278399999999997,
+          "min": 0.23225742242000003,
+          "max": 0.23293393286,
+          "times": [
+            0.23225742242000003,
+            0.23256265304,
+            0.23245463238000003,
+            0.23238710944000002,
+            0.23234513904,
+            0.23267873142000003,
+            0.23256205060000001,
+            0.23253783740000003,
+            0.23293393286,
+            0.23251440660000003
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 3.970222439034842,
+      "budget_limited": false,
+      "peak_rss_kb": 5728
+    },
+    "koka": {
+      "results": [
+        {
+          "command": "/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/array-collection/pcm-mix-limit/koka/executable",
+          "mean": 26.411049332363334,
+          "stddev": 0.2808958870849196,
+          "median": 26.31146124374,
+          "user": 26.382823553333335,
+          "system": 0.0036675033333333326,
+          "min": 26.2583609198,
+          "max": 26.98217598276,
+          "times": [
+            26.98217598276,
+            26.325111906260002,
+            26.27772469788,
+            26.30856118986,
+            26.2583609198,
+            26.31436129762
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 6,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 291.6248217429966,
+      "budget_limited": true,
+      "peak_rss_kb": 7708
+    },
+    "rust": {
+      "results": [
+        {
+          "command": "/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/array-collection/pcm-mix-limit/rust/executable",
+          "mean": 0.25595760219,
+          "stddev": 0.0006064251501963236,
+          "median": 0.25589157149,
+          "user": 0.255058386,
+          "system": 0.000605396,
+          "min": 0.25528730278000006,
+          "max": 0.25711709246000003,
+          "times": [
+            0.25544799946,
+            0.25542140102000005,
+            0.25590707290000003,
+            0.25651533042,
+            0.25711709246000003,
+            0.25613629772,
+            0.25537897354,
+            0.25587607008,
+            0.25528730278000006,
+            0.25648848152
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 4.318257888953667,
+      "budget_limited": false,
+      "peak_rss_kb": 3152
+    },
+    "ocaml": {
+      "results": [
+        {
+          "command": "/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/array-collection/pcm-mix-limit/ocaml/executable",
+          "mean": 4.816916628526,
+          "stddev": 0.0035833972693788034,
+          "median": 4.817633890830001,
+          "user": 4.809754538,
+          "system": 0.001542946,
+          "min": 4.81066050318,
+          "max": 4.821023402660001,
+          "times": [
+            4.8131535459400006,
+            4.81066050318,
+            4.8144585444,
+            4.81451095682,
+            4.81669241582,
+            4.821023402660001,
+            4.82097698918,
+            4.819146547260001,
+            4.8199680141600005,
+            4.81857536584
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 72.7138561939937,
+      "budget_limited": false,
+      "peak_rss_kb": 10412
+    },
+    "morphic": {
+      "results": [
+        {
+          "command": "/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/array-collection/pcm-mix-limit/morphic/executable",
+          "mean": 2.937557215784,
+          "stddev": 0.003950650885641845,
+          "median": 2.93751505422,
+          "user": 2.933141884,
+          "system": 0.0008577039999999999,
+          "min": 2.92976844974,
+          "max": 2.9419938766600002,
+          "times": [
+            2.9419938766600002,
+            2.93500058526,
+            2.94084633302,
+            2.94132608476,
+            2.93602156014,
+            2.92976844974,
+            2.93880654076,
+            2.9411654466000003,
+            2.93622356768,
+            2.93441971322
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 44.54382900096243,
+      "budget_limited": false,
+      "peak_rss_kb": 4412
+    },
+    "rust-with-mimalloc": {
+      "results": [
+        {
+          "command": "/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/array-collection/pcm-mix-limit/rust-with-mimalloc/executable",
+          "mean": 0.250283856058,
+          "stddev": 0.00018537786339028277,
+          "median": 0.2502714414,
+          "user": 0.24978271999999996,
+          "system": 0.000315422,
+          "min": 0.25002880922000004,
+          "max": 0.25062402625999997,
+          "times": [
+            0.25037555070000006,
+            0.25016443762,
+            0.25002880922000004,
+            0.25030476698000004,
+            0.25023811582,
+            0.25007692204,
+            0.25015883214,
+            0.25042841926000003,
+            0.25062402625999997,
+            0.25043868054
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 4.2681119029875845,
+      "budget_limited": false,
+      "peak_rss_kb": 7728
+    },
+    "haskell-st": {
+      "results": [
+        {
+          "command": "/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/array-collection/pcm-mix-limit/haskell-st/executable",
+          "mean": 4.380138209458,
+          "stddev": 0.0012740907654150433,
+          "median": 4.38042031412,
+          "user": 4.372487358,
+          "system": 0.001983236,
+          "min": 4.3777829156,
+          "max": 4.382001848,
+          "times": [
+            4.3813270525,
+            4.38074645918,
+            4.38054823948,
+            4.382001848,
+            4.38029238876,
+            4.3807050936000005,
+            4.3777829156,
+            4.37839729446,
+            4.37969061938,
+            4.37989018362
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 66.20337651198497,
+      "budget_limited": false,
+      "peak_rss_kb": 6112
+    },
+    "haskell-st-a1g": {
+      "results": [
+        {
+          "command": "/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/array-collection/pcm-mix-limit/haskell-st-a1g/executable",
+          "mean": 4.383569347282,
+          "stddev": 0.003193096882726913,
+          "median": 4.384219830939999,
+          "user": 4.37185456,
+          "system": 0.005975177999999999,
+          "min": 4.37545106144,
+          "max": 4.387320375100001,
+          "times": [
+            4.38461051232,
+            4.37545106144,
+            4.38406492366,
+            4.387320375100001,
+            4.3856882943,
+            4.38437473822,
+            4.38328405592,
+            4.38403981454,
+            4.38500721556,
+            4.381852481759999
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 66.25629262300208,
+      "budget_limited": false,
+      "peak_rss_kb": 22816
+    }
   }
 }

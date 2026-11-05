@@ -1,0 +1,340 @@
+[
+  {
+    "cell": "rgba-composite/lean",
+    "step": "lean C emission",
+    "cmd": [
+      "/nix/store/1c3cpd3yrk44z39pxq1if26w5x0pwfgr-lean4-4.30.0-thinlto/bin/lean",
+      "/tmp/nix-shell.uKYaR1/tmpfds8s698/rgba-composite.lean",
+      "-c",
+      "/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/array-collection/rgba-composite/lean/executable.c"
+    ],
+    "cwd": "/tmp/nix-shell.uKYaR1/tmpfds8s698"
+  },
+  {
+    "cell": "rgba-composite/lean",
+    "step": "lean linking",
+    "cmd": [
+      "/nix/store/1c3cpd3yrk44z39pxq1if26w5x0pwfgr-lean4-4.30.0-thinlto/bin/leanc",
+      "-o",
+      "/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/array-collection/rgba-composite/lean/executable",
+      "/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/array-collection/rgba-composite/lean/executable.c",
+      "-flto=thin",
+      "-fuse-ld=lld",
+      "-O3",
+      "-march=native"
+    ],
+    "cwd": "/tmp/nix-shell.uKYaR1/tmpfds8s698"
+  },
+  {
+    "cell": "rgba-composite/reussir",
+    "step": "reussir compilation",
+    "cmd": [
+      "/tmp/reussir-primary-refresh-20261102/rrc",
+      "-o",
+      "reussir.ll",
+      "-Oaggressive",
+      "--reuse-across-call",
+      "--relocation-mode",
+      "pic",
+      "-t",
+      "llvm-ir",
+      "/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/benchmark-arrays/reussir/rgba-composite.rr"
+    ],
+    "cwd": "/tmp/nix-shell.uKYaR1/tmpreymeo55"
+  },
+  {
+    "cell": "rgba-composite/reussir",
+    "step": "reussir linking",
+    "cmd": [
+      "/nix/store/b04h3phsrakl7sinx6zx931n4l5lc29v-clang-wrapper-23.1.0/bin/clang",
+      "-o",
+      "/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/array-collection/rgba-composite/reussir/executable",
+      "reussir.ll",
+      "/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/benchmark-arrays/reussir/rgba-composite.rr.c",
+      "-flto=thin",
+      "-fuse-ld=lld",
+      "-O3",
+      "-march=native",
+      "-Wl,-plugin-opt=-disable-select-optimize=false",
+      "/nix/store/79835jspl8gplpjfi28qa22vcsxi7k86-reussir-rt-xlto-0.1.0-git-bcfff8d41916/lib/libreussir_rt.a",
+      "-lm"
+    ],
+    "cwd": "/tmp/nix-shell.uKYaR1/tmpreymeo55"
+  },
+  {
+    "cell": "rgba-composite/koka",
+    "step": "koka compilation",
+    "cmd": [
+      "/nix/store/kfrnbc6mr3wa1nh6i5m2ib1ajf7y1qxz-koka-3.2.3/bin/koka",
+      "-O3",
+      "--cc=/nix/store/b04h3phsrakl7sinx6zx931n4l5lc29v-clang-wrapper-23.1.0/bin/clang",
+      "--ccopts=-flto=thin -march=native",
+      "--cclinkopts=-flto=thin -fuse-ld=lld",
+      "-i/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/benchmark-arrays/koka/community-std",
+      "/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/benchmark-arrays/koka/rgba-composite.kk",
+      "-o",
+      "/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/array-collection/rgba-composite/koka/executable"
+    ],
+    "cwd": "/tmp/nix-shell.VQ5yA9/tmp9tnx5yc7"
+  },
+  {
+    "cell": "rgba-composite/rust",
+    "step": "rust compilation",
+    "cmd": [
+      "/nix/store/yaa1sq5g4jar7rvlspy7kk2wd98nj6qh-rustc-wrapper-1.97.1/bin/rustc",
+      "-C",
+      "opt-level=3",
+      "-C",
+      "lto=thin",
+      "-C",
+      "target-cpu=native",
+      "-o",
+      "/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/array-collection/rgba-composite/rust/executable",
+      "/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/benchmark-arrays/rust/rgba-composite.rs"
+    ],
+    "cwd": "/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/benchmark-arrays/rust"
+  },
+  {
+    "cell": "rgba-composite/ocaml",
+    "step": "OCaml compilation",
+    "cmd": [
+      "/nix/store/igjbws5i0yp23r296cbx91wfinnjw8z9-oxcaml-5.4.0+ox/bin/ocamlopt",
+      "-O3",
+      "-o",
+      "/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/array-collection/rgba-composite/ocaml/executable",
+      "/tmp/nix-shell.uKYaR1/tmpwd6c4xvi/rgba_composite.ml"
+    ],
+    "cwd": "/tmp/nix-shell.uKYaR1/tmpwd6c4xvi"
+  },
+  {
+    "cell": "rgba-composite/morphic",
+    "step": "morphic compilation",
+    "cmd": [
+      "/nix/store/kbyfqykxfmq2kad618cqqinav9gmzhdr-morphic-0-git-da679c49a336/bin/morphic",
+      "build",
+      "/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/benchmark-arrays/morphic/rgba-composite.mor",
+      "-o",
+      "/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/array-collection/rgba-composite/morphic/executable",
+      "--llvm-opt-level",
+      "3"
+    ],
+    "cwd": "/tmp/nix-shell.uKYaR1/tmpgjxjucy8"
+  },
+  {
+    "cell": "rgba-composite/rust-with-mimalloc",
+    "step": "rust compilation",
+    "cmd": [
+      "/nix/store/yaa1sq5g4jar7rvlspy7kk2wd98nj6qh-rustc-wrapper-1.97.1/bin/rustc",
+      "-C",
+      "opt-level=3",
+      "-C",
+      "lto=thin",
+      "-C",
+      "target-cpu=native",
+      "-o",
+      "/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/array-collection/rgba-composite/rust-with-mimalloc/executable",
+      "/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/benchmark-arrays/rust/rgba-composite.rs"
+    ],
+    "cwd": "/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/benchmark-arrays/rust"
+  },
+  {
+    "cell": "rgba-composite/haskell-st",
+    "step": "haskell compilation",
+    "cmd": [
+      "/nix/store/8mcxdpmjysczky71y8bbkn5qqzfqh2qi-ghc/bin/ghc",
+      "-O2",
+      "-rtsopts",
+      "-outputdir",
+      "/tmp/nix-shell.uKYaR1/tmpfbwqv75q",
+      "-o",
+      "/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/array-collection/rgba-composite/haskell-st/executable",
+      "/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/benchmark-arrays/haskell/rgba-composite_st.hs"
+    ],
+    "cwd": "/tmp/nix-shell.uKYaR1/tmpfbwqv75q"
+  },
+  {
+    "cell": "rgba-composite/haskell-st-a1g",
+    "step": "haskell compilation",
+    "cmd": [
+      "/nix/store/8mcxdpmjysczky71y8bbkn5qqzfqh2qi-ghc/bin/ghc",
+      "-O2",
+      "-rtsopts",
+      "-with-rtsopts=-A1G",
+      "-outputdir",
+      "/tmp/nix-shell.uKYaR1/tmpy1j3pghr",
+      "-o",
+      "/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/array-collection/rgba-composite/haskell-st-a1g/executable",
+      "/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/benchmark-arrays/haskell/rgba-composite_st.hs"
+    ],
+    "cwd": "/tmp/nix-shell.uKYaR1/tmpy1j3pghr"
+  },
+  {
+    "cell": "pcm-mix-limit/lean",
+    "step": "lean C emission",
+    "cmd": [
+      "/nix/store/1c3cpd3yrk44z39pxq1if26w5x0pwfgr-lean4-4.30.0-thinlto/bin/lean",
+      "/tmp/nix-shell.uKYaR1/tmpgbp1ha1v/pcm-mix-limit.lean",
+      "-c",
+      "/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/array-collection/pcm-mix-limit/lean/executable.c"
+    ],
+    "cwd": "/tmp/nix-shell.uKYaR1/tmpgbp1ha1v"
+  },
+  {
+    "cell": "pcm-mix-limit/lean",
+    "step": "lean linking",
+    "cmd": [
+      "/nix/store/1c3cpd3yrk44z39pxq1if26w5x0pwfgr-lean4-4.30.0-thinlto/bin/leanc",
+      "-o",
+      "/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/array-collection/pcm-mix-limit/lean/executable",
+      "/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/array-collection/pcm-mix-limit/lean/executable.c",
+      "-flto=thin",
+      "-fuse-ld=lld",
+      "-O3",
+      "-march=native"
+    ],
+    "cwd": "/tmp/nix-shell.uKYaR1/tmpgbp1ha1v"
+  },
+  {
+    "cell": "pcm-mix-limit/reussir",
+    "step": "reussir compilation",
+    "cmd": [
+      "/tmp/reussir-primary-refresh-20261102/rrc",
+      "-o",
+      "reussir.ll",
+      "-Oaggressive",
+      "--reuse-across-call",
+      "--relocation-mode",
+      "pic",
+      "-t",
+      "llvm-ir",
+      "/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/benchmark-arrays/reussir/pcm-mix-limit.rr"
+    ],
+    "cwd": "/tmp/nix-shell.uKYaR1/tmpse8fb3qp"
+  },
+  {
+    "cell": "pcm-mix-limit/reussir",
+    "step": "reussir linking",
+    "cmd": [
+      "/nix/store/b04h3phsrakl7sinx6zx931n4l5lc29v-clang-wrapper-23.1.0/bin/clang",
+      "-o",
+      "/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/array-collection/pcm-mix-limit/reussir/executable",
+      "reussir.ll",
+      "/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/benchmark-arrays/reussir/pcm-mix-limit.rr.c",
+      "-flto=thin",
+      "-fuse-ld=lld",
+      "-O3",
+      "-march=native",
+      "-Wl,-plugin-opt=-disable-select-optimize=false",
+      "/nix/store/79835jspl8gplpjfi28qa22vcsxi7k86-reussir-rt-xlto-0.1.0-git-bcfff8d41916/lib/libreussir_rt.a",
+      "-lm"
+    ],
+    "cwd": "/tmp/nix-shell.uKYaR1/tmpse8fb3qp"
+  },
+  {
+    "cell": "pcm-mix-limit/koka",
+    "step": "koka compilation",
+    "cmd": [
+      "/nix/store/kfrnbc6mr3wa1nh6i5m2ib1ajf7y1qxz-koka-3.2.3/bin/koka",
+      "-O3",
+      "--cc=/nix/store/b04h3phsrakl7sinx6zx931n4l5lc29v-clang-wrapper-23.1.0/bin/clang",
+      "--ccopts=-flto=thin -march=native",
+      "--cclinkopts=-flto=thin -fuse-ld=lld",
+      "-i/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/benchmark-arrays/koka/community-std",
+      "/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/benchmark-arrays/koka/pcm-mix-limit.kk",
+      "-o",
+      "/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/array-collection/pcm-mix-limit/koka/executable"
+    ],
+    "cwd": "/tmp/nix-shell.VQ5yA9/tmp5lf5n6a7"
+  },
+  {
+    "cell": "pcm-mix-limit/rust",
+    "step": "rust compilation",
+    "cmd": [
+      "/nix/store/yaa1sq5g4jar7rvlspy7kk2wd98nj6qh-rustc-wrapper-1.97.1/bin/rustc",
+      "-C",
+      "opt-level=3",
+      "-C",
+      "lto=thin",
+      "-C",
+      "target-cpu=native",
+      "-o",
+      "/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/array-collection/pcm-mix-limit/rust/executable",
+      "/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/benchmark-arrays/rust/pcm-mix-limit.rs"
+    ],
+    "cwd": "/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/benchmark-arrays/rust"
+  },
+  {
+    "cell": "pcm-mix-limit/ocaml",
+    "step": "OCaml compilation",
+    "cmd": [
+      "/nix/store/igjbws5i0yp23r296cbx91wfinnjw8z9-oxcaml-5.4.0+ox/bin/ocamlopt",
+      "-O3",
+      "-o",
+      "/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/array-collection/pcm-mix-limit/ocaml/executable",
+      "/tmp/nix-shell.uKYaR1/tmpdoq2z8ot/pcm_mix_limit.ml"
+    ],
+    "cwd": "/tmp/nix-shell.uKYaR1/tmpdoq2z8ot"
+  },
+  {
+    "cell": "pcm-mix-limit/morphic",
+    "step": "morphic compilation",
+    "cmd": [
+      "/nix/store/kbyfqykxfmq2kad618cqqinav9gmzhdr-morphic-0-git-da679c49a336/bin/morphic",
+      "build",
+      "/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/benchmark-arrays/morphic/pcm-mix-limit.mor",
+      "-o",
+      "/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/array-collection/pcm-mix-limit/morphic/executable",
+      "--llvm-opt-level",
+      "3"
+    ],
+    "cwd": "/tmp/nix-shell.uKYaR1/tmptp1oprw1"
+  },
+  {
+    "cell": "pcm-mix-limit/rust-with-mimalloc",
+    "step": "rust compilation",
+    "cmd": [
+      "/nix/store/yaa1sq5g4jar7rvlspy7kk2wd98nj6qh-rustc-wrapper-1.97.1/bin/rustc",
+      "-C",
+      "opt-level=3",
+      "-C",
+      "lto=thin",
+      "-C",
+      "target-cpu=native",
+      "-o",
+      "/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/array-collection/pcm-mix-limit/rust-with-mimalloc/executable",
+      "/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/benchmark-arrays/rust/pcm-mix-limit.rs"
+    ],
+    "cwd": "/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/benchmark-arrays/rust"
+  },
+  {
+    "cell": "pcm-mix-limit/haskell-st",
+    "step": "haskell compilation",
+    "cmd": [
+      "/nix/store/8mcxdpmjysczky71y8bbkn5qqzfqh2qi-ghc/bin/ghc",
+      "-O2",
+      "-rtsopts",
+      "-outputdir",
+      "/tmp/nix-shell.uKYaR1/tmpurk7gzgn",
+      "-o",
+      "/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/array-collection/pcm-mix-limit/haskell-st/executable",
+      "/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/benchmark-arrays/haskell/pcm-mix-limit_st.hs"
+    ],
+    "cwd": "/tmp/nix-shell.uKYaR1/tmpurk7gzgn"
+  },
+  {
+    "cell": "pcm-mix-limit/haskell-st-a1g",
+    "step": "haskell compilation",
+    "cmd": [
+      "/nix/store/8mcxdpmjysczky71y8bbkn5qqzfqh2qi-ghc/bin/ghc",
+      "-O2",
+      "-rtsopts",
+      "-with-rtsopts=-A1G",
+      "-outputdir",
+      "/tmp/nix-shell.uKYaR1/tmpg8r1moef",
+      "-o",
+      "/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/array-collection/pcm-mix-limit/haskell-st-a1g/executable",
+      "/home/schrodingerzy/Documents/experiments/paper-ablation-20261104/benchmark-arrays/haskell/pcm-mix-limit_st.hs"
+    ],
+    "cwd": "/tmp/nix-shell.uKYaR1/tmpg8r1moef"
+  }
+]

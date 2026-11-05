@@ -1,0 +1,340 @@
+[
+  {
+    "cell": "rgba-composite/lean",
+    "step": "lean C emission",
+    "cmd": [
+      "/nix/store/azaq5kqiiyv34dr740vb8258yz2qhq60-lean4-4.30.0-thinlto/bin/lean",
+      "/tmp/nix-shell.hcHm8L/tmpqkx_kf3f/rgba-composite.lean",
+      "-c",
+      "/home/schrodingerzy/Documents/experiments/regular-arrays-cross-language-20261104/rgba-composite/lean/executable.c"
+    ],
+    "cwd": "/tmp/nix-shell.hcHm8L/tmpqkx_kf3f"
+  },
+  {
+    "cell": "rgba-composite/lean",
+    "step": "lean linking",
+    "cmd": [
+      "/nix/store/azaq5kqiiyv34dr740vb8258yz2qhq60-lean4-4.30.0-thinlto/bin/leanc",
+      "-o",
+      "/home/schrodingerzy/Documents/experiments/regular-arrays-cross-language-20261104/rgba-composite/lean/executable",
+      "/home/schrodingerzy/Documents/experiments/regular-arrays-cross-language-20261104/rgba-composite/lean/executable.c",
+      "-flto=thin",
+      "-fuse-ld=lld",
+      "-O3",
+      "-mcpu=native"
+    ],
+    "cwd": "/tmp/nix-shell.hcHm8L/tmpqkx_kf3f"
+  },
+  {
+    "cell": "rgba-composite/reussir",
+    "step": "reussir compilation",
+    "cmd": [
+      "/tmp/reussir-primary-refresh-20261102/rrc",
+      "-o",
+      "reussir.ll",
+      "-Oaggressive",
+      "--reuse-across-call",
+      "--relocation-mode",
+      "pic",
+      "-t",
+      "llvm-ir",
+      "/home/schrodingerzy/Documents/experiments/regular-arrays-cross-language-20261104/benchmark/reussir/rgba-composite.rr"
+    ],
+    "cwd": "/tmp/nix-shell.hcHm8L/tmpz648mecm"
+  },
+  {
+    "cell": "rgba-composite/reussir",
+    "step": "reussir linking",
+    "cmd": [
+      "/nix/store/55nmzskx8ai6w4a60cpyf67zxj5lg8wz-clang-wrapper-23.1.0/bin/clang",
+      "-o",
+      "/home/schrodingerzy/Documents/experiments/regular-arrays-cross-language-20261104/rgba-composite/reussir/executable",
+      "reussir.ll",
+      "/home/schrodingerzy/Documents/experiments/regular-arrays-cross-language-20261104/benchmark/reussir/rgba-composite.rr.c",
+      "-flto=thin",
+      "-fuse-ld=lld",
+      "-O3",
+      "-march=native",
+      "-Wl,-plugin-opt=-disable-select-optimize=false",
+      "/nix/store/zjdk9vdxcxyvz8fhsijx248mfm85c1va-reussir-rt-xlto-0.1.0-git-bcfff8d41916/lib/libreussir_rt.a",
+      "-lm"
+    ],
+    "cwd": "/tmp/nix-shell.hcHm8L/tmpz648mecm"
+  },
+  {
+    "cell": "rgba-composite/koka",
+    "step": "koka compilation",
+    "cmd": [
+      "/nix/store/v9p3l36r96dqsn13ifm79i7qsizbh832-koka-3.2.3/bin/koka",
+      "-O3",
+      "--cc=/nix/store/55nmzskx8ai6w4a60cpyf67zxj5lg8wz-clang-wrapper-23.1.0/bin/clang",
+      "--ccopts=-flto=thin -march=native",
+      "--cclinkopts=-flto=thin -fuse-ld=lld",
+      "-i/home/schrodingerzy/Documents/experiments/regular-arrays-cross-language-20261104/benchmark/koka/community-std",
+      "/home/schrodingerzy/Documents/experiments/regular-arrays-cross-language-20261104/benchmark/koka/rgba-composite.kk",
+      "-o",
+      "/home/schrodingerzy/Documents/experiments/regular-arrays-cross-language-20261104/rgba-composite/koka/executable"
+    ],
+    "cwd": "/tmp/nix-shell.f5LEIj/tmpwytqwbpc"
+  },
+  {
+    "cell": "rgba-composite/rust",
+    "step": "rust compilation",
+    "cmd": [
+      "/nix/store/d6bnbpk6jr95frzmmksda4r7l3v8d3m6-rustc-wrapper-1.97.1/bin/rustc",
+      "-C",
+      "opt-level=3",
+      "-C",
+      "lto=thin",
+      "-C",
+      "target-cpu=native",
+      "-o",
+      "/home/schrodingerzy/Documents/experiments/regular-arrays-cross-language-20261104/rgba-composite/rust/executable",
+      "/home/schrodingerzy/Documents/experiments/regular-arrays-cross-language-20261104/benchmark/rust/rgba-composite.rs"
+    ],
+    "cwd": "/home/schrodingerzy/Documents/experiments/regular-arrays-cross-language-20261104/benchmark/rust"
+  },
+  {
+    "cell": "rgba-composite/ocaml",
+    "step": "OCaml compilation",
+    "cmd": [
+      "/nix/store/y4hbc5aq2x4wyv7zip80cn79ak2wav4n-oxcaml-5.4.0+ox/bin/ocamlopt",
+      "-O3",
+      "-o",
+      "/home/schrodingerzy/Documents/experiments/regular-arrays-cross-language-20261104/rgba-composite/ocaml/executable",
+      "/tmp/nix-shell.hcHm8L/tmps2wwie2t/rgba_composite.ml"
+    ],
+    "cwd": "/tmp/nix-shell.hcHm8L/tmps2wwie2t"
+  },
+  {
+    "cell": "rgba-composite/morphic",
+    "step": "morphic compilation",
+    "cmd": [
+      "/nix/store/wxk174dm79z05phih371ygzn9rb3n9km-morphic-0-git-da679c49a336/bin/morphic",
+      "build",
+      "/home/schrodingerzy/Documents/experiments/regular-arrays-cross-language-20261104/benchmark/morphic/rgba-composite.mor",
+      "-o",
+      "/home/schrodingerzy/Documents/experiments/regular-arrays-cross-language-20261104/rgba-composite/morphic/executable",
+      "--llvm-opt-level",
+      "3"
+    ],
+    "cwd": "/tmp/nix-shell.hcHm8L/tmpxl2hrlxl"
+  },
+  {
+    "cell": "rgba-composite/rust-with-mimalloc",
+    "step": "rust compilation",
+    "cmd": [
+      "/nix/store/d6bnbpk6jr95frzmmksda4r7l3v8d3m6-rustc-wrapper-1.97.1/bin/rustc",
+      "-C",
+      "opt-level=3",
+      "-C",
+      "lto=thin",
+      "-C",
+      "target-cpu=native",
+      "-o",
+      "/home/schrodingerzy/Documents/experiments/regular-arrays-cross-language-20261104/rgba-composite/rust-with-mimalloc/executable",
+      "/home/schrodingerzy/Documents/experiments/regular-arrays-cross-language-20261104/benchmark/rust/rgba-composite.rs"
+    ],
+    "cwd": "/home/schrodingerzy/Documents/experiments/regular-arrays-cross-language-20261104/benchmark/rust"
+  },
+  {
+    "cell": "rgba-composite/haskell-st",
+    "step": "haskell compilation",
+    "cmd": [
+      "/nix/store/kz4l78kg9df4hzcidf42xji95qsrw2ay-ghc/bin/ghc",
+      "-O2",
+      "-rtsopts",
+      "-outputdir",
+      "/tmp/nix-shell.hcHm8L/tmpf0tvywx8",
+      "-o",
+      "/home/schrodingerzy/Documents/experiments/regular-arrays-cross-language-20261104/rgba-composite/haskell-st/executable",
+      "/home/schrodingerzy/Documents/experiments/regular-arrays-cross-language-20261104/benchmark/haskell/rgba-composite_st.hs"
+    ],
+    "cwd": "/tmp/nix-shell.hcHm8L/tmpf0tvywx8"
+  },
+  {
+    "cell": "rgba-composite/haskell-st-a1g",
+    "step": "haskell compilation",
+    "cmd": [
+      "/nix/store/kz4l78kg9df4hzcidf42xji95qsrw2ay-ghc/bin/ghc",
+      "-O2",
+      "-rtsopts",
+      "-with-rtsopts=-A1G",
+      "-outputdir",
+      "/tmp/nix-shell.hcHm8L/tmp84pc2ao8",
+      "-o",
+      "/home/schrodingerzy/Documents/experiments/regular-arrays-cross-language-20261104/rgba-composite/haskell-st-a1g/executable",
+      "/home/schrodingerzy/Documents/experiments/regular-arrays-cross-language-20261104/benchmark/haskell/rgba-composite_st.hs"
+    ],
+    "cwd": "/tmp/nix-shell.hcHm8L/tmp84pc2ao8"
+  },
+  {
+    "cell": "pcm-mix-limit/lean",
+    "step": "lean C emission",
+    "cmd": [
+      "/nix/store/azaq5kqiiyv34dr740vb8258yz2qhq60-lean4-4.30.0-thinlto/bin/lean",
+      "/tmp/nix-shell.hcHm8L/tmp8n25rste/pcm-mix-limit.lean",
+      "-c",
+      "/home/schrodingerzy/Documents/experiments/regular-arrays-cross-language-20261104/pcm-mix-limit/lean/executable.c"
+    ],
+    "cwd": "/tmp/nix-shell.hcHm8L/tmp8n25rste"
+  },
+  {
+    "cell": "pcm-mix-limit/lean",
+    "step": "lean linking",
+    "cmd": [
+      "/nix/store/azaq5kqiiyv34dr740vb8258yz2qhq60-lean4-4.30.0-thinlto/bin/leanc",
+      "-o",
+      "/home/schrodingerzy/Documents/experiments/regular-arrays-cross-language-20261104/pcm-mix-limit/lean/executable",
+      "/home/schrodingerzy/Documents/experiments/regular-arrays-cross-language-20261104/pcm-mix-limit/lean/executable.c",
+      "-flto=thin",
+      "-fuse-ld=lld",
+      "-O3",
+      "-mcpu=native"
+    ],
+    "cwd": "/tmp/nix-shell.hcHm8L/tmp8n25rste"
+  },
+  {
+    "cell": "pcm-mix-limit/reussir",
+    "step": "reussir compilation",
+    "cmd": [
+      "/tmp/reussir-primary-refresh-20261102/rrc",
+      "-o",
+      "reussir.ll",
+      "-Oaggressive",
+      "--reuse-across-call",
+      "--relocation-mode",
+      "pic",
+      "-t",
+      "llvm-ir",
+      "/home/schrodingerzy/Documents/experiments/regular-arrays-cross-language-20261104/benchmark/reussir/pcm-mix-limit.rr"
+    ],
+    "cwd": "/tmp/nix-shell.hcHm8L/tmp16wtql3j"
+  },
+  {
+    "cell": "pcm-mix-limit/reussir",
+    "step": "reussir linking",
+    "cmd": [
+      "/nix/store/55nmzskx8ai6w4a60cpyf67zxj5lg8wz-clang-wrapper-23.1.0/bin/clang",
+      "-o",
+      "/home/schrodingerzy/Documents/experiments/regular-arrays-cross-language-20261104/pcm-mix-limit/reussir/executable",
+      "reussir.ll",
+      "/home/schrodingerzy/Documents/experiments/regular-arrays-cross-language-20261104/benchmark/reussir/pcm-mix-limit.rr.c",
+      "-flto=thin",
+      "-fuse-ld=lld",
+      "-O3",
+      "-march=native",
+      "-Wl,-plugin-opt=-disable-select-optimize=false",
+      "/nix/store/zjdk9vdxcxyvz8fhsijx248mfm85c1va-reussir-rt-xlto-0.1.0-git-bcfff8d41916/lib/libreussir_rt.a",
+      "-lm"
+    ],
+    "cwd": "/tmp/nix-shell.hcHm8L/tmp16wtql3j"
+  },
+  {
+    "cell": "pcm-mix-limit/koka",
+    "step": "koka compilation",
+    "cmd": [
+      "/nix/store/v9p3l36r96dqsn13ifm79i7qsizbh832-koka-3.2.3/bin/koka",
+      "-O3",
+      "--cc=/nix/store/55nmzskx8ai6w4a60cpyf67zxj5lg8wz-clang-wrapper-23.1.0/bin/clang",
+      "--ccopts=-flto=thin -march=native",
+      "--cclinkopts=-flto=thin -fuse-ld=lld",
+      "-i/home/schrodingerzy/Documents/experiments/regular-arrays-cross-language-20261104/benchmark/koka/community-std",
+      "/home/schrodingerzy/Documents/experiments/regular-arrays-cross-language-20261104/benchmark/koka/pcm-mix-limit.kk",
+      "-o",
+      "/home/schrodingerzy/Documents/experiments/regular-arrays-cross-language-20261104/pcm-mix-limit/koka/executable"
+    ],
+    "cwd": "/tmp/nix-shell.f5LEIj/tmpkb7x_9jg"
+  },
+  {
+    "cell": "pcm-mix-limit/rust",
+    "step": "rust compilation",
+    "cmd": [
+      "/nix/store/d6bnbpk6jr95frzmmksda4r7l3v8d3m6-rustc-wrapper-1.97.1/bin/rustc",
+      "-C",
+      "opt-level=3",
+      "-C",
+      "lto=thin",
+      "-C",
+      "target-cpu=native",
+      "-o",
+      "/home/schrodingerzy/Documents/experiments/regular-arrays-cross-language-20261104/pcm-mix-limit/rust/executable",
+      "/home/schrodingerzy/Documents/experiments/regular-arrays-cross-language-20261104/benchmark/rust/pcm-mix-limit.rs"
+    ],
+    "cwd": "/home/schrodingerzy/Documents/experiments/regular-arrays-cross-language-20261104/benchmark/rust"
+  },
+  {
+    "cell": "pcm-mix-limit/ocaml",
+    "step": "OCaml compilation",
+    "cmd": [
+      "/nix/store/y4hbc5aq2x4wyv7zip80cn79ak2wav4n-oxcaml-5.4.0+ox/bin/ocamlopt",
+      "-O3",
+      "-o",
+      "/home/schrodingerzy/Documents/experiments/regular-arrays-cross-language-20261104/pcm-mix-limit/ocaml/executable",
+      "/tmp/nix-shell.hcHm8L/tmpbf9d9hvs/pcm_mix_limit.ml"
+    ],
+    "cwd": "/tmp/nix-shell.hcHm8L/tmpbf9d9hvs"
+  },
+  {
+    "cell": "pcm-mix-limit/morphic",
+    "step": "morphic compilation",
+    "cmd": [
+      "/nix/store/wxk174dm79z05phih371ygzn9rb3n9km-morphic-0-git-da679c49a336/bin/morphic",
+      "build",
+      "/home/schrodingerzy/Documents/experiments/regular-arrays-cross-language-20261104/benchmark/morphic/pcm-mix-limit.mor",
+      "-o",
+      "/home/schrodingerzy/Documents/experiments/regular-arrays-cross-language-20261104/pcm-mix-limit/morphic/executable",
+      "--llvm-opt-level",
+      "3"
+    ],
+    "cwd": "/tmp/nix-shell.hcHm8L/tmpmkkv72ev"
+  },
+  {
+    "cell": "pcm-mix-limit/rust-with-mimalloc",
+    "step": "rust compilation",
+    "cmd": [
+      "/nix/store/d6bnbpk6jr95frzmmksda4r7l3v8d3m6-rustc-wrapper-1.97.1/bin/rustc",
+      "-C",
+      "opt-level=3",
+      "-C",
+      "lto=thin",
+      "-C",
+      "target-cpu=native",
+      "-o",
+      "/home/schrodingerzy/Documents/experiments/regular-arrays-cross-language-20261104/pcm-mix-limit/rust-with-mimalloc/executable",
+      "/home/schrodingerzy/Documents/experiments/regular-arrays-cross-language-20261104/benchmark/rust/pcm-mix-limit.rs"
+    ],
+    "cwd": "/home/schrodingerzy/Documents/experiments/regular-arrays-cross-language-20261104/benchmark/rust"
+  },
+  {
+    "cell": "pcm-mix-limit/haskell-st",
+    "step": "haskell compilation",
+    "cmd": [
+      "/nix/store/kz4l78kg9df4hzcidf42xji95qsrw2ay-ghc/bin/ghc",
+      "-O2",
+      "-rtsopts",
+      "-outputdir",
+      "/tmp/nix-shell.hcHm8L/tmpwa7uz6y2",
+      "-o",
+      "/home/schrodingerzy/Documents/experiments/regular-arrays-cross-language-20261104/pcm-mix-limit/haskell-st/executable",
+      "/home/schrodingerzy/Documents/experiments/regular-arrays-cross-language-20261104/benchmark/haskell/pcm-mix-limit_st.hs"
+    ],
+    "cwd": "/tmp/nix-shell.hcHm8L/tmpwa7uz6y2"
+  },
+  {
+    "cell": "pcm-mix-limit/haskell-st-a1g",
+    "step": "haskell compilation",
+    "cmd": [
+      "/nix/store/kz4l78kg9df4hzcidf42xji95qsrw2ay-ghc/bin/ghc",
+      "-O2",
+      "-rtsopts",
+      "-with-rtsopts=-A1G",
+      "-outputdir",
+      "/tmp/nix-shell.hcHm8L/tmpuw6sdqpa",
+      "-o",
+      "/home/schrodingerzy/Documents/experiments/regular-arrays-cross-language-20261104/pcm-mix-limit/haskell-st-a1g/executable",
+      "/home/schrodingerzy/Documents/experiments/regular-arrays-cross-language-20261104/benchmark/haskell/pcm-mix-limit_st.hs"
+    ],
+    "cwd": "/tmp/nix-shell.hcHm8L/tmpuw6sdqpa"
+  }
+]

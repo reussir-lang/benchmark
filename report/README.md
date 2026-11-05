@@ -4,8 +4,8 @@ Current runtime and memory comparisons across the registered language configurat
 
 | Host | Configurations | Timed | Peak RSS | Errors |
 | --- | --- | --- | --- | --- |
-| workstation | 288 | 287 | 287 | 0 |
-| spark | 288 | 287 | 287 | 0 |
+| workstation | 306 | 305 | 305 | 0 |
+| spark | 306 | 305 | 305 | 0 |
 
 [Combined results](comparison.csv) · [Ratios to Reussir](relative-to-reussir.csv) · [Errors](errors.csv)
 
