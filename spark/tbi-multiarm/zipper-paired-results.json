@@ -1,0 +1,72 @@
+[
+  {
+    "variant": "before-amendment",
+    "measurement": {
+      "results": [
+        {
+          "command": "/tmp/reussir-paper-refresh-20261111/lean2rr-fixed/cells/rbtree-zipper-lambda/l2r",
+          "mean": 0.07405396820666667,
+          "stddev": 0.00029056282180767526,
+          "median": 0.07421207146,
+          "user": 0.07250388,
+          "system": 0.0014098466666666665,
+          "min": 0.07371863690000001,
+          "max": 0.07423119626,
+          "times": [
+            0.07421207146,
+            0.07423119626,
+            0.07371863690000001
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 3,
+      "requested_samples": 3,
+      "warmup_runs": 2,
+      "case_time_budget_seconds": 60.0,
+      "measurement_seconds": 0.4177797408774495,
+      "budget_limited": false,
+      "peak_rss_kb": 47708
+    }
+  },
+  {
+    "variant": "amended",
+    "measurement": {
+      "results": [
+        {
+          "command": "/tmp/reussir-paper-refresh-20261111/life-investigation/rbtree-zipper-lambda-amended",
+          "mean": 0.08124692307333335,
+          "stddev": 0.00018487997460139204,
+          "median": 0.08125224394000001,
+          "user": 0.07934925999999999,
+          "system": 0.00173504,
+          "min": 0.08105944010000002,
+          "max": 0.08142908518,
+          "times": [
+            0.08125224394000001,
+            0.08105944010000002,
+            0.08142908518
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 3,
+      "requested_samples": 3,
+      "warmup_runs": 2,
+      "case_time_budget_seconds": 60.0,
+      "measurement_seconds": 0.4529135972261429,
+      "budget_limited": false,
+      "peak_rss_kb": 47708
+    }
+  }
+]

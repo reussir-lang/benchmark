@@ -1,0 +1,535 @@
+{
+  "description": "Same-source Spark isolation of PR #980 inline-variant TBI regression and PR #981 fix. CPU 19, three samples, two warmups.",
+  "parent_revision": "17a29919",
+  "regressed_revision": "015e63cc",
+  "fixed_revision": "b66d0fb4353dbdae677e7ac99cc0aefe5a793135",
+  "merged_fix_revision": "c55dc218bacaa2cfda9574c3b2eaee1e237b6010",
+  "benchmark_revision": "1cf406dffa22b8bfc65eeb30241e8154f27a5505",
+  "runtime_source_revision": "015e63cc",
+  "comparisons": {
+    "runtime_and_encoding": [
+      {
+        "benchmark": "fingertree",
+        "variant": "current",
+        "binary_sha256": "4b7e6d7c950c1f74495006e518cd20f1aa180268f0940dc71926d16e1d3302e0",
+        "measurement": {
+          "results": [
+            {
+              "command": "/tmp/reussir-paper-refresh-20261111/bin/fingertree",
+              "mean": 0.09456461716666668,
+              "stddev": 0.0005723642726880212,
+              "median": 0.09437619000000001,
+              "user": 0.03906647333333333,
+              "system": 0.05536364666666666,
+              "min": 0.09411022136000001,
+              "max": 0.09520744014,
+              "times": [
+                0.09437619000000001,
+                0.09520744014,
+                0.09411022136000001
+              ],
+              "exit_codes": [
+                0,
+                0,
+                0
+              ]
+            }
+          ],
+          "timing_source": "hyperfine",
+          "sample_count": 3,
+          "requested_samples": 3,
+          "warmup_runs": 2,
+          "case_time_budget_seconds": 60.0,
+          "measurement_seconds": 0.6175015028566122,
+          "budget_limited": false,
+          "peak_rss_kb": 187156
+        }
+      },
+      {
+        "benchmark": "fingertree",
+        "variant": "old-runtime",
+        "binary_sha256": "7a5429de02af3d0d7f9a51a23511b487436b2a40bb2778ac76de29e84c082cd4",
+        "measurement": {
+          "results": [
+            {
+              "command": "/tmp/reussir-paper-refresh-20261111/diagnostic/fingertree.old-runtime",
+              "mean": 0.09431527709333333,
+              "stddev": 0.00029584816208220267,
+              "median": 0.09435352832,
+              "user": 0.040440819999999995,
+              "system": 0.05376532666666667,
+              "min": 0.09400216378000001,
+              "max": 0.09459013918,
+              "times": [
+                0.09459013918,
+                0.09435352832,
+                0.09400216378000001
+              ],
+              "exit_codes": [
+                0,
+                0,
+                0
+              ]
+            }
+          ],
+          "timing_source": "hyperfine",
+          "sample_count": 3,
+          "requested_samples": 3,
+          "warmup_runs": 2,
+          "case_time_budget_seconds": 60.0,
+          "measurement_seconds": 0.6165030654519796,
+          "budget_limited": false,
+          "peak_rss_kb": 187284
+        }
+      },
+      {
+        "benchmark": "fingertree",
+        "variant": "old-compiler",
+        "binary_sha256": "ccc7afb296648f694a1470be01a4953499d4979fd6bc7090d49e51b1a03359c1",
+        "measurement": {
+          "results": [
+            {
+              "command": "/tmp/reussir-paper-refresh-20261111/diagnostic/fingertree.old-compiler",
+              "mean": 0.030812099393333334,
+              "stddev": 4.7935853336743946e-05,
+              "median": 0.03079703744,
+              "user": 0.03069676,
+              "system": 0.0002331133333333333,
+              "min": 0.03077350338,
+              "max": 0.030865757360000003,
+              "times": [
+                0.030865757360000003,
+                0.03079703744,
+                0.03077350338
+              ],
+              "exit_codes": [
+                0,
+                0,
+                0
+              ]
+            }
+          ],
+          "timing_source": "hyperfine",
+          "sample_count": 3,
+          "requested_samples": 3,
+          "warmup_runs": 2,
+          "case_time_budget_seconds": 60.0,
+          "measurement_seconds": 0.29372713062912226,
+          "budget_limited": false,
+          "peak_rss_kb": 6196
+        }
+      },
+      {
+        "benchmark": "fingertree",
+        "variant": "immortal-nullary",
+        "binary_sha256": "e851b0a98d6d98ba2abf4969f12fd3b160822002c0d09be3e0b9465bd4590273",
+        "measurement": {
+          "results": [
+            {
+              "command": "/tmp/reussir-paper-refresh-20261111/diagnostic/fingertree.immortal-nullary",
+              "mean": 0.031129128386666673,
+              "stddev": 2.5140339027025637e-05,
+              "median": 0.031142493820000006,
+              "user": 0.03000519333333333,
+              "system": 0.0011570133333333333,
+              "min": 0.031100128400000003,
+              "max": 0.031144762940000004,
+              "times": [
+                0.031144762940000004,
+                0.031100128400000003,
+                0.031142493820000006
+              ],
+              "exit_codes": [
+                0,
+                0,
+                0
+              ]
+            }
+          ],
+          "timing_source": "hyperfine",
+          "sample_count": 3,
+          "requested_samples": 3,
+          "warmup_runs": 2,
+          "case_time_budget_seconds": 60.0,
+          "measurement_seconds": 0.29426785465329885,
+          "budget_limited": false,
+          "peak_rss_kb": 6260
+        }
+      },
+      {
+        "benchmark": "functional-queue",
+        "variant": "current",
+        "binary_sha256": "515f0082628dfcfe50b5ed7ee2ef021ca477da7e8ca80eceb147224320b62b2a",
+        "measurement": {
+          "results": [
+            {
+              "command": "/tmp/reussir-paper-refresh-20261111/bin/functional-queue",
+              "mean": 0.11490771989333333,
+              "stddev": 0.0007120937701586927,
+              "median": 0.11513463846000001,
+              "user": 0.05171534,
+              "system": 0.06305129999999999,
+              "min": 0.11410982032000001,
+              "max": 0.11547870090000001,
+              "times": [
+                0.11547870090000001,
+                0.11513463846000001,
+                0.11410982032000001
+              ],
+              "exit_codes": [
+                0,
+                0,
+                0
+              ]
+            }
+          ],
+          "timing_source": "hyperfine",
+          "sample_count": 3,
+          "requested_samples": 3,
+          "warmup_runs": 2,
+          "case_time_budget_seconds": 60.0,
+          "measurement_seconds": 0.7193889627233148,
+          "budget_limited": false,
+          "peak_rss_kb": 223136
+        }
+      },
+      {
+        "benchmark": "functional-queue",
+        "variant": "old-runtime",
+        "binary_sha256": "cf17f74838a388cd8885711684e2c9398c2c567353782766e7549ac226b3d1b8",
+        "measurement": {
+          "results": [
+            {
+              "command": "/tmp/reussir-paper-refresh-20261111/diagnostic/functional-queue.old-runtime",
+              "mean": 0.11480930873333334,
+              "stddev": 0.00015417978266414655,
+              "median": 0.1148553327,
+              "user": 0.04491894666666666,
+              "system": 0.06977594,
+              "min": 0.11463735800000001,
+              "max": 0.11493523550000001,
+              "times": [
+                0.1148553327,
+                0.11463735800000001,
+                0.11493523550000001
+              ],
+              "exit_codes": [
+                0,
+                0,
+                0
+              ]
+            }
+          ],
+          "timing_source": "hyperfine",
+          "sample_count": 3,
+          "requested_samples": 3,
+          "warmup_runs": 2,
+          "case_time_budget_seconds": 60.0,
+          "measurement_seconds": 0.719070159830153,
+          "budget_limited": false,
+          "peak_rss_kb": 223324
+        }
+      },
+      {
+        "benchmark": "functional-queue",
+        "variant": "old-compiler",
+        "binary_sha256": "adab7cb9c28c32d1431d7768c92b66c884898941e9e2ac992a86c0fb8b228148",
+        "measurement": {
+          "results": [
+            {
+              "command": "/tmp/reussir-paper-refresh-20261111/diagnostic/functional-queue.old-compiler",
+              "mean": 0.036772185846666666,
+              "stddev": 9.301309003782664e-05,
+              "median": 0.03673027344,
+              "user": 0.03628811333333334,
+              "system": 0.0005168266666666666,
+              "min": 0.03670750358,
+              "max": 0.03687878052,
+              "times": [
+                0.03673027344,
+                0.03670750358,
+                0.03687878052
+              ],
+              "exit_codes": [
+                0,
+                0,
+                0
+              ]
+            }
+          ],
+          "timing_source": "hyperfine",
+          "sample_count": 3,
+          "requested_samples": 3,
+          "warmup_runs": 2,
+          "case_time_budget_seconds": 60.0,
+          "measurement_seconds": 0.3230543676763773,
+          "budget_limited": false,
+          "peak_rss_kb": 5980
+        }
+      },
+      {
+        "benchmark": "functional-queue",
+        "variant": "immortal-nullary",
+        "binary_sha256": "a96b29e16cd81b1d26a15e150589a0e5741f0721069ba7df2fe01eade26c8ee2",
+        "measurement": {
+          "results": [
+            {
+              "command": "/tmp/reussir-paper-refresh-20261111/diagnostic/functional-queue.immortal-nullary",
+              "mean": 0.03653283082,
+              "stddev": 6.001446241339537e-05,
+              "median": 0.03653960716,
+              "user": 0.03670452,
+              "system": 0.0,
+              "min": 0.036469715800000004,
+              "max": 0.0365891695,
+              "times": [
+                0.03653960716,
+                0.036469715800000004,
+                0.0365891695
+              ],
+              "exit_codes": [
+                0,
+                0,
+                0
+              ]
+            }
+          ],
+          "timing_source": "hyperfine",
+          "sample_count": 3,
+          "requested_samples": 3,
+          "warmup_runs": 2,
+          "case_time_budget_seconds": 60.0,
+          "measurement_seconds": 0.3210641983896494,
+          "budget_limited": false,
+          "peak_rss_kb": 6236
+        }
+      }
+    ],
+    "immediate_parent": [
+      {
+        "benchmark": "fingertree",
+        "variant": "current",
+        "binary_sha256": "4b7e6d7c950c1f74495006e518cd20f1aa180268f0940dc71926d16e1d3302e0",
+        "measurement": {
+          "results": [
+            {
+              "command": "/tmp/reussir-paper-refresh-20261111/bin/fingertree",
+              "mean": 0.09413776410000001,
+              "stddev": 0.0004387641826259675,
+              "median": 0.0940168759,
+              "user": 0.03850069333333333,
+              "system": 0.05550454666666666,
+              "min": 0.0937721172,
+              "max": 0.09462429920000001,
+              "times": [
+                0.0940168759,
+                0.0937721172,
+                0.09462429920000001
+              ],
+              "exit_codes": [
+                0,
+                0,
+                0
+              ]
+            }
+          ],
+          "timing_source": "hyperfine",
+          "sample_count": 3,
+          "requested_samples": 3,
+          "warmup_runs": 2,
+          "case_time_budget_seconds": 60.0,
+          "measurement_seconds": 0.6151958722621202,
+          "budget_limited": false,
+          "peak_rss_kb": 187156
+        }
+      },
+      {
+        "benchmark": "fingertree",
+        "variant": "pre980",
+        "binary_sha256": "ccc7afb296648f694a1470be01a4953499d4979fd6bc7090d49e51b1a03359c1",
+        "measurement": {
+          "results": [
+            {
+              "command": "/tmp/reussir-paper-refresh-20261111/diagnostic/fingertree.pre980",
+              "mean": 0.030770327093333338,
+              "stddev": 1.843627857069996e-05,
+              "median": 0.030763253640000005,
+              "user": 0.03063389333333333,
+              "system": 0.00025650666666666663,
+              "min": 0.030756475000000002,
+              "max": 0.03079125264,
+              "times": [
+                0.030763253640000005,
+                0.030756475000000002,
+                0.03079125264
+              ],
+              "exit_codes": [
+                0,
+                0,
+                0
+              ]
+            }
+          ],
+          "timing_source": "hyperfine",
+          "sample_count": 3,
+          "requested_samples": 3,
+          "warmup_runs": 2,
+          "case_time_budget_seconds": 60.0,
+          "measurement_seconds": 0.2937323162332177,
+          "budget_limited": false,
+          "peak_rss_kb": 6260
+        }
+      },
+      {
+        "benchmark": "functional-queue",
+        "variant": "current",
+        "binary_sha256": "515f0082628dfcfe50b5ed7ee2ef021ca477da7e8ca80eceb147224320b62b2a",
+        "measurement": {
+          "results": [
+            {
+              "command": "/tmp/reussir-paper-refresh-20261111/bin/functional-queue",
+              "mean": 0.11451218326000001,
+              "stddev": 0.00037535481547333436,
+              "median": 0.11463761684000001,
+              "user": 0.046242093333333324,
+              "system": 0.06815848666666667,
+              "min": 0.11409017404,
+              "max": 0.11480875890000002,
+              "times": [
+                0.11463761684000001,
+                0.11409017404,
+                0.11480875890000002
+              ],
+              "exit_codes": [
+                0,
+                0,
+                0
+              ]
+            }
+          ],
+          "timing_source": "hyperfine",
+          "sample_count": 3,
+          "requested_samples": 3,
+          "warmup_runs": 2,
+          "case_time_budget_seconds": 60.0,
+          "measurement_seconds": 0.7186869559809566,
+          "budget_limited": false,
+          "peak_rss_kb": 223136
+        }
+      },
+      {
+        "benchmark": "functional-queue",
+        "variant": "pre980",
+        "binary_sha256": "adab7cb9c28c32d1431d7768c92b66c884898941e9e2ac992a86c0fb8b228148",
+        "measurement": {
+          "results": [
+            {
+              "command": "/tmp/reussir-paper-refresh-20261111/diagnostic/functional-queue.pre980",
+              "mean": 0.036854941800000006,
+              "stddev": 8.825361033991608e-05,
+              "median": 0.03687293702,
+              "user": 0.03671845333333333,
+              "system": 0.00025654,
+              "min": 0.03675907746,
+              "max": 0.03693281092,
+              "times": [
+                0.03687293702,
+                0.03675907746,
+                0.03693281092
+              ],
+              "exit_codes": [
+                0,
+                0,
+                0
+              ]
+            }
+          ],
+          "timing_source": "hyperfine",
+          "sample_count": 3,
+          "requested_samples": 3,
+          "warmup_runs": 2,
+          "case_time_budget_seconds": 60.0,
+          "measurement_seconds": 0.3229091791436076,
+          "budget_limited": false,
+          "peak_rss_kb": 5980
+        }
+      }
+    ],
+    "fix": [
+      {
+        "benchmark": "fingertree",
+        "variant": "fixed",
+        "binary_sha256": "5fc4d7e1076cbe218cf89fa4b6bcaf3a1d9143c5b962975264d0927bb097061b",
+        "measurement": {
+          "results": [
+            {
+              "command": "/tmp/reussir-paper-refresh-20261111/diagnostic/fingertree.fixed",
+              "mean": 0.031289335093333336,
+              "stddev": 0.000469626845353621,
+              "median": 0.031065439480000005,
+              "user": 0.03087717333333333,
+              "system": 0.00045247999999999995,
+              "min": 0.030973553500000004,
+              "max": 0.03182901230000001,
+              "times": [
+                0.031065439480000005,
+                0.03182901230000001,
+                0.030973553500000004
+              ],
+              "exit_codes": [
+                0,
+                0,
+                0
+              ]
+            }
+          ],
+          "timing_source": "hyperfine",
+          "sample_count": 3,
+          "requested_samples": 3,
+          "warmup_runs": 2,
+          "case_time_budget_seconds": 60.0,
+          "measurement_seconds": 0.3000173680484295,
+          "budget_limited": false,
+          "peak_rss_kb": 6260
+        }
+      },
+      {
+        "benchmark": "functional-queue",
+        "variant": "fixed",
+        "binary_sha256": "16928267d0ff317026c09544fcc3f51c9499679fabdb03ed287fce40e317eb17",
+        "measurement": {
+          "results": [
+            {
+              "command": "/tmp/reussir-paper-refresh-20261111/diagnostic/functional-queue.fixed",
+              "mean": 0.038055290826666664,
+              "stddev": 0.0001653959565591971,
+              "median": 0.03807928228,
+              "user": 0.03760768666666666,
+              "system": 0.0004863666666666667,
+              "min": 0.03787920936,
+              "max": 0.03820738084,
+              "times": [
+                0.03820738084,
+                0.03807928228,
+                0.03787920936
+              ],
+              "exit_codes": [
+                0,
+                0,
+                0
+              ]
+            }
+          ],
+          "timing_source": "hyperfine",
+          "sample_count": 3,
+          "requested_samples": 3,
+          "warmup_runs": 2,
+          "case_time_budget_seconds": 60.0,
+          "measurement_seconds": 0.328105503693223,
+          "budget_limited": false,
+          "peak_rss_kb": 6108
+        }
+      }
+    ]
+  }
+}

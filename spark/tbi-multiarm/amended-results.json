@@ -1,0 +1,320 @@
+[
+  {
+    "suite": "lean2rr",
+    "benchmark": "life",
+    "sha256": "861606f741c53bd24075b407ab7824687c11d0d889fbe30e1ad93d95eb4ed503",
+    "stdout": "",
+    "stderr": "",
+    "measurement": {
+      "results": [
+        {
+          "command": "/tmp/reussir-paper-refresh-20261111/life-investigation/life-amended",
+          "mean": 1.630832757032,
+          "stddev": 0.0037009940642761864,
+          "median": 1.63231126258,
+          "user": 1.63027629,
+          "system": 0.000291996,
+          "min": 1.62129195588,
+          "max": 1.63339180654,
+          "times": [
+            1.63247531798,
+            1.63221847804,
+            1.6325385855599999,
+            1.62129195588,
+            1.63240404712,
+            1.6276716315400002,
+            1.6316091818999998,
+            1.6328231693800002,
+            1.63339180654,
+            1.6319033963800003
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 24.730863478034735,
+      "budget_limited": false,
+      "peak_rss_kb": 6756
+    }
+  },
+  {
+    "suite": "lean2rr",
+    "benchmark": "rbtree-zipper-lambda",
+    "sha256": "0e13897f17551fe4195715f1de02a9878a88615d4ad9f2488685963bda12e688",
+    "stdout": "105000\n",
+    "stderr": "",
+    "measurement": {
+      "results": [
+        {
+          "command": "/tmp/reussir-paper-refresh-20261111/life-investigation/rbtree-zipper-lambda-amended",
+          "mean": 0.08114816872200001,
+          "stddev": 0.00022102633300358492,
+          "median": 0.08122436811,
+          "user": 0.07959701999999999,
+          "system": 0.0013865319999999998,
+          "min": 0.08071486862,
+          "max": 0.0813753313,
+          "times": [
+            0.08129289674000001,
+            0.08137342156,
+            0.08118408268,
+            0.08106729642,
+            0.08107298318,
+            0.08126465354000001,
+            0.08127873708000001,
+            0.0813753313,
+            0.08085741610000001,
+            0.08071486862
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 1.3693133778870106,
+      "budget_limited": false,
+      "peak_rss_kb": 47720
+    }
+  },
+  {
+    "suite": "lean2rr",
+    "benchmark": "rbtree",
+    "sha256": "03d2c9436aabbdb255613ab74973fe8ec90211ed6eb8e038c2eaa3bd372a681e",
+    "stdout": "",
+    "stderr": "",
+    "measurement": {
+      "results": [
+        {
+          "command": "/tmp/reussir-paper-refresh-20261111/life-investigation/rbtree-amended",
+          "mean": 0.18705486263600002,
+          "stddev": 0.0007331518464439568,
+          "median": 0.18699439054,
+          "user": 0.184174916,
+          "system": 0.002687656,
+          "min": 0.1861164095,
+          "max": 0.18827011018,
+          "times": [
+            0.18822937318000002,
+            0.18717161482,
+            0.18660166382,
+            0.18639830002000002,
+            0.18705316238000003,
+            0.18732172622,
+            0.1869356187,
+            0.18827011018,
+            0.18645064754000001,
+            0.1861164095
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 2.963445920497179,
+      "budget_limited": false,
+      "peak_rss_kb": 102996
+    }
+  },
+  {
+    "suite": "main",
+    "benchmark": "rbtree",
+    "sha256": "b47ec00444c2f417215d2ddc7476e344e7e69b8d8eef5f0a7a63f5ab2a7e5c66",
+    "stdout": "",
+    "stderr": "",
+    "measurement": {
+      "results": [
+        {
+          "command": "/tmp/reussir-paper-refresh-20261111/life-investigation/rbtree.amended",
+          "mean": 0.209342816732,
+          "stddev": 0.00045019730357707217,
+          "median": 0.20944226482,
+          "user": 0.20693972,
+          "system": 0.002229954,
+          "min": 0.20854858250000002,
+          "max": 0.20986163804000002,
+          "times": [
+            0.20986163804000002,
+            0.20932365214,
+            0.20979648704,
+            0.20885715170000002,
+            0.20964718878000002,
+            0.20967816034,
+            0.20956087750000002,
+            0.20886706794,
+            0.20928736134,
+            0.20854858250000002
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 3.2973646400496364,
+      "budget_limited": false,
+      "peak_rss_kb": 100440
+    }
+  },
+  {
+    "suite": "main",
+    "benchmark": "functional-queue",
+    "sha256": "16928267d0ff317026c09544fcc3f51c9499679fabdb03ed287fce40e317eb17",
+    "stdout": "",
+    "stderr": "",
+    "measurement": {
+      "results": [
+        {
+          "command": "/tmp/reussir-paper-refresh-20261111/life-investigation/functional-queue.amended",
+          "mean": 0.038254341366000005,
+          "stddev": 0.00012532575047806058,
+          "median": 0.038236207280000004,
+          "user": 0.037850565999999995,
+          "system": 0.000332586,
+          "min": 0.038061357500000004,
+          "max": 0.03842661354,
+          "times": [
+            0.03842661354,
+            0.038399889660000006,
+            0.03817529192000001,
+            0.0382676804,
+            0.03820473416,
+            0.038061357500000004,
+            0.03819303242000001,
+            0.03811264746,
+            0.03832097898,
+            0.03838118762000001
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 0.7069920664653182,
+      "budget_limited": false,
+      "peak_rss_kb": 5944
+    }
+  },
+  {
+    "suite": "main",
+    "benchmark": "fingertree",
+    "sha256": "15c14093c64d68db7f7af4962affa0ecfb4ab638fd5c2ebb2b0041a2da59747e",
+    "stdout": "",
+    "stderr": "",
+    "measurement": {
+      "results": [
+        {
+          "command": "/tmp/reussir-paper-refresh-20261111/life-investigation/fingertree.amended",
+          "mean": 0.030947801144000003,
+          "stddev": 0.00014757722310472472,
+          "median": 0.03093816042,
+          "user": 0.030635965999999997,
+          "system": 0.00023072599999999997,
+          "min": 0.0307681539,
+          "max": 0.0312966163,
+          "times": [
+            0.03094694908,
+            0.0312966163,
+            0.03083721848,
+            0.030989549680000002,
+            0.0308143235,
+            0.031021503660000005,
+            0.03098342078,
+            0.030890904300000004,
+            0.0307681539,
+            0.03092937176
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 0.5973933888599277,
+      "budget_limited": false,
+      "peak_rss_kb": 6164
+    }
+  }
+]

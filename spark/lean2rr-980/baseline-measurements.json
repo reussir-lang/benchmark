@@ -1,0 +1,1842 @@
+[
+  {
+    "benchmark": "rbtree-zipper-lambda",
+    "variant": "native",
+    "binary_sha256": "8b53f680bf814c0331189b88f006f145f28ab4c24177ffa09a8a0f92e173c8b0",
+    "started": "2026-11-10T07:01:24.664858+00:00",
+    "measurement": {
+      "results": [
+        {
+          "command": "/home/schrodingerzy/Documents/paper-evidence-20261110/lean434/cells/rbtree-zipper-lambda/native",
+          "mean": 0.42243209643800006,
+          "stddev": 0.00017059374162271167,
+          "median": 0.42245838950000003,
+          "user": 0.42013188999999995,
+          "system": 0.002049436,
+          "min": 0.42209793428000003,
+          "max": 0.42267357634,
+          "times": [
+            0.42261736256000004,
+            0.42267357634,
+            0.42209793428000003,
+            0.42252099764,
+            0.42253029270000003,
+            0.42247439244,
+            0.422339987,
+            0.42233271456,
+            0.42229132030000005,
+            0.42244238656000005
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 6.4952778639271855,
+      "budget_limited": false,
+      "peak_rss_kb": 56976
+    }
+  },
+  {
+    "benchmark": "rbtree-zipper-lambda",
+    "variant": "l2r",
+    "binary_sha256": "56c4f4465b9b97ef7359ec977c7332217585848652819480ae3a7ef9d9bfa260",
+    "started": "2026-11-10T07:01:31.165236+00:00",
+    "measurement": {
+      "results": [
+        {
+          "command": "/home/schrodingerzy/Documents/paper-evidence-20261110/lean434/cells/rbtree-zipper-lambda/l2r",
+          "mean": 0.08843783449,
+          "stddev": 0.00015578693220524137,
+          "median": 0.08840836086000001,
+          "user": 0.086856438,
+          "system": 0.0014257459999999999,
+          "min": 0.08822024526,
+          "max": 0.0887241382,
+          "times": [
+            0.08822024526,
+            0.08839068246,
+            0.08857012444000001,
+            0.08834030608000001,
+            0.08834854772000002,
+            0.0887241382,
+            0.08858521178,
+            0.08849783256,
+            0.08827521714,
+            0.08842603926
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 1.4784625368192792,
+      "budget_limited": false,
+      "peak_rss_kb": 47708
+    }
+  },
+  {
+    "benchmark": "rbtree",
+    "variant": "native",
+    "binary_sha256": "1acda15ace809be9b7f2e08774526566958cedab3be99b039da552d7833fe633",
+    "started": "2026-11-10T07:01:32.646808+00:00",
+    "measurement": {
+      "results": [
+        {
+          "command": "/home/schrodingerzy/Documents/paper-evidence-20261110/lean434/cells/rbtree/native",
+          "mean": 0.6497781010300001,
+          "stddev": 0.00042527754935466007,
+          "median": 0.64983489801,
+          "user": 0.646543042,
+          "system": 0.002921184,
+          "min": 0.64907522476,
+          "max": 0.6504445083000001,
+          "times": [
+            0.6497519325800001,
+            0.6499200222600001,
+            0.64981509636,
+            0.64964241816,
+            0.65013302654,
+            0.6500369329,
+            0.6504445083000001,
+            0.64910714878,
+            0.6498546996600001,
+            0.64907522476
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 9.901552738621831,
+      "budget_limited": false,
+      "peak_rss_kb": 124548
+    }
+  },
+  {
+    "benchmark": "rbtree",
+    "variant": "l2r",
+    "binary_sha256": "92e139caf6f21916df0d2bc8f9d211d86e75e95a2f692af28a18e72e0eacacc8",
+    "started": "2026-11-10T07:01:42.552616+00:00",
+    "measurement": {
+      "results": [
+        {
+          "command": "/home/schrodingerzy/Documents/paper-evidence-20261110/lean434/cells/rbtree/l2r",
+          "mean": 0.21798789859200002,
+          "stddev": 0.0011503694302118612,
+          "median": 0.2175535791,
+          "user": 0.21546239199999997,
+          "system": 0.0023346039999999997,
+          "min": 0.21698212196000002,
+          "max": 0.2206052045,
+          "times": [
+            0.21760856250000002,
+            0.21890728346000002,
+            0.21714989456,
+            0.21757570968,
+            0.21895144984,
+            0.21711297704000002,
+            0.21753144852,
+            0.2206052045,
+            0.21745433386000002,
+            0.21698212196000002
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 3.424586587585509,
+      "budget_limited": false,
+      "peak_rss_kb": 103060
+    }
+  },
+  {
+    "benchmark": "heap",
+    "variant": "native",
+    "binary_sha256": "5037ee60dab76a29e5ec3f3f854b0ae7670bef9804ab9275bf18b6473a1437e5",
+    "started": "2026-11-10T07:01:45.980688+00:00",
+    "measurement": {
+      "results": [
+        {
+          "command": "/home/schrodingerzy/Documents/paper-evidence-20261110/lean434/cells/heap/native",
+          "mean": 1.3897538402360001,
+          "stddev": 0.0018509790398123051,
+          "median": 1.3899199709699999,
+          "user": 1.388077756,
+          "system": 0.001330752,
+          "min": 1.38722782624,
+          "max": 1.39165665206,
+          "times": [
+            1.39112051356,
+            1.3884026085,
+            1.3914042217200002,
+            1.38722782624,
+            1.39150178632,
+            1.3877366277799998,
+            1.39165665206,
+            1.38812542832,
+            1.3916433094800003,
+            1.38871942838
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 20.984606097452343,
+      "budget_limited": false,
+      "peak_rss_kb": 13212
+    }
+  },
+  {
+    "benchmark": "heap",
+    "variant": "l2r",
+    "binary_sha256": "9b571206f08856a52036636ace982208659e73746be89a363b9de5f43758eecc",
+    "started": "2026-11-10T07:02:06.969384+00:00",
+    "measurement": {
+      "results": [
+        {
+          "command": "/home/schrodingerzy/Documents/paper-evidence-20261110/lean434/cells/heap/l2r",
+          "mean": 0.5485251769720001,
+          "stddev": 0.024036025071160556,
+          "median": 0.53366333027,
+          "user": 0.547918398,
+          "system": 0.000447384,
+          "min": 0.53346309388,
+          "max": 0.58430785722,
+          "times": [
+            0.53367760604,
+            0.5826333934800001,
+            0.53370935226,
+            0.53348693552,
+            0.5336490545,
+            0.5335757175,
+            0.58430785722,
+            0.53363543416,
+            0.53346309388,
+            0.58311332516
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 8.33829840272665,
+      "budget_limited": false,
+      "peak_rss_kb": 6752
+    }
+  },
+  {
+    "benchmark": "nbe-closure",
+    "variant": "native",
+    "binary_sha256": "bbb919ca21e9dd15b9b327db1a269d2e1c0bee2cc14446ecd2d6a7dd7a56d6ac",
+    "started": "2026-11-10T07:02:15.310466+00:00",
+    "measurement": {
+      "results": [
+        {
+          "command": "/home/schrodingerzy/Documents/paper-evidence-20261110/lean434/cells/nbe-closure/native",
+          "mean": 0.086958383434,
+          "stddev": 0.00017136079859701682,
+          "median": 0.08698813086,
+          "user": 0.054400201999999995,
+          "system": 0.032327586,
+          "min": 0.08666537430000001,
+          "max": 0.08719324482,
+          "times": [
+            0.08710925382000001,
+            0.0869366774,
+            0.08710048608,
+            0.08703958432,
+            0.08719324482,
+            0.0868949254,
+            0.08666537430000001,
+            0.08681138072000001,
+            0.08676797176,
+            0.08706493572000001
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 1.464060585014522,
+      "budget_limited": false,
+      "peak_rss_kb": 172268
+    }
+  },
+  {
+    "benchmark": "nbe-closure",
+    "variant": "l2r",
+    "binary_sha256": "45dfcec1102620999a0db6df953e80c351fabd0def17b8e08f9dc286492056b2",
+    "started": "2026-11-10T07:02:16.778727+00:00",
+    "measurement": {
+      "results": [
+        {
+          "command": "/home/schrodingerzy/Documents/paper-evidence-20261110/lean434/cells/nbe-closure/l2r",
+          "mean": 0.036335838758000005,
+          "stddev": 0.0016407381098655523,
+          "median": 0.035862154980000005,
+          "user": 0.034611652,
+          "system": 0.0015494299999999999,
+          "min": 0.0355472594,
+          "max": 0.04098506578,
+          "times": [
+            0.035639786060000005,
+            0.0357996588,
+            0.03572992152,
+            0.0355472594,
+            0.035780656220000005,
+            0.03594556794,
+            0.035985392600000006,
+            0.03592465116000001,
+            0.04098506578,
+            0.0360204281
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 0.7025983314961195,
+      "budget_limited": false,
+      "peak_rss_kb": 45852
+    }
+  },
+  {
+    "benchmark": "nbe-hoas",
+    "variant": "native",
+    "binary_sha256": "476f1034f01e750b19d56e0dee48e4f8404eb222f69e6fbf4f0013f9dcd64097",
+    "started": "2026-11-10T07:02:17.484232+00:00",
+    "measurement": {
+      "results": [
+        {
+          "command": "/home/schrodingerzy/Documents/paper-evidence-20261110/lean434/cells/nbe-hoas/native",
+          "mean": 0.083401857856,
+          "stddev": 0.00015031713763776123,
+          "median": 0.08337826159,
+          "user": 0.055384277999999995,
+          "system": 0.027824811999999997,
+          "min": 0.08320055804000001,
+          "max": 0.08370261828,
+          "times": [
+            0.08359992326,
+            0.08320055804000001,
+            0.08370261828,
+            0.0833873165,
+            0.08336920668,
+            0.08334136318,
+            0.08325610524000002,
+            0.08339607712,
+            0.08343838624000001,
+            0.08332702402
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 1.4069622019305825,
+      "budget_limited": false,
+      "peak_rss_kb": 156652
+    }
+  },
+  {
+    "benchmark": "nbe-hoas",
+    "variant": "l2r",
+    "binary_sha256": "2a4c39fa2fbae64dfc54145eab2e61c2663cc68a21d3fb98fedec8f994f9cd92",
+    "started": "2026-11-10T07:02:18.895383+00:00",
+    "measurement": {
+      "results": [
+        {
+          "command": "/home/schrodingerzy/Documents/paper-evidence-20261110/lean434/cells/nbe-hoas/l2r",
+          "mean": 0.03491719089800001,
+          "stddev": 0.00014470187797829741,
+          "median": 0.034913502240000005,
+          "user": 0.033142899999999996,
+          "system": 0.0015837479999999998,
+          "min": 0.034735601240000004,
+          "max": 0.035177428200000006,
+          "times": [
+            0.034806533980000005,
+            0.03493310436,
+            0.034735601240000004,
+            0.035177428200000006,
+            0.03492952322,
+            0.03477146106,
+            0.03489748126000001,
+            0.03512576514,
+            0.03496531104,
+            0.034829699480000004
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 0.6842635329812765,
+      "budget_limited": false,
+      "peak_rss_kb": 45860
+    }
+  },
+  {
+    "benchmark": "functional-queue",
+    "variant": "native",
+    "binary_sha256": "6db3b36a92d8e77371966635a85c14f7b098b33088264ea115a061d3fca3a155",
+    "started": "2026-11-10T07:02:19.583241+00:00",
+    "measurement": {
+      "results": [
+        {
+          "command": "/home/schrodingerzy/Documents/paper-evidence-20261110/lean434/cells/functional-queue/native",
+          "mean": 0.053753656686000004,
+          "stddev": 8.41271473028563e-05,
+          "median": 0.05373586519000001,
+          "user": 0.052920659999999994,
+          "system": 0.0007257659999999999,
+          "min": 0.05364103464,
+          "max": 0.05387027430000001,
+          "times": [
+            0.05384479340000001,
+            0.05372607334,
+            0.05384579594,
+            0.0536620583,
+            0.05387027430000001,
+            0.053727928060000006,
+            0.05380874378000001,
+            0.05366606278,
+            0.053743802320000006,
+            0.05364103464
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 0.9475728059187531,
+      "budget_limited": false,
+      "peak_rss_kb": 12212
+    }
+  },
+  {
+    "benchmark": "functional-queue",
+    "variant": "l2r",
+    "binary_sha256": "c1e7e1acaf8d533b69fa61d87d124cd6d251ce4f9978c62ee330da1b87788098",
+    "started": "2026-11-10T07:02:20.534940+00:00",
+    "measurement": {
+      "results": [
+        {
+          "command": "/home/schrodingerzy/Documents/paper-evidence-20261110/lean434/cells/functional-queue/l2r",
+          "mean": 0.020800367932,
+          "stddev": 0.00018131166177563136,
+          "median": 0.02075982733,
+          "user": 0.019892408,
+          "system": 0.0008147339999999999,
+          "min": 0.020647292060000003,
+          "max": 0.021275808400000002,
+          "times": [
+            0.020882286660000002,
+            0.020773861700000004,
+            0.020647292060000003,
+            0.020793256300000004,
+            0.02074579296,
+            0.020793932120000004,
+            0.021275808400000002,
+            0.02065859416,
+            0.020745701400000004,
+            0.02068715356
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 0.4479244602844119,
+      "budget_limited": false,
+      "peak_rss_kb": 8992
+    }
+  },
+  {
+    "benchmark": "hash-map-linear",
+    "variant": "native",
+    "binary_sha256": "2a27d880faa2ba261ace3f7fde83b092f4609f61cf86b0761ac0890d0c64cb20",
+    "started": "2026-11-10T07:02:20.986818+00:00",
+    "measurement": {
+      "results": [
+        {
+          "command": "/home/schrodingerzy/Documents/paper-evidence-20261110/lean434/cells/hash-map-linear/native",
+          "mean": 1.1429173201179998,
+          "stddev": 0.000667607013852096,
+          "median": 1.14301594254,
+          "user": 1.139366632,
+          "system": 0.0030269139999999995,
+          "min": 1.1419788237,
+          "max": 1.1440775293199998,
+          "times": [
+            1.14339728908,
+            1.14335497272,
+            1.1424396831799999,
+            1.14242260804,
+            1.1419788237,
+            1.14334690284,
+            1.1440775293199998,
+            1.1431825425400002,
+            1.14284934254,
+            1.14212350722
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 17.30481721740216,
+      "budget_limited": false,
+      "peak_rss_kb": 104760
+    }
+  },
+  {
+    "benchmark": "hash-map-linear",
+    "variant": "l2r",
+    "binary_sha256": "f198c5ffb7749732183cadbc7575dce3b90251e8f1929c6096e7233273447f66",
+    "started": "2026-11-10T07:02:38.295903+00:00",
+    "measurement": {
+      "results": [
+        {
+          "command": "/home/schrodingerzy/Documents/paper-evidence-20261110/lean434/cells/hash-map-linear/l2r",
+          "mean": 0.401449349648,
+          "stddev": 0.0006628916967680465,
+          "median": 0.40130769354,
+          "user": 0.398828258,
+          "system": 0.002331232,
+          "min": 0.40067067124,
+          "max": 0.40279395182,
+          "times": [
+            0.40112507700000005,
+            0.40083623088,
+            0.40091522512000005,
+            0.4013770441,
+            0.40161839860000004,
+            0.40166280212,
+            0.40225575262,
+            0.40067067124,
+            0.40279395182,
+            0.40123834298
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 6.18475282844156,
+      "budget_limited": false,
+      "peak_rss_kb": 59996
+    }
+  },
+  {
+    "benchmark": "heap-functional",
+    "variant": "native",
+    "binary_sha256": "7b6413ccf77ed26ff0b112c658fe7463147167f2025d6b6bcf445c76aa28d2bf",
+    "started": "2026-11-10T07:02:44.484198+00:00",
+    "measurement": {
+      "results": [
+        {
+          "command": "/home/schrodingerzy/Documents/paper-evidence-20261110/lean434/cells/heap-functional/native",
+          "mean": 1.328523836786,
+          "stddev": 0.00792815899337776,
+          "median": 1.3278461723,
+          "user": 1.327779814,
+          "system": 0.000412284,
+          "min": 1.3181722393600002,
+          "max": 1.33710300404,
+          "times": [
+            1.3217129561,
+            1.33705351708,
+            1.3181722393600002,
+            1.3329654308799999,
+            1.32097049604,
+            1.33622823612,
+            1.32272691372,
+            1.33710300404,
+            1.3222511148,
+            1.3360544597200001
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 20.074466107413173,
+      "budget_limited": false,
+      "peak_rss_kb": 12264
+    }
+  },
+  {
+    "benchmark": "heap-functional",
+    "variant": "l2r",
+    "binary_sha256": "172bd924941909cfdd75d1ef850fc5823f8d47f72b9f806fbbcb6a88cb511598",
+    "started": "2026-11-10T07:03:04.562895+00:00",
+    "measurement": {
+      "results": [
+        {
+          "command": "/home/schrodingerzy/Documents/paper-evidence-20261110/lean434/cells/heap-functional/l2r",
+          "mean": 0.577232739654,
+          "stddev": 0.0024790406677509917,
+          "median": 0.5761834563500001,
+          "user": 0.576225792,
+          "system": 0.0007641179999999999,
+          "min": 0.57553546838,
+          "max": 0.5828606095800001,
+          "times": [
+            0.5759764379400001,
+            0.5762641851800001,
+            0.5757194186200001,
+            0.58072114074,
+            0.5828606095800001,
+            0.57666725894,
+            0.57610272752,
+            0.5765673337000001,
+            0.57553546838,
+            0.5759128159400001
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 8.793765539303422,
+      "budget_limited": false,
+      "peak_rss_kb": 10848
+    }
+  },
+  {
+    "benchmark": "qsort",
+    "variant": "native",
+    "binary_sha256": "f5e9b5a17cca5cfa4ccd4e333af33cc6e0a496197343399fc5e06af224b4b735",
+    "started": "2026-11-10T07:03:13.360155+00:00",
+    "measurement": {
+      "results": [
+        {
+          "command": "/home/schrodingerzy/Documents/paper-evidence-20261110/lean434/cells/qsort/native",
+          "mean": 1.031200754566,
+          "stddev": 0.0007253599741916893,
+          "median": 1.03095848771,
+          "user": 1.029971842,
+          "system": 0.000944414,
+          "min": 1.03050739318,
+          "max": 1.03297648934,
+          "times": [
+            1.03083595736,
+            1.03096604484,
+            1.03174303588,
+            1.03050739318,
+            1.03074553508,
+            1.03297648934,
+            1.03095093058,
+            1.03138075928,
+            1.03126054852,
+            1.0306408515999999
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 15.607129091396928,
+      "budget_limited": false,
+      "peak_rss_kb": 10260
+    }
+  },
+  {
+    "benchmark": "qsort",
+    "variant": "l2r",
+    "binary_sha256": "fe92e3bca0e2b67277a7195e1bf56443c5da5971a09a1afa440c5a4273668a61",
+    "started": "2026-11-10T07:03:28.971515+00:00",
+    "measurement": {
+      "results": [
+        {
+          "command": "/home/schrodingerzy/Documents/paper-evidence-20261110/lean434/cells/qsort/l2r",
+          "mean": 0.49992490734600004,
+          "stddev": 0.0041759663873064835,
+          "median": 0.49690870612000004,
+          "user": 0.49924262199999997,
+          "system": 0.0005053179999999999,
+          "min": 0.49587824444000006,
+          "max": 0.5054954813800001,
+          "times": [
+            0.5054954813800001,
+            0.49687628178000004,
+            0.49587824444000006,
+            0.49689174410000003,
+            0.50428348284,
+            0.4968008816,
+            0.50500945318,
+            0.5041960919,
+            0.49691009306,
+            0.49690731918000003
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 7.6304986495524645,
+      "budget_limited": false,
+      "peak_rss_kb": 6824
+    }
+  },
+  {
+    "benchmark": "ordered-map-linear",
+    "variant": "native",
+    "binary_sha256": "921317271ef9c95988603e6b800bf1ef530845238cf2db97c543997637793d71",
+    "started": "2026-11-10T07:03:36.605855+00:00",
+    "measurement": {
+      "results": [
+        {
+          "command": "/home/schrodingerzy/Documents/paper-evidence-20261110/lean434/cells/ordered-map-linear/native",
+          "mean": 1.7074740250000002,
+          "stddev": 0.001978540136203607,
+          "median": 1.70790713508,
+          "user": 1.704392776,
+          "system": 0.0023988760000000003,
+          "min": 1.70350299314,
+          "max": 1.70968674492,
+          "times": [
+            1.7053759308599998,
+            1.7087569398,
+            1.7062889067600002,
+            1.7085142008199998,
+            1.70857197822,
+            1.70963343628,
+            1.7071090498600001,
+            1.70350299314,
+            1.70730006934,
+            1.70968674492
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 25.748051115311682,
+      "budget_limited": false,
+      "peak_rss_kb": 71964
+    }
+  },
+  {
+    "benchmark": "ordered-map-linear",
+    "variant": "l2r",
+    "binary_sha256": "66316fd2690576cf6882f8143b9a862c69eb1c3961eb0615bb6313455748464e",
+    "started": "2026-11-10T07:04:02.359171+00:00",
+    "measurement": {
+      "results": [
+        {
+          "command": "/home/schrodingerzy/Documents/paper-evidence-20261110/lean434/cells/ordered-map-linear/l2r",
+          "mean": 0.678632101048,
+          "stddev": 0.0005714665926445344,
+          "median": 0.6785759026,
+          "user": 0.6773529699999999,
+          "system": 0.0009615779999999999,
+          "min": 0.6779756291800001,
+          "max": 0.6797349931600001,
+          "times": [
+            0.67851943546,
+            0.67892810658,
+            0.67863236974,
+            0.6783742691,
+            0.67935040242,
+            0.6797349931600001,
+            0.67863338384,
+            0.67816713822,
+            0.67800528278,
+            0.6779756291800001
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 10.331690550781786,
+      "budget_limited": false,
+      "peak_rss_kb": 27352
+    }
+  },
+  {
+    "benchmark": "rbtree-zipper",
+    "variant": "native",
+    "binary_sha256": "a4dbe35b0ef809810f782ba11c6775e51a95959497ed079e0dbb0176708a142f",
+    "started": "2026-11-10T07:04:12.693909+00:00",
+    "measurement": {
+      "results": [
+        {
+          "command": "/home/schrodingerzy/Documents/paper-evidence-20261110/lean434/cells/rbtree-zipper/native",
+          "mean": 0.35649602724600005,
+          "stddev": 0.00023624044083956692,
+          "median": 0.35653536434000005,
+          "user": 0.353022824,
+          "system": 0.003219878,
+          "min": 0.35608106370000003,
+          "max": 0.35684593780000007,
+          "times": [
+            0.35660931834000004,
+            0.35664335896000005,
+            0.35631831918000006,
+            0.35648562836000003,
+            0.35658510032000007,
+            0.35631761382,
+            0.35684593780000007,
+            0.35675867148,
+            0.35608106370000003,
+            0.3563152605
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 5.507036249153316,
+      "budget_limited": false,
+      "peak_rss_kb": 124636
+    }
+  },
+  {
+    "benchmark": "rbtree-zipper",
+    "variant": "l2r",
+    "binary_sha256": "c72585bc1cbde7e06d36d8ec9b8d66010a99d3271a2b4da9631148af3e4237c4",
+    "started": "2026-11-10T07:04:18.205331+00:00",
+    "measurement": {
+      "results": [
+        {
+          "command": "/home/schrodingerzy/Documents/paper-evidence-20261110/lean434/cells/rbtree-zipper/l2r",
+          "mean": 0.199030420638,
+          "stddev": 0.00020046698358115007,
+          "median": 0.19903951032,
+          "user": 0.19648870999999998,
+          "system": 0.002353168,
+          "min": 0.19871059230000002,
+          "max": 0.19935935540000002,
+          "times": [
+            0.19917751728,
+            0.19910795180000002,
+            0.19935935540000002,
+            0.1988100877,
+            0.19887501666,
+            0.19894567850000003,
+            0.19923898610000002,
+            0.19871059230000002,
+            0.19904080076,
+            0.19903821988
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 3.142111868597567,
+      "budget_limited": false,
+      "peak_rss_kb": 103008
+    }
+  },
+  {
+    "benchmark": "ordered-map-shared",
+    "variant": "native",
+    "binary_sha256": "6d5e426125d02ee376632ab813bf9875723f2a1eba18ab451482efcd289f2c87",
+    "started": "2026-11-10T07:04:21.351483+00:00",
+    "measurement": {
+      "results": [
+        {
+          "command": "/home/schrodingerzy/Documents/paper-evidence-20261110/lean434/cells/ordered-map-shared/native",
+          "mean": 2.9328316093,
+          "stddev": 0.015480276491396881,
+          "median": 2.9277320166500003,
+          "user": 2.928358338,
+          "system": 0.0033233539999999997,
+          "min": 2.9260078564,
+          "max": 2.9764955633600003,
+          "times": [
+            2.92671594168,
+            2.9764955633600003,
+            2.92765701496,
+            2.9264033346400002,
+            2.9260078564,
+            2.92621426376,
+            2.9281355806800002,
+            2.9278070183400002,
+            2.93270124086,
+            2.9301782783199997
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 44.1052301581949,
+      "budget_limited": false,
+      "peak_rss_kb": 135464
+    }
+  },
+  {
+    "benchmark": "ordered-map-shared",
+    "variant": "l2r",
+    "binary_sha256": "29176fcb9c20915f7c76b2b7dd73f8ce4ac3f166b95cebddbed41138fb7725e2",
+    "started": "2026-11-10T07:05:05.462100+00:00",
+    "measurement": {
+      "results": [
+        {
+          "command": "/home/schrodingerzy/Documents/paper-evidence-20261110/lean434/cells/ordered-map-shared/l2r",
+          "mean": 1.6447594228540001,
+          "stddev": 0.001817862944128906,
+          "median": 1.6451097733200002,
+          "user": 1.6419126259999999,
+          "system": 0.00217214,
+          "min": 1.64112023082,
+          "max": 1.6469905978800001,
+          "times": [
+            1.6455303887800001,
+            1.6428045660600001,
+            1.64112023082,
+            1.6440906509600002,
+            1.64397438982,
+            1.64616447752,
+            1.64494053862,
+            1.6469905978800001,
+            1.6452790080200002,
+            1.64669938006
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 24.825849438086152,
+      "budget_limited": false,
+      "peak_rss_kb": 64228
+    }
+  },
+  {
+    "benchmark": "life",
+    "variant": "native",
+    "binary_sha256": "3c64fbe96d173a5ede78e8f1c19756eb5304dc0a07726f2b3a9519db518cf134",
+    "started": "2026-11-10T07:05:30.291639+00:00",
+    "measurement": {
+      "results": [
+        {
+          "command": "/home/schrodingerzy/Documents/paper-evidence-20261110/lean434/cells/life/native",
+          "mean": 4.386686319732,
+          "stddev": 0.004457717365395034,
+          "median": 4.38584059179,
+          "user": 4.385162158,
+          "system": 0.0008806679999999999,
+          "min": 4.3811922149,
+          "max": 4.39847361784,
+          "times": [
+            4.38601519868,
+            4.38506833648,
+            4.3848370137799995,
+            4.38588107832,
+            4.38579033208,
+            4.38757243554,
+            4.39847361784,
+            4.386232864439999,
+            4.3811922149,
+            4.3858001052599995
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 65.94083651900291,
+      "budget_limited": false,
+      "peak_rss_kb": 8320
+    }
+  },
+  {
+    "benchmark": "life",
+    "variant": "l2r",
+    "binary_sha256": "17c01fd92ece4b3a99cc92e083ce70a9485694696e9f827aa816627134d78ca1",
+    "started": "2026-11-10T07:06:36.236710+00:00",
+    "measurement": {
+      "results": [
+        {
+          "command": "/home/schrodingerzy/Documents/paper-evidence-20261110/lean434/cells/life/l2r",
+          "mean": 1.6251068672480002,
+          "stddev": 0.001354214797968966,
+          "median": 1.62483197307,
+          "user": 1.6242071599999999,
+          "system": 0.00061628,
+          "min": 1.6231487282400001,
+          "max": 1.6283195165600002,
+          "times": [
+            1.6244073112,
+            1.6252723846800001,
+            1.6250872806200003,
+            1.62520451238,
+            1.62457666552,
+            1.6283195165600002,
+            1.62451214548,
+            1.62602335284,
+            1.62451677496,
+            1.6231487282400001
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 24.50935990922153,
+      "budget_limited": false,
+      "peak_rss_kb": 6760
+    }
+  },
+  {
+    "benchmark": "ordered-map-heavily-shared",
+    "variant": "native",
+    "binary_sha256": "3c5f4b872455bad76c6ea5ac074013dd18181c7f9f8add24d397e18f138acb1e",
+    "started": "2026-11-10T07:07:00.750018+00:00",
+    "measurement": {
+      "results": [
+        {
+          "command": "/home/schrodingerzy/Documents/paper-evidence-20261110/lean434/cells/ordered-map-heavily-shared/native",
+          "mean": 2.975860450476,
+          "stddev": 0.010085182506451504,
+          "median": 2.97460404442,
+          "user": 2.97254257,
+          "system": 0.002149746,
+          "min": 2.9650374532000003,
+          "max": 3.00198232288,
+          "times": [
+            2.97486684012,
+            2.9669589600200004,
+            2.97378868426,
+            2.97435484464,
+            2.9785083613000003,
+            2.9650374532000003,
+            2.97687366778,
+            3.00198232288,
+            2.97138012636,
+            2.9748532441999997
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 44.737718073651195,
+      "budget_limited": false,
+      "peak_rss_kb": 84316
+    }
+  },
+  {
+    "benchmark": "ordered-map-heavily-shared",
+    "variant": "l2r",
+    "binary_sha256": "6a1551a681397ca4edee58362dfb609b54809cd9d4f628ad5e7f16ad37cdbae8",
+    "started": "2026-11-10T07:07:45.492249+00:00",
+    "measurement": {
+      "results": [
+        {
+          "command": "/home/schrodingerzy/Documents/paper-evidence-20261110/lean434/cells/ordered-map-heavily-shared/l2r",
+          "mean": 1.5241124886019999,
+          "stddev": 0.0013145117870586615,
+          "median": 1.5236296606900002,
+          "user": 1.5215548399999999,
+          "system": 0.00193184,
+          "min": 1.5227493062000002,
+          "max": 1.52632093804,
+          "times": [
+            1.52289978842,
+            1.5227493062000002,
+            1.52526640824,
+            1.52288291802,
+            1.52322194746,
+            1.5235060957400002,
+            1.5257953961800002,
+            1.52632093804,
+            1.5237532256400002,
+            1.52472886208
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 23.012502468191087,
+      "budget_limited": false,
+      "peak_rss_kb": 35560
+    }
+  },
+  {
+    "benchmark": "fingertree",
+    "variant": "native",
+    "binary_sha256": "908e4e60986ef3b8f2d7d07676abe56ad64a3ccabd255b4a6161c0abd2bca962",
+    "started": "2026-11-10T07:08:08.508543+00:00",
+    "measurement": {
+      "results": [
+        {
+          "command": "/home/schrodingerzy/Documents/paper-evidence-20261110/lean434/cells/fingertree/native",
+          "mean": 0.055112820837999996,
+          "stddev": 0.0002095075126990884,
+          "median": 0.05505060691000001,
+          "user": 0.054718212,
+          "system": 0.000310522,
+          "min": 0.05484211196,
+          "max": 0.05548840582,
+          "times": [
+            0.05548840582,
+            0.05484211196,
+            0.054997601660000006,
+            0.05544364072,
+            0.055042440660000004,
+            0.05493586560000001,
+            0.055058773160000005,
+            0.05507819424,
+            0.05521404486,
+            0.0550271297
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 0.9670922579243779,
+      "budget_limited": false,
+      "peak_rss_kb": 12400
+    }
+  },
+  {
+    "benchmark": "fingertree",
+    "variant": "l2r",
+    "binary_sha256": "18ed55c2e9649d0a0c3bba945f527d9e1d50676784bc494f4b22a6e7dad049ee",
+    "started": "2026-11-10T07:08:09.480005+00:00",
+    "measurement": {
+      "results": [
+        {
+          "command": "/home/schrodingerzy/Documents/paper-evidence-20261110/lean434/cells/fingertree/l2r",
+          "mean": 0.035168681342000005,
+          "stddev": 0.0001804420169253291,
+          "median": 0.03509505293,
+          "user": 0.03471427,
+          "system": 0.000383882,
+          "min": 0.034988305020000006,
+          "max": 0.03555616598,
+          "times": [
+            0.03525834544,
+            0.035034902480000005,
+            0.035349189600000004,
+            0.03509721226,
+            0.0350928936,
+            0.03499344906,
+            0.035087268240000004,
+            0.03522908174,
+            0.034988305020000006,
+            0.03555616598
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 0.6628528283908963,
+      "budget_limited": false,
+      "peak_rss_kb": 9000
+    }
+  },
+  {
+    "benchmark": "hash-map-shared",
+    "variant": "native",
+    "binary_sha256": "c28794fe7058d2d6f25113af05615ee576fb358c222fe3e5db99c808c24e7af7",
+    "started": "2026-11-10T07:08:10.147011+00:00",
+    "measurement": {
+      "results": [
+        {
+          "command": "/home/schrodingerzy/Documents/paper-evidence-20261110/lean434/cells/hash-map-shared/native",
+          "mean": 6.303338697418,
+          "stddev": 0.005824537298290351,
+          "median": 6.30434598407,
+          "user": 6.288835946,
+          "system": 0.012006796,
+          "min": 6.29452023684,
+          "max": 6.31170367912,
+          "times": [
+            6.29763342556,
+            6.297875374759999,
+            6.29911335708,
+            6.3101459709,
+            6.31170367912,
+            6.29452023684,
+            6.30757934238,
+            6.305616877299999,
+            6.3061236194,
+            6.30307509084
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 94.4142270674929,
+      "budget_limited": false,
+      "peak_rss_kb": 296984
+    }
+  },
+  {
+    "benchmark": "hash-map-shared",
+    "variant": "l2r",
+    "binary_sha256": "ea40600cbb3cc2a23eb9a8166b0d7e10aa924b2ec4728d26e3f283c4fe541b82",
+    "started": "2026-11-10T07:09:44.565668+00:00",
+    "measurement": {
+      "results": [
+        {
+          "command": "/home/schrodingerzy/Documents/paper-evidence-20261110/lean434/cells/hash-map-shared/l2r",
+          "mean": 5.802488359962,
+          "stddev": 0.011749170318011546,
+          "median": 5.80198148527,
+          "user": 5.620658232,
+          "system": 0.17945323200000002,
+          "min": 5.7836757039,
+          "max": 5.8208633016,
+          "times": [
+            5.80562219724,
+            5.79770720352,
+            5.80664820128,
+            5.7983407733000005,
+            5.79311271334,
+            5.7836757039,
+            5.8208633016,
+            5.8195985376,
+            5.79306367146,
+            5.80625129638
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 86.9211897412315,
+      "budget_limited": false,
+      "peak_rss_kb": 267680
+    }
+  },
+  {
+    "benchmark": "derive",
+    "variant": "native",
+    "binary_sha256": "44a62737e936d5ca326230e627af5d9f02548c1ae0fc5682b9478ee77cd7e22b",
+    "started": "2026-11-10T07:11:11.489963+00:00",
+    "measurement": {
+      "results": [
+        {
+          "command": "/home/schrodingerzy/Documents/paper-evidence-20261110/lean434/cells/derive/native",
+          "mean": 0.29181549801600004,
+          "stddev": 0.0016928085613069229,
+          "median": 0.29124120026,
+          "user": 0.28253758799999995,
+          "system": 0.008951502,
+          "min": 0.29075790338,
+          "max": 0.29652726544,
+          "times": [
+            0.29075790338,
+            0.29161652472000005,
+            0.29652726544,
+            0.29119827692,
+            0.29109243276,
+            0.29099136584,
+            0.29192593046,
+            0.2912841236,
+            0.29108417064000003,
+            0.2916769864
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 4.530738741159439,
+      "budget_limited": false,
+      "peak_rss_kb": 564940
+    }
+  },
+  {
+    "benchmark": "derive",
+    "variant": "l2r",
+    "binary_sha256": "2b8613fd463765fdb89e4eb47d296ae01f6e3521e5c556a760854c286644b7c0",
+    "started": "2026-11-10T07:11:16.025121+00:00",
+    "measurement": {
+      "results": [
+        {
+          "command": "/home/schrodingerzy/Documents/paper-evidence-20261110/lean434/cells/derive/l2r",
+          "mean": 0.257605022806,
+          "stddev": 0.0005264359782887019,
+          "median": 0.25744036551,
+          "user": 0.24958397,
+          "system": 0.007720678,
+          "min": 0.2568564118,
+          "max": 0.25845220890000004,
+          "times": [
+            0.25845220890000004,
+            0.25744420428,
+            0.25836633568,
+            0.25735803816,
+            0.25724724004,
+            0.257917893,
+            0.2578509512,
+            0.2568564118,
+            0.25712041826,
+            0.25743652674
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 4.017962647601962,
+      "budget_limited": false,
+      "peak_rss_kb": 434804
+    }
+  },
+  {
+    "benchmark": "hash-map-heavily-shared",
+    "variant": "native",
+    "binary_sha256": "17ffa56e63950bcdd970c10e5fac8584f309b3443645f7b6f4578fed9a8fc99d",
+    "started": "2026-11-10T07:11:20.047508+00:00",
+    "measurement": {
+      "results": [
+        {
+          "command": "/home/schrodingerzy/Documents/paper-evidence-20261110/lean434/cells/hash-map-heavily-shared/native",
+          "mean": 71.48717171212,
+          "stddev": 0.011669925956809896,
+          "median": 71.48717171212,
+          "user": 71.4276793,
+          "system": 0.02397026,
+          "min": 71.47891982834,
+          "max": 71.49542359590001,
+          "times": [
+            71.49542359590001,
+            71.47891982834
+          ],
+          "exit_codes": [
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 2,
+      "requested_samples": 10,
+      "warmup_runs": 2,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 284.3544518360868,
+      "budget_limited": true,
+      "peak_rss_kb": 275544
+    }
+  },
+  {
+    "benchmark": "hash-map-heavily-shared",
+    "variant": "l2r",
+    "binary_sha256": "fa3b081e386bc47073ed09a2bc189bd5d9361ef57c2274cfa0d5ff96a13cd9bf",
+    "started": "2026-11-10T07:16:04.406473+00:00",
+    "measurement": {
+      "results": [
+        {
+          "command": "/home/schrodingerzy/Documents/paper-evidence-20261110/lean434/cells/hash-map-heavily-shared/l2r",
+          "mean": 76.80664511628001,
+          "stddev": 0.3932583226162533,
+          "median": 76.80664511628001,
+          "user": 73.89341092000001,
+          "system": 2.8717987899999997,
+          "min": 76.5285694896,
+          "max": 77.08472074296,
+          "times": [
+            77.08472074296,
+            76.5285694896
+          ],
+          "exit_codes": [
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 2,
+      "requested_samples": 10,
+      "warmup_runs": 1,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 230.2217431878671,
+      "budget_limited": true,
+      "peak_rss_kb": 238052
+    }
+  }
+]

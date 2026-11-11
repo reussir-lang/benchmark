@@ -1,0 +1,146 @@
+[
+  {
+    "variant": "before",
+    "sha256": "7a5fab60726231cb81468fd9b8a6cbc5daac9d061978fbfa2689cdb22bebc85c",
+    "measurement": {
+      "results": [
+        {
+          "command": "/tmp/reussir-paper-refresh-20261111/life-investigation/life-before",
+          "mean": 1.6206727539066668,
+          "stddev": 0.007059554790436852,
+          "median": 1.62458137208,
+          "user": 1.6190731866666666,
+          "system": 0.0009770266666666667,
+          "min": 1.61252333854,
+          "max": 1.6249135511000001,
+          "times": [
+            1.62458137208,
+            1.61252333854,
+            1.6249135511000001
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 3,
+      "requested_samples": 3,
+      "warmup_runs": 2,
+      "case_time_budget_seconds": 60.0,
+      "measurement_seconds": 8.160380877554417,
+      "budget_limited": false,
+      "peak_rss_kb": 6752
+    }
+  },
+  {
+    "variant": "fixed",
+    "sha256": "e896f7665bcd828cfdbddcd8bbe48b2ae1ef3e6fa182303d9e2fda8ec937d8ed",
+    "measurement": {
+      "results": [
+        {
+          "command": "/tmp/reussir-paper-refresh-20261111/life-investigation/life-fixed",
+          "mean": 1.9500138712533335,
+          "stddev": 0.00045358055727248627,
+          "median": 1.94992164746,
+          "user": 1.9484536533333332,
+          "system": 0.0009736333333333333,
+          "min": 1.9496134897,
+          "max": 1.9505064766000002,
+          "times": [
+            1.9505064766000002,
+            1.94992164746,
+            1.9496134897
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 3,
+      "requested_samples": 3,
+      "warmup_runs": 2,
+      "case_time_budget_seconds": 60.0,
+      "measurement_seconds": 9.795011730864644,
+      "budget_limited": false,
+      "peak_rss_kb": 6952
+    }
+  },
+  {
+    "variant": "no-decode",
+    "sha256": "c1bb93337840e0fb40ea72051bc02600ddf4df6ac8d82044160b2287a0965198",
+    "measurement": {
+      "results": [
+        {
+          "command": "/tmp/reussir-paper-refresh-20261111/life-investigation/life-no-decode",
+          "mean": 1.8480952878600003,
+          "stddev": 0.0005281615999393151,
+          "median": 1.8479577741400002,
+          "user": 1.84674082,
+          "system": 0.0009782,
+          "min": 1.84764948456,
+          "max": 1.8486786048800001,
+          "times": [
+            1.8486786048800001,
+            1.8479577741400002,
+            1.84764948456
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 3,
+      "requested_samples": 3,
+      "warmup_runs": 2,
+      "case_time_budget_seconds": 60.0,
+      "measurement_seconds": 9.284763745963573,
+      "budget_limited": false,
+      "peak_rss_kb": 6940
+    }
+  },
+  {
+    "variant": "no-peel",
+    "sha256": "37caaf5f77e901fd3364198637024c0c312a01a02e43215bd47a2220a4bc9042",
+    "measurement": {
+      "results": [
+        {
+          "command": "/tmp/reussir-paper-refresh-20261111/life-investigation/life-no-peel",
+          "mean": 1.6369392427333331,
+          "stddev": 0.0008605129457382942,
+          "median": 1.6365479106199998,
+          "user": 1.6360732866666667,
+          "system": 0.0005576266666666666,
+          "min": 1.6363439429800002,
+          "max": 1.6379258745999998,
+          "times": [
+            1.6379258745999998,
+            1.6365479106199998,
+            1.6363439429800002
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 3,
+      "requested_samples": 3,
+      "warmup_runs": 2,
+      "case_time_budget_seconds": 60.0,
+      "measurement_seconds": 8.227590034715831,
+      "budget_limited": false,
+      "peak_rss_kb": 6824
+    }
+  }
+]

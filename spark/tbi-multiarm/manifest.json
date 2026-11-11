@@ -1,0 +1,24 @@
+{
+  "upstream_pr": "https://github.com/reussir-lang/reussir/pull/982",
+  "upstream_code_commit": "9f8604db5927080178eca53c78972bf2595f0e7e",
+  "upstream_test_commit": "8d42e3908e8964e85811915ca7a24522ca2fbeff",
+  "paper_compiler_commit": "055b282f13b0267c38c99020eb472f6be4d3b264",
+  "measurement_cpu": 19,
+  "targeted_workloads": 6,
+  "samples_per_amended_workload": 10,
+  "warmups_per_amended_workload": 5,
+  "isolation_samples": 3,
+  "isolation_warmups": 2,
+  "reason": "Peeling nullary arms left a second boxed-arm dispatch in the hot four-arm closure application loop.",
+  "amendment": "Peel TBI nullary arms only if at most one residual arm remains, eliminating the residual tag load and dispatch.",
+  "life_ms": {
+    "published": 1625.106867248,
+    "before_amendment": 1953.578101508,
+    "amended": 1630.832757032
+  },
+  "tradeoff": "Extracted rbtree-zipper-lambda increases from 73.93 to 81.15 ms, still below its published 88.44 ms.",
+  "full_dataset_rerun_for_amendment": false,
+  "correctness": "All six workloads pass; native/extracted outputs match for all three Lean cases.",
+  "lowering_tests": "Four-arm regression and existing two-arm tests under TBI and immortal pass.",
+  "format_and_clang_tidy": "Changed C++ formatting and targeted clang-analyzer checks pass."
+}
