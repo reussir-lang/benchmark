@@ -163,72 +163,72 @@
       "variant": "haskell",
       "available_pairs": 27,
       "timing_pairs": 27,
-      "time_vs_reussir": 2.148793376294376,
+      "time_vs_reussir": 2.195131074177483,
       "memory_pairs": 27,
-      "rss_vs_reussir": 2.903624633083523
+      "rss_vs_reussir": 2.94617976279767
     },
     {
       "host": "spark",
       "variant": "haskell-a1g",
       "available_pairs": 27,
       "timing_pairs": 27,
-      "time_vs_reussir": 2.5167376381546873,
+      "time_vs_reussir": 2.5710098774562473,
       "memory_pairs": 27,
-      "rss_vs_reussir": 31.36244437377269
+      "rss_vs_reussir": 31.82208811465846
     },
     {
       "host": "spark",
       "variant": "haskell-st",
       "available_pairs": 5,
       "timing_pairs": 5,
-      "time_vs_reussir": 5.157592179638777,
+      "time_vs_reussir": 5.163810053253637,
       "memory_pairs": 5,
-      "rss_vs_reussir": 1.4020419875944092
+      "rss_vs_reussir": 1.45348489174578
     },
     {
       "host": "spark",
       "variant": "haskell-st-a1g",
       "available_pairs": 5,
       "timing_pairs": 5,
-      "time_vs_reussir": 5.500949285919232,
+      "time_vs_reussir": 5.507581102904805,
       "memory_pairs": 5,
-      "rss_vs_reussir": 12.75928169150227
+      "rss_vs_reussir": 13.22743778875474
     },
     {
       "host": "spark",
       "variant": "koka",
       "available_pairs": 30,
       "timing_pairs": 28,
-      "time_vs_reussir": 2.358569475016049,
+      "time_vs_reussir": 2.405315192469993,
       "memory_pairs": 28,
-      "rss_vs_reussir": 1.3016403686648177
+      "rss_vs_reussir": 1.3232887817577286
     },
     {
       "host": "spark",
       "variant": "lean",
       "available_pairs": 30,
       "timing_pairs": 29,
-      "time_vs_reussir": 2.274969920352447,
+      "time_vs_reussir": 2.3186501386331804,
       "memory_pairs": 29,
-      "rss_vs_reussir": 2.1500103340489565
+      "rss_vs_reussir": 2.1867146526419274
     },
     {
       "host": "spark",
       "variant": "morphic",
       "available_pairs": 22,
       "timing_pairs": 21,
-      "time_vs_reussir": 2.786521623492058,
+      "time_vs_reussir": 2.846168467860211,
       "memory_pairs": 21,
-      "rss_vs_reussir": 1.0426837838096314
+      "rss_vs_reussir": 1.0604248428012923
     },
     {
       "host": "spark",
       "variant": "ocaml",
       "available_pairs": 30,
       "timing_pairs": 28,
-      "time_vs_reussir": 2.8545220780786535,
+      "time_vs_reussir": 2.911511419197997,
       "memory_pairs": 28,
-      "rss_vs_reussir": 3.3096497516716643
+      "rss_vs_reussir": 3.367951934732125
     },
     {
       "host": "spark",
@@ -244,45 +244,45 @@
       "variant": "reussir-nrac",
       "available_pairs": 28,
       "timing_pairs": 28,
-      "time_vs_reussir": 1.0978435268998346,
+      "time_vs_reussir": 1.1206635734876214,
       "memory_pairs": 28,
-      "rss_vs_reussir": 1.033358632839233
+      "rss_vs_reussir": 1.049492257554977
     },
     {
       "host": "spark",
       "variant": "rust",
       "available_pairs": 30,
       "timing_pairs": 29,
-      "time_vs_reussir": 2.2059972104454295,
+      "time_vs_reussir": 2.248353128568522,
       "memory_pairs": 29,
-      "rss_vs_reussir": 1.5955567557741863
+      "rss_vs_reussir": 1.6227956125227554
     },
     {
       "host": "spark",
       "variant": "rust-rpds",
       "available_pairs": 6,
       "timing_pairs": 6,
-      "time_vs_reussir": 2.2997590526044287,
+      "time_vs_reussir": 2.3719908475641285,
       "memory_pairs": 6,
-      "rss_vs_reussir": 2.1371678019055826
+      "rss_vs_reussir": 2.144578148507504
     },
     {
       "host": "spark",
       "variant": "rust-rpds-with-mimalloc",
       "available_pairs": 6,
       "timing_pairs": 6,
-      "time_vs_reussir": 1.5653811656576515,
+      "time_vs_reussir": 1.614547312547479,
       "memory_pairs": 6,
-      "rss_vs_reussir": 1.8094833566884951
+      "rss_vs_reussir": 1.8157575008298743
     },
     {
       "host": "spark",
       "variant": "rust-with-mimalloc",
       "available_pairs": 30,
       "timing_pairs": 30,
-      "time_vs_reussir": 1.7891231323032357,
+      "time_vs_reussir": 1.8240143556770734,
       "memory_pairs": 30,
-      "rss_vs_reussir": 2.8459986992678523
+      "rss_vs_reussir": 2.892980885116652
     }
   ],
   "plots": [

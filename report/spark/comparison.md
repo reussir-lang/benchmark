@@ -4,30 +4,28 @@ spark: 306 recorded cells accounted for; timing 305/306, footprint 305/306. Stat
 
 The ocaml configuration uses OxCaml (Flambda 2). Time and RSS ratios are variant / default Reussir: above 1 means slower or more memory. Geometric means use only complete, non-budget-limited pairs with positive measurements. Timing and memory coverage can differ. X means takes too long (no completed measurement within 5 minutes). Blank CSV cells and — mean unavailable for other reasons; a single timing sample has no standard deviation.
 
-Baseline Reussir: `36f05142f3b33f442f69afa421a10b7a39ee21f9`. Baseline benchmark: `19efdd9334de1d1fb64bb32ff59e0a47aea7d039`. Architecture: aarch64; measurement CPU: 19.
+Reussir: `c55dc218bacaa2cfda9574c3b2eaee1e237b6010`. Benchmark: `19efdd9334de1d1fb64bb32ff59e0a47aea7d039`. Architecture: aarch64; measurement CPU: 19.
 
-Source revisions and toolchains for each cell are identified in [the combined manifest](provenance/manifest.json); the added array cells use [the regular-array manifest](provenance/regular-arrays-manifest.json).
-
-Baseline compiler and runtime hashes are recorded in `provenance/manifest.json`. The compiler hash identifies the native ELF; the compiler launcher environment is recorded separately in `provenance/compiler-launch-environment.json`.
+Compiler and runtime hashes are recorded in `provenance/manifest.json`. Each cell identifies its measurement batch; compiler environments are recorded in that batch’s manifest.
 
 ## Complete paired comparisons
 
 | Variant | Available pairs | Timing pairs | Time / Reussir | Memory pairs | RSS / Reussir |
 | --- | --- | --- | --- | --- | --- |
-| haskell | 27 | 27 | 2.14879 | 27 | 2.90362 |
-| haskell-a1g | 27 | 27 | 2.51674 | 27 | 31.3624 |
-| haskell-st | 5 | 5 | 5.15759 | 5 | 1.40204 |
-| haskell-st-a1g | 5 | 5 | 5.50095 | 5 | 12.7593 |
-| koka | 30 | 28 | 2.35857 | 28 | 1.30164 |
-| lean | 30 | 29 | 2.27497 | 29 | 2.15001 |
-| morphic | 22 | 21 | 2.78652 | 21 | 1.04268 |
-| ocaml | 30 | 28 | 2.85452 | 28 | 3.30965 |
+| haskell | 27 | 27 | 2.19513 | 27 | 2.94618 |
+| haskell-a1g | 27 | 27 | 2.57101 | 27 | 31.8221 |
+| haskell-st | 5 | 5 | 5.16381 | 5 | 1.45348 |
+| haskell-st-a1g | 5 | 5 | 5.50758 | 5 | 13.2274 |
+| koka | 30 | 28 | 2.40532 | 28 | 1.32329 |
+| lean | 30 | 29 | 2.31865 | 29 | 2.18671 |
+| morphic | 22 | 21 | 2.84617 | 21 | 1.06042 |
+| ocaml | 30 | 28 | 2.91151 | 28 | 3.36795 |
 | reussir | 30 | 30 | 1 | 30 | 1 |
-| reussir-nrac | 28 | 28 | 1.09784 | 28 | 1.03336 |
-| rust | 30 | 29 | 2.206 | 29 | 1.59556 |
-| rust-rpds | 6 | 6 | 2.29976 | 6 | 2.13717 |
-| rust-rpds-with-mimalloc | 6 | 6 | 1.56538 | 6 | 1.80948 |
-| rust-with-mimalloc | 30 | 30 | 1.78912 | 30 | 2.846 |
+| reussir-nrac | 28 | 28 | 1.12066 | 28 | 1.04949 |
+| rust | 30 | 29 | 2.24835 | 29 | 1.6228 |
+| rust-rpds | 6 | 6 | 2.37199 | 6 | 2.14458 |
+| rust-rpds-with-mimalloc | 6 | 6 | 1.61455 | 6 | 1.81576 |
+| rust-with-mimalloc | 30 | 30 | 1.82401 | 30 | 2.89298 |
 
 ## Functional data structures
 
@@ -39,7 +37,7 @@ Baseline compiler and runtime hashes are recorded in `provenance/manifest.json`.
 | derive | lean | 296.021 | 0.330851 | 10 | 553.324 | complete | false | hyperfine |
 | derive | morphic | 596.163 | 1.54492 | 10 | 765.242 | complete | false | hyperfine |
 | derive | ocaml | 565.325 | 1.97521 | 10 | 375.418 | complete | false | hyperfine |
-| derive | reussir | 238.743 | 0.276986 | 10 | 456.168 | complete | false | hyperfine |
+| derive | reussir | 236.11 | 0.363965 | 10 | 456.062 | complete | false | hyperfine |
 | derive | reussir-nrac | 238.78 | 0.663488 | 10 | 456.355 | complete | false | hyperfine |
 | derive | rust | 1061.81 | 5.68245 | 10 | 1530.02 | complete | false | hyperfine |
 | derive | rust-with-mimalloc | 538.856 | 0.322926 | 10 | 1536.41 | complete | false | hyperfine |
@@ -49,7 +47,7 @@ Baseline compiler and runtime hashes are recorded in `provenance/manifest.json`.
 | fingertree | lean | 59.0785 | 0.188769 | 10 | 14.1094 | complete | false | hyperfine |
 | fingertree | morphic | 55.5025 | 0.142029 | 10 | 2.90234 | complete | false | hyperfine |
 | fingertree | ocaml | 53.405 | 0.607744 | 10 | 17.4492 | complete | false | hyperfine |
-| fingertree | reussir | 30.9151 | 0.102641 | 10 | 6.08984 | complete | false | hyperfine |
+| fingertree | reussir | 31.2068 | 0.510482 | 10 | 6.05078 | complete | false | hyperfine |
 | fingertree | reussir-nrac | 34.098 | 0.400675 | 10 | 6.08984 | complete | false | hyperfine |
 | fingertree | rust | 55.9973 | 0.336516 | 10 | 7.67969 | complete | false | hyperfine |
 | fingertree | rust-with-mimalloc | 56.37 | 0.218688 | 10 | 10.168 | complete | false | hyperfine |
@@ -59,7 +57,7 @@ Baseline compiler and runtime hashes are recorded in `provenance/manifest.json`.
 | functional-queue | lean | 61.318 | 0.0611493 | 10 | 14.1211 | complete | false | hyperfine |
 | functional-queue | morphic | 73.372 | 0.427251 | 10 | 5.71484 | complete | false | hyperfine |
 | functional-queue | ocaml | 87.7632 | 0.150906 | 10 | 18.543 | complete | false | hyperfine |
-| functional-queue | reussir | 36.8747 | 0.097778 | 10 | 6.00391 | complete | false | hyperfine |
+| functional-queue | reussir | 38.0367 | 0.062419 | 10 | 5.96484 | complete | false | hyperfine |
 | functional-queue | reussir-nrac | 36.8505 | 0.0820036 | 10 | 5.94141 | complete | false | hyperfine |
 | functional-queue | rust | 71.2906 | 6.5026 | 10 | 6.74219 | complete | false | hyperfine |
 | functional-queue | rust-with-mimalloc | 61.1842 | 0.13626 | 10 | 8.72656 | complete | false | hyperfine |
@@ -69,7 +67,7 @@ Baseline compiler and runtime hashes are recorded in `provenance/manifest.json`.
 | heap-functional | lean | 1440.6 | 3.21392 | 10 | 14.1133 | complete | false | hyperfine |
 | heap-functional | morphic | 2466.06 | 11.827 | 10 | 4.92969 | complete | false | hyperfine |
 | heap-functional | ocaml | 1939.39 | 12.2177 | 10 | 18.2305 | complete | false | hyperfine |
-| heap-functional | reussir | 569.942 | 1.02498 | 10 | 5.99609 | complete | false | hyperfine |
+| heap-functional | reussir | 548.991 | 0.37733 | 10 | 5.85547 | complete | false | hyperfine |
 | heap-functional | reussir-nrac | 965.535 | 2.89138 | 10 | 5.99609 | complete | false | hyperfine |
 | heap-functional | rust | 2329.93 | 1.22869 | 10 | 7.86328 | complete | false | hyperfine |
 | heap-functional | rust-with-mimalloc | 2642.41 | 3.33909 | 10 | 12.1758 | complete | false | hyperfine |
@@ -78,7 +76,7 @@ Baseline compiler and runtime hashes are recorded in `provenance/manifest.json`.
 | mltt | koka | 830.462 | 2.83885 | 10 | 11.8906 | complete | false | hyperfine |
 | mltt | lean | 762.507 | 0.19719 | 10 | 15.5977 | complete | false | hyperfine |
 | mltt | ocaml | 554.399 | 0.399312 | 10 | 18.293 | complete | false | hyperfine |
-| mltt | reussir | 562.907 | 0.568339 | 10 | 12.5234 | complete | false | hyperfine |
+| mltt | reussir | 542.047 | 0.394134 | 10 | 12.0117 | complete | false | hyperfine |
 | mltt | reussir-nrac | 575.538 | 2.47429 | 10 | 12.582 | complete | false | hyperfine |
 | mltt | rust | 736.262 | 1.06896 | 10 | 29.2695 | complete | false | hyperfine |
 | mltt | rust-with-mimalloc | 571.436 | 1.36612 | 10 | 31.9492 | complete | false | hyperfine |
@@ -88,7 +86,7 @@ Baseline compiler and runtime hashes are recorded in `provenance/manifest.json`.
 | nbe-closure | lean | 84.6803 | 0.129955 | 10 | 167.996 | complete | false | hyperfine |
 | nbe-closure | morphic | 409.548 | 1.31835 | 10 | 168.84 | complete | false | hyperfine |
 | nbe-closure | ocaml | 715.978 | 1.08067 | 10 | 129.77 | complete | false | hyperfine |
-| nbe-closure | reussir | 157.679 | 0.107005 | 10 | 42.3398 | complete | false | hyperfine |
+| nbe-closure | reussir | 154.778 | 0.225326 | 10 | 42.0547 | complete | false | hyperfine |
 | nbe-closure | reussir-nrac | 173.331 | 0.949142 | 10 | 66.2812 | complete | false | hyperfine |
 | nbe-closure | rust | 846.08 | 1.83512 | 10 | 444.086 | complete | false | hyperfine |
 | nbe-closure | rust-with-mimalloc | 471.333 | 0.674138 | 10 | 386.551 | complete | false | hyperfine |
@@ -98,7 +96,7 @@ Baseline compiler and runtime hashes are recorded in `provenance/manifest.json`.
 | nbe-hoas | lean | 82.0312 | 0.191275 | 10 | 152.734 | complete | false | hyperfine |
 | nbe-hoas | morphic | 366.865 | 1.82352 | 10 | 153.527 | complete | false | hyperfine |
 | nbe-hoas | ocaml | 572.992 | 2.23965 | 10 | 134.113 | complete | false | hyperfine |
-| nbe-hoas | reussir | 179.404 | 0.969397 | 10 | 42.3477 | complete | false | hyperfine |
+| nbe-hoas | reussir | 175.009 | 0.868844 | 10 | 42.1172 | complete | false | hyperfine |
 | nbe-hoas | reussir-nrac | 190.942 | 0.643636 | 10 | 66.3477 | complete | false | hyperfine |
 | nbe-hoas | rust | 739.435 | 4.26285 | 10 | 428.93 | complete | false | hyperfine |
 | nbe-hoas | rust-with-mimalloc | 446.321 | 7.69202 | 10 | 371.293 | complete | false | hyperfine |
@@ -108,7 +106,7 @@ Baseline compiler and runtime hashes are recorded in `provenance/manifest.json`.
 | rbtree | lean | 695.773 | 0.372078 | 10 | 123.547 | complete | false | hyperfine |
 | rbtree | morphic | 1377.38 | 2.88507 | 10 | 191.648 | complete | false | hyperfine |
 | rbtree | ocaml | 421.018 | 2.47634 | 10 | 183.23 | complete | false | hyperfine |
-| rbtree | reussir | 237.716 | 0.374165 | 10 | 98.2148 | complete | false | hyperfine |
+| rbtree | reussir | 208.835 | 0.296356 | 10 | 98.0508 | complete | false | hyperfine |
 | rbtree | reussir-nrac | 402.651 | 0.207522 | 10 | 98.2148 | complete | false | hyperfine |
 | rbtree | rust | 2822.91 | 41.1777 | 10 | 4963.15 | complete | false | hyperfine |
 | rbtree | rust-with-mimalloc | 1350.89 | 5.823 | 10 | 3799.51 | complete | false | hyperfine |
@@ -118,7 +116,7 @@ Baseline compiler and runtime hashes are recorded in `provenance/manifest.json`.
 | rbtree-zipper | lean | 349.727 | 0.210266 | 10 | 123.5 | complete | false | hyperfine |
 | rbtree-zipper | morphic | 1646.78 | 19.3299 | 10 | 191.648 | complete | false | hyperfine |
 | rbtree-zipper | ocaml | 457.881 | 0.590141 | 10 | 183.543 | complete | false | hyperfine |
-| rbtree-zipper | reussir | 196.761 | 0.434874 | 10 | 98.0781 | complete | false | hyperfine |
+| rbtree-zipper | reussir | 182.598 | 0.394186 | 10 | 97.832 | complete | false | hyperfine |
 | rbtree-zipper | reussir-nrac | 196.801 | 0.219343 | 10 | 97.9961 | complete | false | hyperfine |
 | rbtree-zipper | rust | 3746.72 | 88.7048 | 10 | 5192.05 | complete | false | hyperfine |
 | rbtree-zipper | rust-with-mimalloc | 2142.87 | 1.32799 | 10 | 4028.44 | complete | false | hyperfine |
@@ -133,7 +131,7 @@ Baseline compiler and runtime hashes are recorded in `provenance/manifest.json`.
 | heap-array | lean | 1462.69 | 4.70251 | 10 | 14.793 | complete | false | hyperfine |
 | heap-array | morphic | 810.671 | 2.97354 | 10 | 1.14844 | complete | false | hyperfine |
 | heap-array | ocaml | 1688.11 | 6.20813 | 10 | 15.7305 | complete | false | hyperfine |
-| heap-array | reussir | 319.642 | 0.187935 | 10 | 3.99219 | complete | false | hyperfine |
+| heap-array | reussir | 319.644 | 0.194521 | 10 | 3.83203 | complete | false | hyperfine |
 | heap-array | reussir-nrac | 338.783 | 0.184287 | 10 | 3.99609 | complete | false | hyperfine |
 | heap-array | rust | 366.494 | 6.7757 | 10 | 2.05469 | complete | false | hyperfine |
 | heap-array | rust-with-mimalloc | 372.198 | 3.83805 | 10 | 6.16797 | complete | false | hyperfine |
@@ -145,7 +143,7 @@ Baseline compiler and runtime hashes are recorded in `provenance/manifest.json`.
 | life | lean | 4423.31 | 3.83417 | 10 | 10.1562 | complete | false | hyperfine |
 | life | morphic | 779.638 | 0.237605 | 10 | 0.867188 | complete | false | hyperfine |
 | life | ocaml | 2073 | 0.799183 | 10 | 6.39844 | complete | false | hyperfine |
-| life | reussir | 216.745 | 1.91164 | 10 | 3.99609 | complete | false | hyperfine |
+| life | reussir | 215.826 | 0.113349 | 10 | 3.83594 | complete | false | hyperfine |
 | life | reussir-nrac | 215.923 | 0.163893 | 10 | 3.99609 | complete | false | hyperfine |
 | life | rust | 208.562 | 0.163334 | 10 | 1.58594 | complete | false | hyperfine |
 | life | rust-with-mimalloc | 208.754 | 0.196015 | 10 | 6.16797 | complete | false | hyperfine |
@@ -155,7 +153,7 @@ Baseline compiler and runtime hashes are recorded in `provenance/manifest.json`.
 | pcm-mix-limit | lean | 8780.61 | 4.68532 | 10 | 17.6055 | complete | false | hyperfine |
 | pcm-mix-limit | morphic | 3843.47 | 3.61851 | 10 | 4.61328 | complete | false | hyperfine |
 | pcm-mix-limit | ocaml | 6562.19 | 0.624394 | 10 | 6.98047 | complete | false | hyperfine |
-| pcm-mix-limit | reussir | 828.392 | 1.31281 | 10 | 6.00391 | complete | false | hyperfine |
+| pcm-mix-limit | reussir | 826.726 | 0.471136 | 10 | 5.83203 | complete | false | hyperfine |
 | pcm-mix-limit | rust | 816.569 | 3.83097 | 10 | 3.5 | complete | false | hyperfine |
 | pcm-mix-limit | rust-with-mimalloc | 816.015 | 0.169448 | 10 | 8.17578 | complete | false | hyperfine |
 | qsort | haskell | 2803.88 | 1.91506 | 10 | 29.082 | complete | false | hyperfine |
@@ -166,7 +164,7 @@ Baseline compiler and runtime hashes are recorded in `provenance/manifest.json`.
 | qsort | lean | 1141.63 | 14.6488 | 10 | 11.8164 | complete | false | hyperfine |
 | qsort | morphic | 520.32 | 4.34008 | 10 | 1.43359 | complete | false | hyperfine |
 | qsort | ocaml | 1138.78 | 2.22627 | 10 | 8.39453 | complete | false | hyperfine |
-| qsort | reussir | 239.743 | 0.285271 | 10 | 3.99609 | complete | false | hyperfine |
+| qsort | reussir | 240.126 | 0.146156 | 10 | 3.83594 | complete | false | hyperfine |
 | qsort | reussir-nrac | 239.678 | 0.074627 | 10 | 3.99609 | complete | false | hyperfine |
 | qsort | rust | 204.584 | 0.307638 | 10 | 2.16406 | complete | false | hyperfine |
 | qsort | rust-with-mimalloc | 204.913 | 0.404877 | 10 | 6.16797 | complete | false | hyperfine |
@@ -175,7 +173,7 @@ Baseline compiler and runtime hashes are recorded in `provenance/manifest.json`.
 | raytracer | koka | 341.933 | 1.01267 | 10 | 4.37109 | complete | false | hyperfine |
 | raytracer | lean | 976.066 | 0.99078 | 10 | 10.543 | complete | false | hyperfine |
 | raytracer | ocaml | 126.718 | 0.102774 | 10 | 11.2305 | complete | false | hyperfine |
-| raytracer | reussir | 71.4252 | 0.10235 | 10 | 4.19531 | complete | false | hyperfine |
+| raytracer | reussir | 72.1457 | 0.873319 | 10 | 4.21875 | complete | false | hyperfine |
 | raytracer | reussir-nrac | 71.5595 | 0.171947 | 10 | 4.36719 | complete | false | hyperfine |
 | raytracer | rust | 72.5535 | 0.0601076 | 10 | 2.17578 | complete | false | hyperfine |
 | raytracer | rust-with-mimalloc | 72.7411 | 0.0437558 | 10 | 6.55078 | complete | false | hyperfine |
@@ -185,7 +183,7 @@ Baseline compiler and runtime hashes are recorded in `provenance/manifest.json`.
 | rgba-composite | lean | 3212.51 | 4.94849 | 10 | 17.4766 | complete | false | hyperfine |
 | rgba-composite | morphic | 5551.96 | 2.92719 | 10 | 4.60938 | complete | false | hyperfine |
 | rgba-composite | ocaml | 6500.74 | 15.2521 | 10 | 6.98047 | complete | false | hyperfine |
-| rgba-composite | reussir | 600.335 | 0.362129 | 10 | 6.00391 | complete | false | hyperfine |
+| rgba-composite | reussir | 599.518 | 0.252784 | 10 | 5.83594 | complete | false | hyperfine |
 | rgba-composite | rust | 539.779 | 0.64736 | 10 | 3.5 | complete | false | hyperfine |
 | rgba-composite | rust-with-mimalloc | 540.412 | 0.657271 | 10 | 8.17578 | complete | false | hyperfine |
 
@@ -199,7 +197,7 @@ Baseline compiler and runtime hashes are recorded in `provenance/manifest.json`.
 | hash-map-heavily-shared | lean | 73955 | 339.665 | 2 | 257.559 | budget_limited | true | hyperfine |
 | hash-map-heavily-shared | morphic | 153070 | — | 1 | 548.781 | budget_limited | true | gnu-time |
 | hash-map-heavily-shared | ocaml | X (takes too long) | — | 0 | X (takes too long) | budget_exhausted | true | — |
-| hash-map-heavily-shared | reussir | 3811.83 | 170.38 | 10 | 77.9844 | complete | false | hyperfine |
+| hash-map-heavily-shared | reussir | 3706.98 | 5.51879 | 10 | 77.9609 | complete | false | hyperfine |
 | hash-map-heavily-shared | reussir-nrac | 3784.8 | 37.2459 | 10 | 78.2305 | complete | false | hyperfine |
 | hash-map-heavily-shared | rust | 40599.2 | 476.726 | 2 | 358.824 | budget_limited | true | hyperfine |
 | hash-map-heavily-shared | rust-rpds | 7213.1 | 24.7396 | 10 | 163.801 | complete | false | hyperfine |
@@ -211,7 +209,7 @@ Baseline compiler and runtime hashes are recorded in `provenance/manifest.json`.
 | hash-map-linear | lean | 1074.72 | 1.14642 | 10 | 96.4727 | complete | false | hyperfine |
 | hash-map-linear | morphic | 835.059 | 8.87107 | 10 | 116.324 | complete | false | hyperfine |
 | hash-map-linear | ocaml | 1922.76 | 17.6611 | 10 | 138.531 | complete | false | hyperfine |
-| hash-map-linear | reussir | 969.313 | 1.84479 | 10 | 70.2266 | complete | false | hyperfine |
+| hash-map-linear | reussir | 963.592 | 2.05667 | 10 | 70.0117 | complete | false | hyperfine |
 | hash-map-linear | reussir-nrac | 998.165 | 1.07598 | 10 | 70.2812 | complete | false | hyperfine |
 | hash-map-linear | rust | 224.255 | 0.872683 | 10 | 52.7461 | complete | false | hyperfine |
 | hash-map-linear | rust-rpds | 1541.43 | 3.86195 | 10 | 157.863 | complete | false | hyperfine |
@@ -223,7 +221,7 @@ Baseline compiler and runtime hashes are recorded in `provenance/manifest.json`.
 | hash-map-shared | lean | 6548.87 | 10.6963 | 10 | 278.523 | complete | false | hyperfine |
 | hash-map-shared | morphic | 12735.3 | 17.4617 | 10 | 565.59 | complete | false | hyperfine |
 | hash-map-shared | ocaml | 71710 | 2.18779 | 2 | 922.879 | budget_limited | true | hyperfine |
-| hash-map-shared | reussir | 3411.97 | 8.41236 | 10 | 110.176 | complete | false | hyperfine |
+| hash-map-shared | reussir | 3418.7 | 3.98061 | 10 | 109.961 | complete | false | hyperfine |
 | hash-map-shared | reussir-nrac | 3448.01 | 9.48395 | 10 | 110.043 | complete | false | hyperfine |
 | hash-map-shared | rust | 2767.23 | 10.438 | 10 | 358.801 | complete | false | hyperfine |
 | hash-map-shared | rust-rpds | 6768.35 | 24.3422 | 10 | 190.961 | complete | false | hyperfine |
@@ -235,7 +233,7 @@ Baseline compiler and runtime hashes are recorded in `provenance/manifest.json`.
 | ordered-map-heavily-shared | lean | 3002.57 | 3.18239 | 10 | 84.3594 | complete | false | hyperfine |
 | ordered-map-heavily-shared | morphic | 3717.96 | 7.1397 | 10 | 48.2188 | complete | false | hyperfine |
 | ordered-map-heavily-shared | ocaml | 3086.78 | 2.79061 | 10 | 95.2617 | complete | false | hyperfine |
-| ordered-map-heavily-shared | reussir | 1389.66 | 1.07133 | 10 | 32.2305 | complete | false | hyperfine |
+| ordered-map-heavily-shared | reussir | 1313.72 | 9.12343 | 10 | 32.0547 | complete | false | hyperfine |
 | ordered-map-heavily-shared | reussir-nrac | 1394.82 | 1.81358 | 10 | 32.043 | complete | false | hyperfine |
 | ordered-map-heavily-shared | rust | 10523.2 | 27.7883 | 10 | 126.742 | complete | false | hyperfine |
 | ordered-map-heavily-shared | rust-rpds | 4209.01 | 6.68882 | 10 | 73.1484 | complete | false | hyperfine |
@@ -247,7 +245,7 @@ Baseline compiler and runtime hashes are recorded in `provenance/manifest.json`.
 | ordered-map-linear | lean | 1728.71 | 1.99119 | 10 | 72.3398 | complete | false | hyperfine |
 | ordered-map-linear | morphic | 1890.32 | 2.55961 | 10 | 34.9375 | complete | false | hyperfine |
 | ordered-map-linear | ocaml | 2557.05 | 2.22265 | 10 | 84.6367 | complete | false | hyperfine |
-| ordered-map-linear | reussir | 639.495 | 0.379895 | 10 | 24.2188 | complete | false | hyperfine |
+| ordered-map-linear | reussir | 620.274 | 0.466682 | 10 | 24.0508 | complete | false | hyperfine |
 | ordered-map-linear | reussir-nrac | 648.712 | 0.47232 | 10 | 24.0352 | complete | false | hyperfine |
 | ordered-map-linear | rust | 281.216 | 0.358895 | 10 | 14.0859 | complete | false | hyperfine |
 | ordered-map-linear | rust-rpds | 2024.02 | 3.88318 | 10 | 56.1172 | complete | false | hyperfine |
@@ -259,7 +257,7 @@ Baseline compiler and runtime hashes are recorded in `provenance/manifest.json`.
 | ordered-map-shared | lean | 2978.28 | 3.06386 | 10 | 131.898 | complete | false | hyperfine |
 | ordered-map-shared | morphic | 4108.65 | 8.84807 | 10 | 97.2812 | complete | false | hyperfine |
 | ordered-map-shared | ocaml | 2994.92 | 6.93945 | 10 | 150.105 | complete | false | hyperfine |
-| ordered-map-shared | reussir | 1559.27 | 0.945611 | 10 | 58.2305 | complete | false | hyperfine |
+| ordered-map-shared | reussir | 1458.22 | 0.757659 | 10 | 58.0547 | complete | false | hyperfine |
 | ordered-map-shared | reussir-nrac | 1569.11 | 7.22225 | 10 | 58.2305 | complete | false | hyperfine |
 | ordered-map-shared | rust | 1037.74 | 3.59046 | 10 | 126.43 | complete | false | hyperfine |
 | ordered-map-shared | rust-rpds | 4031.25 | 8.88696 | 10 | 128.93 | complete | false | hyperfine |
@@ -275,7 +273,7 @@ Baseline compiler and runtime hashes are recorded in `provenance/manifest.json`.
 | bigint-binomial | koka | 9161.66 | 78.2458 | 10 | 6.05859 | complete | false | hyperfine |
 | bigint-binomial | lean | 1808.12 | 3.28759 | 10 | 10.3945 | complete | false | hyperfine |
 | bigint-binomial | ocaml | 1463.38 | 4.32887 | 10 | 14.6484 | complete | false | hyperfine |
-| bigint-binomial | reussir | 1353.94 | 0.860922 | 10 | 6.11328 | complete | false | hyperfine |
+| bigint-binomial | reussir | 1354.71 | 3.67365 | 10 | 5.94922 | complete | false | hyperfine |
 | bigint-binomial | reussir-nrac | 1354.76 | 3.46956 | 10 | 6.09766 | complete | false | hyperfine |
 | bigint-binomial | rust | 5273.44 | 3.71099 | 10 | 2.17188 | complete | false | hyperfine |
 | bigint-binomial | rust-with-mimalloc | 5276.39 | 3.23183 | 10 | 6.54688 | complete | false | hyperfine |
@@ -284,7 +282,7 @@ Baseline compiler and runtime hashes are recorded in `provenance/manifest.json`.
 | bigint-collatz | koka | 158.264 | 0.384883 | 10 | 4.11719 | complete | false | hyperfine |
 | bigint-collatz | lean | 181.205 | 0.111057 | 10 | 10.0938 | complete | false | hyperfine |
 | bigint-collatz | ocaml | 521.532 | 0.581216 | 10 | 3.63672 | complete | false | hyperfine |
-| bigint-collatz | reussir | 121.534 | 0.15432 | 10 | 2.19531 | complete | false | hyperfine |
+| bigint-collatz | reussir | 121.406 | 0.0429995 | 10 | 2.02344 | complete | false | hyperfine |
 | bigint-collatz | reussir-nrac | 121.61 | 0.162574 | 10 | 2.19531 | complete | false | hyperfine |
 | bigint-collatz | rust | 756.362 | 11.5236 | 10 | 1.76953 | complete | false | hyperfine |
 | bigint-collatz | rust-with-mimalloc | 753.6 | 8.60393 | 10 | 6.17188 | complete | false | hyperfine |
@@ -293,7 +291,7 @@ Baseline compiler and runtime hashes are recorded in `provenance/manifest.json`.
 | bigint-factorial | koka | 11111.1 | 8.08605 | 10 | 5.99219 | complete | false | hyperfine |
 | bigint-factorial | lean | 1189.81 | 1.75116 | 10 | 11.1484 | complete | false | hyperfine |
 | bigint-factorial | ocaml | 3548.48 | 3.34249 | 10 | 12732.1 | complete | false | hyperfine |
-| bigint-factorial | reussir | 633.139 | 0.740462 | 10 | 7.85938 | complete | false | hyperfine |
+| bigint-factorial | reussir | 632.868 | 1.26415 | 10 | 7.86719 | complete | false | hyperfine |
 | bigint-factorial | reussir-nrac | 633.458 | 0.844328 | 10 | 7.85938 | complete | false | hyperfine |
 | bigint-factorial | rust | 992.328 | 43.6852 | 10 | 2.30078 | complete | false | hyperfine |
 | bigint-factorial | rust-with-mimalloc | 983.122 | 36.7632 | 10 | 10.5508 | complete | false | hyperfine |
@@ -302,7 +300,7 @@ Baseline compiler and runtime hashes are recorded in `provenance/manifest.json`.
 | bigint-fib | koka | 2104.44 | 0.812542 | 10 | 5.99219 | complete | false | hyperfine |
 | bigint-fib | lean | 1028.09 | 0.359442 | 10 | 10.3945 | complete | false | hyperfine |
 | bigint-fib | ocaml | 3888.56 | 7.51141 | 10 | 14921.6 | complete | false | hyperfine |
-| bigint-fib | reussir | 499.562 | 0.508224 | 10 | 5.85938 | complete | false | hyperfine |
+| bigint-fib | reussir | 499.541 | 0.367492 | 10 | 5.88281 | complete | false | hyperfine |
 | bigint-fib | reussir-nrac | 499.803 | 0.537297 | 10 | 5.85938 | complete | false | hyperfine |
 | bigint-fib | rust | 1955.49 | 0.696074 | 10 | 2.17188 | complete | false | hyperfine |
 | bigint-fib | rust-with-mimalloc | 1955.64 | 0.614554 | 10 | 8.54688 | complete | false | hyperfine |
@@ -311,7 +309,7 @@ Baseline compiler and runtime hashes are recorded in `provenance/manifest.json`.
 | bigint-pidigits | koka | 6906.07 | 3.36045 | 10 | 41.7148 | complete | false | hyperfine |
 | bigint-pidigits | lean | 744.972 | 0.828241 | 10 | 10.418 | complete | false | hyperfine |
 | bigint-pidigits | ocaml | 653.469 | 0.580086 | 10 | 18.8164 | complete | false | hyperfine |
-| bigint-pidigits | reussir | 411.67 | 0.32495 | 10 | 6.22656 | complete | false | hyperfine |
+| bigint-pidigits | reussir | 418.197 | 4.37246 | 10 | 6.24609 | complete | false | hyperfine |
 | bigint-pidigits | reussir-nrac | 411.663 | 0.415809 | 10 | 6.22656 | complete | false | hyperfine |
 | bigint-pidigits | rust | 2197.2 | 2.6416 | 10 | 2.90625 | complete | false | hyperfine |
 | bigint-pidigits | rust-with-mimalloc | 1634.74 | 1.52764 | 10 | 11.7422 | complete | false | hyperfine |
@@ -320,7 +318,7 @@ Baseline compiler and runtime hashes are recorded in `provenance/manifest.json`.
 | bigint-rbtree | koka | 188.383 | 0.96009 | 10 | 117.969 | complete | false | hyperfine |
 | bigint-rbtree | lean | 673.751 | 0.342996 | 10 | 123.605 | complete | false | hyperfine |
 | bigint-rbtree | ocaml | 361.895 | 0.406534 | 10 | 126.918 | complete | false | hyperfine |
-| bigint-rbtree | reussir | 248.357 | 0.923631 | 10 | 118.023 | complete | false | hyperfine |
+| bigint-rbtree | reussir | 226.118 | 0.579912 | 10 | 118.043 | complete | false | hyperfine |
 | bigint-rbtree | reussir-nrac | 406.356 | 0.679622 | 10 | 118.023 | complete | false | hyperfine |
 | bigint-rbtree | rust | 3857.64 | 6.55127 | 10 | 7615.74 | complete | false | hyperfine |
 | bigint-rbtree | rust-with-mimalloc | 1855.89 | 3.61396 | 10 | 7639.42 | complete | false | hyperfine |
@@ -335,7 +333,7 @@ Baseline compiler and runtime hashes are recorded in `provenance/manifest.json`.
 | expr-replace | lean | 427.163 | 7.05441 | 10 | 10.043 | complete | false | hyperfine |
 | expr-replace | morphic | 289.781 | 0.392029 | 10 | 1.17969 | complete | false | hyperfine |
 | expr-replace | ocaml | 309.931 | 1.94016 | 10 | 4.01172 | complete | false | hyperfine |
-| expr-replace | reussir | 275.608 | 3.60774 | 10 | 4.26953 | complete | false | hyperfine |
+| expr-replace | reussir | 267.115 | 1.98704 | 10 | 4.04297 | complete | false | hyperfine |
 | expr-replace | reussir-nrac | 274.081 | 1.07019 | 10 | 4.26953 | complete | false | hyperfine |
 | expr-replace | rust | 360.073 | 0.287181 | 10 | 2.05469 | complete | false | hyperfine |
 | expr-replace | rust-with-mimalloc | 357.398 | 4.60926 | 10 | 6.16797 | complete | false | hyperfine |
@@ -345,7 +343,7 @@ Baseline compiler and runtime hashes are recorded in `provenance/manifest.json`.
 | list-membership | lean | 353.591 | 0.369046 | 10 | 10.2383 | complete | false | hyperfine |
 | list-membership | morphic | 335.543 | 0.431833 | 10 | 1.36328 | complete | false | hyperfine |
 | list-membership | ocaml | 347.74 | 0.26821 | 10 | 3.38672 | complete | false | hyperfine |
-| list-membership | reussir | 324.028 | 0.250162 | 10 | 3.99609 | complete | false | hyperfine |
+| list-membership | reussir | 323.134 | 2.4018 | 10 | 3.83203 | complete | false | hyperfine |
 | list-membership | reussir-nrac | 324.005 | 0.239068 | 10 | 3.99609 | complete | false | hyperfine |
 | list-membership | rust | 340.682 | 0.201464 | 10 | 2.36719 | complete | false | hyperfine |
 | list-membership | rust-with-mimalloc | 323.32 | 0.357075 | 10 | 6.32422 | complete | false | hyperfine |
@@ -355,7 +353,7 @@ Baseline compiler and runtime hashes are recorded in `provenance/manifest.json`.
 | rbtree-lookup | lean | 1132.29 | 19.9799 | 10 | 55.0703 | complete | false | hyperfine |
 | rbtree-lookup | morphic | 1634.33 | 0.860859 | 10 | 77.1172 | complete | false | hyperfine |
 | rbtree-lookup | ocaml | 1895.88 | 1.7887 | 10 | 129.168 | complete | false | hyperfine |
-| rbtree-lookup | reussir | 453.665 | 0.539519 | 10 | 42.2148 | complete | false | hyperfine |
+| rbtree-lookup | reussir | 457.634 | 0.450905 | 10 | 42.0508 | complete | false | hyperfine |
 | rbtree-lookup | reussir-nrac | 896.217 | 0.628264 | 10 | 42.2148 | complete | false | hyperfine |
 | rbtree-lookup | rust | 1681.87 | 12.3415 | 10 | 123.773 | complete | false | hyperfine |
 | rbtree-lookup | rust-with-mimalloc | 1878 | 2.08287 | 10 | 96.1797 | complete | false | hyperfine |

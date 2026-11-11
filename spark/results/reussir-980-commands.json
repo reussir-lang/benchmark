@@ -1,0 +1,1336 @@
+[
+  {
+    "cell": "bigint-binomial/reussir",
+    "step": "reussir core interface",
+    "cmd": [
+      "/tmp/reussir-full-tbi-20261111/build/bin/rrc",
+      "--package-root",
+      "/tmp/reussir-full-tbi-20261111/library/core/src",
+      "--package-name",
+      "core",
+      "--builtin",
+      "-t",
+      "rri",
+      "-o",
+      "core.rri"
+    ],
+    "cwd": "/tmp/nix-shell.tLeyZ7/reussir-core-mr8f2gs5"
+  },
+  {
+    "cell": "bigint-binomial/reussir",
+    "step": "reussir core compilation",
+    "cmd": [
+      "/tmp/reussir-full-tbi-20261111/build/bin/rrc",
+      "--package-root",
+      "/tmp/reussir-full-tbi-20261111/library/core/src",
+      "--package-name",
+      "core",
+      "--builtin",
+      "-t",
+      "llvm-ir",
+      "-o",
+      "core.ll",
+      "-Oaggressive",
+      "--reuse-across-call",
+      "--relocation-mode",
+      "pic"
+    ],
+    "cwd": "/tmp/nix-shell.tLeyZ7/reussir-core-mr8f2gs5"
+  },
+  {
+    "cell": "bigint-binomial/reussir",
+    "step": "reussir compilation",
+    "cmd": [
+      "/tmp/reussir-full-tbi-20261111/build/bin/rrc",
+      "-o",
+      "reussir.ll",
+      "--package-name",
+      "bench",
+      "--extern",
+      "core=/tmp/nix-shell.tLeyZ7/reussir-core-mr8f2gs5/core.rri",
+      "--extern-src",
+      "core=/tmp/reussir-full-tbi-20261111/library/core/src",
+      "-Oaggressive",
+      "--reuse-across-call",
+      "--relocation-mode",
+      "pic",
+      "-t",
+      "llvm-ir",
+      "/tmp/reussir-paper-refresh-20261111/benchmark/reussir/bigint-binomial.rr"
+    ],
+    "cwd": "/tmp/nix-shell.tLeyZ7/tmpvj_syrk_"
+  },
+  {
+    "cell": "bigint-binomial/reussir",
+    "step": "reussir linking",
+    "cmd": [
+      "/nix/store/55nmzskx8ai6w4a60cpyf67zxj5lg8wz-clang-wrapper-23.1.0/bin/clang",
+      "-o",
+      "/tmp/reussir-paper-refresh-20261111/bin/bigint-binomial",
+      "reussir.ll",
+      "/tmp/nix-shell.tLeyZ7/reussir-core-mr8f2gs5/core.ll",
+      "/tmp/reussir-paper-refresh-20261111/benchmark/reussir/bigint-binomial.rr.c",
+      "-flto=thin",
+      "-fuse-ld=lld",
+      "-O3",
+      "-march=native",
+      "-Wl,-plugin-opt=-disable-select-optimize=false",
+      "/tmp/reussir-full-tbi-20261111/build/lib/libRCGMPRuntime.a",
+      "-Wl,-rpath,/nix/store/np1ym239sl7vml5k1aha3hc6lh6i2gr5-gmp-with-cxx-6.3.0/lib",
+      "-lgmp",
+      "/tmp/reussir-paper-refresh-20261111/runtime-xlto/release/libreussir_rt.a",
+      "-lm"
+    ],
+    "cwd": "/tmp/nix-shell.tLeyZ7/tmpvj_syrk_"
+  },
+  {
+    "cell": "bigint-collatz/reussir",
+    "step": "reussir compilation",
+    "cmd": [
+      "/tmp/reussir-full-tbi-20261111/build/bin/rrc",
+      "-o",
+      "reussir.ll",
+      "--package-name",
+      "bench",
+      "--extern",
+      "core=/tmp/nix-shell.tLeyZ7/reussir-core-mr8f2gs5/core.rri",
+      "--extern-src",
+      "core=/tmp/reussir-full-tbi-20261111/library/core/src",
+      "-Oaggressive",
+      "--reuse-across-call",
+      "--relocation-mode",
+      "pic",
+      "-t",
+      "llvm-ir",
+      "/tmp/reussir-paper-refresh-20261111/benchmark/reussir/bigint-collatz.rr"
+    ],
+    "cwd": "/tmp/nix-shell.tLeyZ7/tmpiw7xz4a4"
+  },
+  {
+    "cell": "bigint-collatz/reussir",
+    "step": "reussir linking",
+    "cmd": [
+      "/nix/store/55nmzskx8ai6w4a60cpyf67zxj5lg8wz-clang-wrapper-23.1.0/bin/clang",
+      "-o",
+      "/tmp/reussir-paper-refresh-20261111/bin/bigint-collatz",
+      "reussir.ll",
+      "/tmp/nix-shell.tLeyZ7/reussir-core-mr8f2gs5/core.ll",
+      "/tmp/reussir-paper-refresh-20261111/benchmark/reussir/bigint-collatz.rr.c",
+      "-flto=thin",
+      "-fuse-ld=lld",
+      "-O3",
+      "-march=native",
+      "-Wl,-plugin-opt=-disable-select-optimize=false",
+      "/tmp/reussir-full-tbi-20261111/build/lib/libRCGMPRuntime.a",
+      "-Wl,-rpath,/nix/store/np1ym239sl7vml5k1aha3hc6lh6i2gr5-gmp-with-cxx-6.3.0/lib",
+      "-lgmp",
+      "/tmp/reussir-paper-refresh-20261111/runtime-xlto/release/libreussir_rt.a",
+      "-lm"
+    ],
+    "cwd": "/tmp/nix-shell.tLeyZ7/tmpiw7xz4a4"
+  },
+  {
+    "cell": "bigint-factorial/reussir",
+    "step": "reussir compilation",
+    "cmd": [
+      "/tmp/reussir-full-tbi-20261111/build/bin/rrc",
+      "-o",
+      "reussir.ll",
+      "--package-name",
+      "bench",
+      "--extern",
+      "core=/tmp/nix-shell.tLeyZ7/reussir-core-mr8f2gs5/core.rri",
+      "--extern-src",
+      "core=/tmp/reussir-full-tbi-20261111/library/core/src",
+      "-Oaggressive",
+      "--reuse-across-call",
+      "--relocation-mode",
+      "pic",
+      "-t",
+      "llvm-ir",
+      "/tmp/reussir-paper-refresh-20261111/benchmark/reussir/bigint-factorial.rr"
+    ],
+    "cwd": "/tmp/nix-shell.tLeyZ7/tmpg20rtqsi"
+  },
+  {
+    "cell": "bigint-factorial/reussir",
+    "step": "reussir linking",
+    "cmd": [
+      "/nix/store/55nmzskx8ai6w4a60cpyf67zxj5lg8wz-clang-wrapper-23.1.0/bin/clang",
+      "-o",
+      "/tmp/reussir-paper-refresh-20261111/bin/bigint-factorial",
+      "reussir.ll",
+      "/tmp/nix-shell.tLeyZ7/reussir-core-mr8f2gs5/core.ll",
+      "/tmp/reussir-paper-refresh-20261111/benchmark/reussir/bigint-factorial.rr.c",
+      "-flto=thin",
+      "-fuse-ld=lld",
+      "-O3",
+      "-march=native",
+      "-Wl,-plugin-opt=-disable-select-optimize=false",
+      "/tmp/reussir-full-tbi-20261111/build/lib/libRCGMPRuntime.a",
+      "-Wl,-rpath,/nix/store/np1ym239sl7vml5k1aha3hc6lh6i2gr5-gmp-with-cxx-6.3.0/lib",
+      "-lgmp",
+      "/tmp/reussir-paper-refresh-20261111/runtime-xlto/release/libreussir_rt.a",
+      "-lm"
+    ],
+    "cwd": "/tmp/nix-shell.tLeyZ7/tmpg20rtqsi"
+  },
+  {
+    "cell": "bigint-fib/reussir",
+    "step": "reussir compilation",
+    "cmd": [
+      "/tmp/reussir-full-tbi-20261111/build/bin/rrc",
+      "-o",
+      "reussir.ll",
+      "--package-name",
+      "bench",
+      "--extern",
+      "core=/tmp/nix-shell.tLeyZ7/reussir-core-mr8f2gs5/core.rri",
+      "--extern-src",
+      "core=/tmp/reussir-full-tbi-20261111/library/core/src",
+      "-Oaggressive",
+      "--reuse-across-call",
+      "--relocation-mode",
+      "pic",
+      "-t",
+      "llvm-ir",
+      "/tmp/reussir-paper-refresh-20261111/benchmark/reussir/bigint-fib.rr"
+    ],
+    "cwd": "/tmp/nix-shell.tLeyZ7/tmp59dilzr4"
+  },
+  {
+    "cell": "bigint-fib/reussir",
+    "step": "reussir linking",
+    "cmd": [
+      "/nix/store/55nmzskx8ai6w4a60cpyf67zxj5lg8wz-clang-wrapper-23.1.0/bin/clang",
+      "-o",
+      "/tmp/reussir-paper-refresh-20261111/bin/bigint-fib",
+      "reussir.ll",
+      "/tmp/nix-shell.tLeyZ7/reussir-core-mr8f2gs5/core.ll",
+      "/tmp/reussir-paper-refresh-20261111/benchmark/reussir/bigint-fib.rr.c",
+      "-flto=thin",
+      "-fuse-ld=lld",
+      "-O3",
+      "-march=native",
+      "-Wl,-plugin-opt=-disable-select-optimize=false",
+      "/tmp/reussir-full-tbi-20261111/build/lib/libRCGMPRuntime.a",
+      "-Wl,-rpath,/nix/store/np1ym239sl7vml5k1aha3hc6lh6i2gr5-gmp-with-cxx-6.3.0/lib",
+      "-lgmp",
+      "/tmp/reussir-paper-refresh-20261111/runtime-xlto/release/libreussir_rt.a",
+      "-lm"
+    ],
+    "cwd": "/tmp/nix-shell.tLeyZ7/tmp59dilzr4"
+  },
+  {
+    "cell": "bigint-pidigits/reussir",
+    "step": "reussir compilation",
+    "cmd": [
+      "/tmp/reussir-full-tbi-20261111/build/bin/rrc",
+      "-o",
+      "reussir.ll",
+      "--package-name",
+      "bench",
+      "--extern",
+      "core=/tmp/nix-shell.tLeyZ7/reussir-core-mr8f2gs5/core.rri",
+      "--extern-src",
+      "core=/tmp/reussir-full-tbi-20261111/library/core/src",
+      "-Oaggressive",
+      "--reuse-across-call",
+      "--relocation-mode",
+      "pic",
+      "-t",
+      "llvm-ir",
+      "/tmp/reussir-paper-refresh-20261111/benchmark/reussir/bigint-pidigits.rr"
+    ],
+    "cwd": "/tmp/nix-shell.tLeyZ7/tmpi4kos4vd"
+  },
+  {
+    "cell": "bigint-pidigits/reussir",
+    "step": "reussir linking",
+    "cmd": [
+      "/nix/store/55nmzskx8ai6w4a60cpyf67zxj5lg8wz-clang-wrapper-23.1.0/bin/clang",
+      "-o",
+      "/tmp/reussir-paper-refresh-20261111/bin/bigint-pidigits",
+      "reussir.ll",
+      "/tmp/nix-shell.tLeyZ7/reussir-core-mr8f2gs5/core.ll",
+      "/tmp/reussir-paper-refresh-20261111/benchmark/reussir/bigint-pidigits.rr.c",
+      "-flto=thin",
+      "-fuse-ld=lld",
+      "-O3",
+      "-march=native",
+      "-Wl,-plugin-opt=-disable-select-optimize=false",
+      "/tmp/reussir-full-tbi-20261111/build/lib/libRCGMPRuntime.a",
+      "-Wl,-rpath,/nix/store/np1ym239sl7vml5k1aha3hc6lh6i2gr5-gmp-with-cxx-6.3.0/lib",
+      "-lgmp",
+      "/tmp/reussir-paper-refresh-20261111/runtime-xlto/release/libreussir_rt.a",
+      "-lm"
+    ],
+    "cwd": "/tmp/nix-shell.tLeyZ7/tmpi4kos4vd"
+  },
+  {
+    "cell": "bigint-rbtree/reussir",
+    "step": "reussir compilation",
+    "cmd": [
+      "/tmp/reussir-full-tbi-20261111/build/bin/rrc",
+      "-o",
+      "reussir.ll",
+      "--package-name",
+      "bench",
+      "--extern",
+      "core=/tmp/nix-shell.tLeyZ7/reussir-core-mr8f2gs5/core.rri",
+      "--extern-src",
+      "core=/tmp/reussir-full-tbi-20261111/library/core/src",
+      "-Oaggressive",
+      "--reuse-across-call",
+      "--relocation-mode",
+      "pic",
+      "-t",
+      "llvm-ir",
+      "/tmp/reussir-paper-refresh-20261111/benchmark/reussir/bigint-rbtree.rr"
+    ],
+    "cwd": "/tmp/nix-shell.tLeyZ7/tmpvgtu05py"
+  },
+  {
+    "cell": "bigint-rbtree/reussir",
+    "step": "reussir linking",
+    "cmd": [
+      "/nix/store/55nmzskx8ai6w4a60cpyf67zxj5lg8wz-clang-wrapper-23.1.0/bin/clang",
+      "-o",
+      "/tmp/reussir-paper-refresh-20261111/bin/bigint-rbtree",
+      "reussir.ll",
+      "/tmp/nix-shell.tLeyZ7/reussir-core-mr8f2gs5/core.ll",
+      "/tmp/reussir-paper-refresh-20261111/benchmark/reussir/bigint-rbtree.rr.c",
+      "-flto=thin",
+      "-fuse-ld=lld",
+      "-O3",
+      "-march=native",
+      "-Wl,-plugin-opt=-disable-select-optimize=false",
+      "/tmp/reussir-full-tbi-20261111/build/lib/libRCGMPRuntime.a",
+      "-Wl,-rpath,/nix/store/np1ym239sl7vml5k1aha3hc6lh6i2gr5-gmp-with-cxx-6.3.0/lib",
+      "-lgmp",
+      "/tmp/reussir-paper-refresh-20261111/runtime-xlto/release/libreussir_rt.a",
+      "-lm"
+    ],
+    "cwd": "/tmp/nix-shell.tLeyZ7/tmpvgtu05py"
+  },
+  {
+    "cell": "derive/reussir",
+    "step": "reussir compilation",
+    "cmd": [
+      "/tmp/reussir-full-tbi-20261111/build/bin/rrc",
+      "-o",
+      "reussir.ll",
+      "-Oaggressive",
+      "--reuse-across-call",
+      "--relocation-mode",
+      "pic",
+      "-t",
+      "llvm-ir",
+      "/tmp/reussir-paper-refresh-20261111/benchmark/reussir/derive.rr"
+    ],
+    "cwd": "/tmp/nix-shell.tLeyZ7/tmp61n8urtu"
+  },
+  {
+    "cell": "derive/reussir",
+    "step": "reussir linking",
+    "cmd": [
+      "/nix/store/55nmzskx8ai6w4a60cpyf67zxj5lg8wz-clang-wrapper-23.1.0/bin/clang",
+      "-o",
+      "/tmp/reussir-paper-refresh-20261111/bin/derive",
+      "reussir.ll",
+      "/tmp/reussir-paper-refresh-20261111/benchmark/reussir/derive.rr.c",
+      "-flto=thin",
+      "-fuse-ld=lld",
+      "-O3",
+      "-march=native",
+      "-Wl,-plugin-opt=-disable-select-optimize=false",
+      "/tmp/reussir-paper-refresh-20261111/runtime-xlto/release/libreussir_rt.a",
+      "-lm"
+    ],
+    "cwd": "/tmp/nix-shell.tLeyZ7/tmp61n8urtu"
+  },
+  {
+    "cell": "expr-replace/reussir",
+    "step": "reussir compilation",
+    "cmd": [
+      "/tmp/reussir-full-tbi-20261111/build/bin/rrc",
+      "-o",
+      "reussir.ll",
+      "-Oaggressive",
+      "--reuse-across-call",
+      "--relocation-mode",
+      "pic",
+      "-t",
+      "llvm-ir",
+      "/tmp/reussir-paper-refresh-20261111/benchmark/reussir/expr-replace.rr"
+    ],
+    "cwd": "/tmp/nix-shell.tLeyZ7/tmpbfdjb7ge"
+  },
+  {
+    "cell": "expr-replace/reussir",
+    "step": "reussir linking",
+    "cmd": [
+      "/nix/store/55nmzskx8ai6w4a60cpyf67zxj5lg8wz-clang-wrapper-23.1.0/bin/clang",
+      "-o",
+      "/tmp/reussir-paper-refresh-20261111/bin/expr-replace",
+      "reussir.ll",
+      "/tmp/reussir-paper-refresh-20261111/benchmark/reussir/expr-replace.rr.c",
+      "-flto=thin",
+      "-fuse-ld=lld",
+      "-O3",
+      "-march=native",
+      "-Wl,-plugin-opt=-disable-select-optimize=false",
+      "/tmp/reussir-paper-refresh-20261111/runtime-xlto/release/libreussir_rt.a",
+      "-lm"
+    ],
+    "cwd": "/tmp/nix-shell.tLeyZ7/tmpbfdjb7ge"
+  },
+  {
+    "cell": "fingertree/reussir",
+    "step": "reussir compilation",
+    "cmd": [
+      "/tmp/reussir-full-tbi-20261111/build/bin/rrc",
+      "-o",
+      "reussir.ll",
+      "-Oaggressive",
+      "--reuse-across-call",
+      "--relocation-mode",
+      "pic",
+      "-t",
+      "llvm-ir",
+      "/tmp/reussir-paper-refresh-20261111/benchmark/reussir/fingertree.rr"
+    ],
+    "cwd": "/tmp/nix-shell.tLeyZ7/tmpi8gyg5w2"
+  },
+  {
+    "cell": "fingertree/reussir",
+    "step": "reussir linking",
+    "cmd": [
+      "/nix/store/55nmzskx8ai6w4a60cpyf67zxj5lg8wz-clang-wrapper-23.1.0/bin/clang",
+      "-o",
+      "/tmp/reussir-paper-refresh-20261111/bin/fingertree",
+      "reussir.ll",
+      "/tmp/reussir-paper-refresh-20261111/benchmark/reussir/fingertree.rr.c",
+      "-flto=thin",
+      "-fuse-ld=lld",
+      "-O3",
+      "-march=native",
+      "-Wl,-plugin-opt=-disable-select-optimize=false",
+      "/tmp/reussir-paper-refresh-20261111/runtime-xlto/release/libreussir_rt.a",
+      "-lm"
+    ],
+    "cwd": "/tmp/nix-shell.tLeyZ7/tmpi8gyg5w2"
+  },
+  {
+    "cell": "functional-queue/reussir",
+    "step": "reussir compilation",
+    "cmd": [
+      "/tmp/reussir-full-tbi-20261111/build/bin/rrc",
+      "-o",
+      "reussir.ll",
+      "-Oaggressive",
+      "--reuse-across-call",
+      "--relocation-mode",
+      "pic",
+      "-t",
+      "llvm-ir",
+      "/tmp/reussir-paper-refresh-20261111/benchmark/reussir/functional-queue.rr"
+    ],
+    "cwd": "/tmp/nix-shell.tLeyZ7/tmpkwynhqxl"
+  },
+  {
+    "cell": "functional-queue/reussir",
+    "step": "reussir linking",
+    "cmd": [
+      "/nix/store/55nmzskx8ai6w4a60cpyf67zxj5lg8wz-clang-wrapper-23.1.0/bin/clang",
+      "-o",
+      "/tmp/reussir-paper-refresh-20261111/bin/functional-queue",
+      "reussir.ll",
+      "/tmp/reussir-paper-refresh-20261111/benchmark/reussir/functional-queue.rr.c",
+      "-flto=thin",
+      "-fuse-ld=lld",
+      "-O3",
+      "-march=native",
+      "-Wl,-plugin-opt=-disable-select-optimize=false",
+      "/tmp/reussir-paper-refresh-20261111/runtime-xlto/release/libreussir_rt.a",
+      "-lm"
+    ],
+    "cwd": "/tmp/nix-shell.tLeyZ7/tmpkwynhqxl"
+  },
+  {
+    "cell": "hash-map-heavily-shared/reussir",
+    "step": "reussir core interface",
+    "cmd": [
+      "/tmp/reussir-full-tbi-20261111/build/bin/rrc",
+      "--package-root",
+      "/tmp/reussir-full-tbi-20261111/library/core/src",
+      "--package-name",
+      "core",
+      "--builtin",
+      "-t",
+      "rri",
+      "-o",
+      "core.rri"
+    ],
+    "cwd": "/tmp/nix-shell.tLeyZ7/reussir-std-u__e6d7b"
+  },
+  {
+    "cell": "hash-map-heavily-shared/reussir",
+    "step": "reussir core compilation",
+    "cmd": [
+      "/tmp/reussir-full-tbi-20261111/build/bin/rrc",
+      "--package-root",
+      "/tmp/reussir-full-tbi-20261111/library/core/src",
+      "--package-name",
+      "core",
+      "--builtin",
+      "-t",
+      "llvm-ir",
+      "-o",
+      "core.ll",
+      "-Oaggressive",
+      "--reuse-across-call",
+      "--relocation-mode",
+      "pic"
+    ],
+    "cwd": "/tmp/nix-shell.tLeyZ7/reussir-std-u__e6d7b"
+  },
+  {
+    "cell": "hash-map-heavily-shared/reussir",
+    "step": "reussir std interface",
+    "cmd": [
+      "/tmp/reussir-full-tbi-20261111/build/bin/rrc",
+      "--package-root",
+      "/tmp/reussir-full-tbi-20261111/library/std/src",
+      "--package-name",
+      "std",
+      "--builtin",
+      "--extern",
+      "core=/tmp/nix-shell.tLeyZ7/reussir-std-u__e6d7b/core.rri",
+      "--extern-src",
+      "core=/tmp/reussir-full-tbi-20261111/library/core/src",
+      "-t",
+      "rri",
+      "-o",
+      "std.rri"
+    ],
+    "cwd": "/tmp/nix-shell.tLeyZ7/reussir-std-u__e6d7b"
+  },
+  {
+    "cell": "hash-map-heavily-shared/reussir",
+    "step": "reussir std compilation",
+    "cmd": [
+      "/tmp/reussir-full-tbi-20261111/build/bin/rrc",
+      "--package-root",
+      "/tmp/reussir-full-tbi-20261111/library/std/src",
+      "--package-name",
+      "std",
+      "--builtin",
+      "--extern",
+      "core=/tmp/nix-shell.tLeyZ7/reussir-std-u__e6d7b/core.rri",
+      "--extern-src",
+      "core=/tmp/reussir-full-tbi-20261111/library/core/src",
+      "-t",
+      "llvm-ir",
+      "-o",
+      "std.ll",
+      "-Oaggressive",
+      "--reuse-across-call",
+      "--relocation-mode",
+      "pic"
+    ],
+    "cwd": "/tmp/nix-shell.tLeyZ7/reussir-std-u__e6d7b"
+  },
+  {
+    "cell": "hash-map-heavily-shared/reussir",
+    "step": "reussir compilation",
+    "cmd": [
+      "/tmp/reussir-full-tbi-20261111/build/bin/rrc",
+      "-o",
+      "reussir.ll",
+      "--package-name",
+      "bench",
+      "--extern",
+      "core=/tmp/nix-shell.tLeyZ7/reussir-std-u__e6d7b/core.rri",
+      "--extern-src",
+      "core=/tmp/reussir-full-tbi-20261111/library/core/src",
+      "--extern",
+      "std=/tmp/nix-shell.tLeyZ7/reussir-std-u__e6d7b/std.rri",
+      "--extern-src",
+      "std=/tmp/reussir-full-tbi-20261111/library/std/src",
+      "-Oaggressive",
+      "--reuse-across-call",
+      "--relocation-mode",
+      "pic",
+      "-t",
+      "llvm-ir",
+      "/tmp/reussir-paper-refresh-20261111/benchmark/reussir/hash-map-heavily-shared.rr"
+    ],
+    "cwd": "/tmp/nix-shell.tLeyZ7/tmpny45nwk8"
+  },
+  {
+    "cell": "hash-map-heavily-shared/reussir",
+    "step": "reussir linking",
+    "cmd": [
+      "/nix/store/55nmzskx8ai6w4a60cpyf67zxj5lg8wz-clang-wrapper-23.1.0/bin/clang",
+      "-o",
+      "/tmp/reussir-paper-refresh-20261111/bin/hash-map-heavily-shared",
+      "reussir.ll",
+      "/tmp/nix-shell.tLeyZ7/reussir-std-u__e6d7b/std.ll",
+      "/tmp/nix-shell.tLeyZ7/reussir-std-u__e6d7b/core.ll",
+      "/tmp/reussir-paper-refresh-20261111/benchmark/reussir/hash-map-heavily-shared.rr.c",
+      "-flto=thin",
+      "-fuse-ld=lld",
+      "-O3",
+      "-march=native",
+      "-Wl,-plugin-opt=-disable-select-optimize=false",
+      "/tmp/reussir-paper-refresh-20261111/runtime-xlto/release/libreussir_rt.a",
+      "-lm"
+    ],
+    "cwd": "/tmp/nix-shell.tLeyZ7/tmpny45nwk8"
+  },
+  {
+    "cell": "hash-map-linear/reussir",
+    "step": "reussir compilation",
+    "cmd": [
+      "/tmp/reussir-full-tbi-20261111/build/bin/rrc",
+      "-o",
+      "reussir.ll",
+      "--package-name",
+      "bench",
+      "--extern",
+      "core=/tmp/nix-shell.tLeyZ7/reussir-std-u__e6d7b/core.rri",
+      "--extern-src",
+      "core=/tmp/reussir-full-tbi-20261111/library/core/src",
+      "--extern",
+      "std=/tmp/nix-shell.tLeyZ7/reussir-std-u__e6d7b/std.rri",
+      "--extern-src",
+      "std=/tmp/reussir-full-tbi-20261111/library/std/src",
+      "-Oaggressive",
+      "--reuse-across-call",
+      "--relocation-mode",
+      "pic",
+      "-t",
+      "llvm-ir",
+      "/tmp/reussir-paper-refresh-20261111/benchmark/reussir/hash-map-linear.rr"
+    ],
+    "cwd": "/tmp/nix-shell.tLeyZ7/tmp885y4_1v"
+  },
+  {
+    "cell": "hash-map-linear/reussir",
+    "step": "reussir linking",
+    "cmd": [
+      "/nix/store/55nmzskx8ai6w4a60cpyf67zxj5lg8wz-clang-wrapper-23.1.0/bin/clang",
+      "-o",
+      "/tmp/reussir-paper-refresh-20261111/bin/hash-map-linear",
+      "reussir.ll",
+      "/tmp/nix-shell.tLeyZ7/reussir-std-u__e6d7b/std.ll",
+      "/tmp/nix-shell.tLeyZ7/reussir-std-u__e6d7b/core.ll",
+      "/tmp/reussir-paper-refresh-20261111/benchmark/reussir/hash-map-linear.rr.c",
+      "-flto=thin",
+      "-fuse-ld=lld",
+      "-O3",
+      "-march=native",
+      "-Wl,-plugin-opt=-disable-select-optimize=false",
+      "/tmp/reussir-paper-refresh-20261111/runtime-xlto/release/libreussir_rt.a",
+      "-lm"
+    ],
+    "cwd": "/tmp/nix-shell.tLeyZ7/tmp885y4_1v"
+  },
+  {
+    "cell": "hash-map-shared/reussir",
+    "step": "reussir compilation",
+    "cmd": [
+      "/tmp/reussir-full-tbi-20261111/build/bin/rrc",
+      "-o",
+      "reussir.ll",
+      "--package-name",
+      "bench",
+      "--extern",
+      "core=/tmp/nix-shell.tLeyZ7/reussir-std-u__e6d7b/core.rri",
+      "--extern-src",
+      "core=/tmp/reussir-full-tbi-20261111/library/core/src",
+      "--extern",
+      "std=/tmp/nix-shell.tLeyZ7/reussir-std-u__e6d7b/std.rri",
+      "--extern-src",
+      "std=/tmp/reussir-full-tbi-20261111/library/std/src",
+      "-Oaggressive",
+      "--reuse-across-call",
+      "--relocation-mode",
+      "pic",
+      "-t",
+      "llvm-ir",
+      "/tmp/reussir-paper-refresh-20261111/benchmark/reussir/hash-map-shared.rr"
+    ],
+    "cwd": "/tmp/nix-shell.tLeyZ7/tmp08f_8ltp"
+  },
+  {
+    "cell": "hash-map-shared/reussir",
+    "step": "reussir linking",
+    "cmd": [
+      "/nix/store/55nmzskx8ai6w4a60cpyf67zxj5lg8wz-clang-wrapper-23.1.0/bin/clang",
+      "-o",
+      "/tmp/reussir-paper-refresh-20261111/bin/hash-map-shared",
+      "reussir.ll",
+      "/tmp/nix-shell.tLeyZ7/reussir-std-u__e6d7b/std.ll",
+      "/tmp/nix-shell.tLeyZ7/reussir-std-u__e6d7b/core.ll",
+      "/tmp/reussir-paper-refresh-20261111/benchmark/reussir/hash-map-shared.rr.c",
+      "-flto=thin",
+      "-fuse-ld=lld",
+      "-O3",
+      "-march=native",
+      "-Wl,-plugin-opt=-disable-select-optimize=false",
+      "/tmp/reussir-paper-refresh-20261111/runtime-xlto/release/libreussir_rt.a",
+      "-lm"
+    ],
+    "cwd": "/tmp/nix-shell.tLeyZ7/tmp08f_8ltp"
+  },
+  {
+    "cell": "heap-array/reussir",
+    "step": "reussir compilation",
+    "cmd": [
+      "/tmp/reussir-full-tbi-20261111/build/bin/rrc",
+      "-o",
+      "reussir.ll",
+      "-Oaggressive",
+      "--reuse-across-call",
+      "--relocation-mode",
+      "pic",
+      "-t",
+      "llvm-ir",
+      "/tmp/reussir-paper-refresh-20261111/benchmark/reussir/heap.rr"
+    ],
+    "cwd": "/tmp/nix-shell.tLeyZ7/tmpi7lruk0i"
+  },
+  {
+    "cell": "heap-array/reussir",
+    "step": "reussir linking",
+    "cmd": [
+      "/nix/store/55nmzskx8ai6w4a60cpyf67zxj5lg8wz-clang-wrapper-23.1.0/bin/clang",
+      "-o",
+      "/tmp/reussir-paper-refresh-20261111/bin/heap-array",
+      "reussir.ll",
+      "/tmp/reussir-paper-refresh-20261111/benchmark/reussir/heap.rr.c",
+      "-flto=thin",
+      "-fuse-ld=lld",
+      "-O3",
+      "-march=native",
+      "-Wl,-plugin-opt=-disable-select-optimize=false",
+      "/tmp/reussir-paper-refresh-20261111/runtime-xlto/release/libreussir_rt.a",
+      "-lm"
+    ],
+    "cwd": "/tmp/nix-shell.tLeyZ7/tmpi7lruk0i"
+  },
+  {
+    "cell": "heap-functional/reussir",
+    "step": "reussir compilation",
+    "cmd": [
+      "/tmp/reussir-full-tbi-20261111/build/bin/rrc",
+      "-o",
+      "reussir.ll",
+      "-Oaggressive",
+      "--reuse-across-call",
+      "--relocation-mode",
+      "pic",
+      "-t",
+      "llvm-ir",
+      "/tmp/reussir-paper-refresh-20261111/benchmark/reussir/heap-functional.rr"
+    ],
+    "cwd": "/tmp/nix-shell.tLeyZ7/tmpogrmkun3"
+  },
+  {
+    "cell": "heap-functional/reussir",
+    "step": "reussir linking",
+    "cmd": [
+      "/nix/store/55nmzskx8ai6w4a60cpyf67zxj5lg8wz-clang-wrapper-23.1.0/bin/clang",
+      "-o",
+      "/tmp/reussir-paper-refresh-20261111/bin/heap-functional",
+      "reussir.ll",
+      "/tmp/reussir-paper-refresh-20261111/benchmark/reussir/heap.rr.c",
+      "-flto=thin",
+      "-fuse-ld=lld",
+      "-O3",
+      "-march=native",
+      "-Wl,-plugin-opt=-disable-select-optimize=false",
+      "/tmp/reussir-paper-refresh-20261111/runtime-xlto/release/libreussir_rt.a",
+      "-lm"
+    ],
+    "cwd": "/tmp/nix-shell.tLeyZ7/tmpogrmkun3"
+  },
+  {
+    "cell": "life/reussir",
+    "step": "reussir compilation",
+    "cmd": [
+      "/tmp/reussir-full-tbi-20261111/build/bin/rrc",
+      "-o",
+      "reussir.ll",
+      "-Oaggressive",
+      "--reuse-across-call",
+      "--relocation-mode",
+      "pic",
+      "-t",
+      "llvm-ir",
+      "/tmp/reussir-paper-refresh-20261111/benchmark/reussir/life.rr"
+    ],
+    "cwd": "/tmp/nix-shell.tLeyZ7/tmp4z_zhnj7"
+  },
+  {
+    "cell": "life/reussir",
+    "step": "reussir linking",
+    "cmd": [
+      "/nix/store/55nmzskx8ai6w4a60cpyf67zxj5lg8wz-clang-wrapper-23.1.0/bin/clang",
+      "-o",
+      "/tmp/reussir-paper-refresh-20261111/bin/life",
+      "reussir.ll",
+      "/tmp/reussir-paper-refresh-20261111/benchmark/reussir/life.rr.c",
+      "-flto=thin",
+      "-fuse-ld=lld",
+      "-O3",
+      "-march=native",
+      "-Wl,-plugin-opt=-disable-select-optimize=false",
+      "/tmp/reussir-paper-refresh-20261111/runtime-xlto/release/libreussir_rt.a",
+      "-lm"
+    ],
+    "cwd": "/tmp/nix-shell.tLeyZ7/tmp4z_zhnj7"
+  },
+  {
+    "cell": "list-membership/reussir",
+    "step": "reussir compilation",
+    "cmd": [
+      "/tmp/reussir-full-tbi-20261111/build/bin/rrc",
+      "-o",
+      "reussir.ll",
+      "-Oaggressive",
+      "--reuse-across-call",
+      "--relocation-mode",
+      "pic",
+      "-t",
+      "llvm-ir",
+      "/tmp/reussir-paper-refresh-20261111/benchmark/reussir/list-membership.rr"
+    ],
+    "cwd": "/tmp/nix-shell.tLeyZ7/tmpo9oq7d9k"
+  },
+  {
+    "cell": "list-membership/reussir",
+    "step": "reussir linking",
+    "cmd": [
+      "/nix/store/55nmzskx8ai6w4a60cpyf67zxj5lg8wz-clang-wrapper-23.1.0/bin/clang",
+      "-o",
+      "/tmp/reussir-paper-refresh-20261111/bin/list-membership",
+      "reussir.ll",
+      "/tmp/reussir-paper-refresh-20261111/benchmark/reussir/list-membership.rr.c",
+      "-flto=thin",
+      "-fuse-ld=lld",
+      "-O3",
+      "-march=native",
+      "-Wl,-plugin-opt=-disable-select-optimize=false",
+      "/tmp/reussir-paper-refresh-20261111/runtime-xlto/release/libreussir_rt.a",
+      "-lm"
+    ],
+    "cwd": "/tmp/nix-shell.tLeyZ7/tmpo9oq7d9k"
+  },
+  {
+    "cell": "mltt/reussir",
+    "step": "reussir compilation",
+    "cmd": [
+      "/tmp/reussir-full-tbi-20261111/build/bin/rrc",
+      "-o",
+      "reussir.ll",
+      "-Oaggressive",
+      "--reuse-across-call",
+      "--relocation-mode",
+      "pic",
+      "-t",
+      "llvm-ir",
+      "/tmp/reussir-paper-refresh-20261111/benchmark/reussir/mltt.rr"
+    ],
+    "cwd": "/tmp/nix-shell.tLeyZ7/tmpzkil2h77"
+  },
+  {
+    "cell": "mltt/reussir",
+    "step": "reussir linking",
+    "cmd": [
+      "/nix/store/55nmzskx8ai6w4a60cpyf67zxj5lg8wz-clang-wrapper-23.1.0/bin/clang",
+      "-o",
+      "/tmp/reussir-paper-refresh-20261111/bin/mltt",
+      "reussir.ll",
+      "/tmp/reussir-paper-refresh-20261111/benchmark/reussir/mltt.rr.c",
+      "-flto=thin",
+      "-fuse-ld=lld",
+      "-O3",
+      "-march=native",
+      "-Wl,-plugin-opt=-disable-select-optimize=false",
+      "/tmp/reussir-paper-refresh-20261111/runtime-xlto/release/libreussir_rt.a",
+      "-lm"
+    ],
+    "cwd": "/tmp/nix-shell.tLeyZ7/tmpzkil2h77"
+  },
+  {
+    "cell": "nbe-closure/reussir",
+    "step": "reussir compilation",
+    "cmd": [
+      "/tmp/reussir-full-tbi-20261111/build/bin/rrc",
+      "-o",
+      "reussir.ll",
+      "-Oaggressive",
+      "--reuse-across-call",
+      "--relocation-mode",
+      "pic",
+      "-t",
+      "llvm-ir",
+      "/tmp/reussir-paper-refresh-20261111/benchmark/reussir/nbe-closure.rr"
+    ],
+    "cwd": "/tmp/nix-shell.tLeyZ7/tmpsbhnepud"
+  },
+  {
+    "cell": "nbe-closure/reussir",
+    "step": "reussir linking",
+    "cmd": [
+      "/nix/store/55nmzskx8ai6w4a60cpyf67zxj5lg8wz-clang-wrapper-23.1.0/bin/clang",
+      "-o",
+      "/tmp/reussir-paper-refresh-20261111/bin/nbe-closure",
+      "reussir.ll",
+      "/tmp/reussir-paper-refresh-20261111/benchmark/reussir/nbe-closure.rr.c",
+      "-flto=thin",
+      "-fuse-ld=lld",
+      "-O3",
+      "-march=native",
+      "-Wl,-plugin-opt=-disable-select-optimize=false",
+      "/tmp/reussir-paper-refresh-20261111/runtime-xlto/release/libreussir_rt.a",
+      "-lm"
+    ],
+    "cwd": "/tmp/nix-shell.tLeyZ7/tmpsbhnepud"
+  },
+  {
+    "cell": "nbe-hoas/reussir",
+    "step": "reussir compilation",
+    "cmd": [
+      "/tmp/reussir-full-tbi-20261111/build/bin/rrc",
+      "-o",
+      "reussir.ll",
+      "-Oaggressive",
+      "--reuse-across-call",
+      "--relocation-mode",
+      "pic",
+      "-t",
+      "llvm-ir",
+      "/tmp/reussir-paper-refresh-20261111/benchmark/reussir/nbe-hoas.rr"
+    ],
+    "cwd": "/tmp/nix-shell.tLeyZ7/tmpcn7tgs9_"
+  },
+  {
+    "cell": "nbe-hoas/reussir",
+    "step": "reussir linking",
+    "cmd": [
+      "/nix/store/55nmzskx8ai6w4a60cpyf67zxj5lg8wz-clang-wrapper-23.1.0/bin/clang",
+      "-o",
+      "/tmp/reussir-paper-refresh-20261111/bin/nbe-hoas",
+      "reussir.ll",
+      "/tmp/reussir-paper-refresh-20261111/benchmark/reussir/nbe-hoas.rr.c",
+      "-flto=thin",
+      "-fuse-ld=lld",
+      "-O3",
+      "-march=native",
+      "-Wl,-plugin-opt=-disable-select-optimize=false",
+      "/tmp/reussir-paper-refresh-20261111/runtime-xlto/release/libreussir_rt.a",
+      "-lm"
+    ],
+    "cwd": "/tmp/nix-shell.tLeyZ7/tmpcn7tgs9_"
+  },
+  {
+    "cell": "ordered-map-heavily-shared/reussir",
+    "step": "reussir compilation",
+    "cmd": [
+      "/tmp/reussir-full-tbi-20261111/build/bin/rrc",
+      "-o",
+      "reussir.ll",
+      "--package-name",
+      "bench",
+      "--extern",
+      "core=/tmp/nix-shell.tLeyZ7/reussir-std-u__e6d7b/core.rri",
+      "--extern-src",
+      "core=/tmp/reussir-full-tbi-20261111/library/core/src",
+      "--extern",
+      "std=/tmp/nix-shell.tLeyZ7/reussir-std-u__e6d7b/std.rri",
+      "--extern-src",
+      "std=/tmp/reussir-full-tbi-20261111/library/std/src",
+      "-Oaggressive",
+      "--reuse-across-call",
+      "--relocation-mode",
+      "pic",
+      "-t",
+      "llvm-ir",
+      "/tmp/reussir-paper-refresh-20261111/benchmark/reussir/ordered-map-heavily-shared.rr"
+    ],
+    "cwd": "/tmp/nix-shell.tLeyZ7/tmpf27uv2g2"
+  },
+  {
+    "cell": "ordered-map-heavily-shared/reussir",
+    "step": "reussir linking",
+    "cmd": [
+      "/nix/store/55nmzskx8ai6w4a60cpyf67zxj5lg8wz-clang-wrapper-23.1.0/bin/clang",
+      "-o",
+      "/tmp/reussir-paper-refresh-20261111/bin/ordered-map-heavily-shared",
+      "reussir.ll",
+      "/tmp/nix-shell.tLeyZ7/reussir-std-u__e6d7b/std.ll",
+      "/tmp/nix-shell.tLeyZ7/reussir-std-u__e6d7b/core.ll",
+      "/tmp/reussir-paper-refresh-20261111/benchmark/reussir/ordered-map-heavily-shared.rr.c",
+      "-flto=thin",
+      "-fuse-ld=lld",
+      "-O3",
+      "-march=native",
+      "-Wl,-plugin-opt=-disable-select-optimize=false",
+      "/tmp/reussir-paper-refresh-20261111/runtime-xlto/release/libreussir_rt.a",
+      "-lm"
+    ],
+    "cwd": "/tmp/nix-shell.tLeyZ7/tmpf27uv2g2"
+  },
+  {
+    "cell": "ordered-map-linear/reussir",
+    "step": "reussir compilation",
+    "cmd": [
+      "/tmp/reussir-full-tbi-20261111/build/bin/rrc",
+      "-o",
+      "reussir.ll",
+      "--package-name",
+      "bench",
+      "--extern",
+      "core=/tmp/nix-shell.tLeyZ7/reussir-std-u__e6d7b/core.rri",
+      "--extern-src",
+      "core=/tmp/reussir-full-tbi-20261111/library/core/src",
+      "--extern",
+      "std=/tmp/nix-shell.tLeyZ7/reussir-std-u__e6d7b/std.rri",
+      "--extern-src",
+      "std=/tmp/reussir-full-tbi-20261111/library/std/src",
+      "-Oaggressive",
+      "--reuse-across-call",
+      "--relocation-mode",
+      "pic",
+      "-t",
+      "llvm-ir",
+      "/tmp/reussir-paper-refresh-20261111/benchmark/reussir/ordered-map-linear.rr"
+    ],
+    "cwd": "/tmp/nix-shell.tLeyZ7/tmpn_ibssk5"
+  },
+  {
+    "cell": "ordered-map-linear/reussir",
+    "step": "reussir linking",
+    "cmd": [
+      "/nix/store/55nmzskx8ai6w4a60cpyf67zxj5lg8wz-clang-wrapper-23.1.0/bin/clang",
+      "-o",
+      "/tmp/reussir-paper-refresh-20261111/bin/ordered-map-linear",
+      "reussir.ll",
+      "/tmp/nix-shell.tLeyZ7/reussir-std-u__e6d7b/std.ll",
+      "/tmp/nix-shell.tLeyZ7/reussir-std-u__e6d7b/core.ll",
+      "/tmp/reussir-paper-refresh-20261111/benchmark/reussir/ordered-map-linear.rr.c",
+      "-flto=thin",
+      "-fuse-ld=lld",
+      "-O3",
+      "-march=native",
+      "-Wl,-plugin-opt=-disable-select-optimize=false",
+      "/tmp/reussir-paper-refresh-20261111/runtime-xlto/release/libreussir_rt.a",
+      "-lm"
+    ],
+    "cwd": "/tmp/nix-shell.tLeyZ7/tmpn_ibssk5"
+  },
+  {
+    "cell": "ordered-map-shared/reussir",
+    "step": "reussir compilation",
+    "cmd": [
+      "/tmp/reussir-full-tbi-20261111/build/bin/rrc",
+      "-o",
+      "reussir.ll",
+      "--package-name",
+      "bench",
+      "--extern",
+      "core=/tmp/nix-shell.tLeyZ7/reussir-std-u__e6d7b/core.rri",
+      "--extern-src",
+      "core=/tmp/reussir-full-tbi-20261111/library/core/src",
+      "--extern",
+      "std=/tmp/nix-shell.tLeyZ7/reussir-std-u__e6d7b/std.rri",
+      "--extern-src",
+      "std=/tmp/reussir-full-tbi-20261111/library/std/src",
+      "-Oaggressive",
+      "--reuse-across-call",
+      "--relocation-mode",
+      "pic",
+      "-t",
+      "llvm-ir",
+      "/tmp/reussir-paper-refresh-20261111/benchmark/reussir/ordered-map-shared.rr"
+    ],
+    "cwd": "/tmp/nix-shell.tLeyZ7/tmpj5rpl4n9"
+  },
+  {
+    "cell": "ordered-map-shared/reussir",
+    "step": "reussir linking",
+    "cmd": [
+      "/nix/store/55nmzskx8ai6w4a60cpyf67zxj5lg8wz-clang-wrapper-23.1.0/bin/clang",
+      "-o",
+      "/tmp/reussir-paper-refresh-20261111/bin/ordered-map-shared",
+      "reussir.ll",
+      "/tmp/nix-shell.tLeyZ7/reussir-std-u__e6d7b/std.ll",
+      "/tmp/nix-shell.tLeyZ7/reussir-std-u__e6d7b/core.ll",
+      "/tmp/reussir-paper-refresh-20261111/benchmark/reussir/ordered-map-shared.rr.c",
+      "-flto=thin",
+      "-fuse-ld=lld",
+      "-O3",
+      "-march=native",
+      "-Wl,-plugin-opt=-disable-select-optimize=false",
+      "/tmp/reussir-paper-refresh-20261111/runtime-xlto/release/libreussir_rt.a",
+      "-lm"
+    ],
+    "cwd": "/tmp/nix-shell.tLeyZ7/tmpj5rpl4n9"
+  },
+  {
+    "cell": "pcm-mix-limit/reussir",
+    "step": "reussir compilation",
+    "cmd": [
+      "/tmp/reussir-full-tbi-20261111/build/bin/rrc",
+      "-o",
+      "reussir.ll",
+      "-Oaggressive",
+      "--reuse-across-call",
+      "--relocation-mode",
+      "pic",
+      "-t",
+      "llvm-ir",
+      "/tmp/reussir-paper-refresh-20261111/benchmark/reussir/pcm-mix-limit.rr"
+    ],
+    "cwd": "/tmp/nix-shell.tLeyZ7/tmpc75ylmi0"
+  },
+  {
+    "cell": "pcm-mix-limit/reussir",
+    "step": "reussir linking",
+    "cmd": [
+      "/nix/store/55nmzskx8ai6w4a60cpyf67zxj5lg8wz-clang-wrapper-23.1.0/bin/clang",
+      "-o",
+      "/tmp/reussir-paper-refresh-20261111/bin/pcm-mix-limit",
+      "reussir.ll",
+      "/tmp/reussir-paper-refresh-20261111/benchmark/reussir/pcm-mix-limit.rr.c",
+      "-flto=thin",
+      "-fuse-ld=lld",
+      "-O3",
+      "-march=native",
+      "-Wl,-plugin-opt=-disable-select-optimize=false",
+      "/tmp/reussir-paper-refresh-20261111/runtime-xlto/release/libreussir_rt.a",
+      "-lm"
+    ],
+    "cwd": "/tmp/nix-shell.tLeyZ7/tmpc75ylmi0"
+  },
+  {
+    "cell": "qsort/reussir",
+    "step": "reussir compilation",
+    "cmd": [
+      "/tmp/reussir-full-tbi-20261111/build/bin/rrc",
+      "-o",
+      "reussir.ll",
+      "-Oaggressive",
+      "--reuse-across-call",
+      "--relocation-mode",
+      "pic",
+      "-t",
+      "llvm-ir",
+      "/tmp/reussir-paper-refresh-20261111/benchmark/reussir/qsort.rr"
+    ],
+    "cwd": "/tmp/nix-shell.tLeyZ7/tmp6uhm8nn7"
+  },
+  {
+    "cell": "qsort/reussir",
+    "step": "reussir linking",
+    "cmd": [
+      "/nix/store/55nmzskx8ai6w4a60cpyf67zxj5lg8wz-clang-wrapper-23.1.0/bin/clang",
+      "-o",
+      "/tmp/reussir-paper-refresh-20261111/bin/qsort",
+      "reussir.ll",
+      "/tmp/reussir-paper-refresh-20261111/benchmark/reussir/qsort.rr.c",
+      "-flto=thin",
+      "-fuse-ld=lld",
+      "-O3",
+      "-march=native",
+      "-Wl,-plugin-opt=-disable-select-optimize=false",
+      "/tmp/reussir-paper-refresh-20261111/runtime-xlto/release/libreussir_rt.a",
+      "-lm"
+    ],
+    "cwd": "/tmp/nix-shell.tLeyZ7/tmp6uhm8nn7"
+  },
+  {
+    "cell": "raytracer/reussir",
+    "step": "reussir compilation",
+    "cmd": [
+      "/tmp/reussir-full-tbi-20261111/build/bin/rrc",
+      "-o",
+      "reussir.ll",
+      "-Oaggressive",
+      "--reuse-across-call",
+      "--relocation-mode",
+      "pic",
+      "-t",
+      "llvm-ir",
+      "/tmp/reussir-paper-refresh-20261111/benchmark/reussir/raytracer.rr"
+    ],
+    "cwd": "/tmp/nix-shell.tLeyZ7/tmpdpvz8owg"
+  },
+  {
+    "cell": "raytracer/reussir",
+    "step": "reussir linking",
+    "cmd": [
+      "/nix/store/55nmzskx8ai6w4a60cpyf67zxj5lg8wz-clang-wrapper-23.1.0/bin/clang",
+      "-o",
+      "/tmp/reussir-paper-refresh-20261111/bin/raytracer",
+      "reussir.ll",
+      "/tmp/reussir-paper-refresh-20261111/benchmark/reussir/raytracer.rr.c",
+      "-flto=thin",
+      "-fuse-ld=lld",
+      "-O3",
+      "-march=native",
+      "-Wl,-plugin-opt=-disable-select-optimize=false",
+      "/tmp/reussir-paper-refresh-20261111/runtime-xlto/release/libreussir_rt.a",
+      "-lm"
+    ],
+    "cwd": "/tmp/nix-shell.tLeyZ7/tmpdpvz8owg"
+  },
+  {
+    "cell": "rbtree/reussir",
+    "step": "reussir compilation",
+    "cmd": [
+      "/tmp/reussir-full-tbi-20261111/build/bin/rrc",
+      "-o",
+      "reussir.ll",
+      "-Oaggressive",
+      "--reuse-across-call",
+      "--relocation-mode",
+      "pic",
+      "-t",
+      "llvm-ir",
+      "/tmp/reussir-paper-refresh-20261111/benchmark/reussir/rbtree.rr"
+    ],
+    "cwd": "/tmp/nix-shell.tLeyZ7/tmp1nve705u"
+  },
+  {
+    "cell": "rbtree/reussir",
+    "step": "reussir linking",
+    "cmd": [
+      "/nix/store/55nmzskx8ai6w4a60cpyf67zxj5lg8wz-clang-wrapper-23.1.0/bin/clang",
+      "-o",
+      "/tmp/reussir-paper-refresh-20261111/bin/rbtree",
+      "reussir.ll",
+      "/tmp/reussir-paper-refresh-20261111/benchmark/reussir/rbtree.rr.c",
+      "-flto=thin",
+      "-fuse-ld=lld",
+      "-O3",
+      "-march=native",
+      "-Wl,-plugin-opt=-disable-select-optimize=false",
+      "/tmp/reussir-paper-refresh-20261111/runtime-xlto/release/libreussir_rt.a",
+      "-lm"
+    ],
+    "cwd": "/tmp/nix-shell.tLeyZ7/tmp1nve705u"
+  },
+  {
+    "cell": "rbtree-lookup/reussir",
+    "step": "reussir compilation",
+    "cmd": [
+      "/tmp/reussir-full-tbi-20261111/build/bin/rrc",
+      "-o",
+      "reussir.ll",
+      "-Oaggressive",
+      "--reuse-across-call",
+      "--relocation-mode",
+      "pic",
+      "-t",
+      "llvm-ir",
+      "/tmp/reussir-paper-refresh-20261111/benchmark/reussir/rbtree-lookup.rr"
+    ],
+    "cwd": "/tmp/nix-shell.tLeyZ7/tmp_x0xulmz"
+  },
+  {
+    "cell": "rbtree-lookup/reussir",
+    "step": "reussir linking",
+    "cmd": [
+      "/nix/store/55nmzskx8ai6w4a60cpyf67zxj5lg8wz-clang-wrapper-23.1.0/bin/clang",
+      "-o",
+      "/tmp/reussir-paper-refresh-20261111/bin/rbtree-lookup",
+      "reussir.ll",
+      "/tmp/reussir-paper-refresh-20261111/benchmark/reussir/rbtree-lookup.rr.c",
+      "-flto=thin",
+      "-fuse-ld=lld",
+      "-O3",
+      "-march=native",
+      "-Wl,-plugin-opt=-disable-select-optimize=false",
+      "/tmp/reussir-paper-refresh-20261111/runtime-xlto/release/libreussir_rt.a",
+      "-lm"
+    ],
+    "cwd": "/tmp/nix-shell.tLeyZ7/tmp_x0xulmz"
+  },
+  {
+    "cell": "rbtree-zipper/reussir",
+    "step": "reussir compilation",
+    "cmd": [
+      "/tmp/reussir-full-tbi-20261111/build/bin/rrc",
+      "-o",
+      "reussir.ll",
+      "-Oaggressive",
+      "--reuse-across-call",
+      "--relocation-mode",
+      "pic",
+      "-t",
+      "llvm-ir",
+      "/tmp/reussir-paper-refresh-20261111/benchmark/reussir/rbtree-zipper.rr"
+    ],
+    "cwd": "/tmp/nix-shell.tLeyZ7/tmpdoj99bho"
+  },
+  {
+    "cell": "rbtree-zipper/reussir",
+    "step": "reussir linking",
+    "cmd": [
+      "/nix/store/55nmzskx8ai6w4a60cpyf67zxj5lg8wz-clang-wrapper-23.1.0/bin/clang",
+      "-o",
+      "/tmp/reussir-paper-refresh-20261111/bin/rbtree-zipper",
+      "reussir.ll",
+      "/tmp/reussir-paper-refresh-20261111/benchmark/reussir/rbtree.rr.c",
+      "-flto=thin",
+      "-fuse-ld=lld",
+      "-O3",
+      "-march=native",
+      "-Wl,-plugin-opt=-disable-select-optimize=false",
+      "/tmp/reussir-paper-refresh-20261111/runtime-xlto/release/libreussir_rt.a",
+      "-lm"
+    ],
+    "cwd": "/tmp/nix-shell.tLeyZ7/tmpdoj99bho"
+  },
+  {
+    "cell": "rgba-composite/reussir",
+    "step": "reussir compilation",
+    "cmd": [
+      "/tmp/reussir-full-tbi-20261111/build/bin/rrc",
+      "-o",
+      "reussir.ll",
+      "-Oaggressive",
+      "--reuse-across-call",
+      "--relocation-mode",
+      "pic",
+      "-t",
+      "llvm-ir",
+      "/tmp/reussir-paper-refresh-20261111/benchmark/reussir/rgba-composite.rr"
+    ],
+    "cwd": "/tmp/nix-shell.tLeyZ7/tmpl3pip_7x"
+  },
+  {
+    "cell": "rgba-composite/reussir",
+    "step": "reussir linking",
+    "cmd": [
+      "/nix/store/55nmzskx8ai6w4a60cpyf67zxj5lg8wz-clang-wrapper-23.1.0/bin/clang",
+      "-o",
+      "/tmp/reussir-paper-refresh-20261111/bin/rgba-composite",
+      "reussir.ll",
+      "/tmp/reussir-paper-refresh-20261111/benchmark/reussir/rgba-composite.rr.c",
+      "-flto=thin",
+      "-fuse-ld=lld",
+      "-O3",
+      "-march=native",
+      "-Wl,-plugin-opt=-disable-select-optimize=false",
+      "/tmp/reussir-paper-refresh-20261111/runtime-xlto/release/libreussir_rt.a",
+      "-lm"
+    ],
+    "cwd": "/tmp/nix-shell.tLeyZ7/tmpl3pip_7x"
+  }
+]

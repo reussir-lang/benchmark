@@ -310,7 +310,7 @@ spark,bigint-binomial,haskell-a1g,complete,1935.231553658,4.739673398264693,10,1
 spark,bigint-binomial,koka,complete,9161.65873322,78.24576763683791,10,6.05859375,False,hyperfine
 spark,bigint-binomial,lean,complete,1808.123199744,3.287591130557231,10,10.39453125,False,hyperfine
 spark,bigint-binomial,ocaml,complete,1463.379081468,4.328874901607961,10,14.6484375,False,hyperfine
-spark,bigint-binomial,reussir,complete,1353.943760654,0.8609223606178636,10,6.11328125,False,hyperfine
+spark,bigint-binomial,reussir,complete,1354.71477408,3.6736460569654534,10,5.94921875,False,hyperfine
 spark,bigint-binomial,reussir-nrac,complete,1354.76270406,3.46955679429985,10,6.09765625,False,hyperfine
 spark,bigint-binomial,rust,complete,5273.440578074,3.710987821422255,10,2.171875,False,hyperfine
 spark,bigint-binomial,rust-with-mimalloc,complete,5276.393301229999,3.2318329824032634,10,6.546875,False,hyperfine
@@ -319,7 +319,7 @@ spark,bigint-collatz,haskell-a1g,complete,1665.74238349,12.957976025464566,10,10
 spark,bigint-collatz,koka,complete,158.264119138,0.3848830864115721,10,4.1171875,False,hyperfine
 spark,bigint-collatz,lean,complete,181.204507462,0.11105675284237757,10,10.09375,False,hyperfine
 spark,bigint-collatz,ocaml,complete,521.531545452,0.5812163909775071,10,3.63671875,False,hyperfine
-spark,bigint-collatz,reussir,complete,121.534304874,0.154319717572879,10,2.1953125,False,hyperfine
+spark,bigint-collatz,reussir,complete,121.40638103600001,0.042999484981031455,10,2.0234375,False,hyperfine
 spark,bigint-collatz,reussir-nrac,complete,121.609911216,0.16257396564838855,10,2.1953125,False,hyperfine
 spark,bigint-collatz,rust,complete,756.3623950919999,11.523607182209645,10,1.76953125,False,hyperfine
 spark,bigint-collatz,rust-with-mimalloc,complete,753.6004176900001,8.6039269447542,10,6.171875,False,hyperfine
@@ -328,7 +328,7 @@ spark,bigint-factorial,haskell-a1g,complete,1126.68295251,5.947005450084049,10,1
 spark,bigint-factorial,koka,complete,11111.109262512,8.086051785266203,10,5.9921875,False,hyperfine
 spark,bigint-factorial,lean,complete,1189.81327153,1.7511572444806351,10,11.1484375,False,hyperfine
 spark,bigint-factorial,ocaml,complete,3548.4765245780004,3.3424881522550525,10,12732.08984375,False,hyperfine
-spark,bigint-factorial,reussir,complete,633.1394753620001,0.740462227306488,10,7.859375,False,hyperfine
+spark,bigint-factorial,reussir,complete,632.868408596,1.2641476665333558,10,7.8671875,False,hyperfine
 spark,bigint-factorial,reussir-nrac,complete,633.457847924,0.844327647158569,10,7.859375,False,hyperfine
 spark,bigint-factorial,rust,complete,992.328199764,43.685158498997836,10,2.30078125,False,hyperfine
 spark,bigint-factorial,rust-with-mimalloc,complete,983.12217689,36.76317717450005,10,10.55078125,False,hyperfine
@@ -337,7 +337,7 @@ spark,bigint-fib,haskell-a1g,complete,1169.909788674,9.27390254826853,10,1409.57
 spark,bigint-fib,koka,complete,2104.443385504,0.8125422961351564,10,5.9921875,False,hyperfine
 spark,bigint-fib,lean,complete,1028.086711826,0.35944196601944567,10,10.39453125,False,hyperfine
 spark,bigint-fib,ocaml,complete,3888.5600172659997,7.5114085894830005,10,14921.62109375,False,hyperfine
-spark,bigint-fib,reussir,complete,499.56224176800004,0.5082241336047069,10,5.859375,False,hyperfine
+spark,bigint-fib,reussir,complete,499.541262834,0.3674921651478056,10,5.8828125,False,hyperfine
 spark,bigint-fib,reussir-nrac,complete,499.80331323999997,0.5372971041615903,10,5.859375,False,hyperfine
 spark,bigint-fib,rust,complete,1955.4890303420002,0.6960744732779811,10,2.171875,False,hyperfine
 spark,bigint-fib,rust-with-mimalloc,complete,1955.643275906,0.6145539487824253,10,8.546875,False,hyperfine
@@ -346,7 +346,7 @@ spark,bigint-pidigits,haskell-a1g,complete,874.1054345580001,7.749123143450452,1
 spark,bigint-pidigits,koka,complete,6906.0670270559995,3.360447492606769,10,41.71484375,False,hyperfine
 spark,bigint-pidigits,lean,complete,744.9720618940001,0.8282411807818428,10,10.41796875,False,hyperfine
 spark,bigint-pidigits,ocaml,complete,653.468896962,0.5800858345933375,10,18.81640625,False,hyperfine
-spark,bigint-pidigits,reussir,complete,411.66970634800003,0.3249496216135422,10,6.2265625,False,hyperfine
+spark,bigint-pidigits,reussir,complete,418.196724254,4.372463693653557,10,6.24609375,False,hyperfine
 spark,bigint-pidigits,reussir-nrac,complete,411.663450302,0.41580915007361846,10,6.2265625,False,hyperfine
 spark,bigint-pidigits,rust,complete,2197.197616744,2.6416033624284614,10,2.90625,False,hyperfine
 spark,bigint-pidigits,rust-with-mimalloc,complete,1634.7356184439998,1.5276373873180982,10,11.7421875,False,hyperfine
@@ -355,7 +355,7 @@ spark,bigint-rbtree,haskell-a1g,complete,986.692085276,5.705535193832328,10,1216
 spark,bigint-rbtree,koka,complete,188.383047262,0.9600901285271243,10,117.96875,False,hyperfine
 spark,bigint-rbtree,lean,complete,673.750556392,0.3429964197078491,10,123.60546875,False,hyperfine
 spark,bigint-rbtree,ocaml,complete,361.895067932,0.4065341854158946,10,126.91796875,False,hyperfine
-spark,bigint-rbtree,reussir,complete,248.35731064600003,0.9236305055140129,10,118.0234375,False,hyperfine
+spark,bigint-rbtree,reussir,complete,226.11786935400002,0.5799124641151049,10,118.04296875,False,hyperfine
 spark,bigint-rbtree,reussir-nrac,complete,406.355907256,0.6796223925813897,10,118.0234375,False,hyperfine
 spark,bigint-rbtree,rust,complete,3857.6395283019997,6.551266128690822,10,7615.73828125,False,hyperfine
 spark,bigint-rbtree,rust-with-mimalloc,complete,1855.894911472,3.613955028631492,10,7639.41796875,False,hyperfine
@@ -365,7 +365,7 @@ spark,derive,koka,complete,255.744831416,0.5286195472064906,10,456.14453125,Fals
 spark,derive,lean,complete,296.021247974,0.33085089992956945,10,553.32421875,False,hyperfine
 spark,derive,morphic,complete,596.1627883680001,1.5449221870207375,10,765.2421875,False,hyperfine
 spark,derive,ocaml,complete,565.3249082640001,1.975214975985867,10,375.41796875,False,hyperfine
-spark,derive,reussir,complete,238.743483462,0.27698599667870855,10,456.16796875,False,hyperfine
+spark,derive,reussir,complete,236.11045273400003,0.3639650195202372,10,456.0625,False,hyperfine
 spark,derive,reussir-nrac,complete,238.77988854600002,0.6634881478959427,10,456.35546875,False,hyperfine
 spark,derive,rust,complete,1061.8097758000001,5.682445693356201,10,1530.0234375,False,hyperfine
 spark,derive,rust-with-mimalloc,complete,538.8558877300001,0.32292571765758454,10,1536.4140625,False,hyperfine
@@ -375,7 +375,7 @@ spark,expr-replace,koka,complete,586.1017787260001,1.9090322153404067,10,3.96093
 spark,expr-replace,lean,complete,427.16313058199995,7.054405995594177,10,10.04296875,False,hyperfine
 spark,expr-replace,morphic,complete,289.781489712,0.3920285205415482,10,1.1796875,False,hyperfine
 spark,expr-replace,ocaml,complete,309.93091824400005,1.940162251084562,10,4.01171875,False,hyperfine
-spark,expr-replace,reussir,complete,275.60841934,3.6077446565330322,10,4.26953125,False,hyperfine
+spark,expr-replace,reussir,complete,267.11455474400003,1.9870367437826573,10,4.04296875,False,hyperfine
 spark,expr-replace,reussir-nrac,complete,274.08131024600004,1.0701853417635498,10,4.26953125,False,hyperfine
 spark,expr-replace,rust,complete,360.073144652,0.28718126304642705,10,2.0546875,False,hyperfine
 spark,expr-replace,rust-with-mimalloc,complete,357.39816790400005,4.609256666439812,10,6.16796875,False,hyperfine
@@ -385,7 +385,7 @@ spark,fingertree,koka,complete,50.818916466,7.02967554559754,10,5.97265625,False
 spark,fingertree,lean,complete,59.078467456000006,0.18876939098506695,10,14.109375,False,hyperfine
 spark,fingertree,morphic,complete,55.502483832,0.1420289046204417,10,2.90234375,False,hyperfine
 spark,fingertree,ocaml,complete,53.404978652000004,0.6077438866949589,10,17.44921875,False,hyperfine
-spark,fingertree,reussir,complete,30.915084798000002,0.10264119290445073,10,6.08984375,False,hyperfine
+spark,fingertree,reussir,complete,31.206774612,0.5104819540176674,10,6.05078125,False,hyperfine
 spark,fingertree,reussir-nrac,complete,34.09802697800001,0.40067456815833186,10,6.08984375,False,hyperfine
 spark,fingertree,rust,complete,55.997333053999995,0.3365164761322334,10,7.6796875,False,hyperfine
 spark,fingertree,rust-with-mimalloc,complete,56.36999933800001,0.21868769146203462,10,10.16796875,False,hyperfine
@@ -395,7 +395,7 @@ spark,functional-queue,koka,complete,59.77668014,0.222171758693358,10,5.98046875
 spark,functional-queue,lean,complete,61.31802863,0.06114926540667024,10,14.12109375,False,hyperfine
 spark,functional-queue,morphic,complete,73.372025652,0.4272511963193955,10,5.71484375,False,hyperfine
 spark,functional-queue,ocaml,complete,87.76316966600001,0.15090605369081123,10,18.54296875,False,hyperfine
-spark,functional-queue,reussir,complete,36.87473949,0.09777802470519494,10,6.00390625,False,hyperfine
+spark,functional-queue,reussir,complete,38.03671039,0.062419028709475306,10,5.96484375,False,hyperfine
 spark,functional-queue,reussir-nrac,complete,36.850495518,0.08200363831867724,10,5.94140625,False,hyperfine
 spark,functional-queue,rust,complete,71.29064797400001,6.502595908693704,10,6.7421875,False,hyperfine
 spark,functional-queue,rust-with-mimalloc,complete,61.18418305000001,0.13626019790864477,10,8.7265625,False,hyperfine
@@ -405,7 +405,7 @@ spark,hash-map-heavily-shared,koka,budget_limited,60064.453064559995,,1,634.9492
 spark,hash-map-heavily-shared,lean,budget_limited,73955.03612305001,339.66508007032627,2,257.55859375,True,hyperfine
 spark,hash-map-heavily-shared,morphic,budget_limited,153070.0,,1,548.78125,True,gnu-time
 spark,hash-map-heavily-shared,ocaml,budget_exhausted,,,0,,True,
-spark,hash-map-heavily-shared,reussir,complete,3811.8331229339997,170.37970830764328,10,77.984375,False,hyperfine
+spark,hash-map-heavily-shared,reussir,complete,3706.983070028,5.518786894963196,10,77.9609375,False,hyperfine
 spark,hash-map-heavily-shared,reussir-nrac,complete,3784.801134908,37.24594881285039,10,78.23046875,False,hyperfine
 spark,hash-map-heavily-shared,rust,budget_limited,40599.16882422,476.72560539490604,2,358.82421875,True,hyperfine
 spark,hash-map-heavily-shared,rust-rpds,complete,7213.099059984001,24.739586925804982,10,163.80078125,False,hyperfine
@@ -417,7 +417,7 @@ spark,hash-map-linear,koka,complete,1346.893614784,13.520111013911578,10,584.109
 spark,hash-map-linear,lean,complete,1074.7184391239998,1.1464158671628772,10,96.47265625,False,hyperfine
 spark,hash-map-linear,morphic,complete,835.0593764280001,8.871070941494102,10,116.32421875,False,hyperfine
 spark,hash-map-linear,ocaml,complete,1922.7634572140003,17.66105595292432,10,138.53125,False,hyperfine
-spark,hash-map-linear,reussir,complete,969.312662806,1.844789073885936,10,70.2265625,False,hyperfine
+spark,hash-map-linear,reussir,complete,963.591572016,2.0566652580344127,10,70.01171875,False,hyperfine
 spark,hash-map-linear,reussir-nrac,complete,998.16479007,1.0759753399949687,10,70.28125,False,hyperfine
 spark,hash-map-linear,rust,complete,224.25491343000004,0.8726829562841246,10,52.74609375,False,hyperfine
 spark,hash-map-linear,rust-rpds,complete,1541.4309127660001,3.8619510522500082,10,157.86328125,False,hyperfine
@@ -429,7 +429,7 @@ spark,hash-map-shared,koka,complete,5641.289870474,28.42488692585182,10,629.7031
 spark,hash-map-shared,lean,complete,6548.871388008,10.696315225422346,10,278.5234375,False,hyperfine
 spark,hash-map-shared,morphic,complete,12735.302327239999,17.461663669019266,10,565.58984375,False,hyperfine
 spark,hash-map-shared,ocaml,budget_limited,71710.02691731,2.1877889891048947,2,922.87890625,True,hyperfine
-spark,hash-map-shared,reussir,complete,3411.971232516,8.412364649506518,10,110.17578125,False,hyperfine
+spark,hash-map-shared,reussir,complete,3418.696623094,3.980610507006276,10,109.9609375,False,hyperfine
 spark,hash-map-shared,reussir-nrac,complete,3448.010652104,9.48394506010148,10,110.04296875,False,hyperfine
 spark,hash-map-shared,rust,complete,2767.229844622,10.437953233743894,10,358.80078125,False,hyperfine
 spark,hash-map-shared,rust-rpds,complete,6768.352326844,24.342228449849337,10,190.9609375,False,hyperfine
@@ -441,7 +441,7 @@ spark,heap-array,koka,complete,2334.7612745940005,46.94985547937493,10,4.1171875
 spark,heap-array,lean,complete,1462.68612424,4.702513799232496,10,14.79296875,False,hyperfine
 spark,heap-array,morphic,complete,810.671080078,2.973538921539669,10,1.1484375,False,hyperfine
 spark,heap-array,ocaml,complete,1688.1103863900003,6.208127292100749,10,15.73046875,False,hyperfine
-spark,heap-array,reussir,complete,319.642206358,0.18793543752732786,10,3.9921875,False,hyperfine
+spark,heap-array,reussir,complete,319.64363740400006,0.19452139904767263,10,3.83203125,False,hyperfine
 spark,heap-array,reussir-nrac,complete,338.7830144260001,0.18428693877621413,10,3.99609375,False,hyperfine
 spark,heap-array,rust,complete,366.49420640600005,6.775700212996851,10,2.0546875,False,hyperfine
 spark,heap-array,rust-with-mimalloc,complete,372.19801752600006,3.8380521294123864,10,6.16796875,False,hyperfine
@@ -451,7 +451,7 @@ spark,heap-functional,koka,complete,568.2337044600001,0.3502758380608409,10,5.96
 spark,heap-functional,lean,complete,1440.601117944,3.2139200179328182,10,14.11328125,False,hyperfine
 spark,heap-functional,morphic,complete,2466.061774322,11.826986954001928,10,4.9296875,False,hyperfine
 spark,heap-functional,ocaml,complete,1939.386969564,12.21773929203251,10,18.23046875,False,hyperfine
-spark,heap-functional,reussir,complete,569.9424382980001,1.02498342321367,10,5.99609375,False,hyperfine
+spark,heap-functional,reussir,complete,548.9906388740001,0.3773302736193092,10,5.85546875,False,hyperfine
 spark,heap-functional,reussir-nrac,complete,965.534922964,2.891383432302292,10,5.99609375,False,hyperfine
 spark,heap-functional,rust,complete,2329.930852236,1.2286934251242705,10,7.86328125,False,hyperfine
 spark,heap-functional,rust-with-mimalloc,complete,2642.409169248,3.3390930785213677,10,12.17578125,False,hyperfine
@@ -463,7 +463,7 @@ spark,life,koka,complete,4614.97162114,10.031236445565103,10,4.12109375,False,hy
 spark,life,lean,complete,4423.307279068,3.834172479856968,10,10.15625,False,hyperfine
 spark,life,morphic,complete,779.638104286,0.23760541946443073,10,0.8671875,False,hyperfine
 spark,life,ocaml,complete,2072.996575066,0.799182600047654,10,6.3984375,False,hyperfine
-spark,life,reussir,complete,216.74529320000002,1.9116369902888792,10,3.99609375,False,hyperfine
+spark,life,reussir,complete,215.82619613,0.11334868247975115,10,3.8359375,False,hyperfine
 spark,life,reussir-nrac,complete,215.922851306,0.16389295179968627,10,3.99609375,False,hyperfine
 spark,life,rust,complete,208.561961372,0.16333368698009276,10,1.5859375,False,hyperfine
 spark,life,rust-with-mimalloc,complete,208.754395964,0.19601494578151946,10,6.16796875,False,hyperfine
@@ -473,7 +473,7 @@ spark,list-membership,koka,complete,339.22886344200003,0.7539924872320161,10,3.9
 spark,list-membership,lean,complete,353.59089589200005,0.3690455544238981,10,10.23828125,False,hyperfine
 spark,list-membership,morphic,complete,335.542927674,0.43183281807171403,10,1.36328125,False,hyperfine
 spark,list-membership,ocaml,complete,347.7401805,0.268210425943196,10,3.38671875,False,hyperfine
-spark,list-membership,reussir,complete,324.027794726,0.2501623202339051,10,3.99609375,False,hyperfine
+spark,list-membership,reussir,complete,323.13395712400006,2.401801367905723,10,3.83203125,False,hyperfine
 spark,list-membership,reussir-nrac,complete,324.00509250000005,0.23906778424651776,10,3.99609375,False,hyperfine
 spark,list-membership,rust,complete,340.682325126,0.2014636982263062,10,2.3671875,False,hyperfine
 spark,list-membership,rust-with-mimalloc,complete,323.32029077800007,0.3570752764542224,10,6.32421875,False,hyperfine
@@ -482,7 +482,7 @@ spark,mltt,haskell-a1g,complete,1732.388287662,4.9919931950357705,10,60.1953125,
 spark,mltt,koka,complete,830.4624402860001,2.838847626213491,10,11.890625,False,hyperfine
 spark,mltt,lean,complete,762.5068960059999,0.1971896737763699,10,15.59765625,False,hyperfine
 spark,mltt,ocaml,complete,554.399410536,0.3993117943963962,10,18.29296875,False,hyperfine
-spark,mltt,reussir,complete,562.906750612,0.5683387147227092,10,12.5234375,False,hyperfine
+spark,mltt,reussir,complete,542.0472702400001,0.39413400379381713,10,12.01171875,False,hyperfine
 spark,mltt,reussir-nrac,complete,575.53824298,2.474285969113993,10,12.58203125,False,hyperfine
 spark,mltt,rust,complete,736.2615821400001,1.0689561957890177,10,29.26953125,False,hyperfine
 spark,mltt,rust-with-mimalloc,complete,571.43629376,1.3661219492950456,10,31.94921875,False,hyperfine
@@ -492,7 +492,7 @@ spark,nbe-closure,koka,complete,180.270991642,1.607494270810437,10,41.9765625,Fa
 spark,nbe-closure,lean,complete,84.68030118600001,0.12995500208932442,10,167.99609375,False,hyperfine
 spark,nbe-closure,morphic,complete,409.5480092640001,1.3183454629372695,10,168.83984375,False,hyperfine
 spark,nbe-closure,ocaml,complete,715.9781271240001,1.0806721428962718,10,129.76953125,False,hyperfine
-spark,nbe-closure,reussir,complete,157.67932771000002,0.1070054576161503,10,42.33984375,False,hyperfine
+spark,nbe-closure,reussir,complete,154.77806680800003,0.22532637357772028,10,42.0546875,False,hyperfine
 spark,nbe-closure,reussir-nrac,complete,173.33065569400003,0.949141862482544,10,66.28125,False,hyperfine
 spark,nbe-closure,rust,complete,846.0804708380001,1.8351241925558122,10,444.0859375,False,hyperfine
 spark,nbe-closure,rust-with-mimalloc,complete,471.3331346340001,0.6741376557754692,10,386.55078125,False,hyperfine
@@ -502,7 +502,7 @@ spark,nbe-hoas,koka,complete,168.292632686,2.09029760577791,10,41.9765625,False,
 spark,nbe-hoas,lean,complete,82.03124209600001,0.19127504064161382,10,152.734375,False,hyperfine
 spark,nbe-hoas,morphic,complete,366.86475280200005,1.8235164375815311,10,153.52734375,False,hyperfine
 spark,nbe-hoas,ocaml,complete,572.9916956120001,2.2396534576694602,10,134.11328125,False,hyperfine
-spark,nbe-hoas,reussir,complete,179.403828746,0.9693966672325762,10,42.34765625,False,hyperfine
+spark,nbe-hoas,reussir,complete,175.009427168,0.8688442361357128,10,42.1171875,False,hyperfine
 spark,nbe-hoas,reussir-nrac,complete,190.941746698,0.6436362254400827,10,66.34765625,False,hyperfine
 spark,nbe-hoas,rust,complete,739.4346625740001,4.262848068430151,10,428.9296875,False,hyperfine
 spark,nbe-hoas,rust-with-mimalloc,complete,446.32115917600004,7.692024770787887,10,371.29296875,False,hyperfine
@@ -512,7 +512,7 @@ spark,ordered-map-heavily-shared,koka,complete,1667.7307024200002,2.326243815818
 spark,ordered-map-heavily-shared,lean,complete,3002.571546006,3.1823914124893835,10,84.359375,False,hyperfine
 spark,ordered-map-heavily-shared,morphic,complete,3717.95592217,7.139695721433764,10,48.21875,False,hyperfine
 spark,ordered-map-heavily-shared,ocaml,complete,3086.784248972,2.7906128503942167,10,95.26171875,False,hyperfine
-spark,ordered-map-heavily-shared,reussir,complete,1389.656857372,1.0713322628718553,10,32.23046875,False,hyperfine
+spark,ordered-map-heavily-shared,reussir,complete,1313.7206841400002,9.123427491109519,10,32.0546875,False,hyperfine
 spark,ordered-map-heavily-shared,reussir-nrac,complete,1394.8154266699999,1.8135831855706321,10,32.04296875,False,hyperfine
 spark,ordered-map-heavily-shared,rust,complete,10523.231468400001,27.788256840648074,10,126.7421875,False,hyperfine
 spark,ordered-map-heavily-shared,rust-rpds,complete,4209.011285214,6.688824432258916,10,73.1484375,False,hyperfine
@@ -524,7 +524,7 @@ spark,ordered-map-linear,koka,complete,740.227682058,0.8651296452767205,10,24.28
 spark,ordered-map-linear,lean,complete,1728.705796554,1.9911907836929021,10,72.33984375,False,hyperfine
 spark,ordered-map-linear,morphic,complete,1890.321031056,2.5596073423841124,10,34.9375,False,hyperfine
 spark,ordered-map-linear,ocaml,complete,2557.050872874,2.2226468986531587,10,84.63671875,False,hyperfine
-spark,ordered-map-linear,reussir,complete,639.494921954,0.37989495077764973,10,24.21875,False,hyperfine
+spark,ordered-map-linear,reussir,complete,620.273880566,0.46668239908573633,10,24.05078125,False,hyperfine
 spark,ordered-map-linear,reussir-nrac,complete,648.712388668,0.4723200297860854,10,24.03515625,False,hyperfine
 spark,ordered-map-linear,rust,complete,281.216177258,0.35889461223214597,10,14.0859375,False,hyperfine
 spark,ordered-map-linear,rust-rpds,complete,2024.0187127340002,3.8831802302286302,10,56.1171875,False,hyperfine
@@ -536,7 +536,7 @@ spark,ordered-map-shared,koka,complete,1904.763218286,5.195545300486007,10,60.29
 spark,ordered-map-shared,lean,complete,2978.2789214620007,3.06385731293703,10,131.8984375,False,hyperfine
 spark,ordered-map-shared,morphic,complete,4108.646590308,8.848068854461173,10,97.28125,False,hyperfine
 spark,ordered-map-shared,ocaml,complete,2994.920865166,6.93945163365556,10,150.10546875,False,hyperfine
-spark,ordered-map-shared,reussir,complete,1559.269050456,0.9456108499598528,10,58.23046875,False,hyperfine
+spark,ordered-map-shared,reussir,complete,1458.223655968,0.7576585789053544,10,58.0546875,False,hyperfine
 spark,ordered-map-shared,reussir-nrac,complete,1569.114723916,7.222251889688078,10,58.23046875,False,hyperfine
 spark,ordered-map-shared,rust,complete,1037.742365308,3.5904554267014825,10,126.4296875,False,hyperfine
 spark,ordered-map-shared,rust-rpds,complete,4031.2464591340004,8.886960868018376,10,128.9296875,False,hyperfine
@@ -548,7 +548,7 @@ spark,pcm-mix-limit,koka,budget_limited,31316.779521705,987.4456466884418,4,8.30
 spark,pcm-mix-limit,lean,complete,8780.614603728001,4.685323293544862,10,17.60546875,False,hyperfine
 spark,pcm-mix-limit,morphic,complete,3843.46749063,3.6185138850959215,10,4.61328125,False,hyperfine
 spark,pcm-mix-limit,ocaml,complete,6562.189673692001,0.6243943805764228,10,6.98046875,False,hyperfine
-spark,pcm-mix-limit,reussir,complete,828.391682358,1.3128126709750851,10,6.00390625,False,hyperfine
+spark,pcm-mix-limit,reussir,complete,826.725542844,0.47113595148211274,10,5.83203125,False,hyperfine
 spark,pcm-mix-limit,rust,complete,816.568953582,3.830974421207979,10,3.5,False,hyperfine
 spark,pcm-mix-limit,rust-with-mimalloc,complete,816.0154096320001,0.16944772798035593,10,8.17578125,False,hyperfine
 spark,qsort,haskell,complete,2803.8830958559997,1.9150584678453115,10,29.08203125,False,hyperfine
@@ -559,7 +559,7 @@ spark,qsort,koka,complete,947.2267718680001,0.4632788838868723,10,10.125,False,h
 spark,qsort,lean,complete,1141.6303649119998,14.648822926449458,10,11.81640625,False,hyperfine
 spark,qsort,morphic,complete,520.3197706240001,4.340076547237529,10,1.43359375,False,hyperfine
 spark,qsort,ocaml,complete,1138.7803182240002,2.2262737152624568,10,8.39453125,False,hyperfine
-spark,qsort,reussir,complete,239.74286335800002,0.28527105287489907,10,3.99609375,False,hyperfine
+spark,qsort,reussir,complete,240.12584868200003,0.14615559569468856,10,3.8359375,False,hyperfine
 spark,qsort,reussir-nrac,complete,239.678003714,0.07462696924801235,10,3.99609375,False,hyperfine
 spark,qsort,rust,complete,204.58354452400002,0.30763772286450763,10,2.1640625,False,hyperfine
 spark,qsort,rust-with-mimalloc,complete,204.913143876,0.40487740409689355,10,6.16796875,False,hyperfine
@@ -568,7 +568,7 @@ spark,raytracer,haskell-a1g,complete,239.12959625000002,0.27266116144802993,10,8
 spark,raytracer,koka,complete,341.933377604,1.0126729454610328,10,4.37109375,False,hyperfine
 spark,raytracer,lean,complete,976.0660508020001,0.9907795878036527,10,10.54296875,False,hyperfine
 spark,raytracer,ocaml,complete,126.71808564800003,0.10277431646232357,10,11.23046875,False,hyperfine
-spark,raytracer,reussir,complete,71.42523878600001,0.1023504312753792,10,4.1953125,False,hyperfine
+spark,raytracer,reussir,complete,72.145661012,0.8733190451716037,10,4.21875,False,hyperfine
 spark,raytracer,reussir-nrac,complete,71.559503484,0.171946691454357,10,4.3671875,False,hyperfine
 spark,raytracer,rust,complete,72.553468036,0.06010755006962256,10,2.17578125,False,hyperfine
 spark,raytracer,rust-with-mimalloc,complete,72.741124526,0.04375579903200498,10,6.55078125,False,hyperfine
@@ -578,7 +578,7 @@ spark,rbtree,koka,complete,191.713345984,0.4117219740227895,10,100.15234375,Fals
 spark,rbtree,lean,complete,695.7729472100001,0.3720778009901085,10,123.546875,False,hyperfine
 spark,rbtree,morphic,complete,1377.382308434,2.885066283137953,10,191.6484375,False,hyperfine
 spark,rbtree,ocaml,complete,421.01772889,2.476343232418566,10,183.23046875,False,hyperfine
-spark,rbtree,reussir,complete,237.71641190800003,0.37416516168136027,10,98.21484375,False,hyperfine
+spark,rbtree,reussir,complete,208.834978946,0.29635617983854556,10,98.05078125,False,hyperfine
 spark,rbtree,reussir-nrac,complete,402.65108857,0.20752223956047555,10,98.21484375,False,hyperfine
 spark,rbtree,rust,complete,2822.913330382,41.17767627173201,10,4963.1484375,False,hyperfine
 spark,rbtree,rust-with-mimalloc,complete,1350.894217028,5.8229994790182475,10,3799.51171875,False,hyperfine
@@ -588,7 +588,7 @@ spark,rbtree-lookup,koka,complete,528.753530488,3.4853712580620453,10,41.9609375
 spark,rbtree-lookup,lean,complete,1132.290369322,19.979857980446496,10,55.0703125,False,hyperfine
 spark,rbtree-lookup,morphic,complete,1634.325407796,0.860858533211212,10,77.1171875,False,hyperfine
 spark,rbtree-lookup,ocaml,complete,1895.8789109440002,1.788698194510732,10,129.16796875,False,hyperfine
-spark,rbtree-lookup,reussir,complete,453.66482056000007,0.5395192817643629,10,42.21484375,False,hyperfine
+spark,rbtree-lookup,reussir,complete,457.6339348,0.45090538250350043,10,42.05078125,False,hyperfine
 spark,rbtree-lookup,reussir-nrac,complete,896.216789284,0.6282641817148192,10,42.21484375,False,hyperfine
 spark,rbtree-lookup,rust,complete,1681.87199584,12.341453064176665,10,123.7734375,False,hyperfine
 spark,rbtree-lookup,rust-with-mimalloc,complete,1877.998605084,2.082866708953065,10,96.1796875,False,hyperfine
@@ -598,7 +598,7 @@ spark,rbtree-zipper,koka,complete,242.88126763,0.4717048614159169,10,100.1523437
 spark,rbtree-zipper,lean,complete,349.72655914,0.21026561739759517,10,123.5,False,hyperfine
 spark,rbtree-zipper,morphic,complete,1646.7750359060003,19.32986161759224,10,191.6484375,False,hyperfine
 spark,rbtree-zipper,ocaml,complete,457.88117392400005,0.5901412188461965,10,183.54296875,False,hyperfine
-spark,rbtree-zipper,reussir,complete,196.76091007000002,0.4348735021032339,10,98.078125,False,hyperfine
+spark,rbtree-zipper,reussir,complete,182.59838319600001,0.39418567430479357,10,97.83203125,False,hyperfine
 spark,rbtree-zipper,reussir-nrac,complete,196.80057799800002,0.21934268085714798,10,97.99609375,False,hyperfine
 spark,rbtree-zipper,rust,complete,3746.7209975460005,88.70481737674837,10,5192.0546875,False,hyperfine
 spark,rbtree-zipper,rust-with-mimalloc,complete,2142.872814044,1.3279872648935422,10,4028.44140625,False,hyperfine
@@ -608,6 +608,6 @@ spark,rgba-composite,koka,complete,14753.252872514,108.71787302751629,10,8.29296
 spark,rgba-composite,lean,complete,3212.5149683540003,4.94848517972232,10,17.4765625,False,hyperfine
 spark,rgba-composite,morphic,complete,5551.9569422899995,2.9271945611708863,10,4.609375,False,hyperfine
 spark,rgba-composite,ocaml,complete,6500.736049948,15.252064630226933,10,6.98046875,False,hyperfine
-spark,rgba-composite,reussir,complete,600.3354229820001,0.362129107090742,10,6.00390625,False,hyperfine
+spark,rgba-composite,reussir,complete,599.518229142,0.25278359431766695,10,5.8359375,False,hyperfine
 spark,rgba-composite,rust,complete,539.7786295320001,0.6473602038062608,10,3.5,False,hyperfine
 spark,rgba-composite,rust-with-mimalloc,complete,540.411893132,0.6572707961383114,10,8.17578125,False,hyperfine

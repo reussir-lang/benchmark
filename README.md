@@ -12,3 +12,7 @@ Each host's `results.json` contains raw samples and peak RSS; `status.json` reco
 The array-heap refresh applies the recorded [source patch](workstation/results/heap-child-index-source.patch) to benchmark revision `26b4446e03823f822f96650207ced834888cfb2c`. Both hosts use that same patch; the per-host `heap-child-index-manifest.json` files record the refreshed configurations and their five-warmup, ten-sample measurements. Other configurations retain their existing provenance.
 
 The regular-array refresh adds `rgba-composite` and `pcm-mix-limit` in seven languages (nine runtime configurations), requesting five warmups and ten timed runs per configuration on each host within the existing five-minute budget. Exact source revisions and toolchains are recorded in each host's `regular-arrays-manifest.json`.
+
+The 30 Spark `reussir` configurations were refreshed with merged compiler `c55dc218bacaa2cfda9574c3b2eaee1e237b6010` and its runtime, preserving native ThinLTO settings, CPU 19 affinity, five warmups, and ten samples. Sources are benchmark revision `1cf406dffa22b8bfc65eeb30241e8154f27a5505`. Other Spark configurations and all workstation measurements retain their prior samples. See [refresh provenance](spark/results/reussir-980-manifest.json).
+
+This refresh includes the inline-variant TBI fix in [Reussir PR #981](https://github.com/reussir-lang/reussir/pull/981). [Diagnostic samples](spark/results/reussir-981-diagnostic.json) isolate the stack-growth regression introduced in PR #980 and confirm recovery with the fix.
