@@ -1,0 +1,922 @@
+[
+  {
+    "benchmark": "rbtree-zipper-lambda",
+    "variant": "l2r",
+    "binary_sha256": "7a094e35737af2dd472ff79a030c88a00625187916162c631bda6e0108f87c5d",
+    "started": "2026-11-11T16:59:17.229012+00:00",
+    "measurement": {
+      "results": [
+        {
+          "command": "/tmp/reussir-paper-refresh-20261111/lean2rr-fixed/cells/rbtree-zipper-lambda/l2r",
+          "mean": 0.073925300604,
+          "stddev": 0.000162080794590447,
+          "median": 0.07394027975,
+          "user": 0.07228035399999999,
+          "system": 0.001501862,
+          "min": 0.07367004626000001,
+          "max": 0.07420616858000001,
+          "times": [
+            0.07367004626000001,
+            0.07398442644,
+            0.07420616858000001,
+            0.07385635926,
+            0.07372129648,
+            0.07410195542,
+            0.07396587674,
+            0.0739846102,
+            0.07391468276,
+            0.07384758390000001
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 1.2632179893553257,
+      "budget_limited": false,
+      "peak_rss_kb": 47712
+    }
+  },
+  {
+    "benchmark": "rbtree",
+    "variant": "l2r",
+    "binary_sha256": "ec06cdb80550f0163d205252bf8e62868fbf3fd471bd387b049bc454bcd06129",
+    "started": "2026-11-11T16:59:18.496947+00:00",
+    "measurement": {
+      "results": [
+        {
+          "command": "/tmp/reussir-paper-refresh-20261111/lean2rr-fixed/cells/rbtree/l2r",
+          "mean": 0.187210559798,
+          "stddev": 0.0006406706834617411,
+          "median": 0.18711948772,
+          "user": 0.18509006,
+          "system": 0.0019291619999999999,
+          "min": 0.18609325542000002,
+          "max": 0.18817462494,
+          "times": [
+            0.18647195306,
+            0.18700296302,
+            0.1870299125,
+            0.18780283828,
+            0.18609325542000002,
+            0.1869575723,
+            0.18720906294,
+            0.18754696662,
+            0.18781644890000002,
+            0.18817462494
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 2.965197067707777,
+      "budget_limited": false,
+      "peak_rss_kb": 103004
+    }
+  },
+  {
+    "benchmark": "heap",
+    "variant": "l2r",
+    "binary_sha256": "2ba65ccaef2f00f346473fd8e005eb2db7092febd5d4847a73b785d5266ced0b",
+    "started": "2026-11-11T16:59:21.466335+00:00",
+    "measurement": {
+      "results": [
+        {
+          "command": "/tmp/reussir-paper-refresh-20261111/lean2rr-fixed/cells/heap/l2r",
+          "mean": 0.5436519558180001,
+          "stddev": 0.02095356908288238,
+          "median": 0.5337304815199999,
+          "user": 0.5430669379999999,
+          "system": 0.00042820999999999994,
+          "min": 0.5334948166800001,
+          "max": 0.5838344675000001,
+          "times": [
+            0.53406598616,
+            0.53397678204,
+            0.5335798185,
+            0.53354867774,
+            0.5838344675000001,
+            0.5334948166800001,
+            0.5336143735,
+            0.53384658954,
+            0.58297560546,
+            0.5335824410600001
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 8.29147822316736,
+      "budget_limited": false,
+      "peak_rss_kb": 6952
+    }
+  },
+  {
+    "benchmark": "nbe-closure",
+    "variant": "l2r",
+    "binary_sha256": "e5c73bff60088c3e9ba1f31e54f59b8184c6a5e6d0261b637d8e89f3aeadcf7c",
+    "started": "2026-11-11T16:59:29.761803+00:00",
+    "measurement": {
+      "results": [
+        {
+          "command": "/tmp/reussir-paper-refresh-20261111/lean2rr-fixed/cells/nbe-closure/l2r",
+          "mean": 0.036096992630000005,
+          "stddev": 0.00019011269464230842,
+          "median": 0.036061856590000003,
+          "user": 0.033845816,
+          "system": 0.002102364,
+          "min": 0.0358356783,
+          "max": 0.0364516582,
+          "times": [
+            0.0358356783,
+            0.0364516582,
+            0.03606589566,
+            0.0361524131,
+            0.03626529086,
+            0.036266172160000006,
+            0.03605781752000001,
+            0.03602744826,
+            0.03596764638,
+            0.03587990586
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 0.7029685275629163,
+      "budget_limited": false,
+      "peak_rss_kb": 45852
+    }
+  },
+  {
+    "benchmark": "nbe-hoas",
+    "variant": "l2r",
+    "binary_sha256": "2946bad4621645ab451906616bcb9cb987b178c2f65fd2aba4182a2cbbd83d69",
+    "started": "2026-11-11T16:59:30.469010+00:00",
+    "measurement": {
+      "results": [
+        {
+          "command": "/tmp/reussir-paper-refresh-20261111/lean2rr-fixed/cells/nbe-hoas/l2r",
+          "mean": 0.035000739522,
+          "stddev": 0.0002635671904333381,
+          "median": 0.03491181437,
+          "user": 0.033059918,
+          "system": 0.001749366,
+          "min": 0.03479791378,
+          "max": 0.03564779866000001,
+          "times": [
+            0.0349445275,
+            0.03487910124,
+            0.035155306100000006,
+            0.03481785196000001,
+            0.03564779866000001,
+            0.03479982124,
+            0.03503196178,
+            0.035118889779999996,
+            0.03479791378,
+            0.03481422318
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 0.6878069676458836,
+      "budget_limited": false,
+      "peak_rss_kb": 45848
+    }
+  },
+  {
+    "benchmark": "functional-queue",
+    "variant": "l2r",
+    "binary_sha256": "391fc9a8825207b3378fc0165ac191b5dcdd7863ef972b7c97841e24cd335d09",
+    "started": "2026-11-11T16:59:31.161057+00:00",
+    "measurement": {
+      "results": [
+        {
+          "command": "/tmp/reussir-paper-refresh-20261111/lean2rr-fixed/cells/functional-queue/l2r",
+          "mean": 0.021142973454,
+          "stddev": 6.690276809487438e-05,
+          "median": 0.02112869082,
+          "user": 0.020726326,
+          "system": 0.000335186,
+          "min": 0.02103614698,
+          "max": 0.02124912262,
+          "times": [
+            0.02124912262,
+            0.02120356488,
+            0.02109014596,
+            0.02110001672,
+            0.021200708600000003,
+            0.02103614698,
+            0.02114667338,
+            0.02111070826,
+            0.02119575236,
+            0.02109689478
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 0.4549340084195137,
+      "budget_limited": false,
+      "peak_rss_kb": 9184
+    }
+  },
+  {
+    "benchmark": "hash-map-linear",
+    "variant": "l2r",
+    "binary_sha256": "8ed922157161fa75fb06d8f1659182216f5dd50e2a3d4b1cc63a4f78ee92f360",
+    "started": "2026-11-11T16:59:31.620069+00:00",
+    "measurement": {
+      "results": [
+        {
+          "command": "/tmp/reussir-paper-refresh-20261111/lean2rr-fixed/cells/hash-map-linear/l2r",
+          "mean": 0.382352278132,
+          "stddev": 0.000621376446457262,
+          "median": 0.3822176773,
+          "user": 0.37997595399999995,
+          "system": 0.002130944,
+          "min": 0.38142797198,
+          "max": 0.38336603896,
+          "times": [
+            0.38190107912000004,
+            0.38287717014,
+            0.38258863154,
+            0.38336603896,
+            0.38218088432,
+            0.38309779096,
+            0.38211401554,
+            0.38142797198,
+            0.38225447028000004,
+            0.38171472848
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 5.895159143023193,
+      "budget_limited": false,
+      "peak_rss_kb": 60204
+    }
+  },
+  {
+    "benchmark": "heap-functional",
+    "variant": "l2r",
+    "binary_sha256": "79ad9bc70389365f5a904b9ee321c8f5dbdf3768eda757974b80c6b0ee8e323a",
+    "started": "2026-11-11T16:59:37.519465+00:00",
+    "measurement": {
+      "results": [
+        {
+          "command": "/tmp/reussir-paper-refresh-20261111/lean2rr-fixed/cells/heap-functional/l2r",
+          "mean": 0.5614045930880001,
+          "stddev": 0.016703648464978526,
+          "median": 0.5611335832400001,
+          "user": 0.560521386,
+          "system": 0.0005321239999999999,
+          "min": 0.5451926958800001,
+          "max": 0.5791727944,
+          "times": [
+            0.5765418992400001,
+            0.545711485,
+            0.5767691889400001,
+            0.5457225531600001,
+            0.5791727944,
+            0.5451926958800001,
+            0.5766457436400001,
+            0.54551827708,
+            0.5770460263,
+            0.54572526724
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 8.545643112622201,
+      "budget_limited": false,
+      "peak_rss_kb": 10844
+    }
+  },
+  {
+    "benchmark": "qsort",
+    "variant": "l2r",
+    "binary_sha256": "6d9537ca4ea4bd0ccfe9cc309349946ca1f1fa7d4e222ea3f3c56aade5731d1b",
+    "started": "2026-11-11T16:59:46.069079+00:00",
+    "measurement": {
+      "results": [
+        {
+          "command": "/tmp/reussir-paper-refresh-20261111/lean2rr-fixed/cells/qsort/l2r",
+          "mean": 0.49889989219400005,
+          "stddev": 0.005017164640559216,
+          "median": 0.49690369998000006,
+          "user": 0.4975332979999999,
+          "system": 0.0010743839999999998,
+          "min": 0.49627696084000006,
+          "max": 0.51289507722,
+          "times": [
+            0.49707728694000003,
+            0.49663794744000006,
+            0.49838574248000006,
+            0.49663988474,
+            0.49627696084000006,
+            0.49661871964000004,
+            0.51289507722,
+            0.49906681178,
+            0.49867037784,
+            0.49673011302000003
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 7.619258328340948,
+      "budget_limited": false,
+      "peak_rss_kb": 6748
+    }
+  },
+  {
+    "benchmark": "ordered-map-linear",
+    "variant": "l2r",
+    "binary_sha256": "56b7e234c6dd1b2bf1f2a751d61681faef5159dae14e8e879380b5308cfe393f",
+    "started": "2026-11-11T16:59:53.693162+00:00",
+    "measurement": {
+      "results": [
+        {
+          "command": "/tmp/reussir-paper-refresh-20261111/lean2rr-fixed/cells/ordered-map-linear/l2r",
+          "mean": 0.671113972828,
+          "stddev": 0.004693887303467216,
+          "median": 0.6690551242,
+          "user": 0.66929851,
+          "system": 0.001355874,
+          "min": 0.66826327748,
+          "max": 0.6824207076200001,
+          "times": [
+            0.6700995125200001,
+            0.66826327748,
+            0.66916888048,
+            0.668822412,
+            0.6697485830000001,
+            0.66851361492,
+            0.66894136792,
+            0.66842064634,
+            0.676740726,
+            0.6824207076200001
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 10.210356450639665,
+      "budget_limited": false,
+      "peak_rss_kb": 27548
+    }
+  },
+  {
+    "benchmark": "rbtree-zipper",
+    "variant": "l2r",
+    "binary_sha256": "66dd06b5d8f5bc189132e1eb9ce75f45f2dd56584b77eca2e72cde04d9c9c5ca",
+    "started": "2026-11-11T17:00:03.907701+00:00",
+    "measurement": {
+      "results": [
+        {
+          "command": "/tmp/reussir-paper-refresh-20261111/lean2rr-fixed/cells/rbtree-zipper/l2r",
+          "mean": 0.20419112525000002,
+          "stddev": 0.000557848512876696,
+          "median": 0.2041106835,
+          "user": 0.20121596,
+          "system": 0.002766152,
+          "min": 0.20374934264000003,
+          "max": 0.20568256744000002,
+          "times": [
+            0.20568256744000002,
+            0.20421133436,
+            0.20383373336000002,
+            0.20431539132,
+            0.20416202846,
+            0.2037946483,
+            0.20415528350000003,
+            0.20374934264000003,
+            0.20394083962,
+            0.2040660835
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 3.2333210725337267,
+      "budget_limited": false,
+      "peak_rss_kb": 102996
+    }
+  },
+  {
+    "benchmark": "ordered-map-shared",
+    "variant": "l2r",
+    "binary_sha256": "a2ae7d27e6b6f0ff4660810b8470b446cea113ee73ae3eef599fd3519c7123c2",
+    "started": "2026-11-11T17:00:07.146288+00:00",
+    "measurement": {
+      "results": [
+        {
+          "command": "/tmp/reussir-paper-refresh-20261111/lean2rr-fixed/cells/ordered-map-shared/l2r",
+          "mean": 1.635750360362,
+          "stddev": 0.0018663689111901194,
+          "median": 1.6351553553100002,
+          "user": 1.633125604,
+          "system": 0.001931374,
+          "min": 1.63387183734,
+          "max": 1.63960071204,
+          "times": [
+            1.6371431246400001,
+            1.63577375318,
+            1.6351174409600002,
+            1.63456989292,
+            1.6377907203,
+            1.63960071204,
+            1.63387183734,
+            1.63519326966,
+            1.6344589257600002,
+            1.63398392682
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 24.67618693318218,
+      "budget_limited": false,
+      "peak_rss_kb": 64420
+    }
+  },
+  {
+    "benchmark": "life",
+    "variant": "l2r",
+    "binary_sha256": "e896f7665bcd828cfdbddcd8bbe48b2ae1ef3e6fa182303d9e2fda8ec937d8ed",
+    "started": "2026-11-11T17:00:31.826733+00:00",
+    "measurement": {
+      "results": [
+        {
+          "command": "/tmp/reussir-paper-refresh-20261111/lean2rr-fixed/cells/life/l2r",
+          "mean": 1.953578101508,
+          "stddev": 0.00514516951060256,
+          "median": 1.9512628621600001,
+          "user": 1.9526060639999998,
+          "system": 0.000633274,
+          "min": 1.9503440497200002,
+          "max": 1.96507302806,
+          "times": [
+            1.95106643902,
+            1.9519713926200002,
+            1.9612051698200001,
+            1.96507302806,
+            1.95195854432,
+            1.9503440497200002,
+            1.95136995978,
+            1.95115576454,
+            1.95079431572,
+            1.95084235148
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 29.432139860466123,
+      "budget_limited": false,
+      "peak_rss_kb": 6956
+    }
+  },
+  {
+    "benchmark": "ordered-map-heavily-shared",
+    "variant": "l2r",
+    "binary_sha256": "6a71fab9d4542c84fb930629135dfa7ddb0e5a5a497237d709b0c7c721e3975a",
+    "started": "2026-11-11T17:01:01.263051+00:00",
+    "measurement": {
+      "results": [
+        {
+          "command": "/tmp/reussir-paper-refresh-20261111/lean2rr-fixed/cells/ordered-map-heavily-shared/l2r",
+          "mean": 1.514134724544,
+          "stddev": 0.0016027561555376725,
+          "median": 1.5142566370900001,
+          "user": 1.5120140119999999,
+          "system": 0.00146028,
+          "min": 1.51161314736,
+          "max": 1.5167271082399998,
+          "times": [
+            1.5141042511600002,
+            1.5154956913600002,
+            1.5155329168199998,
+            1.51258573676,
+            1.51161314736,
+            1.51223313926,
+            1.5145419803000002,
+            1.5141527919000002,
+            1.51436048228,
+            1.5167271082399998
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 22.89028849825263,
+      "budget_limited": false,
+      "peak_rss_kb": 35736
+    }
+  },
+  {
+    "benchmark": "fingertree",
+    "variant": "l2r",
+    "binary_sha256": "7f0c02c242d272151e414b9cd283d76df00e96b32494bb2916c4d7b3f7a0cc93",
+    "started": "2026-11-11T17:01:24.157494+00:00",
+    "measurement": {
+      "results": [
+        {
+          "command": "/tmp/reussir-paper-refresh-20261111/lean2rr-fixed/cells/fingertree/l2r",
+          "mean": 0.035324766798,
+          "stddev": 0.00013438220016143712,
+          "median": 0.0352659291,
+          "user": 0.034926474,
+          "system": 0.000315628,
+          "min": 0.035193355040000006,
+          "max": 0.035552152840000004,
+          "times": [
+            0.03544791086,
+            0.035506361740000006,
+            0.035552152840000004,
+            0.03520103528,
+            0.0352326075,
+            0.035251083020000004,
+            0.035193355040000006,
+            0.03521376334,
+            0.03528077518,
+            0.03536862318
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 0.667103917337954,
+      "budget_limited": false,
+      "peak_rss_kb": 9000
+    }
+  },
+  {
+    "benchmark": "hash-map-shared",
+    "variant": "l2r",
+    "binary_sha256": "92e73cb7b8c7e1d690280e26507e62fe04cc80fd4a43f5c19ab490e3f7f5bb9b",
+    "started": "2026-11-11T17:01:24.828556+00:00",
+    "measurement": {
+      "results": [
+        {
+          "command": "/tmp/reussir-paper-refresh-20261111/lean2rr-fixed/cells/hash-map-shared/l2r",
+          "mean": 5.766630914974,
+          "stddev": 0.0030478415307804295,
+          "median": 5.7662866803499995,
+          "user": 5.583374301999999,
+          "system": 0.18079254,
+          "min": 5.76299160508,
+          "max": 5.77110627264,
+          "times": [
+            5.7649541297199995,
+            5.76761923098,
+            5.7636613071600005,
+            5.76299160508,
+            5.76421924824,
+            5.76824931018,
+            5.7705932667,
+            5.76385663016,
+            5.77110627264,
+            5.769058148879999
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 86.39087559375912,
+      "budget_limited": false,
+      "peak_rss_kb": 267872
+    }
+  },
+  {
+    "benchmark": "derive",
+    "variant": "l2r",
+    "binary_sha256": "ec9b5be5178ffae6e20dd770401f50229e44b1b3de3cd408509354204124c4ef",
+    "started": "2026-11-11T17:02:51.223472+00:00",
+    "measurement": {
+      "results": [
+        {
+          "command": "/tmp/reussir-paper-refresh-20261111/lean2rr-fixed/cells/derive/l2r",
+          "mean": 0.25996996007400003,
+          "stddev": 0.0006729234023022589,
+          "median": 0.26014214458,
+          "user": 0.25067025,
+          "system": 0.008957368,
+          "min": 0.25905290668000003,
+          "max": 0.26122508584,
+          "times": [
+            0.26037522972000005,
+            0.26049514492000003,
+            0.26122508584,
+            0.25947159858,
+            0.26013662778,
+            0.25905290668000003,
+            0.25945167408,
+            0.26014766138,
+            0.26015399064,
+            0.25918968112
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 10,
+      "requested_samples": 10,
+      "warmup_runs": 5,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 4.054551436565816,
+      "budget_limited": false,
+      "peak_rss_kb": 434804
+    }
+  },
+  {
+    "benchmark": "hash-map-heavily-shared",
+    "variant": "l2r",
+    "binary_sha256": "21a56f3c28696f43d7de5245245127d0311712baff77658ca650136e131f28cd",
+    "started": "2026-11-11T17:02:55.282205+00:00",
+    "measurement": {
+      "results": [
+        {
+          "command": "/tmp/reussir-paper-refresh-20261111/lean2rr-fixed/cells/hash-map-heavily-shared/l2r",
+          "mean": 76.84465025652,
+          "stddev": 0.14153497952892488,
+          "median": 76.84465025652,
+          "user": 73.94934389,
+          "system": 2.85075814,
+          "min": 76.74456991272,
+          "max": 76.94473060032,
+          "times": [
+            76.74456991272,
+            76.94473060032
+          ],
+          "exit_codes": [
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 2,
+      "requested_samples": 10,
+      "warmup_runs": 1,
+      "case_time_budget_seconds": 300.0,
+      "measurement_seconds": 230.72364894859493,
+      "budget_limited": true,
+      "peak_rss_kb": 238240
+    }
+  }
+]

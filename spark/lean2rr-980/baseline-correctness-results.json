@@ -1,0 +1,182 @@
+[
+  {
+    "name": "rbtree-zipper-lambda",
+    "native_sha256": "8b53f680bf814c0331189b88f006f145f28ab4c24177ffa09a8a0f92e173c8b0",
+    "extracted_sha256": "56c4f4465b9b97ef7359ec977c7332217585848652819480ae3a7ef9d9bfa260",
+    "source_sha256": "15700816c56242dff954fe4ebe1de08a70b10c5e218996f3919ed194a47a2a18",
+    "exit_code": 0,
+    "stdout_equal": true,
+    "stderr_equal": true,
+    "fallback": false
+  },
+  {
+    "name": "rbtree",
+    "native_sha256": "1acda15ace809be9b7f2e08774526566958cedab3be99b039da552d7833fe633",
+    "extracted_sha256": "92e139caf6f21916df0d2bc8f9d211d86e75e95a2f692af28a18e72e0eacacc8",
+    "source_sha256": "fe3b0d98fe6da4e7dcdad4e6c7b24866ef7e59f6f5e428ce4ac99a9d0efcc78a",
+    "exit_code": 0,
+    "stdout_equal": true,
+    "stderr_equal": true,
+    "fallback": false
+  },
+  {
+    "name": "heap",
+    "native_sha256": "5037ee60dab76a29e5ec3f3f854b0ae7670bef9804ab9275bf18b6473a1437e5",
+    "extracted_sha256": "9b571206f08856a52036636ace982208659e73746be89a363b9de5f43758eecc",
+    "source_sha256": "23c93b79e61f8b251c6614db3dc29f0bf3235120208a83ac9cd522cd0f3ac7b3",
+    "exit_code": 0,
+    "stdout_equal": true,
+    "stderr_equal": true,
+    "fallback": false
+  },
+  {
+    "name": "nbe-closure",
+    "native_sha256": "bbb919ca21e9dd15b9b327db1a269d2e1c0bee2cc14446ecd2d6a7dd7a56d6ac",
+    "extracted_sha256": "45dfcec1102620999a0db6df953e80c351fabd0def17b8e08f9dc286492056b2",
+    "source_sha256": "3834e40a0017ea8627cbf2281430a4269a0ef684ad6a2904a69266335aae8594",
+    "exit_code": 0,
+    "stdout_equal": true,
+    "stderr_equal": true,
+    "fallback": false
+  },
+  {
+    "name": "nbe-hoas",
+    "native_sha256": "476f1034f01e750b19d56e0dee48e4f8404eb222f69e6fbf4f0013f9dcd64097",
+    "extracted_sha256": "2a4c39fa2fbae64dfc54145eab2e61c2663cc68a21d3fb98fedec8f994f9cd92",
+    "source_sha256": "883bddf32aaf43f1a5672138322756d0e0a4f72ee221683aaf82e15153ecdef9",
+    "exit_code": 0,
+    "stdout_equal": true,
+    "stderr_equal": true,
+    "fallback": false
+  },
+  {
+    "name": "functional-queue",
+    "native_sha256": "6db3b36a92d8e77371966635a85c14f7b098b33088264ea115a061d3fca3a155",
+    "extracted_sha256": "c1e7e1acaf8d533b69fa61d87d124cd6d251ce4f9978c62ee330da1b87788098",
+    "source_sha256": "0c16929e2cd066cba67026db203c36b640f0408eee805a16697d0ac8a938aeb1",
+    "exit_code": 0,
+    "stdout_equal": true,
+    "stderr_equal": true,
+    "fallback": false
+  },
+  {
+    "name": "hash-map-linear",
+    "native_sha256": "2a27d880faa2ba261ace3f7fde83b092f4609f61cf86b0761ac0890d0c64cb20",
+    "extracted_sha256": "f198c5ffb7749732183cadbc7575dce3b90251e8f1929c6096e7233273447f66",
+    "source_sha256": "2c4c6dfa2d3722066bd4658e5db813dea99c57fbc8a5e11114d988c0d15da52e",
+    "exit_code": 0,
+    "stdout_equal": true,
+    "stderr_equal": true,
+    "fallback": false
+  },
+  {
+    "name": "heap-functional",
+    "native_sha256": "7b6413ccf77ed26ff0b112c658fe7463147167f2025d6b6bcf445c76aa28d2bf",
+    "extracted_sha256": "172bd924941909cfdd75d1ef850fc5823f8d47f72b9f806fbbcb6a88cb511598",
+    "source_sha256": "3611716ff6d40f7e9fb94ec2cf669ec8fe728aada08de27f590a785e7d0df8f2",
+    "exit_code": 0,
+    "stdout_equal": true,
+    "stderr_equal": true,
+    "fallback": false
+  },
+  {
+    "name": "qsort",
+    "native_sha256": "f5e9b5a17cca5cfa4ccd4e333af33cc6e0a496197343399fc5e06af224b4b735",
+    "extracted_sha256": "fe92e3bca0e2b67277a7195e1bf56443c5da5971a09a1afa440c5a4273668a61",
+    "source_sha256": "4cb4e1c46fc57932552a63b0f7ae89c3db11d9a630eb109598d94b5ea521f2c8",
+    "exit_code": 0,
+    "stdout_equal": true,
+    "stderr_equal": true,
+    "fallback": false
+  },
+  {
+    "name": "ordered-map-linear",
+    "native_sha256": "921317271ef9c95988603e6b800bf1ef530845238cf2db97c543997637793d71",
+    "extracted_sha256": "66316fd2690576cf6882f8143b9a862c69eb1c3961eb0615bb6313455748464e",
+    "source_sha256": "c43d6abd4661ec2eb002bed81713470298ef815cabf1b53a964cb733147ebe25",
+    "exit_code": 0,
+    "stdout_equal": true,
+    "stderr_equal": true,
+    "fallback": false
+  },
+  {
+    "name": "rbtree-zipper",
+    "native_sha256": "a4dbe35b0ef809810f782ba11c6775e51a95959497ed079e0dbb0176708a142f",
+    "extracted_sha256": "c72585bc1cbde7e06d36d8ec9b8d66010a99d3271a2b4da9631148af3e4237c4",
+    "source_sha256": "9e791defcc3be785137b8e9dc2308728c9a50096816dfed3c1670b5b72494e67",
+    "exit_code": 0,
+    "stdout_equal": true,
+    "stderr_equal": true,
+    "fallback": false
+  },
+  {
+    "name": "ordered-map-shared",
+    "native_sha256": "6d5e426125d02ee376632ab813bf9875723f2a1eba18ab451482efcd289f2c87",
+    "extracted_sha256": "29176fcb9c20915f7c76b2b7dd73f8ce4ac3f166b95cebddbed41138fb7725e2",
+    "source_sha256": "a583c43acd51703b5c36af43e52218b99079b50c72df19396e5d8ee156cf32e6",
+    "exit_code": 0,
+    "stdout_equal": true,
+    "stderr_equal": true,
+    "fallback": false
+  },
+  {
+    "name": "life",
+    "native_sha256": "3c64fbe96d173a5ede78e8f1c19756eb5304dc0a07726f2b3a9519db518cf134",
+    "extracted_sha256": "17c01fd92ece4b3a99cc92e083ce70a9485694696e9f827aa816627134d78ca1",
+    "source_sha256": "9492bf79096c8e4b174a778c3ecf0391060e8fd785862484e81f67cc191be438",
+    "exit_code": 0,
+    "stdout_equal": true,
+    "stderr_equal": true,
+    "fallback": false
+  },
+  {
+    "name": "ordered-map-heavily-shared",
+    "native_sha256": "3c5f4b872455bad76c6ea5ac074013dd18181c7f9f8add24d397e18f138acb1e",
+    "extracted_sha256": "6a1551a681397ca4edee58362dfb609b54809cd9d4f628ad5e7f16ad37cdbae8",
+    "source_sha256": "474232b764533603636d6936843525383fecc80ae2f39688e7336eabab92a6ca",
+    "exit_code": 0,
+    "stdout_equal": true,
+    "stderr_equal": true,
+    "fallback": false
+  },
+  {
+    "name": "fingertree",
+    "native_sha256": "908e4e60986ef3b8f2d7d07676abe56ad64a3ccabd255b4a6161c0abd2bca962",
+    "extracted_sha256": "18ed55c2e9649d0a0c3bba945f527d9e1d50676784bc494f4b22a6e7dad049ee",
+    "source_sha256": "fdf30f0aca758d31e90955c3c925cade27ad2e57fad5ac2881a250746f5098f8",
+    "exit_code": 0,
+    "stdout_equal": true,
+    "stderr_equal": true,
+    "fallback": false
+  },
+  {
+    "name": "hash-map-shared",
+    "native_sha256": "c28794fe7058d2d6f25113af05615ee576fb358c222fe3e5db99c808c24e7af7",
+    "extracted_sha256": "ea40600cbb3cc2a23eb9a8166b0d7e10aa924b2ec4728d26e3f283c4fe541b82",
+    "source_sha256": "584345b0b13464ac19ec4d64b133efb97f7fa5d818c3c264776546c5d151963a",
+    "exit_code": 0,
+    "stdout_equal": true,
+    "stderr_equal": true,
+    "fallback": false
+  },
+  {
+    "name": "derive",
+    "native_sha256": "44a62737e936d5ca326230e627af5d9f02548c1ae0fc5682b9478ee77cd7e22b",
+    "extracted_sha256": "2b8613fd463765fdb89e4eb47d296ae01f6e3521e5c556a760854c286644b7c0",
+    "source_sha256": "94a43e9062e50da9517053d3f26bb5b390bbe126f7ad978ae76db6625af25880",
+    "exit_code": 0,
+    "stdout_equal": true,
+    "stderr_equal": true,
+    "fallback": false
+  },
+  {
+    "name": "hash-map-heavily-shared",
+    "native_sha256": "17ffa56e63950bcdd970c10e5fac8584f309b3443645f7b6f4578fed9a8fc99d",
+    "extracted_sha256": "fa3b081e386bc47073ed09a2bc189bd5d9361ef57c2274cfa0d5ff96a13cd9bf",
+    "source_sha256": "90a7e522138ff10e2a76df4975fde9cca1fc9894474a661124e37eda208097ea",
+    "exit_code": 0,
+    "stdout_equal": true,
+    "stderr_equal": true,
+    "fallback": false
+  }
+]

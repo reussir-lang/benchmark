@@ -1,0 +1,18 @@
+2026-11-11T08:48:59-08:00
+2760f82eb6cdf7b3028833b5a041920e1becd055
+aed287756971f576952eb56d8a4cf62a1be5d1b9
+5d9070466890455077aef35d496c191a33ebdd0c
+bef6816a14f489a205199887fd88592a91c7ec3d
+-50840bb0eaccfddd86175994078bee8ff296d08b third_party/lean-runtime
+1cf406dffa22b8bfc65eeb30241e8154f27a5505
+rustc 1.100.0-nightly (908501772 2026-08-30)
+binary: rustc
+commit-hash: 90850177249efe0321573c569aec5d12b257f8d6
+commit-date: 2026-08-30
+host: aarch64-unknown-linux-gnu
+release: 1.100.0-nightly
+LLVM version: 23.1.0
+{"rustc_fingerprint":2635340999400992244,"outputs":{"15156167132254897284":{"success":true,"status":"","code":0,"stdout":"/nix/store/fi6hlv01lvm2i4jqad1qs328srxm0wll-rust-nightly-2026-08-31\n","stderr":""},"16558551116846604283":{"success":true,"status":"","code":0,"stdout":"rustc 1.100.0-nightly (908501772 2026-08-30)\nbinary: rustc\ncommit-hash: 90850177249efe0321573c569aec5d12b257f8d6\ncommit-date: 2026-08-30\nhost: aarch64-unknown-linux-gnu\nrelease: 1.100.0-nightly\nLLVM version: 23.1.0\n","stderr":""},"18388833609885540028":{"success":true,"status":"","code":0,"stdout":"___\nlib___.rlib\nlib___.so\nlib___.so\nlib___.a\nlib___.so\noff\npacked\nunpacked\n___\ndebug_assertions\nfmt_debug=\"full\"\noverflow_checks\npanic=\"unwind\"\nproc_macro\nrelocation_model=\"pic\"\ntarget_abi=\"\"\ntarget_arch=\"aarch64\"\ntarget_endian=\"little\"\ntarget_env=\"gnu\"\ntarget_family=\"unix\"\ntarget_feature=\"neon\"\ntarget_feature=\"outline-atomics\"\ntarget_has_atomic\ntarget_has_atomic=\"128\"\ntarget_has_atomic=\"16\"\ntarget_has_atomic=\"32\"\ntarget_has_atomic=\"64\"\ntarget_has_atomic=\"8\"\ntarget_has_atomic=\"ptr\"\ntarget_has_atomic_load_store\ntarget_has_atomic_load_store=\"128\"\ntarget_has_atomic_load_store=\"16\"\ntarget_has_atomic_load_store=\"32\"\ntarget_has_atomic_load_store=\"64\"\ntarget_has_atomic_load_store=\"8\"\ntarget_has_atomic_load_store=\"ptr\"\ntarget_has_atomic_primitive_alignment=\"128\"\ntarget_has_atomic_primitive_alignment=\"16\"\ntarget_has_atomic_primitive_alignment=\"32\"\ntarget_has_atomic_primitive_alignment=\"64\"\ntarget_has_atomic_primitive_alignment=\"8\"\ntarget_has_atomic_primitive_alignment=\"ptr\"\ntarget_has_reliable_f128\ntarget_has_reliable_f128_math\ntarget_has_reliable_f16\ntarget_has_reliable_f16_math\ntarget_has_threads\ntarget_object_format=\"elf\"\ntarget_os=\"linux\"\ntarget_pointer_width=\"64\"\ntarget_thread_local\ntarget_vendor=\"unknown\"\nub_checks\nunix\n","stderr":""}},"successes":{}}Lean (version 4.34.0, aarch64-unknown-linux-gnu, commit 293d5d0c0c3f3dded4688b3ccd6a33939ac5102b, Release)
+64ff09d2fa57e372c201a744307b13cc42f43f65762611d38df657f2340ae7ca  /home/schrodingerzy/Documents/paper-evidence-20261110/lean434/stack/reussir-l2r/build/bin/rrc
+f68d7e26908acea4a52302bc961a3ef3b650775385595368fada46ca60ad0300  /home/schrodingerzy/Documents/paper-evidence-20261110/lean434/stack/lean-to-reussir/lean2rr/.lake/build/bin/lean2rr
+33152ce5cb6630329eefaeb4013cec4efd9937db94d09480ea26750713c2203e  /home/schrodingerzy/Documents/paper-evidence-20261110/lean434/stack/reussir-l2r/flake.lock

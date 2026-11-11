@@ -1,0 +1,24 @@
+{
+  "description": "Fresh Spark lean2rr measurements with PRs #980 and #981 backported onto the existing paper compiler. Native Lean timing samples are retained from the prior paper run; both executables were freshly rebuilt and checked for identical successful output before timing extracted code.",
+  "upstream_changes": [
+    "015e63cc9b15ea5ac7a5f5d2caa257fb6ef278f7",
+    "c55dc218bacaa2cfda9574c3b2eaee1e237b6010"
+  ],
+  "paper_compiler_base": "91dddd9a80dc888137a8e962609f691ce65700bd",
+  "paper_compiler_backport": "2760f82eb6cdf7b3028833b5a041920e1becd055",
+  "extractor_revision": "5d9070466890455077aef35d496c191a33ebdd0c",
+  "lean_runtime_revision": "50840bb0eaccfddd86175994078bee8ff296d08b",
+  "benchmark_revision": "1cf406dffa22b8bfc65eeb30241e8154f27a5505",
+  "native_lean_version": "4.34.0",
+  "measurement_cpu": 19,
+  "requested_warmups": 5,
+  "requested_samples": 10,
+  "case_time_budget_seconds": 300,
+  "fresh_measured_configurations": 18,
+  "native_timing_baseline": "baseline-measurements.json, variant=native",
+  "correctness_pairs": 18,
+  "compiler_fallbacks": 0,
+  "source_membership_unchanged": true,
+  "backport_patch_sha256": "d3456e944be6dff8c8f95b3d580408e1fd0f9d7f9f9fc401da78338f52bd5b5e",
+  "remaining_regression": "life: +20.21% versus prior extracted code, confirmed by back-to-back measurements in life-diagnostic.json"
+}

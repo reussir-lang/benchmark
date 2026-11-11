@@ -1,0 +1,313 @@
+diff --git a/include/Reussir/IR/ReussirOps.td b/include/Reussir/IR/ReussirOps.td
+index 2da78217..a1dd517d 100644
+--- a/include/Reussir/IR/ReussirOps.td
++++ b/include/Reussir/IR/ReussirOps.td
+@@ -855,17 +855,16 @@ def ReussirRcCompareImmortalOp : ReussirRcOp<"compare_immortal", [Pure]> {
+   let summary = "Test an rc value against a nullary variant's immediate";
+   let description = [{
+     `reussir.rc.compare_immortal` answers whether an rc value *is* the
+-    unboxed immediate of the nullary variant arm `tag` — a pure pointer
+-    comparison against the arm's per-tag dummy box, no memory access.
++    unboxed immediate of the nullary variant arm `tag`, without accessing
++    memory. TBI compares the pointer's top byte with `tag + 1`; the immortal
++    encoding compares the pointer with the arm's per-tag dummy box.
+ 
+     Under the special-pointer-tag scheme every construction of a nullary arm
+     of a taggable type yields the immediate (the scheme invariant at
+     `kSpecialPtrTagAttr`), so for such an arm this comparison is *exact*:
+     true iff the value's tag is `tag`. Dispatch lowering uses it to peel
+     nullary arms off a `record.dispatch` before the generic tag-load
+-    dispatch — on x86's `immortal` encoding the tag read is otherwise a
+-    dependent load from the dummy box on every iteration of pointer-chasing
+-    kernels (issue #400).
++    dispatch, avoiding a dependent load in pointer-chasing kernels.
+ 
+     ```mlir
+     %is_leaf = reussir.rc.compare_immortal (%rc : !reussir.rc<...>) tag(1)
+diff --git a/lib/Conversion/BasicOpsLowering/BasicOpsLowering.cpp b/lib/Conversion/BasicOpsLowering/BasicOpsLowering.cpp
+index 0b40a326..1e7f5d0b 100644
+--- a/lib/Conversion/BasicOpsLowering/BasicOpsLowering.cpp
++++ b/lib/Conversion/BasicOpsLowering/BasicOpsLowering.cpp
+@@ -97,11 +97,9 @@ namespace {
+ //===----------------------------------------------------------------------===//
+ // When `reussir-special-pointer-tag` ran (module carries kSpecialPtrTagAttr),
+ // a value of a taggable shared rc<variant> type may be an unboxed immediate
+-// pointing at a per-tag *dummy box* — a well-formed shared box header the
+-// hot accesses land in, so refcount loads/increments, uniqueness reads, and
+-// even the variant-tag read through a tagged value lower exactly as without
+-// the scheme: plain loads, zero guards. The attribute's value selects one of
+-// two encodings, differing only in how the cold guards recognize immediates:
++// pointing at a per-tag dummy box with a well-formed shared header.
++// Refcount accesses can use that header; TBI tag reads decode the pointer's
++// top byte. The attribute selects one of two encodings:
+ //   * `tbi` (aarch64): top byte = tag + 1, low bits = the dummy address;
+ //     the hardware ignores the top byte on data accesses. The dummy count is
+ //     initialized to 2 and guards test the pointer's top byte. Foreign code
+@@ -1604,6 +1602,30 @@ struct ReussirRecordTagConversionPattern
+     // Get the index type for the result
+     auto indexType = converter->getIndexType();
+ 
++    mlir::Block *contBlock = nullptr;
++    mlir::Value tagValue;
++    auto rcType = RcType::get(rewriter.getContext(), recordType,
++                              refType.getCapability(), refType.getAtomicKind());
++    // Inline value variants always read their stored discriminant.
++    if (recordType.hasFusedHeader() &&
++        specialPtrTagEncoding(op) == TagEncoding::TBI &&
++        rcType.mayCarrySpecialPointerTag() &&
++        llvm::cast<mlir::IntegerType>(indexType).getWidth() == 64) {
++      mlir::Value top = topByteOf(refPtr, loc, rewriter);
++      mlir::Value tagged = isTaggedImmediate(top, loc, rewriter);
++      auto one = mlir::LLVM::ConstantOp::create(rewriter, loc, indexType, 1);
++      auto decoded = mlir::LLVM::SubOp::create(rewriter, loc, top, one);
++      mlir::Block *condBlock = rewriter.getInsertionBlock();
++      contBlock = rewriter.splitBlock(condBlock, rewriter.getInsertionPoint());
++      contBlock->addArgument(indexType, loc);
++      mlir::Block *loadBlock = rewriter.createBlock(
++          contBlock->getParent(), mlir::Region::iterator(contBlock));
++      rewriter.setInsertionPointToEnd(condBlock);
++      mlir::LLVM::CondBrOp::create(rewriter, loc, tagged, contBlock,
++                                   mlir::ValueRange{decoded}, loadBlock,
++                                   mlir::ValueRange{});
++      rewriter.setInsertionPointToStart(loadBlock);
++    }
+     // The discriminant field: past the count slot for fused-header
+     // variants, first field otherwise.
+     int32_t tagField = recordType.hasFusedHeader() ? 1 : 0;
+@@ -1612,19 +1634,21 @@ struct ReussirRecordTagConversionPattern
+         rewriter, loc, tagPtrType, elementType, refPtr,
+         llvm::ArrayRef<mlir::LLVM::GEPArg>{0, tagField});
+ 
+-    // Load the tag value at the record's minimal tag width and widen it to
+-    // the op's index result. Under the special-pointer-tag scheme a tagged
+-    // immediate scrutinee needs no decode: the load lands in its per-tag
+-    // dummy box (TBI masks the top byte) and reads the real tag — so the
+-    // match hot path is identical with and without the scheme.
++    // Untagged references read the discriminant at its minimal width.
+     mlir::IntegerType tagType = recordType.getTagType();
+     mlir::Value narrowTag =
+         mlir::LLVM::LoadOp::create(rewriter, loc, tagType, tagPtr);
+-    mlir::Value tagValue =
++    tagValue =
+         tagType.getWidth() < llvm::cast<mlir::IntegerType>(indexType).getWidth()
+             ? mlir::LLVM::ZExtOp::create(rewriter, loc, indexType, narrowTag)
+                   .getResult()
+             : narrowTag;
++    if (contBlock) {
++      mlir::LLVM::BrOp::create(rewriter, loc, mlir::ValueRange{tagValue},
++                               contBlock);
++      rewriter.setInsertionPointToStart(contBlock);
++      tagValue = contBlock->getArgument(0);
++    }
+     rewriter.replaceOp(op, tagValue);
+ 
+     // Assume that the tag is always in bounds
+@@ -2044,13 +2068,9 @@ struct ReussirRcTaggedConversionPattern
+   mlir::LogicalResult
+   matchAndRewrite(ReussirRcTaggedOp op, OpAdaptor adaptor,
+                   mlir::ConversionPatternRewriter &rewriter) const override {
+-    // The immediate is the per-tag dummy box's address; refcount,
+-    // uniqueness, and tag accesses through the value hit the dummy box
+-    // unguarded and observe a well-formed shared header. The TBI encoding
+-    // additionally sets the top byte to `tag + 1` (masked by the hardware
+-    // on data accesses) so foreign code and future inhabited-variant
+-    // tagging can decode from the pointer; the immortal encoding uses the
+-    // plain address.
++    // Refcount accesses use the dummy box's shared header. TBI additionally
++    // stamps `tag + 1` into the top byte for tag reads; the immortal
++    // encoding uses the plain dummy address.
+     mlir::Location loc = op.getLoc();
+     auto indexTy = llvm::cast<mlir::IntegerType>(
+         static_cast<const mlir::LLVMTypeConverter *>(getTypeConverter())
+@@ -2090,35 +2110,29 @@ struct ReussirRcCompareImmortalConversionPattern
+   mlir::LogicalResult
+   matchAndRewrite(ReussirRcCompareImmortalOp op, OpAdaptor adaptor,
+                   mlir::ConversionPatternRewriter &rewriter) const override {
+-    // The nullary arm's immediate is a link-time constant: the per-tag
+-    // dummy box address (immortal), with `(tag + 1) << 56` folded into the
+-    // top byte under TBI. The classification is therefore one pointer
+-    // compare — no load, unlike a tag read through the dummy box.
+     mlir::Location loc = op.getLoc();
+     auto indexTy = llvm::cast<mlir::IntegerType>(
+         static_cast<const mlir::LLVMTypeConverter *>(getTypeConverter())
+             ->getIndexType());
+     mlir::Type ptrTy = mlir::LLVM::LLVMPointerType::get(rewriter.getContext());
+     TagEncoding encoding = specialPtrTagEncoding(op);
+-    auto dummy = tagDummyBox(op->getParentOfType<mlir::ModuleOp>(), loc,
+-                             op.getTag().getZExtValue(), encoding, rewriter);
+-    mlir::Value expected = mlir::LLVM::AddressOfOp::create(rewriter, loc, ptrTy,
+-                                                           dummy.getSymName());
+     if (encoding == TagEncoding::TBI) {
+       if (indexTy.getWidth() != 64)
+         return op.emitOpError(
+             "the TBI encoding requires a 64-bit target; use the "
+             "arch-independent encoding instead");
+-      mlir::Value baseInt =
+-          mlir::LLVM::PtrToIntOp::create(rewriter, loc, indexTy, expected);
+-      uint64_t encoded = (op.getTag().getZExtValue() + 1) << 56;
+-      mlir::Value tagBits = mlir::LLVM::ConstantOp::create(
++      mlir::Value top = topByteOf(adaptor.getRcPtr(), loc, rewriter);
++      mlir::Value expected = mlir::LLVM::ConstantOp::create(
+           rewriter, loc, indexTy,
+-          rewriter.getIntegerAttr(indexTy, static_cast<int64_t>(encoded)));
+-      mlir::Value imm =
+-          mlir::LLVM::OrOp::create(rewriter, loc, baseInt, tagBits);
+-      expected = mlir::LLVM::IntToPtrOp::create(rewriter, loc, ptrTy, imm);
++          rewriter.getIntegerAttr(indexTy, op.getTag().getZExtValue() + 1));
++      rewriter.replaceOpWithNewOp<mlir::LLVM::ICmpOp>(
++          op, mlir::LLVM::ICmpPredicate::eq, top, expected);
++      return mlir::success();
+     }
++    auto dummy = tagDummyBox(op->getParentOfType<mlir::ModuleOp>(), loc,
++                             op.getTag().getZExtValue(), encoding, rewriter);
++    mlir::Value expected = mlir::LLVM::AddressOfOp::create(rewriter, loc, ptrTy,
++                                                           dummy.getSymName());
+     rewriter.replaceOpWithNewOp<mlir::LLVM::ICmpOp>(
+         op, mlir::LLVM::ICmpPredicate::eq, adaptor.getRcPtr(), expected);
+     return mlir::success();
+diff --git a/lib/Conversion/ConvertToSTD/ConvertToSTD.cpp b/lib/Conversion/ConvertToSTD/ConvertToSTD.cpp
+index abb80163..2a7e9ad8 100644
+--- a/lib/Conversion/ConvertToSTD/ConvertToSTD.cpp
++++ b/lib/Conversion/ConvertToSTD/ConvertToSTD.cpp
+@@ -588,14 +588,9 @@ public:
+   mlir::LogicalResult
+   matchAndRewrite(ReussirRecordDispatchOp op, OpAdaptor adaptor,
+                   mlir::ConversionPatternRewriter &rewriter) const override {
+-    // Under the immortal encoding a nullary arm's value is always the
+-    // per-tag immediate (the scheme invariant at `kSpecialPtrTagAttr`), so
+-    // membership is one pointer compare — while the generic tag read is a
+-    // dependent *load* through the dummy box on every dispatch (issue
+-    // #400). Peel such arms off into `rc.compare_immortal` guards and keep
+-    // the unchanged tag dispatch for the rest. The TBI encoding already
+-    // reads tags from the pointer's top byte without touching memory, so
+-    // only `immortal` peels.
++    // Peel nullary arms into immediate tests: TBI compares the top byte,
++    // immortal compares the dummy address. Neither needs the generic tag
++    // load; inhabited arms retain the ordinary dispatch.
+     auto moduleOp = op->getParentOfType<mlir::ModuleOp>();
+     auto encoding =
+         moduleOp->getAttrOfType<mlir::StringAttr>(kSpecialPtrTagAttr);
+@@ -604,7 +599,8 @@ public:
+     llvm::SmallVector<unsigned> remaining;
+     RecordType recordType =
+         llvm::cast<RecordType>(op.getVariant().getType().getElementType());
+-    if (encoding && encoding.getValue() == kSpecialPtrTagImmortal)
++    if (encoding && (encoding.getValue() == kSpecialPtrTagImmortal ||
++                     encoding.getValue() == kSpecialPtrTagTBI))
+       if (auto borrow = op.getVariant().getDefiningOp<ReussirRcBorrowOp>();
+           borrow && borrow.getRcPtr().getType().mayCarrySpecialPointerTag())
+         scrutinee = borrow.getRcPtr();
+diff --git a/lib/Transformation/SpecialPointerTag/SpecialPointerTag.cpp b/lib/Transformation/SpecialPointerTag/SpecialPointerTag.cpp
+index 12a98b77..46d54a58 100644
+--- a/lib/Transformation/SpecialPointerTag/SpecialPointerTag.cpp
++++ b/lib/Transformation/SpecialPointerTag/SpecialPointerTag.cpp
+@@ -33,8 +33,7 @@ namespace reussir {
+ // observable reference count — and stamps the module with
+ // `kSpecialPtrTagAttr` carrying the chosen encoding, so the LLVM lowering
+ // steers the few stores that must not reach an immediate's dummy box (see
+-// BasicOpsLowering's special-pointer-tag notes; the hot reads need no guard
+-// at all).
++// BasicOpsLowering's special-pointer-tag notes).
+ //
+ // Encodings: `tbi` puts `tag + 1` in the pointer's top byte (hard-depends
+ // on the hardware ignoring the top byte on data accesses — aarch64);
+diff --git a/tests/integration/conversion/dispatch_compare_immortal.mlir b/tests/integration/conversion/dispatch_compare_immortal.mlir
+index 1a58339c..fa7bd954 100644
+--- a/tests/integration/conversion/dispatch_compare_immortal.mlir
++++ b/tests/integration/conversion/dispatch_compare_immortal.mlir
+@@ -1,8 +1,9 @@
+ // RUN: %reussir-opt %s --reussir-convert-to-std | %FileCheck %s
++// RUN: sed 's/"immortal"/"tbi"/' %s | %reussir-opt --reussir-convert-to-std | %FileCheck %s
+ 
+-// Under the immortal encoding a nullary arm's value is always the per-tag
++// Under either encoding a nullary arm's value is always the per-tag
+ // immediate, so dispatch peels such arms into `rc.compare_immortal` guards
+-// (a pointer compare — no load); when a single arm remains it inlines as
++// (no tag load); when a single arm remains it inlines as
+ // the residual else with no tag read at all.
+ 
+ !list_ = !reussir.record<variant "List" incomplete>
+diff --git a/tests/integration/conversion/special_pointer_tag_lowering.mlir b/tests/integration/conversion/special_pointer_tag_lowering.mlir
+index e6c1ac95..0d55052b 100644
+--- a/tests/integration/conversion/special_pointer_tag_lowering.mlir
++++ b/tests/integration/conversion/special_pointer_tag_lowering.mlir
+@@ -5,18 +5,32 @@
+ // `reussir.special_ptr_tag`). A tagged immediate's top byte is `tag + 1`
+ // and its low bits hold the address of the per-tag dummy box
+ // `{refcount = 2, tag}`. TBI makes loads through the tagged value land in
+-// the dummy box, so the hot reads (rc.fetch, rc.is_unique, record.tag)
+-// lower to plain loads with no immediate-check; only `rc.set` — the one
+-// store that could decay the dummy's refcount to 1 — skips a tagged
++// the dummy box. Refcount reads remain plain loads; record.tag decodes
++// the top byte for immediates and loads the header for ordinary boxes.
++// `rc.set`, which could decay the dummy's refcount to 1, skips a tagged
+ // access behind an unlikely branch (a select-steered store address would
+ // data-depend on the count and serialize every rc op against its load).
+ 
+ !list = !reussir.record<variant "List" {!reussir.record<compound "List.Cons" [value] {i64, !reussir.record<variant "List">}>, !reussir.record<compound "List.Nil" [value] {}>}>
+ !rclist = !reussir.rc<!list>
++!value = !reussir.record<variant "Value" [value] {!reussir.record<compound "Value.Some" [value] {i64}>, !reussir.record<compound "Value.None" [value] {}>}>
+ 
+ // CHECK-DAG: @_RNvC17REUSSIR_TAG_DUMMY43JTSaUNTZpqgb8a0JnRra5ebq8TvOJDFg1m5Smu4IYVX = linkonce_odr global [2 x i32] [i32 2, i32 1]
+ module @test attributes { reussir.special_ptr_tag = "tbi", dlti.dl_spec = #dlti.dl_spec<#dlti.dl_entry<i64, dense<64> : vector<2xi64>>, #dlti.dl_entry<i8, dense<8> : vector<2xi64>>> } {
+ 
++  // A known nullary tag needs only the top byte, not its dummy box.
++  // CHECK-LABEL: define i1 @is_nil(ptr %0)
++  // CHECK-NOT: load
++  // CHECK-NOT: REUSSIR_TAG_DUMMY
++  // CHECK: %[[INT:.+]] = ptrtoint ptr %0 to i64
++  // CHECK: %[[TOP:.+]] = lshr i64 %[[INT]], 56
++  // CHECK: %[[ISNIL:.+]] = icmp eq i64 %[[TOP]], 2
++  // CHECK-NEXT: ret i1 %[[ISNIL]]
++  func.func @is_nil(%rc: !rclist) -> i1 {
++    %nil = reussir.rc.compare_immortal(%rc : !rclist) tag(1)
++    return %nil : i1
++  }
++
+   // Immediate materialization: dummy address | (tag + 1) << 56, no
+   // allocation. (2 << 56 = 144115188075855872.)
+   // CHECK-LABEL: define ptr @make_nil()
+@@ -40,19 +54,38 @@ module @test attributes { reussir.special_ptr_tag = "tbi", dlti.dl_spec = #dlti.
+     return %cnt : index
+   }
+ 
+-  // Hot read: plain tag load — a tagged immediate's load lands in its
+-  // per-tag dummy box and reads the real tag, so no decode is emitted.
++  // Decode immediate tags; ordinary boxes read the header.
+   // CHECK-LABEL: define i64 @tag(ptr %0)
+-  // CHECK-NOT: lshr
+-  // CHECK-NOT: select
++  // CHECK: %[[INT:.+]] = ptrtoint ptr %0 to i64
++  // CHECK: %[[TOP:.+]] = lshr i64 %[[INT]], 56
++  // CHECK: %[[ISTAG:.+]] = icmp ne i64 %[[TOP]], 0
++  // CHECK: %[[DECODED:.+]] = sub i64 %[[TOP]], 1
++  // CHECK: br i1 %[[ISTAG]], label %[[CONT:[^, ]+]], label %[[LOAD:[^, ]+]]{{$}}
++  // CHECK: [[LOAD]]:
+   // CHECK: %[[TAG:.+]] = load i32, ptr
+   // CHECK: %[[WIDE:.+]] = zext i32 %[[TAG]] to i64
+-  // CHECK: ret i64 %[[WIDE]]
++  // CHECK: br label %[[CONT]]
++  // CHECK: [[CONT]]:
++  // CHECK: %[[RESULT:.+]] = phi i64 [ %[[WIDE]], %[[LOAD]] ], [ %[[DECODED]], %{{.+}} ]
++  // CHECK: ret i64 %[[RESULT]]
+   func.func @tag(%ref: !reussir.ref<!list shared>) -> index {
+     %tag = reussir.record.tag(%ref : !reussir.ref<!list shared>) : index
+     return %tag : index
+   }
+ 
++  // A shared reference to an inline variant is not a tagged box pointer.
++  // CHECK-LABEL: define i64 @value_tag(ptr %0)
++  // CHECK-NOT: ptrtoint
++  // CHECK-NOT: lshr
++  // CHECK: %[[TAG:.+]] = load i8, ptr
++  // CHECK: %[[WIDE:.+]] = zext i8 %[[TAG]] to i64
++  // CHECK-NOT: br
++  // CHECK: ret i64 %[[WIDE]]
++  func.func @value_tag(%ref: !reussir.ref<!value shared>) -> index {
++    %tag = reussir.record.tag(%ref : !reussir.ref<!value shared>) : index
++    return %tag : index
++  }
++
+   // The decrementing store: a tagged access skips the store entirely via an
+   // unlikely branch, so the dummy refcount is never written and can never
+   // decay below 2.

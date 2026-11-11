@@ -1,0 +1,110 @@
+[
+  {
+    "variant": "before980",
+    "binary_sha256": "17c01fd92ece4b3a99cc92e083ce70a9485694696e9f827aa816627134d78ca1",
+    "measurement": {
+      "results": [
+        {
+          "command": "/home/schrodingerzy/Documents/paper-evidence-20261110/lean434/cells/life/l2r",
+          "mean": 1.6249400821533333,
+          "stddev": 0.003273415491906726,
+          "median": 1.6251398159,
+          "user": 1.623669353333333,
+          "system": 0.0009788933333333334,
+          "min": 1.6215713731599999,
+          "max": 1.6281090574000001,
+          "times": [
+            1.6251398159,
+            1.6281090574000001,
+            1.6215713731599999
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 3,
+      "requested_samples": 3,
+      "warmup_runs": 2,
+      "case_time_budget_seconds": 60.0,
+      "measurement_seconds": 8.16956049297005,
+      "budget_limited": false,
+      "peak_rss_kb": 6756
+    }
+  },
+  {
+    "variant": "pr980",
+    "binary_sha256": "fe3994054a06c1678a904afe6c54b49b1425b0a29f520ab8d349035026e100b2",
+    "measurement": {
+      "results": [
+        {
+          "command": "/tmp/reussir-paper-refresh-20261111/lean2rr/cells/life/l2r",
+          "mean": 1.95080019128,
+          "stddev": 0.000597650975828437,
+          "median": 1.9505523479,
+          "user": 1.9504796133333333,
+          "system": 0.0,
+          "min": 1.9503663344,
+          "max": 1.95148189154,
+          "times": [
+            1.9505523479,
+            1.95148189154,
+            1.9503663344
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 3,
+      "requested_samples": 3,
+      "warmup_runs": 2,
+      "case_time_budget_seconds": 60.0,
+      "measurement_seconds": 9.79933700338006,
+      "budget_limited": false,
+      "peak_rss_kb": 6940
+    }
+  },
+  {
+    "variant": "fixed",
+    "binary_sha256": "e896f7665bcd828cfdbddcd8bbe48b2ae1ef3e6fa182303d9e2fda8ec937d8ed",
+    "measurement": {
+      "results": [
+        {
+          "command": "/tmp/reussir-paper-refresh-20261111/lean2rr-fixed/cells/life/l2r",
+          "mean": 1.9506460370733334,
+          "stddev": 0.0003396127924491648,
+          "median": 1.9505779323,
+          "user": 1.9493342599999999,
+          "system": 0.0009704666666666665,
+          "min": 1.9503456374400001,
+          "max": 1.95101454148,
+          "times": [
+            1.9503456374400001,
+            1.9505779323,
+            1.95101454148
+          ],
+          "exit_codes": [
+            0,
+            0,
+            0
+          ]
+        }
+      ],
+      "timing_source": "hyperfine",
+      "sample_count": 3,
+      "requested_samples": 3,
+      "warmup_runs": 2,
+      "case_time_budget_seconds": 60.0,
+      "measurement_seconds": 9.796128118410707,
+      "budget_limited": false,
+      "peak_rss_kb": 6760
+    }
+  }
+]

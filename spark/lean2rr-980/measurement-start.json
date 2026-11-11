@@ -1,0 +1,44 @@
+{
+  "date": "2026-11-11T16:59:17.224503+00:00",
+  "affinity": [
+    19
+  ],
+  "loadavg": [
+    1.07763671875,
+    1.1787109375,
+    1.19873046875
+  ],
+  "uname": [
+    "Linux",
+    "promaxgb10-edf0",
+    "7.0.0-1013-nvidia",
+    "#13~24.04.1-Ubuntu SMP PREEMPT_DYNAMIC Fri Jun 19 03:30:53 UTC 2",
+    "aarch64"
+  ],
+  "config": {
+    "reussir-compiler": "rrc",
+    "cc": "clang",
+    "reussir-libs": "build/lib",
+    "reussir-src": "",
+    "reussir-rcgmp-runtime": "",
+    "koka-compiler": "koka",
+    "lean-compiler": "lean",
+    "leanc": "leanc",
+    "rustc": "rustc",
+    "rust-extern-libs": "",
+    "ghc": "ghc",
+    "ocamlopt": "ocamlopt",
+    "ocamlfind": "ocamlfind",
+    "morphic-compiler": "morphic",
+    "morphic-clang": "",
+    "hyperfine": "/nix/store/vrwisnhvgz2m89fmq63rwyny59hhlhxf-ablation-runner-tools/bin/hyperfine",
+    "time": "/nix/store/vrwisnhvgz2m89fmq63rwyny59hhlhxf-ablation-runner-tools/bin/time",
+    "compile-timeout-seconds": 300,
+    "case-time-budget-seconds": 300,
+    "warmup-runs": 5,
+    "runs": 10,
+    "rust-runtime-env": [
+      "LD_PRELOAD=$MIMALLOC_LIB"
+    ]
+  }
+}
